@@ -1,8 +1,10 @@
 ---
-sidebar_position: 2
+slug: /
+sidebar_label: Home
+sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Title
 
 Let's discover **Docusaurus in less than 5 minutes**.
 

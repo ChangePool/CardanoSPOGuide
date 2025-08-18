@@ -28,15 +28,32 @@ function HomepageHeader() {
   );
 }
 
+//
+// August 17, 2025 - Disable the default Home() function
+//
+//export default function Home() {
+//  const {siteConfig} = useDocusaurusContext();
+//  return (
+//    <Layout
+//      title={`Hello from ${siteConfig.title}`}
+//      description="Description will go into a meta tag in <head />">
+//      <HomepageHeader />
+//      <main>
+//        <HomepageFeatures />
+//      </main>
+//    </Layout>
+//  );
+//}
+
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
-      <HomepageHeader />
+    <Layout title={`${siteConfig.title}`} description="This guide explains how to install and configure a Cardano stake pool from source code on Ubuntu/Debian in a two-node setup comprised of one block-producing node and one relay node.">
       <main>
-        <HomepageFeatures />
+        {/* In JSX, this is a comment */}
+        <h1>Heading 1 (h1)</h1>
+        <p>Paragraph text</p>
+        {/* <HomepageFeatures /> */}
       </main>
     </Layout>
   );
