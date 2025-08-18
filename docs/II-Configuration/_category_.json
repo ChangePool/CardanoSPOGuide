@@ -1,0 +1,12 @@
+{
+  "label": "PART II - CONFIGURATION",
+  "position": 35,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Part II - Configuration",
+    "slug": "/II",
+    "description": "Part II includes the following topics explaining how to set up Cardano nodes to create a stake pool:"
+  }
+}

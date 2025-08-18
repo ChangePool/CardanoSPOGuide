@@ -1,0 +1,12 @@
+{
+  "label": "PART V - TIPS",
+  "position": 50,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Part V - Tips",
+    "slug": "/V",
+    "description": "Part V includes the following topics containing additional procedures to simplify managing your stake pool:"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "label": "PART III - OPERATION",
+  "position": 40,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Part III - Operation",
+    "slug": "/III",
+    "description": "Part III includes the following topics discussing how to create your stake pool:"
+  }
+}

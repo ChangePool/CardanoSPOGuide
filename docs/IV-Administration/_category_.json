@@ -1,0 +1,12 @@
+{
+  "label": "PART IV - ADMINISTRATION & MAINTENANCE",
+  "position": 45,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Part IV - Administration & Maintenance",
+    "slug": "/IV",
+    "description": "Part IV includes the following topics providing procedures that you need to manage your stake pool:"
+  }
+}
