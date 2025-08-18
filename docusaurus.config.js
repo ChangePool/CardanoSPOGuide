@@ -50,8 +50,8 @@ const config = {
           sidebarPath: './sidebars.js',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/ChangePool/CardanoSPOGuide',
+          //editUrl:
+          //  'https://github.com/ChangePool/CardanoSPOGuide',
           // August 17, 2025 - Enable docs-only mode to remove the default landing page
           routeBasePath: '/',
         },
