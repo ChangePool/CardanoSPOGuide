@@ -11,16 +11,15 @@ import React from 'react';
 export function HTMLContent() {
   return (
     <div>
-      <p><i>Appendix C</i> discusses...</p>
+      <p><i>Appendix C</i> explains how to revise the <i>How to Set Up a Cardano Stake Pool</i> guide, including a style guide showing in context how to use all available styles.</p>
       <h1>Editing the Guide</h1>
-      <p>Explain how to clone the GitHub repository and use Docusaurus to edit the Guide.</p>
+      <p>Explain how to clone the GitHub repository; install Docusaurus; and, edit the Guide.</p>
       <h1>Heading 1 (h1)</h1>
       <p>Paragraph text (p)</p>
       <p>The following is an unordered list:</p>
       <ul>
         <li>li (list item)</li>
-        <li>This is a wrapping list item. This is a wrapping list item. This is a wrapping list item. This is a wrapping list item. This is a wrapping list item.
-          This is a wrapping list item. This is a second-level list:
+        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in eleifend ante, vitae placerat arcu. Duis pharetra mattis fringilla. Quisque consequat fermentum bibendum. Donec commodo ipsum ut justo porta aliquet. Vestibulum a sagittis leo, a convallis elit. Pellentesque elementum placerat arcu eu tristique. Duis in risus egestas dolor consectetur lobortis non vestibulum sem. This is a second-level list:
           <ul>
             <li>List item</li>
             <li>This is a wrapping list item. This is a wrapping list item. This is a wrapping list item. This is a wrapping list item. This is a wrapping list item.
