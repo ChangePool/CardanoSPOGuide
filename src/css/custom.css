@@ -28,3 +28,97 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Note, Important and Credit snippets use the table.box, p.boxLabel and p.boxText styles */
+table.box
+{
+        width: 100%;
+
+        border-top-width: 2px;
+        border-top-style: solid;
+        border-top-color: gray;
+
+        border-right-width: 0px;
+        border-right-style: solid;
+        border-right-color: gray;
+
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
+        border-bottom-color: gray;
+
+        border-left-width: 0px;
+        border-left-style: solid;
+        border-left-color: gray;
+
+        border-spacing: 0pt;
+        border-collapse: collapse;
+}
+
+table.box td
+{
+        padding: 6pt 0pt 6pt 0pt;
+        border-width: 0px;
+        border-style: solid;
+        border-color: gray;
+        vertical-align: top;
+}
+
+p.boxLabel
+{
+  font-weight: bold;
+}
+
+p.boxText
+{
+  margin-bottom: 0pt;
+}
+
+table.center
+{
+        width: 100%;
+
+        border-top-width: 1px;
+        border-top-style: solid;
+        border-top-color: black;
+
+        border-right-width: 1px;
+        border-right-style: solid;
+        border-right-color: black;
+
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: black;
+
+        border-left-width: 1px;
+        border-left-style: solid;
+        border-left-color: black;
+
+        border-spacing: 0pt;
+        border-collapse: collapse;
+}
+
+table.center caption
+{
+  font-weight: bold;
+}
+
+table.center th
+{
+  background-color: gray;
+}
+
+table.center td
+{
+  vertical-align: top;
+}
+
+td.center
+{
+  text-align: center;
+}
+
+table.center p
+{
+  margin-top: 6pt;
+  margin-bottom: 6pt;
+}
