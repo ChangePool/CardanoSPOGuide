@@ -133,8 +133,10 @@ export function HTMLContent() {
         </tbody>
       </table>
       <p>Paragraph Text (p)—Morbi vulputate elit sapien, a dignissim tortor vulputate eu. Nam imperdiet sapien vulputate, malesuada enim sit amet, venenatis ipsum. Morbi fringilla nunc sit amet iaculis accumsan. Suspendisse ultricies tempus augue, ut vulputate ipsum. Vivamus imperdiet fringilla lectus at porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et magna in dolor vulputate pulvinar. Nulla molestie rhoncus rutrum.</p>
-      <img src="img/coincashew-social-card.png" />
-      <caption>Figure Caption (caption)</caption>
+      <figure>
+        <img src="img/coincashew-social-card.png" />
+        <figcaption>Figure Caption (caption)</figcaption>
+      </figure>
       <p>Procedure Heading (p.h):</p>
       <ol>
         <li>List Item (li)</li>

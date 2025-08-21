@@ -122,3 +122,10 @@ table.center p
   margin-top: 6pt;
   margin-bottom: 6pt;
 }
+
+figcaption
+{
+  text-align: center;
+  font-weight: bold;
+}
+
