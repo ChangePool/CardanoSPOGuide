@@ -39,7 +39,7 @@
 
 b.navbar__title
 {
-  color: dimgrey;
+  /* color: dimgrey; */
   font-weight: 700; /* Bold */
 }
 
@@ -48,6 +48,11 @@ code.block
   display: inline-block;
   margin-top: 0pt;
   margin-bottom: 14pt;
+}
+
+div.pagination-nav__label
+{
+  font-weight: 500; /* Medium */
 }
 
 figcaption
@@ -59,7 +64,7 @@ figcaption
 
 header h1
 {
-  color: #0033ad;
+  color: light-dark(#0033ad,#0033dd);
   font-weight: 500; /* Medium */
 }
 
