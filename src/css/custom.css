@@ -43,12 +43,14 @@ b.navbar__title
   font-weight: 700; /* Bold */
 }
 
+/* For code blocks, use the pre tag instead
 code.block
 {
   display: inline-block;
   margin-top: 0pt;
   margin-bottom: 14pt;
 }
+*/
 
 div.pagination-nav__label
 {
@@ -114,6 +116,12 @@ p
 p.pi
 {
   font-weight: 500; /* Medium */
+}
+
+pre
+{
+  margin-top: 0pt;
+  margin-bottom: 14pt;
 }
 
 /* August 21, 2025 - Note, Important and Credit snippets use the table.box, p.boxLabel and p.boxText styles */
