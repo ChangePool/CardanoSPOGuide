@@ -4,6 +4,10 @@
  * work well for content-centric websites.
  */
 
+/* August 21, 2025 - Load the Ubuntu font for use throughout the Guide */
+/* For details on the Ubuntu font, see https://fonts.google.com/specimen/Ubuntu */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&amp;display=swap');
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #2e8555;
@@ -15,6 +19,10 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  /* August 21, 2025 - Set the Ubuntu font as the default font for the Guide */
+  --ifm-font-family-base: 'Ubuntu', sans-serif; /* For general text */
+  --ifm-heading-font-family: 'Ubuntu', sans-serif; /* For headings */
+  --ifm-font-family-monospace: 'Courier New', monospace; /* For code blocks (optional) */
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -29,29 +37,106 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-/* Note, Important and Credit snippets use the table.box, p.boxLabel and p.boxText styles */
+b.navbar__title
+{
+  color: dimgrey;
+  font-weight: 700; /* Bold */
+}
+
+code.block
+{
+  display: inline-block;
+  margin-top: 0pt;
+  margin-bottom: 14pt;
+}
+
+figcaption
+{
+  text-align: center;
+  font-weight: 300; /* Light */
+  font-style: italic;
+}
+
+header h1
+{
+  color: #0033ad;
+  font-weight: 500; /* Medium */
+}
+
+h1
+{
+  color: #0033ad;
+  font-weight: 500; /* Medium */
+}
+
+h2
+{
+  color: #0033ad;
+  font-weight: 500; /* Medium */
+}
+
+h3
+{
+  color: #0033ad;
+  font-weight: 500; /* Medium */
+}
+
+h4
+{
+  color: #0033ad;
+  font-size: 13pt;
+  font-style: italic;
+  font-weight: 500; /* Medium */
+}
+
+/* The sidebar uses an unordered list, so do NOT set the font weight for all list (li) items */
+ol li
+{
+  font-weight: 300; /* Light */
+}
+
+/* The sidebar uses an unordered list, so assign a class to unordered lists containing body text */
+ul.bt li
+{
+  font-weight: 300; /* Light */
+}
+
+p
+{
+  font-weight: 300; /* Light */
+}
+
+p.pi
+{
+  font-weight: 500; /* Medium */
+}
+
+/* August 21, 2025 - Note, Important and Credit snippets use the table.box, p.boxLabel and p.boxText styles */
 table.box
 {
         width: 100%;
 
-        border-top-width: 2px;
+        border-top-width: 2pt;
         border-top-style: solid;
-        border-top-color: gray;
+        border-top-color: grey;
 
-        border-right-width: 0px;
+        border-right-width: 0pt;
         border-right-style: solid;
-        border-right-color: gray;
+        border-right-color: grey;
 
-        border-bottom-width: 2px;
+        border-bottom-width: 2pt;
         border-bottom-style: solid;
-        border-bottom-color: gray;
+        border-bottom-color: grey;
 
-        border-left-width: 0px;
+        border-left-width: 0pt;
         border-left-style: solid;
-        border-left-color: gray;
+        border-left-color: grey;
 
         border-spacing: 0pt;
         border-collapse: collapse;
+
+        margin-top: 12pt;
+        margin-bottom: 15pt;
 }
 
 table.box td
@@ -59,13 +144,14 @@ table.box td
         padding: 6pt 0pt 6pt 0pt;
         border-width: 0px;
         border-style: solid;
-        border-color: gray;
+        border-color: grey;
         vertical-align: top;
 }
 
 p.boxLabel
 {
-  font-weight: bold;
+  color: #bf9004;
+  font-weight: 500; /* Medium */
 }
 
 p.boxText
@@ -73,42 +159,53 @@ p.boxText
   margin-bottom: 0pt;
 }
 
+/* August 21, 2025 - The Table snippet uses the table.center style */
 table.center
 {
         width: 100%;
 
-        border-top-width: 1px;
+        border-top-width: 0pt;
         border-top-style: solid;
         border-top-color: black;
 
-        border-right-width: 1px;
+        border-right-width: 0pt;
         border-right-style: solid;
         border-right-color: black;
 
-        border-bottom-width: 1px;
+        border-bottom-width: 0pt;
         border-bottom-style: solid;
         border-bottom-color: black;
 
-        border-left-width: 1px;
+        border-left-width: 0pt;
         border-left-style: solid;
         border-left-color: black;
 
         border-spacing: 0pt;
         border-collapse: collapse;
+
+        margin-bottom: 21pt;
 }
 
 table.center caption
 {
-  font-weight: bold;
+  text-align: left;
+  font-weight: 500; /* Medium */
+  margin-bottom: 8pt;
 }
 
 table.center th
 {
-  background-color: gray;
+  border-width: 1pt;
+  border-style: solid;
+  border-color: black;
+  background-color: grey;
 }
 
 table.center td
 {
+  border-width: 1pt;
+  border-style: solid;
+  border-color: black;
   vertical-align: top;
 }
 
@@ -121,11 +218,5 @@ table.center p
 {
   margin-top: 6pt;
   margin-bottom: 6pt;
-}
-
-figcaption
-{
-  text-align: center;
-  font-weight: bold;
 }
 
