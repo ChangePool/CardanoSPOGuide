@@ -62,6 +62,7 @@ figcaption
   text-align: center;
   font-weight: 300; /* Light */
   font-style: italic;
+  margin-top: 6pt;
 }
 
 header h1
@@ -96,6 +97,11 @@ h4
   font-weight: 500; /* Medium */
 }
 
+ol
+{
+  margin-top: -5pt;
+}
+
 /* The sidebar uses an unordered list, so do NOT set the font weight for all list (li) items */
 ol li
 {
@@ -103,6 +109,11 @@ ol li
 }
 
 /* The sidebar uses an unordered list, so assign a class to unordered lists containing body text */
+ul.bt
+{
+  margin-top: -5pt;
+}
+
 ul.bt li
 {
   font-weight: 300; /* Light */
@@ -111,6 +122,7 @@ ul.bt li
 p
 {
   font-weight: 300; /* Light */
+  margin-bottom: 9pt;
 }
 
 p.pi
@@ -120,8 +132,8 @@ p.pi
 
 pre
 {
-  margin-top: 0pt;
-  margin-bottom: 14pt;
+  margin-top: 12pt;
+  margin-bottom: 12pt;
 }
 
 /* August 21, 2025 - Note, Important and Credit snippets use the table.box, p.boxLabel and p.boxText styles */
@@ -149,7 +161,7 @@ table.box
         border-collapse: collapse;
 
         margin-top: 12pt;
-        margin-bottom: 15pt;
+        margin-bottom: 10.5pt;
 }
 
 table.box td
@@ -212,6 +224,11 @@ table.center th
   border-style: solid;
   border-color: black;
   background-color: grey;
+}
+
+table.center th p
+{
+  font-weight: 500; /* Medium */
 }
 
 table.center td
