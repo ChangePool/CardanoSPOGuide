@@ -8,30 +8,34 @@ sidebar_position: 65
 
 import React from 'react';
 
-<!-- To create a comment in Markdown (MD), use HTML comments -->
-
-<!-- The HTMLContent function references the CodeSample constant, preserving whitespace in the multiline string -->
-export const CodeSample = `function Code()
-{
-  Sample Code;
-  Sample Code;
-  Sample Code;
-}`;
+<!-- To create comments in Markdown (MD), use HTML comments -->
 
 export function HTMLContent() {
-  /* To create a comment in JavaScript XML (JSX) outside elements, use JavaScript comments */
+
+  /* To create comments in JavaScript XML (JSX) outside elements, use JavaScript comments */
+
+  /* Define a multiline string to preserve whitespace in a code block */
+  const CodeSample = `function Code()
+  {
+    Sample Code;
+    Sample Code;
+    Sample Code;
+  }`;
+
   return (
     <div>
-      {/* To create a comment inside a JSX element, wrap a JavaScript multiline comment using braces */}
-      <p><i>Appendix C</i> explains how to revise the <i>How to Set Up a Cardano Stake Pool</i> guide, including a style guide showing in context how to use all available HTML styles.</p>
+
+      {/* To create comments inside JSX elements, surround a JavaScript multiline comment using braces */}
+
+      <p><i>Appendix C</i> explains how to revise the <i>How to Set Up a Cardano Stake Pool</i> guide, including a style guide showing you in context how to use all available HTML styles.</p>
       <h1>Editing the Guide</h1>
-      <p>Explain how to clone the GitHub repository; install Docusaurus; and, edit the Guide.</p>
+      <p>Explain how to clone the GitHub repository; install Docusaurus; set up snippets using a text editor of your choice; and, edit the Guide (including the relative folder and file structure of the Docusaurus site).</p>
       <h1>Style Guide</h1>
       <p>In the comprehensive sample text below, parentheses contain one of the following to help you use each style:</p>
         <ul class="bt">
-          <li>HTML tag (may be nested)</li>
+          <li>HTML tag name (may be nested)</li>
           <li>CSS <code>.class</code> selector</li>
-          <li>Relative path to a file containing an HTML snippet</li>
+          <li>Path to a file containing an HTML snippet, relative to the root folder of the Web site source files for the <i>How to Set Up a Cardano Stake Pool</i> guide</li>
         </ul>
       <h1>Heading 1 (h1)</h1>
       <p>Paragraph Text (<code>p</code>)—Mauris sed erat ac urna sollicitudin consequat et et ipsum. Ut viverra quis elit eget feugiat. Pellentesque pulvinar placerat ligula, ac rhoncus est dignissim consequat. Suspendisse pellentesque, leo ut blandit tristique, odio mi ultricies mi, eu sodales erat mi sed elit. Donec tincidunt in orci ut condimentum. Etiam eu massa in metus auctor interdum. Proin eleifend fringilla tortor, vitae bibendum augue semper id. Donec et varius massa, at commodo sapien. Nulla lectus dolor, varius vel mollis at, condimentum et nibh. In vulputate in ante non placerat. Fusce bibendum dolor sit amet molestie faucibus.</p>
@@ -72,16 +76,18 @@ export function HTMLContent() {
           </tr>
         </tbody>
       </table>
-      <p>To preserve whitespace in a code sample, export a multiline string using backticks (<code>`</code>), and then reference the exported variable:</p>
+      <p>To preserve whitespace in a code sample, assign a multiline string to a constant, and then reference the constant:</p>
       <pre>
-        {/* The CodeSample constant is defined at the beginning of the current file */}
-        {CodeSample} 
+
+        {/* The CodeSample constant is set in the definition of the HTMLContent function */}
+
+        {CodeSample}
       </pre>
       <table class="box">
         <tbody>
           <tr>
             <td width="125pt"><p class="boxLabel">Note</p></td>
-            <td><p class="boxText">For more details on displaying code samples, see the source file for the current topic available at the relative path <code>/docs/C&#8209;Styles.mdx</code></p></td>
+            <td><p class="boxText">For more details on displaying code blocks preserving whitespace, see the source file for <i>Appendix C</i>, available at the relative path <code>/docs/C&#8209;Styles.mdx</code></p></td>
           </tr>
         </tbody>
       </table>

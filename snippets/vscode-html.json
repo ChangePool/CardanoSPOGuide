@@ -13,7 +13,66 @@
 	// 	"description": "Log output to console"
 	// }
 
-	"Topic": {
+	//
+	// Dashes
+	//
+	"– en": {
+    	"prefix": "--",
+    	"body": "–"
+	},
+	
+	"— em": {
+    	"prefix": "---",
+    	"body": "—"
+	},
+
+	//
+	// HTML Entities
+	//
+	"& HTML Entity": {
+		"prefix": "Ampersand",
+		"body": "&amp;"
+	},
+
+	"{ HTML Entity": {
+		"prefix": "Left Brace",
+		"body": "&#123;"
+	},
+
+	"} HTML Entity": {
+		"prefix": "Right Brace",
+		"body": "&#125;"
+	},
+
+	"< HTML Entity": {
+		"prefix": "Less Than",
+		"body": "&lt;"
+	},
+
+	"> HTML Entity": {
+		"prefix": "Greater Than",
+		"body": "&gt;"
+	},
+
+	"\" HTML Entity": {
+		"prefix": "Quotation Mark",
+		"body": "&quot;"
+	},
+
+	"' HTML Entity": {
+		"prefix": "Apostrophe",
+		"body": "&apos;"
+	},
+
+	"\" \" HTML Entity": {
+		"prefix": "Non-breaking Space",
+		"body": "&nbsp;"
+	},
+
+	//
+	// Snippets for the CoinCashew Guide template using Docusaurus
+	//
+	"New MDX Topic": {
 		"prefix": ["Topic"],
 		"body": [
 			"---",
@@ -35,7 +94,28 @@
 			"",
 			"<HTMLContent />"
 		],
-		"description": "Default content for a new topic in the /docs folder of the coincashew.io Web site created using Docusaurus"
+		"description": "Template for new topics using Markdown Using JavaScript XML (MDX) format in the coincashew.io Web site created using Docusaurus"
+	},
+
+	"Code Block": {
+		"prefix": "Code Block",
+		"body": [
+			"<pre>",
+			"\t{$1<ConstantName>} |",
+			"\t$2<br />",
+			"\t&nbsp;&nbsp;<br />",
+			"\t<br />",
+			"</pre>"
+		],
+		"description": "Snippet for a code block in the coincashew.io Web site created using Docusaurus"
+	},
+
+	"Define Multiline String": {
+		"prefix": "Code Block Constant",
+		"body": [
+			"const $1<ConstantName> = `$2<MultilineString>`;"
+		],
+		"description": "Snippet for defining a multiline string in the definition of a JSX function, used to preserve whitespace in a code block"
 	}
 
 }
