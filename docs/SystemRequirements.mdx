@@ -1,0 +1,71 @@
+---
+title: "System Requirements"
+sidebar_label: "System Requirements"
+slug: /Requirements
+hide_title: false
+sidebar_position: 35
+---
+
+import React from 'react';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+      <p>In terms of system specifications, operating a Cardano stake pool in a Testnet environment has the lowest barrier to entry. If you implement a stake pool operating in Mainnet, then you may start by meeting minimum specifications and then upgrade the stake pool infrastructure gradually as your pool grows.</p>
+
+      <h1>Testnet Specifications</h1>
+
+      <p>To implement a stake pool in a Testnet environment, meet these system requirements:</p>
+
+      <ul class="bt">
+        <li><b>One Server</b>—One block-producing node</li>
+        <li><b>Operating System</b>—Ubuntu 22.04 LTS</li>
+        <li><b>Processor</b>—An Intel or AMD x86 processor with two or more cores operating at 2GHz or faster</li>
+        <li><b>Memory</b>—8GB RAM</li>
+        <li><b>Storage</b>—50GB free storage</li>
+        <li><b>Internet</b>—A static IP address and broadband connection supporting speeds of at least 10 Mbps</li>
+        <li><b>Data Plan</b>—At least 1GB per day (30GB per month)</li>
+        <li><b>Power</b>—Reliable electrical power</li>
+        <li><b>ADA balance</b>—Request tokens and stake pool delegations using the <a href="https://docs.cardano.org/cardano-testnets/tools/faucet">Testnets Faucet</a></li>
+      </ul>
+
+      <h1>Minimum Specifications</h1>
+
+      <p>To operate on Mainnet, at a minimum a stake pool must meet the following system requirements:</p>
+
+      <ul class="bt">
+        <li><b>Two Separate Servers</b>—One block-producing node and one registered relay node</li>
+        <li><b>One Additional Computer</b>—For use as an air-gapped, offline cold environment</li>
+        <li><b>Operating System</b>—Ubuntu 22.04 LTS</li>
+        <li><b>Processor</b>—An Intel or AMD x86 processor with two or more cores operating at 2GHz or faster</li>
+        <li><b>Memory</b>—24GB RAM (including swap space)</li>
+        <li><b>Storage</b>—300GB free storage</li>
+        <li><b>Internet</b>—A static IP address and broadband connection supporting speeds of at least 10 Mbps</li>
+        <li><b>Data Plan</b>—At least 1GB per day (30GB per month)</li>
+        <li><b>Power</b>—Reliable electrical power</li>
+        <li><b>ADA balance</b>—At least 505 ADA for pool deposit and transaction fees</li>
+      </ul>
+
+      <h1>Recommended Specifications</h1>
+
+      <p>To operate on Mainnet robustly, implement your stake pool to meet the following system requirements:</p>
+
+      <ul class="bt">
+        <li><b>Four Separate Servers</b>—One block-producing node and three relay nodes (two registered relays and one unregistered relay) located in at least two different physical locations around the world</li>
+        <li><b>One Additional Computer</b>—For use as an air-gapped, offline cold environment</li>
+        <li><b>Operating System</b>—Ubuntu 22.04 LTS</li>
+        <li><b>Processor</b>—An Intel or AMD x86 processor with four or more cores operating at 2GHz or faster</li>
+        <li><b>Memory</b>—32GB to 64GB RAM (including swap space)</li>
+        <li><b>Storage</b>—350GB or more free storage</li>
+        <li><b>Internet</b>—A static IP address and broadband connection supporting speeds of at least 100 Mbps</li>
+        <li><b>Data Plan</b>—Unlimited</li>
+        <li><b>Power</b>—Reliable electrical power with an Uninterruptible Power Supply (UPS) or other backup power source</li>
+        <li><b>ADA balance</b>—The Cardano protocol naturally elects stake pools having higher pledge and stake to produce blocks more often</li>
+      </ul>
+
+    </div>
+  );
+}
+
+<HTMLContent />

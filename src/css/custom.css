@@ -108,6 +108,11 @@ ol li
   font-weight: 300; /* Light */
 }
 
+ol li a, p a, ul.bt a
+{
+  color: #0033ad;
+}
+
 /* The sidebar uses an unordered list, so assign a class to unordered lists containing body text */
 ul.bt
 {
@@ -187,28 +192,33 @@ p.boxText
 /* August 21, 2025 - The Table snippet uses the table.center style */
 table.center
 {
-        width: 100%;
 
-        border-top-width: 0pt;
-        border-top-style: solid;
-        border-top-color: black;
+  display: table;
+  width: initial;
+  margin: 0 auto;
 
-        border-right-width: 0pt;
-        border-right-style: solid;
-        border-right-color: black;
+  width: 100%;
 
-        border-bottom-width: 0pt;
-        border-bottom-style: solid;
-        border-bottom-color: black;
+  border-top-width: 0pt;
+  border-top-style: solid;
+  border-top-color: black;
 
-        border-left-width: 0pt;
-        border-left-style: solid;
-        border-left-color: black;
+  border-right-width: 0pt;
+  border-right-style: solid;
+  border-right-color: black;
 
-        border-spacing: 0pt;
-        border-collapse: collapse;
+  border-bottom-width: 0pt;
+  border-bottom-style: solid;
+  border-bottom-color: black;
 
-        margin-bottom: 21pt;
+  border-left-width: 0pt;
+  border-left-style: solid;
+  border-left-color: black;
+
+  border-spacing: 0pt;
+  border-collapse: collapse;
+
+  margin-bottom: 21pt;
 }
 
 table.center caption
