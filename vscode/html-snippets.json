@@ -110,12 +110,61 @@
 		"description": "Snippet for a code block in the coincashew.io Web site created using Docusaurus"
 	},
 
-	"Define Multiline String": {
-		"prefix": "Code Block Constant",
+	"Multiline String": {
+		"prefix": "Multiline String",
 		"body": [
 			"const $1<ConstantName> = `$2<MultilineString>`;"
 		],
 		"description": "Snippet for defining a multiline string in the definition of a JSX function, used to preserve whitespace in a code block"
+	},
+
+	"Figure": {
+		"prefix": "Figure",
+		"body": [
+			"<figure>",
+			"\t<img src=\"img/$1<ImageFileName>\" />",
+			"\t<figcaption>Figure $2<Number> $3<CaptionText></figcaption>",
+			"</figure>"
+		],
+		"description": "Snippet for inserting a figure"
+	},
+
+	"Unordered List": {
+		"prefix": "Unordered List",
+		"body": [
+			"<ul class=\"bt\">",
+			"\t<li>$1</li>",
+			"</ul>"
+		],
+		"description": "Snippet for inserting an unordered bulleted list"
+	},
+
+	"Docusaurus Table": {
+		"prefix": "Table",
+		"body": [
+			"<table class=\"center\">",
+			"\t<caption>Table 1 $1Caption</caption>",
+			"\t<tbody>",
+			"\t\t<tr>",
+			"\t\t\t<th width=\"50%\"><p>$2Column 1 Heading</p></th>",
+			"\t\t\t<th width=\"50%\"><p>$3Column 2 Heading</p></th>",
+			"\t\t</tr>",
+			"\t\t<tr>",
+			"\t\t\t<td class=\"center\"><p>$4Row 1 Column 1 Text</p></td>",
+			"\t\t\t<td class=\"center\"><p>$5Row 1 Column 2 Text</p></td>",
+			"\t\t</tr>",
+			"\t</tbody>",
+			"</table>"
+		],
+		"description": "Snippet for inserting a table"
+	},
+
+	"Docusaurus Hyperlink": {
+		"prefix": "Hyperlink",
+		"body": [
+			"<a href=\"$1\" target=\"_blank\">$2</a>"
+		],
+		"description": "Snippet for inserting a hyperlink"
 	}
 
 }
