@@ -41,6 +41,18 @@ const config = {
     locales: ['en'],
   },
 
+  //
+  // August 30, 2025 - The plugin-sitemap plugin is included in the @docusaurus/preset-classic preset
+  //
+  //plugins: [
+  //  [
+  //    '@docusaurus/plugin-sitemap',
+  //    {
+  //      // plugin options
+  //    },
+  //  ],
+  //],
+
   presets: [
     [
       'classic',
@@ -75,8 +87,36 @@ const config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        //
+        // August 31, 2025 - Configure generation of the sitemap.xml file that the DocSearch
+        // Scraper uses to index the site for the Typesense Server, enabling the Search field.
+        //
+        // NOTE: Typesense is open source and based on Algolia (https://docsearch.algolia.com/)
+        //
+        // For more details, visit:
+        //
+        //   - https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-sitemap
+        //   - https://typesense.org/docs/guide/docsearch.html
+        //   - https://typesense.org/docs/guide/install-typesense.html
+        //
+        sitemap: {
+          lastmod: 'datetime',
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: [],
+          filename: 'sitemap.xml',
+        },
       }),
     ],
+  ],
+
+  //
+  // August 30, 2025 - Use the docusaurus-theme-search-typesense plugin to add a Search bar to the site.
+  //
+  // NOTE: For details on styling the Search bar, see https://docusaurus.io/docs/search#styling-your-algolia-search
+  //
+  themes: [
+    'docusaurus-theme-search-typesense',
   ],
 
   themeConfig:
@@ -184,6 +224,29 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+      },
+      //
+      // August 30, 2025 - Configure the Typesense integration
+      //
+      typesense: {
+        // Replace this with the name of your index/collection.
+        // It should match the "index_name" entry in the scraper's "config.json" file.
+        typesenseCollectionName: 'CCSPOGuide',
+        typesenseServerConfig: {
+          nodes: [
+            {
+              host: 'nt2.paradoxicalsphere.com',
+              port: 8108,
+              protocol: 'https',
+            },
+          ],
+          apiKey: 'qzAbvb4MrA1I52mfscRtDiwiDbdAmHezkxiRRmzvZjfpUgja',
+        },
+        // Optional: Typesense search parameters: https://typesense.org/docs/0.24.0/api/search.html#search-parameters
+        typesenseSearchParameters: {},
+        // Optional: Contextual Search ensures that search results are relevant to the current language and version:
+        // https://docusaurus.io/docs/3.4.0/search#contextual-search
+        contextualSearch: true,
       },
     }),
 };
