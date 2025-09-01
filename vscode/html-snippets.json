@@ -72,8 +72,24 @@
 	//
 	// Snippets for the CoinCashew Guide template using Docusaurus
 	//
-	"CoinCashew Guide New MDX Topic": {
-		"prefix": ["New MDX Topic"],
+
+	"CoinCashew Guide Markdown New Topic": {
+		"prefix": ["Markdown New Topic"],
+		"body": [
+			"---",
+			"title: \"$1<TopicTitle>\"",
+			"sidebar_label: \"$2<SidebarText>\"",
+			"slug: /$3<CustomURL>",
+			"hide_title: $4<true|false>",
+			"sidebar_position: $5<Number>",
+			"---\n",
+			"$6"
+		],
+		"description": "Template for new topics using Markdown in the CoinCashew Guide Web site created using Docusaurus"
+	},
+
+	"CoinCashew Guide HTML New Topic": {
+		"prefix": ["HTML New Topic"],
 		"body": [
 			"---",
 			"title: \"$1<TopicTitle>\"",
@@ -86,7 +102,7 @@
 			"export function HTMLContent() {",
 			"\treturn (",
 			"\t\t<div>\n",
-		    "\t\t\t{/* INSERT HTML HERE */}\n",
+		    "\t\t\t{/* HTML CONTENT */}\n",
 			"\t\t\t$6\n",
 		    "\t\t</div>",
 			"\t);",
@@ -94,7 +110,7 @@
 			"",
 			"<HTMLContent />"
 		],
-		"description": "Template for new topics using Markdown Using JavaScript XML (MDX) format in the coincashew.io Web site created using Docusaurus"
+		"description": "Template for new topics using HTML in the CoinCashew Guide Web site created using Docusaurus"
 	},
 
 	"CoinCashew Guide Code Block": {
@@ -107,7 +123,7 @@
 			"\t<br />",
 			"</pre>"
 		],
-		"description": "Snippet for a code block in the coincashew.io Web site created using Docusaurus"
+		"description": "Snippet for a code block. See also the Multiline String snippet."
 	},
 
 	"CoinCashew Guide Multiline String": {
