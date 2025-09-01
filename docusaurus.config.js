@@ -123,7 +123,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/coincashew-social-card.png',
+      image: 'img/CCSocialCard.png',
       navbar: {
         title: 'How to Set Up a Cardano Stake Pool',
         logo: {

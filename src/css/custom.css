@@ -178,15 +178,31 @@ table.box td
         vertical-align: top;
 }
 
+table.box td.boxLabel
+{
+  width: 85pt;
+}
+
+table.box td.boxText
+{
+  vertical-align: middle;
+}
+
 p.boxLabel
 {
   color: #bf9004;
   font-weight: 500; /* Medium */
 }
 
+p.boxLabel img
+{
+  margin-top: 2pt;
+  margin-bottom: -9pt;
+}
+
 p.boxText
 {
-  margin-bottom: 0pt;
+  margin-bottom: 1pt;
 }
 
 /* August 21, 2025 - The Table snippet uses the table.center style */

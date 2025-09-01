@@ -72,8 +72,8 @@
 	//
 	// Snippets for the CoinCashew Guide template using Docusaurus
 	//
-	"New MDX Topic": {
-		"prefix": ["Topic"],
+	"CoinCashew Guide New MDX Topic": {
+		"prefix": ["New MDX Topic"],
 		"body": [
 			"---",
 			"title: \"$1<TopicTitle>\"",
@@ -97,7 +97,7 @@
 		"description": "Template for new topics using Markdown Using JavaScript XML (MDX) format in the coincashew.io Web site created using Docusaurus"
 	},
 
-	"Code Block": {
+	"CoinCashew Guide Code Block": {
 		"prefix": "Code Block",
 		"body": [
 			"<pre>",
@@ -110,7 +110,7 @@
 		"description": "Snippet for a code block in the coincashew.io Web site created using Docusaurus"
 	},
 
-	"Multiline String": {
+	"CoinCashew Guide Multiline String": {
 		"prefix": "Multiline String",
 		"body": [
 			"const $1<ConstantName> = `$2<MultilineString>`;"
@@ -118,7 +118,7 @@
 		"description": "Snippet for defining a multiline string in the definition of a JSX function, used to preserve whitespace in a code block"
 	},
 
-	"Figure": {
+	"CoinCashew Guide Figure": {
 		"prefix": "Figure",
 		"body": [
 			"<figure>",
@@ -129,7 +129,7 @@
 		"description": "Snippet for inserting a figure"
 	},
 
-	"Unordered List": {
+	"CoinCashew Guide Unordered List": {
 		"prefix": "Unordered List",
 		"body": [
 			"<ul class=\"bt\">",
@@ -139,7 +139,7 @@
 		"description": "Snippet for inserting an unordered bulleted list"
 	},
 
-	"Docusaurus Table": {
+	"CoinCashew Guide Table": {
 		"prefix": "Table",
 		"body": [
 			"<table class=\"center\">",
@@ -159,12 +159,56 @@
 		"description": "Snippet for inserting a table"
 	},
 
-	"Docusaurus Hyperlink": {
+	"CoinCashew Guide Hyperlink": {
 		"prefix": "Hyperlink",
 		"body": [
 			"<a href=\"$1\" target=\"_blank\">$2</a>"
 		],
 		"description": "Snippet for inserting a hyperlink"
-	}
+	},
 
+	"CoinCashew Guide Note Box": {
+		"prefix": "Note Box",
+		"body": [
+			"<table class=\"box\">",
+			"\t<tbody>",
+			"\t\t<tr>",
+			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Note<br /><img src=\"img/BoxNote.png\" alt=\"Note\" /></p></td>",
+			"\t\t\t<td class=\"boxText\"><p class=\"boxText\">$1</p></td>",
+			"\t\t</tr>",
+			"\t</tbody>",
+			"</table>"
+		],
+		"description": "Snippet for inserting a box labeled Note"
+	},
+
+	"CoinCashew Guide Important Box": {
+		"prefix": "Important Box",
+		"body": [
+			"<table class=\"box\">",
+			"\t<tbody>",
+			"\t\t<tr>",
+			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Important<br /><img src=\"img/BoxImportant.png\" alt=\"Important\" /></p></td>",
+			"\t\t\t<td class=\"boxText\"><p class=\"boxText\">$1</p></td>",
+			"\t\t</tr>",
+			"\t</tbody>",
+			"</table>"
+		],
+		"description": "Snippet for inserting a box labeled Important"
+	},
+
+	"CoinCashew Guide Credit Box": {
+		"prefix": "Credit Box",
+		"body": [
+			"<table class=\"box\">",
+			"\t<tbody>",
+			"\t\t<tr>",
+			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Credit<br /><img src=\"img/BoxCredit.png\" alt=\"Credit\" /></p></td>",
+			"\t\t\t<td class=\"boxText\"><p class=\"boxText\">$1</p></td>",
+			"\t\t</tr>",
+			"\t</tbody>",
+			"</table>"
+		],
+		"description": "Snippet for inserting a box labeled Credit"
+	}
 }
