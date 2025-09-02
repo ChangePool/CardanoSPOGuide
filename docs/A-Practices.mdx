@@ -1,6 +1,6 @@
 ---
-title: "Appendix A: Best Practices"
-sidebar_label: "Appendix A: Best Practices"
+title: "Appendix A: Troubleshooting"
+sidebar_label: "Appendix A: Troubleshooting"
 slug: /AppendixA
 hide_title: false
 sidebar_position: 70
@@ -12,7 +12,16 @@ export function HTMLContent() {
   return (
     <div>
 
-      <p><i>Appendix A</i> offers a checklist...</p>
+      <p><i>Appendix A</i> offers a checklist to troubleshoot the most common technical issues that stake pools may experience, as well as steps to resolve each issue:</p>
+
+      <ul class="bt">
+        <li><b>Pool Registration and Metadata Issues</b>—Check your pool's metadata on <a href="https://cexplorer.io/" target="_blank">Cardano Explorer</a>. If needed, [Update your Pool Registration](part-iv-administration/updating-stake-pool-information.md).</li>
+        <li><b>Relay Status</b>—Check your pool's relays on <a href="https://cexplorer.io/" target="_blank">Cardano Explorer</a> under the <b>About</b> Tab</li>
+        <li><b>Block Producer Connectivity</b>—Network topology should match your environment. Your block producer requires at least one connection in and one connection out. Check your firewall or IP/port configurations.</li>
+        <li><b>Transactions Processed Count</b>—The count of transactions processed must be non-zero on your block producer. Check your network configuration.</li>
+        <li><b>Time Synchronization</b>—Install [chrony](how-to-setup-chrony.md) on your block producer and all relay nodes.</li>
+        <li><b>Declared Pledge is Met</b>—Check your pool on <a href="https://pooltool.io" target="_blank">Cardano PoolTool</a> or <a href="https://cexplorer.io/" target="_blank">Cardano Explorer</a>. Add more ADA to the pledge address for your stake pool. For more details on your pledge address, see the topic [Registering Your Stake Pool]().</li>
+      </ul>
 
     </div>
   );
