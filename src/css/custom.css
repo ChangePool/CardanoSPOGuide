@@ -183,7 +183,7 @@ ol ol ol li:before
 }
 
 /* Exclude the unordered list that the sidebar uses */
-ul:not(.theme-doc-sidebar-menu)
+ul:not(.theme-doc-sidebar-menu, .menu__list)
 {
   margin-top: -5pt;
 }
