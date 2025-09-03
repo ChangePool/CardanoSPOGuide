@@ -195,10 +195,10 @@ const config = {
               //  href: 'https://x.com/docusaurus',
               //},
               // August 17, 2025 - Add a link to the CoinCashew Reddit channel
-              {
-                label: 'Reddit',
-                href: 'https://www.reddit.com/r/coincashew/',
-              },
+              //{
+              //  label: 'Reddit',
+              //  href: 'https://www.reddit.com/r/coincashew/',
+              //},
             ],
           },
           {
