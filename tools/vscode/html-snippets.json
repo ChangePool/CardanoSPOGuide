@@ -77,11 +77,11 @@
 		"prefix": ["Markdown New Topic"],
 		"body": [
 			"---",
-			"title: \"$1<TopicTitle>\"",
-			"sidebar_label: \"$2<SidebarText>\"",
-			"slug: /$3<CustomURL>",
-			"hide_title: $4<true|false>",
-			"sidebar_position: $5<Number>",
+			"title: \"$1\"",
+			"sidebar_label: \"$2\"",
+			"slug: /$3",
+			"hide_title: $4false",
+			"sidebar_position: $5",
 			"---\n",
 			"$6"
 		],
@@ -92,17 +92,16 @@
 		"prefix": ["HTML New Topic"],
 		"body": [
 			"---",
-			"title: \"$1<TopicTitle>\"",
-			"sidebar_label: \"$2<SidebarText>\"",
-			"slug: /$3<CustomURL>",
-			"hide_title: $4<true|false>",
-			"sidebar_position: $5<Number>",
+			"title: \"$1\"",
+			"sidebar_label: \"$2\"",
+			"slug: /$3",
+			"hide_title: $4false",
+			"sidebar_position: $5",
 			"---\n",
 			"import React from 'react';\n",
 			"export function HTMLContent() {",
 			"\treturn (",
 			"\t\t<div>\n",
-		    "\t\t\t{/* HTML CONTENT */}\n",
 			"\t\t\t$6\n",
 		    "\t\t</div>",
 			"\t);",
@@ -117,7 +116,8 @@
 		"prefix": "Code Block",
 		"body": [
 			"<pre>",
-			"\t{$1<ConstantName>} |",
+			"\t{$1<ConstantName>}",
+			"\t|",
 			"\t$2<br />",
 			"\t&nbsp;&nbsp;<br />",
 			"\t<br />",
@@ -143,16 +143,6 @@
 			"</figure>"
 		],
 		"description": "Snippet for inserting a figure"
-	},
-
-	"CoinCashew Guide Unordered List": {
-		"prefix": "Unordered List",
-		"body": [
-			"<ul class=\"bt\">",
-			"\t<li>$1</li>",
-			"</ul>"
-		],
-		"description": "Snippet for inserting an unordered bulleted list"
 	},
 
 	"CoinCashew Guide Table": {

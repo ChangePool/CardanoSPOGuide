@@ -8,8 +8,6 @@ sidebar_position: 85
 
 import React from 'react';
 
-<!-- To create comments in Markdown (MD), use HTML comments -->
-
 export function HTMLContent() {
 
   /* To create comments in JavaScript XML (JSX) outside elements, use JavaScript comments */
@@ -22,8 +20,37 @@ export function HTMLContent() {
   Sample Code;
 }`;
 
+const NewTopicTemplate = `---
+title: "<TopicTitle>"
+sidebar_label: "<TopicSidebarLabel>"
+slug: /<UniqueURLSegmentToTopic>
+hide_title: <TitleStatus>
+sidebar_position: <SidebarPositionNumber>
+---
+
+import React from 'react';
+
+export function HTMLContent() {
+
+  /* DEFINE MULTILINE STRING CONSTANTS HERE */
+
   return (
     <div>
+
+      {/* INSERT HTML CONTENT HERE */}
+
+    </div>
+  );
+}
+
+<HTMLContent />
+
+<!-- INSERT MARKDOWN CONTENT HERE -->`;
+
+  return (
+    <div>
+
+      {/* INSERT HTML CONTENT HERE */}
 
       {/* To create comments inside JSX elements, surround a JavaScript multiline comment using braces */}
 
@@ -36,7 +63,7 @@ export function HTMLContent() {
         <ul>
           <li>HTML tag name (may be nested)</li>
           <li>CSS <code>.class</code> selector</li>
-          <li>Path to a file containing an HTML snippet, relative to the root folder of the Docusaurus Web site for the <i>How to Set Up a Cardano Stake Pool</i> guide</li>
+          <li>Name of a VSCode snippet found in the file <code>/tools/vscode/html-snippets.json</code> where the path is relative to the root folder of the Docusaurus Web site for the <i>How to Set Up a Cardano Stake Pool</i> guide</li>
         </ul>
       <h1>Heading 1 (<code>h1</code>)</h1>
       <p>Paragraph Text (<code>p</code>)—Mauris sed erat ac urna sollicitudin consequat et et ipsum. Ut viverra quis elit eget feugiat. Pellentesque pulvinar placerat ligula, ac rhoncus est dignissim consequat. Suspendisse pellentesque, leo ut blandit tristique, odio mi ultricies mi, eu sodales erat mi sed elit. Donec tincidunt in orci ut condimentum. Etiam eu massa in metus auctor interdum. Proin eleifend fringilla tortor, vitae bibendum augue semper id. Donec et varius massa, at commodo sapien. Nulla lectus dolor, varius vel mollis at, condimentum et nibh. In vulputate in ante non placerat. Fusce bibendum dolor sit amet molestie faucibus.</p>
@@ -97,7 +124,12 @@ export function HTMLContent() {
 
         {CodeSample}
       </pre>
-      <table class="box">
+      <p>To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; and, <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar:</p>
+
+      <pre>
+        {NewTopicTemplate}
+      </pre>
+            <table class="box">
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
@@ -250,3 +282,8 @@ export function HTMLContent() {
 }
 
 <HTMLContent />
+
+<!-- INSERT MARKDOWN CONTENT HERE -->
+
+<!-- To create comments in Markdown (MD), use HTML comments -->
+
