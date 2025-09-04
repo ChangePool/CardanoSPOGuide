@@ -4,6 +4,7 @@ sidebar_label: "Appendix D: Styles & Standards"
 slug: /AppendixD
 hide_title: false
 sidebar_position: 85
+description: "How to revise the Guide"
 ---
 
 import React from 'react';
@@ -26,6 +27,7 @@ sidebar_label: "<TopicSidebarLabel>"
 slug: /<UniqueURLSegmentToTopic>
 hide_title: <TitleStatus>
 sidebar_position: <SidebarPositionNumber>
+description: "<Description>"
 ---
 
 import React from 'react';
@@ -58,13 +60,24 @@ export function HTMLContent() {
       <p><i>Appendix D</i> includes a style guide showing you in context how to use all available HTML styles.</p>
       <h1>Editing the Guide</h1>
       <p>TO-DO: Explain how to clone the GitHub repository; install Docusaurus; set up snippets using VSCode; and, edit the Guide (including an explanation of the relative folder and file structure of the Docusaurus site).</p>
+      <p>If you plan to develop content using HTML, then add the code snippets provided in the file <code>/tools/vscode/html-snippets.json</code> to VSCode, where the file path is relative to the root folder of the Docusaurus Web site for the <i>How to Set Up a Cardano Stake Pool</i> guide.</p>
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Specifying file paths relative to the root folder of a Web site is standard for sites created using Docusaurus.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
       <h1>HTML Style Guide</h1>
       <p>In the comprehensive sample text below, parentheses contain one of the following to show you how to use each style:</p>
         <ul>
           <li>HTML tag name (may be nested)</li>
           <li>CSS <code>.class</code> selector</li>
-          <li>Name of a VSCode snippet found in the file <code>/tools/vscode/html-snippets.json</code> where the path is relative to the root folder of the Docusaurus Web site for the <i>How to Set Up a Cardano Stake Pool</i> guide</li>
+          <li>Name of a provided VSCode snippet</li>
         </ul>
+
       <h1>Heading 1 (<code>h1</code>)</h1>
       <p>Paragraph Text (<code>p</code>)—Mauris sed erat ac urna sollicitudin consequat et et ipsum. Ut viverra quis elit eget feugiat. Pellentesque pulvinar placerat ligula, ac rhoncus est dignissim consequat. Suspendisse pellentesque, leo ut blandit tristique, odio mi ultricies mi, eu sodales erat mi sed elit. Donec tincidunt in orci ut condimentum. Etiam eu massa in metus auctor interdum. Proin eleifend fringilla tortor, vitae bibendum augue semper id. Donec et varius massa, at commodo sapien. Nulla lectus dolor, varius vel mollis at, condimentum et nibh. In vulputate in ante non placerat. Fusce bibendum dolor sit amet molestie faucibus.</p>
       <p>Fusce eleifend iaculis feugiat. Proin consequat eget orci ac ultrices. Phasellus a sem nec ipsum tristique mattis. Suspendisse id vulputate eros. Mauris bibendum magna id bibendum ornare. Phasellus ultricies posuere est, vitae sagittis tellus. Donec facilisis non purus egestas vestibulum. Sed orci ex, pharetra id sapien sed, mattis scelerisque velit. Nunc ut diam sed nisi dictum tincidunt.</p>
@@ -79,6 +92,7 @@ export function HTMLContent() {
       <p>Morbi vulputate elit sapien, a dignissim tortor vulputate eu. Nam imperdiet sapien vulputate, malesuada enim sit amet, venenatis ipsum. Morbi fringilla nunc sit amet iaculis accumsan. Suspendisse ultricies tempus augue, ut vulputate ipsum. Vivamus imperdiet fringilla lectus at porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et magna in dolor vulputate pulvinar. Nulla molestie rhoncus rutrum.</p>
       <p>Here is a <a href="/AppendixD" target="_blank">hyperlink</a>. Set the <code>target="_blank"</code> attribute for external links only, to open a new tab.</p>
       <p><b>Bold</b>, <i>italic</i> and <b><i>bold italic</i></b> font weights and styles are available.</p>
+
       <h2>Heading 2 (<code>h2</code>)</h2>
       <p>Quisque vitae lorem suscipit, posuere elit vitae, rutrum enim. Vestibulum ultricies nisi luctus lobortis efficitur. Donec sit amet diam lacinia, faucibus orci vel, euismod mauris. Nunc a massa tincidunt, ornare magna sit amet, tempus mauris. Donec sed suscipit turpis, egestas iaculis quam. Nunc ut mi at mi condimentum tempor. Curabitur eleifend, nulla nec accumsan tincidunt, nisl lorem iaculis ante, sit amet semper massa orci a lectus. Nam justo nibh, scelerisque quis quam non, scelerisque tristique eros. Cras id nisl non turpis sagittis posuere sed ut turpis. Nulla purus diam, imperdiet at aliquam nec, lacinia eu sapien. Proin aliquet mauris egestas nibh pharetra ornare. Praesent ut convallis ipsum.</p>
       <table class="box">
@@ -124,7 +138,7 @@ export function HTMLContent() {
 
         {CodeSample}
       </pre>
-      <p>To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; and, <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar:</p>
+      <p>Create new topics in the <code>/docs</code> subfolder using <code>.MDX</code> as the file name extension. To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar; and, <code>&lt;Description&gt;</code> is a brief summary of the topic that displays in a sidebar category for the topic:</p>
 
       <pre>
         {NewTopicTemplate}
@@ -231,8 +245,10 @@ export function HTMLContent() {
         </li>
         <li>Morbi mollis lectus eget erat imperdiet commodo. Vivamus fringilla interdum faucibus. Phasellus faucibus massa felis, sit amet ultrices nisi accumsan eget.</li>
       </ul>
+
       <h3>Heading 3 (<code>h3</code>)</h3>
       <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras lectus massa, facilisis ac maximus a, interdum sit amet elit. In egestas urna et purus porta volutpat.</p>
+
       <h4>Heading 4 (<code>h4</code>)</h4>
       <p>Vestibulum faucibus neque nec egestas sagittis. Curabitur felis tortor, dignissim sed ipsum in, dignissim pharetra nulla. Maecenas ac lacus eu orci suscipit volutpat. Curabitur sed urna tristique, varius eros sit amet, imperdiet purus. Etiam in ante in erat bibendum hendrerit. Curabitur eu erat blandit, scelerisque ipsum id, faucibus nunc. Integer dignissim nibh eget turpis ultrices, quis vulputate massa vehicula. Ut a ultricies mi. Maecenas vulputate felis id ipsum accumsan congue. Aenean nec purus a odio pellentesque aliquam sed a nulla.</p>
       <table class="box">
