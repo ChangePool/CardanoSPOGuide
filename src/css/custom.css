@@ -198,6 +198,13 @@ ul:not(.menu__list) li
   font-weight: 300; /* Light */
 }
 
+/* Style tabs used in Markdown */
+ul.tabs li.tabs__item--active
+{
+  color: light-dark(#0033ad,#0033dd);
+  border-bottom-color: light-dark(#0033ad,#0033dd);
+}
+
 p
 {
   font-weight: 300; /* Light */
@@ -422,3 +429,10 @@ a.pagination-nav__link:hover
 {
   border-color: light-dark(#0033ad,#0033dd);
 }
+
+/* Style the hyperlinks to topics that display on Category pages listed in the sidebar */
+a.card:hover
+{
+  border-color: light-dark(#0033ad,#0033dd);
+}
+
