@@ -318,6 +318,11 @@ table.center caption
   margin-bottom: 8pt;
 }
 
+table.center caption.center
+{
+  text-align: center;
+}
+
 table.center th
 {
   border-width: 1pt;
