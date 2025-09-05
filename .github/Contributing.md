@@ -1,28 +1,14 @@
----
-title: "Contributing"
-sidebar_label: "Contributing"
-slug: /Contributing
-hide_title: false
-sidebar_position: 10
-description: ""
----
+<!-- September 5, 2025 - GitHub automatically displays files named /.github/Contributing.* on the main page
+ of the the repository. The Docusaurus sidebar for the How to Set Up a Cardano Stake Pool guide displays the
+ ../docs/Contribute.mdx file. Synchronize the content in the Contributing.md file with the content in the
+ ../docs/Contribute.mdx file. -->
 
-import React from 'react';
 
-export function HTMLContent() {
-  return (
-    <div>
+Change Pool and CoinCashew are excited to hear and learn from you! Your contributions of content benefit others who may read and use the *How to Set Up a Cardano Stake Pool* guide.
 
-       <p>Change Pool and CoinCashew are excited to hear and learn from you! Your contributions of content benefit others who may read and use the <i>How to Set Up a Cardano Stake Pool</i> guide.</p>
+To submit small contributions, please create an [Issue](https://github.com/ChangePool/CardanoSPOGuide/issues) or [Pull Request](https://github.com/ChangePool/CardanoSPOGuide/pulls).
 
-       <p>To submit small contributions, please create an <a href="https://github.com/ChangePool/CardanoSPOGuide/issues" target="_blank">Issue</a> or <a href="https://github.com/ChangePool/CardanoSPOGuide/pulls" target="_blank">Pull Request</a>.</p>
+For larger contributions, prior to creating a Pull Request please read [Appendix D: Styles & Standards](https://coincashew.io/spo/AppendixD).
 
-       <p>For larger contributions, prior to creating a Pull Request please read <a href="/AppendixD">Appendix D: Styles & Standards</a>.</p>
+We also encourage "cointributors," who may offer delegations to [Change Pool](https://coincashew.io/) or [donations](https://cointr.ee/coincashew) to CoinCashew without contributing new content.
 
-       <p>We also encourage "cointributors," who may offer delegations to <a href="https://coincashew.io/" target="_blank">Change Pool</a> or <a href="https://cointr.ee/coincashew" target="_blank">donations</a> to CoinCashew without contributing new content.</p>
-
-    </div>
-  );
-}
-
-<HTMLContent />
