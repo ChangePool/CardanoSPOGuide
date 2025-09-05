@@ -3,6 +3,7 @@
  ../docs/Contribute.mdx file. Synchronize the content in the Contributing.md file with the content in the
  ../docs/Contribute.mdx file. -->
 
+# Contributing
 
 Change Pool and CoinCashew are excited to hear and learn from you! Your contributions of content benefit others who may read and use the *How to Set Up a Cardano Stake Pool* guide.
 
