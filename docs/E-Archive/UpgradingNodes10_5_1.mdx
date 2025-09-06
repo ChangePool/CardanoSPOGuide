@@ -439,33 +439,17 @@ To monitor your node, type the command `journalctl -fu cardano-node`in a termina
 
 To verify that the upgrade is successful, open gLiveView, journalctl logs or Grafana dashboard.
 
-<!--
-{% tabs %}
-{% tab title="gLiveView" %}
-```bash
-cd ${NODE_HOME}
-./gLiveView.sh
-```
-{% endtab %}
-
-{% tab title="journalctl" %}
-```
-journalctl -fu cardano-node
-```
-{% endtab %}
-{% endtabs %}
--->
-
 <Tabs>
   <TabItem value="gLiveView" label="gLiveView" default>
-    <pre>
-      cd $&#123;NODE_HOME&#125;<br />./gLiveView.sh
-    </pre>
+    ```bash
+    cd ${NODE_HOME}
+    ./gLiveView.sh
+    ```
   </TabItem>
   <TabItem value="journalctl" label="journalctl">
-    <pre>
-      journalctl -fu cardano-node
-    </pre>
+    ```
+    journalctl -fu cardano-node
+    ```
   </TabItem>
 </Tabs>
 
