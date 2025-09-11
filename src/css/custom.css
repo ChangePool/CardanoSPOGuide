@@ -436,3 +436,9 @@ a.card:hover
   border-color: light-dark(#0033ad,#0033dd);
 }
 
+/* Style markdown */
+strong, th
+{
+  font-weight: 500; /* Medium */
+}
+
