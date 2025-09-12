@@ -312,13 +312,13 @@ If you are enabling 2FA on a remote machine that you access over SSH you need to
 :::info
 One of the first things you should do is secure the shared [memory](https://www.lifewire.com/what-is-random-access-memory-ram-2618159) used on the system. If you're unaware, shared memory can be used in an attack against a running service. Because of this, secure that portion of system memory.
 
-To learn more about secure shared memory, read this [techrepublic.com article](https://www.techrepublic.com/article/how-to-enable-secure-shared-memory-on-ubuntu-server/).
+To learn more about securing shared memory, read this [techrepublic.com article](https://www.techrepublic.com/article/how-to-enable-secure-shared-memory-on-ubuntu-server/).
 :::
 
 :::warning
 **One exceptional case**
 
-There may be a reason for you needing to have that memory space mounted in read/write mode (such as a specific server application like \*\*Chrome \*\*that requires such access to the shared memory or standard applications like Google Chrome). In this case, use the following line for the fstab file with instructions below.
+There may be a reason for you needing to have that memory space mounted in read/write mode (such as a specific server application like **Chrome** that requires such access to the shared memory or standard applications like Google Chrome). In this case, use the following line for the fstab file with instructions below.
 
 ```
 none /run/shm tmpfs rw,noexec,nosuid,nodev 0 0
@@ -328,7 +328,7 @@ The above line will mount the shared memory with read/write access but without p
 
 **Use with caution**
 
-With some trial and error, you may discover some applications(**like Chrome**) do not work with shared memory in read-only mode. For the highest security and if compatible with your applications, it is a worthwhile endeavor to implement this secure shared memory setting.
+With some trial and error, you may discover some applications (**like Chrome**) do not work with shared memory in read-only mode. For the highest security and if compatible with your applications, it is a worthwhile endeavor to implement this secure shared memory setting.
 
 Source: [techrepublic.com](https://www.techrepublic.com/article/how-to-enable-secure-shared-memory-on-ubuntu-server/)
 :::
