@@ -16,9 +16,7 @@ export function HTMLContent() {
     return (
         <div>
 
-            <h1>Set Up Ubuntu</h1>
 
-            <p>Refer to the respective guide to <a href="https://ubuntu.com/tutorials/install-ubuntu-server" target="_blank">Install Ubuntu Server</a> or <a href="https://ubuntu.com/tutorials/install-ubuntu-desktop" target="_blank">Install Ubuntu Desktop</a>.</p>
 
         </div>
     );
@@ -27,6 +25,22 @@ export function HTMLContent() {
 <!-- <HTMLContent /> -->
 
 Cardano stake pools operating on Mainnet hold significant value. Therefore, you need to secure each computer hosting an instance of Cardano Node, especially in your Mainnet stake pool configuration.
+
+Hardening a computer involves reducing the number of vulnerabilities and entry points that attackers may exploit. Complete the following procedures on each computer hosting Cardano Node:
+
+- When [Setting Up Ubuntu Desktop](#setting-up-ubuntu-desktop), create a standard account to log in to the computer.
+- To perform administrative tasks on the computer, use `sudo` or `su`
+- To [Configure Secure Shell](#configuring-secure-shell) connections:
+    - [Implement key authentication](#implementing-key-authentication)
+    - Disable password authentication
+    - [Change the Listening Port Number](#changing-the-listening-port-number)
+    - [Set Up Two-factor Authentication](#setting-up-two-factor-authentication)
+- [Update Your Computer](#robot-updating-your-computer) regularly or automatically.
+- [Disable the Root Account](#disabling-the-root-account) on the computer.
+- [Secure Shared Memory](#jigsaw-securing-shared-memory) on the computer.
+- [Install fail2ban](#chains-installing-fail2ban) to block and log unauthorized login attempts.
+- [Configure a Firewall](#configuring-a-firewall-) to control network access to the computer.
+- [Validate Listening Ports](#telescope-validating-listening-ports) on the computer regularly.
 
 ## Setting Up Ubuntu Desktop
 
@@ -68,7 +82,7 @@ Throughout the *How to Set Up a Cardano Stake Pool* guide, log in to a computer 
 For information on using `sudo` and `su` commands, see [Exploring the Differences between sudo and su Commands in Linux](https://www.redhat.com/en/blog/difference-between-sudo-su) for example.
 :::
 
-Setting a static IP address provides reliable remote access to the services operating on a computer, including Secure Shell and Cardano Node.
+Setting a static IP address provides reliable remote access to the services operating on a computer, such as Secure Shell and Cardano Node.
 
 **To configure a static IP address:**
 
@@ -90,17 +104,9 @@ ssh <Username>@<SSHServer>
 For more details on setting up an SSH client connection, see [How to Connect to an SSH Server](https://www.howtogeek.com/311287/how-to-connect-to-an-ssh-server-from-windows-macos-or-linux/), for example.
 :::
 
-### Disabling SSH Password Authentication and Using SSH Keys Only
+<!-- 250915 - START HERE -->
 
-:::info
-The basic rules of hardening SSH are:
-
-* No password for SSH access (use private key)
-* Don't allow root to SSH (the appropriate users should SSH in, then `su` or `sudo`)
-* Use `sudo` for users so commands are logged
-* Log unauthorized login attempts (and consider software to block/ban users who try to access your server too many times, like fail2ban)
-* Lock down SSH to only the ip range you require (if you feel like it)
-:::
+### Implementing Key Authentication
 
 Create a new SSH key pair on your local machine. Run this on your local machine. You will be asked to type a file name in which to save the key. This will be your **keyname**.
 
@@ -161,6 +167,10 @@ Locate **PermitEmptyPasswords** and update to no
 PermitEmptyPasswords no
 ```
 
+### Changing the Listening Port Number
+
+By default, SSH Server listens on port 22. Changing the port where SSH Server listens helps to obscure the SSH Server.
+
 **Optional**: Locate Port **and customize it to your random port number**.
 
 :::info
@@ -220,7 +230,7 @@ Host cardano-server
 
 This will allow you to log in with `ssh cardano-server` rather than needing to pass through all ssh parameters explicitly.
 
-### Configuring Two Factor Authentication for SSH
+### Setting Up Two-factor Authentication
 
 :::info
 SSH, the secure shell, is often used to access remote Linux systems. Because we often use it to connect with computers containing important data, it’s recommended to add another security layer. Here comes the two factor authentication (_2FA_).
@@ -378,7 +388,7 @@ sudo reboot
 ## :chains: Installing fail2ban
 
 :::info
-Fail2ban is an intrusion-prevention system that monitors log files and searches for particular patterns that correspond to a failed login attempt. If a certain number of failed logins are detected from a specific IP address (within a specified amount of time), fail2ban blocks access from that IP address.
+[Fail2ban](https://github.com/fail2ban/fail2ban) is an intrusion-prevention system that monitors log files and searches for particular patterns that correspond to a failed login attempt. If a certain number of failed logins are detected from a specific IP address (within a specified amount of time), fail2ban blocks access from that IP address.
 :::
 
 ```
@@ -420,7 +430,7 @@ Restart fail2ban for settings to take effect.
 sudo systemctl restart fail2ban
 ```
 
-## Configuring Your Firewall <a href="#ufw" id="ufw"></a>
+## Configuring a Firewall <a href="#ufw" id="ufw"></a>
 
 The standard UFW firewall can be used to control network access to your node.
 
@@ -549,7 +559,7 @@ Carden Pool [CRPL] provides a script that configures and deploys iptables rules 
 
 Further information can be found in the [**Carden Pool GitHub repository**](https://github.com/CardenPool/stakepool-DDoS-defense).
 
-## :telescope: Verifying Listening Ports
+## :telescope: Validating Listening Ports
 
 If you want to maintain a secure server, you should validate the listening network ports every once in a while. This will provide you essential information about your network.
 
@@ -561,31 +571,14 @@ netstat -tulpn
 ss -tulpn
 ```
 
-:::tip
-Congrats on completing the guide. :sparkles:
+## :rocket: Additional Resources
 
-Did you find our guide useful? Send us a signal with a tip and we'll keep updating it.
+The procedures above are based on the following online resources, listed in alphabetical order:
 
-It really energizes us to keep creating the best crypto guides.
-
-Use [cointr.ee to find our donation ](https://cointr.ee/coincashew)addresses. :pray:
-
-Any feedback and all pull requests much appreciated.
-
-Hang out and chat with our stake pool community on Telegram @ [https://t.me/coincashew](https://t.me/coincashew)
-:::
-
-## :rocket: References
-
-[How to Harden your Ubuntu 18.04 Server](https://medium.com/@BaneBiddix/how-to-harden-your-ubuntu-18-04-server-ffc4b6658fe7)
-
-[Ubuntu System Hardening Guide for Desktops and Servers](https://linux-audit.com/ubuntu-server-hardening-guide-quick-and-secure/)
-
-[How To Harden OpenSSH on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-harden-openssh-on-ubuntu-18-04)
-
-[Configure SSH to Use Two-factor Authentication](https://ubuntu.com/tutorials/configure-ssh-2fa)
-
-[Ubuntu Hardening](https://gist.github.com/lokhman/cc716d2e2d373dd696b2d9264c0287a3#file-ubuntu-hardening-md)
-
-[50 Best Linux Hardening Security Tips: A Comprehensive Checklist](https://www.ubuntupit.com/best-linux-hardening-security-tips-a-comprehensive-checklist/)
+- [50 Best Linux Hardening Security Tips: A Comprehensive Checklist](https://www.ubuntupit.com/best-linux-hardening-security-tips-a-comprehensive-checklist/)
+- [Configure SSH to Use Two-factor Authentication](https://ubuntu.com/tutorials/configure-ssh-2fa)
+- [How To Harden OpenSSH on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-harden-openssh-on-ubuntu-18-04)
+- [How to Harden Your Ubuntu 18.04 Server](https://medium.com/@BaneBiddix/how-to-harden-your-ubuntu-18-04-server-ffc4b6658fe7)
+- [Ubuntu Hardening](https://gist.github.com/lokhman/cc716d2e2d373dd696b2d9264c0287a3#file-ubuntu-hardening-md)
+- [Ubuntu System Hardening Guide for Desktops and Servers](https://linux-audit.com/ubuntu-server-hardening-guide-quick-and-secure/)
 
