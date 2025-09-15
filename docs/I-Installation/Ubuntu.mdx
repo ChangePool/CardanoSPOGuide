@@ -28,21 +28,101 @@ export function HTMLContent() {
 
 Cardano stake pools operating on Mainnet hold significant value. Therefore, you need to secure each computer hosting an instance of Cardano Node, especially in your Mainnet stake pool configuration.
 
-## :robot: First Steps
+## Setting Up Ubuntu Desktop
 
-* Installing Ubuntu [Server](https://ubuntu.com/tutorials/install-ubuntu-server) or [Desktop](https://ubuntu.com/tutorials/install-ubuntu-desktop)
-* Installing [SSH server](https://www.simplified.guide/ubuntu/install-ssh-server)
-* Setting Up an [SSH client or terminal window access](https://www.howtogeek.com/311287/how-to-connect-to-an-ssh-server-from-windows-macos-or-linux/)
+The *How to Set Up a Cardano Stake Pool* guide assumes that you run the Cardano Node software application on computers using [Ubuntu 22.04 LTS Desktop](https://releases.ubuntu.com/jammy/).
 
-## Creating a Non-root User with sudo Privileges
+:::note
+For full details on supported operating systems for Cardano Node, see the [release notes](https://github.com/IntersectMBO/cardano-node/releases) for the latest version.
+:::
+
+**To install Ubuntu Desktop:**
+
+1\. Follow the [Install Ubuntu Desktop](https://ubuntu.com/tutorials/install-ubuntu-desktop) tutorial.
+
+2\. In the **Create Your Account** dialog, type `cardano` in the **Your Username** field. Complete the other fields in the dialog, and then click **Next**
+
+3\. Complete the tutorial.
+
+Alternately, if you plan to install Cardano Node using an existing Ubuntu Desktop installation, then create the `cardano` standard account using the command line.
+
+**To create a standard account using the command line:**
+
+1\. Using a terminal window, type:
+```
+# Create a new user named cardano
+useradd -m -s /bin/bash cardano
+# Set the password for the cardano user
+passwd cardano
+# Add the cardano user to the sudo group
+usermod -aG sudo cardano
+```
+
+:::note
+The hash character (`#`) indicates that the remainder of the line is a comment.
+:::
+
+Throughout the *How to Set Up a Cardano Stake Pool* guide, log in to a computer hosting Cardano Node using the `cardano` standard account. To perform administrative tasks, use the `sudo` or `su` command.
+
+:::tip
+For information on using `sudo` and `su` commands, see [Exploring the Differences between sudo and su Commands in Linux](https://www.redhat.com/en/blog/difference-between-sudo-su) for example.
+:::
+
+## :robot: Updating Your Computer
+
+Keeping your computer up to date with the latest patches helps prevent intruders from gaining access to your computer illicitly.
+
+**To update your computer:**
+
+1\. Using a terminal window, type:
+```bash
+sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get autoremove
+sudo apt-get autoclean
+```
+
+Enabling automatic updates ensures that your computer installs updates automatically, so you do not need to install updates manually.
+
+**To enable automatic updates:**
+
+1\. Using a terminal window, type:
+```
+sudo apt-get install unattended-upgrades
+sudo dpkg-reconfigure -plow unattended-upgrades
+```
 
 :::info
-Make a habit of logging to your server using a non-root account. This will prevent the accidental deletion of files if you make a mistake. For instance, the command rm can wipe your entire server if run incorrectly using by a root user.
+By default, the `unattended-upgrades` service only installs security updates automatically. For details on configuring unattended upgrades, see [How to Configure Unattended Upgrades](https://linuxcapable.com/how-to-configure-unattended-upgrades-on-ubuntu-linux/), for example.
 :::
 
-:::warning
-:fire: **Tip**: Do NOT routinely use the root account. Use `su` or `sudo`, always.
+## Disabling the Root Account
+
+The `root` account is the superuser account having unlimited administrative privileges to manage your computer. In Ubuntu 22.04, the `root` account is disabled by default.
+
+Disabling the `root` account improves security because the known `root` username provides attackers a potential opportunity to crack a single password in order to gain full access to your computer. Disabling the `root` account also protects you from consquences of mistakes that you may make. For example, running an `rm` command accidentally as the `root` user may delete all files on your computer.
+
+**To disable the `root` account:**
+
+1. Using a terminal window, type `sudo passwd -l root` to lock the password for the `root` user.
+
+:::note
+If you need to enable the `root` account, type `sudo passwd -u root` to unlock the password for the `root` user.
 :::
+
+## Configuring Secure Shell
+
+Secure Shell (SSH) is a cryptographic network protocol supporting robust authentication mechanisms to enable secure remote access to computers over an unsecured network. Using SSH, you can securely execute commands on a remote computer as if you are logged in locally to facilitate administration, software deployment and maintenance. Using SSH keys, you can automate tasks. You can also create secure tunnels forwarding network traffic using an encrypted SSH connection to access services on the remote computer using a private network instead of the Internet. SSH provides a secure and versatile foundation for managing and interacting with remote computers, protecting data confidentiality and integrity while enabling efficient remote operations.
+
+**To configure SSH:**
+
+1\. Follow the [How to Install SSH Server on Ubuntu](https://www.simplified.guide/ubuntu/install-ssh-server) tutorial.
+
+2\. To set up a client connection, follow the [How to Connect to an SSH Server](https://www.howtogeek.com/311287/how-to-connect-to-an-ssh-server-from-windows-macos-or-linux/) tutorial.
+
+3\. 
+
+
+
 
 SSH to your server
 
@@ -52,25 +132,9 @@ ssh username@server.public.ip.address
 # ssh myUsername@77.22.161.10
 ```
 
-Create a new user called cardano
 
-```
-useradd -m -s /bin/bash cardano
-```
 
-Set the password for cardano user
-
-```
-passwd cardano
-```
-
-Add cardano to the sudo group
-
-```
-usermod -aG sudo cardano
-```
-
-## **Disabling SSH Password Authentication and Using SSH Keys Only**
+### Disabling SSH Password Authentication and Using SSH Keys Only
 
 :::info
 The basic rules of hardening SSH are:
@@ -200,44 +264,7 @@ Host cardano-server
 
 This will allow you to log in with `ssh cardano-server` rather than needing to pass through all ssh parameters explicitly.
 
-## :robot: **Updating Your System**
-
-:::warning
-It's critically important to keep your system up-to-date with the latest patches to prevent intruders from accessing your system.
-:::
-
-```bash
-sudo apt-get update -y && sudo apt-get upgrade -y
-sudo apt-get autoremove
-sudo apt-get autoclean
-```
-
-Enable automatic updates so you don't have to manually install them.
-
-```
-sudo apt-get install unattended-upgrades
-sudo dpkg-reconfigure -plow unattended-upgrades
-```
-
-:::info
-By default when enabled, the `unattended-upgrades` service only installs security updates automatically. For details on configuring unattended upgrades, see [How to Setup & Configure Unattended Upgrades on Ubuntu 20.04](https://www.linuxcapable.com/how-to-setup-configure-unattended-upgrades-on-ubuntu-20-04/), for example.
-:::
-
-## Disabling the root Account
-
-System admins should not frequently log in as root in order to maintain server security. Instead, you can use sudo execute that requires low-level privileges.
-
-```bash
-# To disable the root account, simply use the -l option.
-sudo passwd -l root
-```
-
-```bash
-# If for some valid reason you need to re-enable the account, simply use the -u option.
-sudo passwd -u root
-```
-
-## Configuring Two Factor Authentication for SSH
+### Configuring Two Factor Authentication for SSH
 
 :::info
 SSH, the secure shell, is often used to access remote Linux systems. Because we often use it to connect with computers containing important data, it’s recommended to add another security layer. Here comes the two factor authentication (_2FA_).
@@ -299,7 +326,7 @@ It will ask you a series of questions, here is a recommended configuration:
 * Increase the original generation time limit: no
 * Enable rate-limiting: yes
 
-You may have noticed the giant QR code that appeared during the process, underneath are your emergency scratch codes to be used if you don’t have access to your phone: write them down on paper and keep them in a safe place.
+You may have noticed the giant QR code that appeared during the process, underneath are your emergency scratch codes to be used if you don't have access to your phone: write them down on paper and keep them in a safe place.
 
 Now, open Google Authenticator on your phone and add your secret key to make two factor authentication work.
 
@@ -351,7 +378,7 @@ Reboot the node in order for changes to take effect.
 sudo reboot
 ```
 
-## :chains: **Installing fail2ban**
+## :chains: Installing fail2ban
 
 :::info
 Fail2ban is an intrusion-prevention system that monitors log files and searches for particular patterns that correspond to a failed login attempt. If a certain number of failed logins are detected from a specific IP address (within a specified amount of time), fail2ban blocks access from that IP address.
@@ -396,7 +423,7 @@ Restart fail2ban for settings to take effect.
 sudo systemctl restart fail2ban
 ```
 
-## **Configuring Your Firewall** <a href="#ufw" id="ufw"></a>
+## Configuring Your Firewall <a href="#ufw" id="ufw"></a>
 
 The standard UFW firewall can be used to control network access to your node.
 
@@ -487,7 +514,7 @@ sudo ufw allow from <your local daily laptop/pc>
 **Port Forwarding Tip:** You'll need to forward and open ports to your validator. Verify it's working with [https://www.yougetsignal.com/tools/open-ports/](https://www.yougetsignal.com/tools/open-ports/) or [https://canyouseeme.org/](https://canyouseeme.org) .
 :::
 
-### Additional Hardening Rules for a Block-producing Node
+#### Additional Hardening Rules for a Block-producing Node
 
 Only your Relay Node(s) should be permitted access to your Block Producer Node.
 
@@ -497,7 +524,7 @@ sudo ufw allow proto tcp from <RELAY NODE IP> to any port <BLOCK PRODUCER PORT>
 # sudo ufw allow proto tcp from 18.58.3.31 to any port 6000
 ```
 
-### Additional Hardening Rules for Relay Nodes
+#### Additional Hardening Rules for Relay Nodes
 
 In order to protect your Relay Node(s) from a novel "DoS/Syn" attack, [**Michael Fazio**](https://github.com/michaeljfazio) created iptables entry which restricts connections to a given destination port to 5 connections from the same IP.
 
