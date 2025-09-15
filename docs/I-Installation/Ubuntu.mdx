@@ -68,46 +68,11 @@ Throughout the *How to Set Up a Cardano Stake Pool* guide, log in to a computer 
 For information on using `sudo` and `su` commands, see [Exploring the Differences between sudo and su Commands in Linux](https://www.redhat.com/en/blog/difference-between-sudo-su) for example.
 :::
 
-## :robot: Updating Your Computer
+Setting a static IP address provides reliable remote access to the services operating on a computer, including Secure Shell and Cardano Node.
 
-Keeping your computer up to date with the latest patches helps prevent intruders from gaining access to your computer illicitly.
+**To configure a static IP address:**
 
-**To update your computer:**
-
-1\. Using a terminal window, type:
-```bash
-sudo apt-get update -y && sudo apt-get upgrade -y
-sudo apt-get autoremove
-sudo apt-get autoclean
-```
-
-Enabling automatic updates ensures that your computer installs updates automatically, so you do not need to install updates manually.
-
-**To enable automatic updates:**
-
-1\. Using a terminal window, type:
-```
-sudo apt-get install unattended-upgrades
-sudo dpkg-reconfigure -plow unattended-upgrades
-```
-
-:::info
-By default, the `unattended-upgrades` service only installs security updates automatically. For details on configuring unattended upgrades, see [How to Configure Unattended Upgrades](https://linuxcapable.com/how-to-configure-unattended-upgrades-on-ubuntu-linux/), for example.
-:::
-
-## Disabling the Root Account
-
-The `root` account is the superuser account having unlimited administrative privileges to manage your computer. In Ubuntu 22.04, the `root` account is disabled by default.
-
-Disabling the `root` account improves security because the known `root` username provides attackers a potential opportunity to crack a single password in order to gain full access to your computer. Disabling the `root` account also protects you from consquences of mistakes that you may make. For example, running an `rm` command accidentally as the `root` user may delete all files on your computer.
-
-**To disable the `root` account:**
-
-1. Using a terminal window, type `sudo passwd -l root` to lock the password for the `root` user.
-
-:::note
-If you need to enable the `root` account, type `sudo passwd -u root` to unlock the password for the `root` user.
-:::
+1\. Follow the [Static IP Configuration](https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-18-10-cosmic-cuttlefish-linux) tutorial.
 
 ## Configuring Secure Shell
 
@@ -115,24 +80,15 @@ Secure Shell (SSH) is a cryptographic network protocol supporting robust authent
 
 **To configure SSH:**
 
-1\. Follow the [How to Install SSH Server on Ubuntu](https://www.simplified.guide/ubuntu/install-ssh-server) tutorial.
+1\. On the computer that you want to access remotely, follow the [How to Install SSH Server on Ubuntu](https://www.simplified.guide/ubuntu/install-ssh-server) tutorial.
 
-2\. To set up a client connection, follow the [How to Connect to an SSH Server](https://www.howtogeek.com/311287/how-to-connect-to-an-ssh-server-from-windows-macos-or-linux/) tutorial.
-
-3\. 
-
-
-
-
-SSH to your server
-
+2\. To connect to the computer where you installed SSH Server in step 1 using Linux, type the following command using a terminal window where `<Username>` identifies your Linux account on the computer hosting SSH Server—that is, `cardano` when using the *How to Set Up a Cardano Stake Pool* guide—and `<SSHServer>` is the IP address or domain name where the SSH Server listens:
 ```bash
-ssh username@server.public.ip.address
-# example
-# ssh myUsername@77.22.161.10
+ssh <Username>@<SSHServer>
 ```
-
-
+:::info
+For more details on setting up an SSH client connection, see [How to Connect to an SSH Server](https://www.howtogeek.com/311287/how-to-connect-to-an-ssh-server-from-windows-macos-or-linux/), for example.
+:::
 
 ### Disabling SSH Password Authentication and Using SSH Keys Only
 
@@ -332,6 +288,47 @@ Now, open Google Authenticator on your phone and add your secret key to make two
 
 :::danger
 If you are enabling 2FA on a remote machine that you access over SSH you need to follow **steps 2 and 3** of [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-multi-factor-authentication-for-ssh-on-ubuntu-18-04) to make 2FA work.
+:::
+
+## :robot: Updating Your Computer
+
+Keeping your computer up to date with the latest patches helps prevent intruders from gaining access to your computer illicitly.
+
+**To update your computer:**
+
+1\. Using a terminal window, type:
+```bash
+sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get autoremove
+sudo apt-get autoclean
+```
+
+Enabling automatic updates ensures that your computer installs updates automatically, so you do not need to install updates manually.
+
+**To enable automatic updates:**
+
+1\. Using a terminal window, type:
+```
+sudo apt-get install unattended-upgrades
+sudo dpkg-reconfigure -plow unattended-upgrades
+```
+
+:::info
+By default, the `unattended-upgrades` service only installs security updates automatically. For details on configuring unattended upgrades, see [How to Configure Unattended Upgrades](https://linuxcapable.com/how-to-configure-unattended-upgrades-on-ubuntu-linux/), for example.
+:::
+
+## Disabling the Root Account
+
+The `root` account is the superuser account having unlimited administrative privileges to manage your computer. In Ubuntu 22.04, the `root` account is disabled by default.
+
+Disabling the `root` account improves security because the known `root` username provides attackers a potential opportunity to crack a single password in order to gain full access to your computer. Disabling the `root` account also protects you from consquences of mistakes that you may make. For example, running an `rm` command accidentally as the `root` user may delete all files on your computer.
+
+**To disable the `root` account:**
+
+1. Using a terminal window, type `sudo passwd -l root` to lock the password for the `root` user.
+
+:::note
+If you need to enable the `root` account, type `sudo passwd -u root` to unlock the password for the `root` user.
 :::
 
 ## :jigsaw: Securing Shared Memory
