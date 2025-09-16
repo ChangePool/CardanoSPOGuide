@@ -33,7 +33,8 @@ Hardening a computer involves reducing the number of vulnerabilities and entry p
 - To [Configure Secure Shell](#configuring-secure-shell) connections:
     - [Implement key authentication](#implementing-key-authentication)
     - Disable password authentication
-    - [Change the Listening Port Number](#changing-the-listening-port-number)
+    - Change the Listening Port Number
+    - Simplify SSH Login
     - [Set Up Two-factor Authentication](#setting-up-two-factor-authentication)
 - [Update Your Computer](#robot-updating-your-computer) regularly or automatically.
 - [Disable the Root Account](#disabling-the-root-account) on the computer.
@@ -73,7 +74,7 @@ usermod -aG sudo cardano
 ```
 
 :::note
-The hash character (`#`) indicates that the remainder of the line is a comment.
+The hash character (#) indicates that the remainder of the line is a comment.
 :::
 
 Throughout the *How to Set Up a Cardano Stake Pool* guide, log in to a computer hosting Cardano Node using the `cardano` standard account. To perform administrative tasks, use the `sudo` or `su` command.
@@ -104,136 +105,111 @@ ssh <Username>@<SSHServer>
 For more details on setting up an SSH client connection, see [How to Connect to an SSH Server](https://www.howtogeek.com/311287/how-to-connect-to-an-ssh-server-from-windows-macos-or-linux/), for example.
 :::
 
-<!-- 250915 - START HERE -->
-
 ### Implementing Key Authentication
 
-Create a new SSH key pair on your local machine. Run this on your local machine. You will be asked to type a file name in which to save the key. This will be your **keyname**.
+Implementing SSH key authentication and disabling SSH password authentication on a computer enhances security.
 
-Your choice of [ED25519 or RSA](https://goteleport.com/blog/comparing-ssh-keys/) public key algorithm.
+**To implement SSH key authentication:**
 
-<Tabs>
-    <TabItem value="ED25519" label="ED25519" default>
-        ```
-        ssh-keygen -t ed25519
-        ```
-    </TabItem>
-    <TabItem value="RSA" label="RSA">
-        ```bash
-        ssh-keygen -t rsa -b 4096
-        ```
-    </TabItem>
-</Tabs>
+1\. To create a new SSH key pair, on a computer connecting to the SSH Server as a client, using a terminal window type:
+```
+ssh-keygen -t ed25519
+```
 
-Transfer the public key to your remote node. Update the **keyname**.
+:::note
+The command creates an SSH key pair using Ed25519 encryption. You can also create an SSH key pair using RSA, DSA or ECDSA encryption. For more details, see [Comparing SSH Keys](https://goteleport.com/blog/comparing-ssh-keys/).
+:::
 
+2\. When prompted for a file name to save the key, press ENTER to accept the default `~/.ssh/id_ed25519`
+
+:::note
+In Linux, the tilde (~) symbol represents the home directory for the current user, typically `/home/<Username>` where `<Username>` is the name of the current user.
+:::
+
+3\. When prompted, type an appropriate passphrase, and then press ENTER
+
+4\. To copy the public key that you created in steps 1 to 3 to the computer hosting the SSH Server, type the following command where `<KeyFileName>` is the file name that you typed in step 2, `<Username>` is `cardano` and `<SSHServer>` is the IP address or domain name where the SSH Server listens:
 ```bash
-ssh-copy-id -i $HOME/.ssh/<keyname>.pub cardano@server.public.ip.address
+ssh-copy-id -i $HOME/.ssh/<KeyFileName>.pub <Username>@<SSHServer>
 ```
 
-Login with your new cardano user
-
+5.\ To connect to the computer hosting the SSH Server, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server listens:
+```bash
+ssh cardano@<SSHServer>
 ```
-ssh cardano@server.public.ip.address
-```
 
-Disable root login and password based login. Edit the `/etc/ssh/sshd_config file`
-
+6\. To edit the `sshd_config` file on the computer hosting the SSH Server, type the following command in the remote terminal window:
 ```
 sudo nano /etc/ssh/sshd_config
 ```
 
-Locate **PubkeyAuthentication** and update to yes. Delete the #, if needed.
-
-```
-PubkeyAuthentication yes
-```
-
-Locate **PasswordAuthentication** and update to no
-
-```
-PasswordAuthentication no 
-```
-
-Locate **PermitRootLogin** and update to prohibit-password
-
-```
+7\. Edit the following lines, where `<PortNumber>` is a port number between 1024 and 49151 that is unused on the computer hosting the SSH Server:
+```bash
+# Specify the port where the SSH Server listens
+Port <PortNumber>
+# Permit root login using public key authentication only
 PermitRootLogin prohibit-password
-```
-
-Locate **PermitEmptyPasswords** and update to no
-
-```
+# Allow public key authentication
+PubkeyAuthentication yes 
+# Do not allow password authentication
+PasswordAuthentication no
+# When password authentication is allowed, do not allow empty password strings
 PermitEmptyPasswords no
 ```
 
-### Changing the Listening Port Number
-
-By default, SSH Server listens on port 22. Changing the port where SSH Server listens helps to obscure the SSH Server.
-
-**Optional**: Locate Port **and customize it to your random port number**.
-
-:::info
-Use a **random** port # from 1024 thru 49141. [Check for possible conflicts.](https://en.wikipedia.org/wiki/List\_of\_TCP\_and\_UDP\_port\_numbers)
+:::note
+If any of the lines containing keyword-argument pairs begin with a hash (#) character, then remove the hash character. To check port numbers for potential conflicts, refer to the [List of TCP and UDP Port Numbers](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers).
 :::
 
-```bash
-Port <port number>
-```
+8\. Save and close the `sshd_config` file.
 
-Validate the syntax of your new SSH configuration.
-
+9\. To validate the syntax of the `sshd_config` file, type:
 ```
 sudo sshd -t
 ```
 
-If no errors with the syntax validation, restart the SSH process.
-
+10\. If validating the `sshd_config` file returns no errors, then type the following command to restart the SSH Server:
 ```
 sudo systemctl restart sshd
 ```
 
-Verify the login still works
-
-
-<Tabs>
-    <TabItem value="Standard SSH Port 22" label="Standard SSH Port 22" default>
-        ```
-        ssh cardano@server.public.ip.address
-        ```
-    </TabItem>
-    <TabItem value="Custom SSH Port" label="Custom SSH Port">
-        ```bash
-        ssh cardano@server.public.ip.address -p <custom port number>
-        ```
-    </TabItem>
-</Tabs>
-
-:::info
-Alternatively, add the `-p <port#>` flag if you used a custom SSH port.
-
+11\. To verify that you can connect to the SSH Server using public key authentication, type the following command on the computer connecting to the SSH Server as a client where `<SSHServer>` is the IP address or domain name where the SSH Server listens and `<PortNumber>` is the port number that you set in step 7:
 ```bash
-ssh -i <path to your SSH_key_name.pub> cardano@server.public.ip.address
+ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber>
 ```
-:::
 
-**Optional**: Make logging in easier by updating your local ssh config.
+### Simplifying SSH Login
 
-To simplify the ssh command needed to log in to your server, consider updating your local `$HOME/.ssh/config` file:
+The SSH configuration file located at `~/.ssh/config` on the client computer stores user-specific connection details.
 
+**To simplify logging in to a computer using SSH:**
+
+1\. On the client computer, type:
+```
+nano ~/.ssh/config
+```
+
+2\. In the `config` file, add the following lines where `<SSHServer>` is the IP address or domain name where the SSH Server listens and `<PortNumber>` is the port number where the SSH Server listens:
 ```bash
 Host cardano-server
   User cardano
-  HostName <server.public.ip.address>
-  Port <custom port number>
+  HostName <SSHServer>
+  Port <PortNumber>
 ```
 
-This will allow you to log in with `ssh cardano-server` rather than needing to pass through all ssh parameters explicitly.
+3\. Save and close the `config` file.
+
+4\. To connect to the SSH Server using the connection details specified in the `config` file, type:
+```
+ssh cardano-server
+```
+
+<!-- 250915 - START HERE -->
 
 ### Setting Up Two-factor Authentication
 
 :::info
-SSH, the secure shell, is often used to access remote Linux systems. Because we often use it to connect with computers containing important data, it’s recommended to add another security layer. Here comes the two factor authentication (_2FA_).
+SSH, the secure shell, is often used to access remote Linux systems. Because we often use it to connect with computers containing important data, it's recommended to add another security layer. Here comes the two factor authentication (_2FA_).
 :::
 
 ```
