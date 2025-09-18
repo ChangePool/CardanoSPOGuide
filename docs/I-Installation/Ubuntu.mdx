@@ -284,6 +284,41 @@ ssh cardano-server
 
 2\. Follow the steps on screen to complete two-factor authentication.
 
+### Verifying and Troubleshooting Configuration
+
+SSH Server uses a modular, drop-in functionality for configuration that many Linux applications and services use.
+
+The `/etc/ssh/sshd-config.d` directory contains configuration files processed in alphabetical order by file name via the `Include /etc/ssh/sshd_config.d/*.conf` statement found as the first line in the file `/etc/ssh/sshd-config` Many applications apply the last definition of a configuration option. However, SSH Server applies the first definition of a configuration option. Therefore, if a configuration file found in the `sshd-config.d` folder sets an option also set in the `sshd-config` file, then the option set in the `sshd-config` file may not apply.
+
+**To verify SSH Server settings:**
+
+1\. Using a terminal window on the computer hosting SSH Server, to display the options that the SSH Server currently applies, type:
+```
+sudo sshd -T
+```
+
+2\. Verify that the SSH Server applies the following options, where `<PortNumber>` is the port number that you set when [Implementing Key Authentication](#implementing-key-authentication):
+```
+Port <PortNumber>
+PermitRootLogin prohibit-password
+PubkeyAuthentication yes
+PasswordAuthentication no
+PermitEmptyPasswords no
+UsePAM yes
+KbdInteractiveAuthentication yes
+```
+
+3\. If the SSH Server does NOT apply one or more of the options listed in step 2, then examine the contents of the configuration files found in the `/etc/ssh/sshd-config.d` directory to identify the configuration file(s) setting the same option(s) before the `sshd-config` file sets the options.
+
+4\. To resolve conflicting configuration options, create a file in the `/etc/ssh/sshd-config.d` directory having a file name that appears earlier in alphabetical order than the name of configuration files setting unwanted options, and then set the desired configuration options in the file you create. For example, if a configuration file named `50-cloud-init.conf` sets `PasswordAuthentication yes` then you may create a file named `01-custom-ssh.conf` containing `PasswordAuthentication no` to apply the necessary option.
+
+5\. To restart the SSH Server, type:
+```
+sudo systemctl restart sshd.service
+```
+
+6\. If you edited configuration options in step 4, then go to step 1, and then verify that the options that the SSH Server applies are now correct.
+
 <!-- 250917 - START HERE -->
 
 ## :robot: Updating Your Computer
