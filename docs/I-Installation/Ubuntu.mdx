@@ -34,7 +34,7 @@ Hardening a computer involves reducing the number of vulnerabilities and entry p
     - [Implement key authentication](#implementing-key-authentication)
     - Disable password authentication
     - Change the Listening Port Number
-    - Simplify SSH Login
+    - [Simplify Logging In](#simplifying-logging-in)
     - [Set Up Two-factor Authentication](#setting-up-two-factor-authentication)
 - [Update Your Computer](#robot-updating-your-computer) regularly or automatically.
 - [Disable the Root Account](#disabling-the-root-account) on the computer.
@@ -178,7 +178,7 @@ sudo systemctl restart sshd
 ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber>
 ```
 
-### Simplifying SSH Login
+### Simplifying Logging In
 
 The SSH configuration file located at `~/.ssh/config` on the client computer stores user-specific connection details.
 
@@ -199,82 +199,90 @@ Host cardano-server
 
 3\. Save and close the `config` file.
 
-4\. To connect to the SSH Server using the connection details specified in the `config` file, type:
+4\. To log in using the connection details specified in the `config` file, type:
 ```
 ssh cardano-server
 ```
 
-<!-- 250915 - START HERE -->
-
 ### Setting Up Two-factor Authentication
 
-:::info
-SSH, the secure shell, is often used to access remote Linux systems. Because we often use it to connect with computers containing important data, it's recommended to add another security layer. Here comes the two factor authentication (_2FA_).
-:::
+Using two-factor authentication (2FA) for SSH significantly enhances the security of remote server access by adding an extra layer of verification beyond key authentication.
 
-```
-sudo apt install libpam-google-authenticator -y
-```
+**To set up two-factor authentication for SSH:**
 
-To make SSH use the Google Authenticator PAM module, edit the `/etc/pam.d/sshd` file:
-
+1\. Using a terminal window on the computer hosting SSH Server, type:
 ```
-sudo nano /etc/pam.d/sshd 
+sudo apt-get update
+sudo apt install libpam-google-authenticator
 ```
 
-Add the follow line:
+2\. To edit the Pluggable Authentication Module (PAM) configuration file, type:
+```
+sudo nano /etc/pam.d/sshd
+```
 
+3\. In the `sshd` file, insert a hash (#) character to edit the following line:
+```
+# Standard Un*x authentication.
+#@include common-auth
+```
+
+4\. At the end of the `sshd` file, add the following line, and then save and close the file:
 ```
 auth required pam_google_authenticator.so
 ```
 
-Now you need to restart the `sshd` daemon using:
-
-```
-sudo systemctl restart sshd.service
-```
-
-Modify `/etc/ssh/sshd_config`
-
+5\. To edit the SSH Server configuration file, type:
 ```
 sudo nano /etc/ssh/sshd_config
 ```
 
-Locate **ChallengeResponseAuthentication** and update to yes
-
-```
-ChallengeResponseAuthentication yes
-```
-
-Locate **UsePAM** and update to yes
-
+6\. In the `sshd_config` file, edit the following lines:
 ```
 UsePAM yes
+KbdInteractiveAuthentication yes
 ```
 
-Save the file and exit.
+7\. At the end of the `sshd_config` file, add the following line, and then save and close the file:
+```
+AuthenticationMethods publickey,keyboard-interactive
+```
 
-Run the **google-authenticator** command.
+8\. To restart the SSH Server type:
+```
+sudo systemctl restart sshd.service
+```
 
+9\. To configure Google Authenticator, type:
 ```
 google-authenticator
 ```
 
-It will ask you a series of questions, here is a recommended configuration:
+10\. Respond to the questions that Google Authenticator displays using the following answers:
+* **Use time-based Tokens**—Yes
+* **Update the `.google_authenticator` File**—Yes
+* **Disallow Multiple Uses**—Yes
+* **Increase Time Window**—No
+* **Enable Rate Limiting**—Yes
 
-* Make tokens “time-base”": yes
-* Update the `.google_authenticator` file: yes
-* Disallow multiple uses: yes
-* Increase the original generation time limit: no
-* Enable rate-limiting: yes
+11\. Safely record the Secret Key and Emergency Scratch Codes that Google Authenticator generates in step 10
 
-You may have noticed the giant QR code that appeared during the process, underneath are your emergency scratch codes to be used if you don't have access to your phone: write them down on paper and keep them in a safe place.
+12\. Reboot the computer hosting SSH Server.
 
-Now, open Google Authenticator on your phone and add your secret key to make two factor authentication work.
+13\. Using an authenticator app installed on a mobile device or computer connecting to the SSH Server as a client, add the Secret Key that Google Authenticator generated in step 10
 
-:::danger
-If you are enabling 2FA on a remote machine that you access over SSH you need to follow **steps 2 and 3** of [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-multi-factor-authentication-for-ssh-on-ubuntu-18-04) to make 2FA work.
+14\. To test two-factor authentication, open a new terminal window on a computer that you configured to [Simplify Logging In](#simplifying-logging-in) to the SSH Server as a client, and then type the following command:
+```
+ssh cardano-server
+```
+
+:::warning
+If you connect remotely to a computer hosting SSH Server to configure two-factor authentication, then open a second SSH session for testing. If you misconfigure two-factor authentication and close the first SSH session, then you may not regain remote access.
 :::
+
+15\. Follow the steps on screen to complete two-factor authentication.
+
+<!-- 250917 - START HERE -->
 
 ## :robot: Updating Your Computer
 
