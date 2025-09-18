@@ -208,6 +208,10 @@ ssh cardano-server
 
 Using two-factor authentication (2FA) for SSH significantly enhances the security of remote server access by adding an extra layer of verification beyond key authentication.
 
+:::warning
+If you connect remotely to a computer hosting SSH Server to configure two-factor authentication, then you may not regain remote access if you make an error in the configuration.
+:::
+
 **To set up two-factor authentication for SSH:**
 
 1\. Using a terminal window on the computer hosting SSH Server, type:
@@ -248,7 +252,7 @@ KbdInteractiveAuthentication yes
 AuthenticationMethods publickey,keyboard-interactive
 ```
 
-8\. To restart the SSH Server type:
+8\. To restart the SSH Server, type:
 ```
 sudo systemctl restart sshd.service
 ```
@@ -269,18 +273,16 @@ google-authenticator
 
 12\. Reboot the computer hosting SSH Server.
 
-13\. Using an authenticator app installed on a mobile device or computer connecting to the SSH Server as a client, add the Secret Key that Google Authenticator generated in step 10
+13\. Using an authenticator app installed on a mobile device or computer connecting to the SSH Server as a client, add the Secret Key that you recorded in step 11
 
-14\. To test two-factor authentication, open a new terminal window on a computer that you configured to [Simplify Logging In](#simplifying-logging-in) to the SSH Server as a client, and then type the following command:
+**To test two-factor authentication:**
+
+1\. On a client computer where you [Implemented Key Authentication](#implementing-key-authentication) and [Simplified Logging In](#simplifying-logging-in), open a terminal window and then type the following command:
 ```
 ssh cardano-server
 ```
 
-:::warning
-If you connect remotely to a computer hosting SSH Server to configure two-factor authentication, then open a second SSH session for testing. If you misconfigure two-factor authentication and close the first SSH session, then you may not regain remote access.
-:::
-
-15\. Follow the steps on screen to complete two-factor authentication.
+2\. Follow the steps on screen to complete two-factor authentication.
 
 <!-- 250917 - START HERE -->
 
