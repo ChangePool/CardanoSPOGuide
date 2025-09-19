@@ -34,6 +34,7 @@ Hardening a computer involves reducing the number of vulnerabilities and entry p
     - [Implement key authentication](#implementing-key-authentication)
     - Disable password authentication
     - Change the Listening Port Number
+    - [Use Port Forwarding](#using-port-forwarding)
     - [Simplify Logging In](#simplifying-logging-in)
     - [Set Up Two-factor Authentication](#setting-up-two-factor-authentication)
 - [Disable the Root Account](#disabling-the-root-account) on the computer.
@@ -178,6 +179,34 @@ sudo systemctl restart sshd
 ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber>
 ```
 
+### Using Port Forwarding
+
+SSH port forwarding allows you to connect from a local computer to a service running on a remote computer without opening ports to the Internet. Opening ports introduces security risks by creating more potential entry points for attackers.
+
+**To use port forwarding to access a service running on a remote computer securely:**
+
+1\. Using a terminal window, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server listens, `<PortNumber>` is the port number where the SSH Server listens, `<LocalPort>` is the port number on the local computer that you use to connect to the remote service, `<RemoteHost>` is the IP address or domain name of the target computer that the SSH Server can reach, and `<RemotePort>` is the port number on the `<RemoteHost>` computer where SSH forwards traffic and the remote service listens:
+```
+ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber> -L <LocalPort>:<RemoteHost>:<RemotePort>
+```
+
+For example, if a computer that you access remotely via SSH operates a server having an HTTP endpoint on port 3000, then the following command allows you to access the endpoint by visiting `http://localhost:3010` using your Web browser on the local computer:
+```
+ssh -i ~/.ssh/id_ed25519 cardano@relaynode1.pool.example.net -p 1024 -L 3010:localhost:3000
+```
+
+[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) is also a popular SSH client.
+
+**To configure port forwarding using PuTTY:**
+
+1\. In the **PuTTY Configuration** dialog, scroll down in the left navigation to expand the **Connection** branch, then expand the **SSH** branch, and then click **Tunnels**
+
+2\. In the right pane, in the **Source Port** field type the port number that you use on the local computer to connect to the remote service.
+
+3\. In the **Destination** field, type `<RemoteHost>:<RemotePort>` where `<RemoteHost>` is the IP address or domain name of the target computer that the SSH Server can reach, and `<RemotePort>` is the port number on the `<RemoteHost>` computer where SSH forwards traffic and the remote service listens.
+
+4\. Click the **Add** button.
+
 ### Simplifying Logging In
 
 The SSH configuration file located at `~/.ssh/config` on the client computer stores user-specific connection details.
@@ -189,12 +218,13 @@ The SSH configuration file located at `~/.ssh/config` on the client computer sto
 nano ~/.ssh/config
 ```
 
-2\. In the `config` file, add the following lines where `<SSHServer>` is the IP address or domain name where the SSH Server listens and `<PortNumber>` is the port number where the SSH Server listens:
+2\. In the `config` file, add the following lines where `<SSHServer>` is the IP address or domain name where the SSH Server listens and `<PortNumber>` is the port number where the SSH Server listens. Optionally, include one or more `LocalForward` port forwarding directives where `<LocalPort>` is the port number on the local computer that you use to connect to a remote service, `<RemoteHost>` is the IP address or domain name of the target computer that the SSH Server can reach, and `<RemotePort>` is the port number on the `<RemoteHost>` computer where SSH forwards traffic and the remote service listens:
 ```bash
 Host cardano-server
-  User cardano
   HostName <SSHServer>
   Port <PortNumber>
+  User cardano
+  LocalForward <LocalPort> <RemoteHost>:<RemotePort>
 ```
 
 3\. Save and close the `config` file.
@@ -387,6 +417,8 @@ For more details, see the AI results of the following Google searches:
 
 <!-- 250919 - START HERE -->
 
+
+
 :::info
 [Fail2ban](https://github.com/fail2ban/fail2ban) is an intrusion-prevention system that monitors log files and searches for particular patterns that correspond to a failed login attempt. If a certain number of failed logins are detected from a specific IP address (within a specified amount of time), fail2ban blocks access from that IP address.
 :::
@@ -462,26 +494,7 @@ sudo ufw enable
 # Verify status
 sudo ufw status numbered
 ```
-
-:::danger
-Do not expose Grafana (port 3000) and Prometheus endpoint (port 9100 and 12798) to the public internet as this invites a new attack surface!
-:::
-
-**Better idea - SSH tunnel to Grafana server**
-
-Setup a SSH tunnel with the following command:
-
-```
-ssh -L 3000:localhost:3000 <user>@<your-server-ip-or-dns>
-```
-
-Alternatively, If using Putty for SSHing, you can configure the tunnel as follows. Make sure to click "Add" and save your new profile settings.
-
-![](@site/static/img/putty-tunnel.png)
-
-:::tip
-Now you can access the Grafana server from your local machine's browser by visiting http://localhost:3000
-:::
+<!-- Port forwarding content moved from here -->
 
 Only open the following ports on nodes behind a network firewall. This is not required if using the above SSH tunnel method.
 
