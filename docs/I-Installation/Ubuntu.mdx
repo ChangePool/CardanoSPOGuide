@@ -40,7 +40,7 @@ Hardening a computer involves reducing the number of vulnerabilities and entry p
 - [Secure Shared Memory](#jigsaw-securing-shared-memory) on the computer.
 - [Install fail2ban](#chains-installing-fail2ban) to block and log unauthorized login attempts.
 - [Configure a Firewall](#configuring-a-firewall-) to control network access to the computer.
-- [Validate Listening Ports](#telescope-validating-listening-ports) on the computer regularly.
+- [Validate Network Connections](#telescope-validating-network-connections) on the computer regularly.
 - [Update Your Computer](#robot-updating-your-computer) regularly or automatically.
 
 ## Setting Up Ubuntu Desktop
@@ -347,7 +347,7 @@ Securing shared memory may involve modifying mount options for the shared memory
 * Interpreting files that provide direct access to hardware devices
 
 :::warning
-Ensure that measures you implement to secure shared memory are compatible with all applications running on the computer. For example, Web browsers may require read and write access to shared memory for rendering and caching.
+Ensure that measures you implement to secure shared memory do not interfere with the operation of any applications running on the computer. For example, Web browsers may require read and write access to shared memory for rendering and caching.
 :::
 
 **To secure shared memory:**
@@ -383,9 +383,9 @@ For more details, see the AI results of the following Google searches:
   - "list of applications having issues with read-only shared memory ubuntu"
 -->
 
-<!-- 250919 - START HERE -->
-
 ## :chains: Installing fail2ban
+
+<!-- 250919 - START HERE -->
 
 :::info
 [Fail2ban](https://github.com/fail2ban/fail2ban) is an intrusion-prevention system that monitors log files and searches for particular patterns that correspond to a failed login attempt. If a certain number of failed logins are detected from a specific IP address (within a specified amount of time), fail2ban blocks access from that IP address.
@@ -559,17 +559,22 @@ Carden Pool [CRPL] provides a script that configures and deploys iptables rules 
 
 Further information can be found in the [**Carden Pool GitHub repository**](https://github.com/CardenPool/stakepool-DDoS-defense).
 
-## :telescope: Validating Listening Ports
+## :telescope: Validating Network Connections
 
-If you want to maintain a secure server, you should validate the listening network ports every once in a while. This will provide you essential information about your network.
+To maintain a secure server, regularly review the ports on your computer that are open and listening for incoming connections. Ensure that all open ports are authorized and needed.
 
-```
-netstat -tulpn
-```
+**To display a detailed list of active network connections:**
 
+1\. Using a terminal window, type:
 ```
 ss -tulpn
 ```
+
+<!-- September 19, 2025 - ss is newer than netstat and preferred
+```
+netstat -tulpn
+```
+-->
 
 ## :robot: Updating Your Computer
 
@@ -584,7 +589,7 @@ sudo apt-get autoremove
 sudo apt-get autoclean
 ```
 
-Enabling automatic updates ensures that your computer installs updates automatically, so you do not need to install updates manually.
+Enabling automatic updates ensures that your computer installs updates even when you do not install updates manually.
 
 **To enable automatic updates:**
 
