@@ -319,8 +319,6 @@ sudo systemctl restart sshd.service
 
 6\. If you edited configuration options in step 4, then go to step 1, and then verify that the options the SSH Server applies are now correct.
 
-<!-- 250918 - START HERE -->
-
 ## Disabling the Root Account
 
 The `root` account is the superuser account having unlimited administrative privileges to manage your computer. In Ubuntu 22.04, the `root` account is disabled by default.
@@ -349,7 +347,7 @@ Securing shared memory may involve modifying mount options for the shared memory
 * Interpreting files that provide direct access to hardware devices
 
 :::warning
-Ensure that measures you implement to secure shared memory are compatible with applications running on the computer. For example, Web browsers may require read and write access to shared memory for rendering and caching.
+Ensure that measures you implement to secure shared memory are compatible with all applications running on the computer. For example, Web browsers may require read and write access to shared memory for rendering and caching.
 :::
 
 **To secure shared memory:**
@@ -359,16 +357,16 @@ Ensure that measures you implement to secure shared memory are compatible with a
 sudo nano /etc/fstab
 ```
 
-2\. At the end of the `fstab` file, add the following line to mount the shared memory filesystem securely using read-only access:
+2\. At the end of the `fstab` file, add the following line to mount the shared memory filesystem securely using read-write access:
 ```
-tmpfs /run/shm tmpfs ro,noexec,nosuid 0 0
+tmpfs /run/shm tmpfs defaults,nodev,nosuid,noexec 0 0
 ```
 
 <center><strong>OR</strong></center>
 
-To mount the shared memory filesystem securely using read-write access, add the following line:
+If you are sure that no applications on the computer may require write access to the shared memory filesystem, then add the following line to mount the filesystem using read-only access:
 ```
-none /run/shm tmpfs rw,noexec,nosuid,nodev 0 0
+tmpfs /run/shm tmpfs ro,noexec,nosuid 0 0
 ```
 
 3\. Save and close the `fstab` file, and then reboot the computer.
@@ -377,11 +375,15 @@ none /run/shm tmpfs rw,noexec,nosuid,nodev 0 0
 tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0
 none /run/shm tmpfs rw,noexec,nosuid,nodev 0 0
 tmpfs /run/shm tmpfs ro,noexec,nosuid 0 0
+
+tmpfs /run/shm tmpfs defaults,nodev,nosuid,noexec 0 0 is compatible with PostreSQL
      
 For more details, see the AI results of the following Google searches:
   - "ubuntu fstab none /run/shm tmpfs rw,noexec,nosuid,nodev 0 0 vs tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0"
   - "list of applications having issues with read-only shared memory ubuntu"
 -->
+
+<!-- 250919 - START HERE -->
 
 ## :chains: Installing fail2ban
 
