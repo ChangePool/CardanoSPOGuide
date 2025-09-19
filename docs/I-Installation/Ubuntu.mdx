@@ -190,7 +190,7 @@ SSH port forwarding allows you to connect from a local computer to a service run
 ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber> -L <LocalPort>:<RemoteHost>:<RemotePort>
 ```
 
-For example, if a computer that you access remotely via SSH operates a server having an HTTP endpoint on port 3000, then the following command allows you to access the endpoint by visiting `http://localhost:3010` using your Web browser on the local computer:
+For example, if a computer that you access remotely via SSH operates a server having an HTTP endpoint on port 3000, then the following command allows you to access the endpoint by visiting `http://localhost:3010` using a Web browser on the local computer:
 ```
 ssh -i ~/.ssh/id_ed25519 cardano@relaynode1.pool.example.net -p 1024 -L 3010:localhost:3000
 ```
