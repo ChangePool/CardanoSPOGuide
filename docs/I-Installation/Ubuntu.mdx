@@ -415,52 +415,44 @@ For more details, see the AI results of the following Google searches:
 
 ## :chains: Installing fail2ban
 
-<!-- 250919 - START HERE -->
+[Fail2ban](https://github.com/fail2ban/fail2ban) is an open-source software that protects servers from intrusion by monitoring log files for suspicious activities, such as brute-force login attempts, and automatically banning offending IP addresses using firewall rules.
 
+**To install fail2ban:**
 
-
-:::info
-[Fail2ban](https://github.com/fail2ban/fail2ban) is an intrusion-prevention system that monitors log files and searches for particular patterns that correspond to a failed login attempt. If a certain number of failed logins are detected from a specific IP address (within a specified amount of time), fail2ban blocks access from that IP address.
-:::
-
+1\. Using a terminal window, type:
 ```
-sudo apt-get install fail2ban -y
+sudo apt-get install fail2ban
 ```
 
-Edit a config file that monitors SSH logins.
-
+2\. To configure fail2ban, type:
 ```
 sudo nano /etc/fail2ban/jail.local
 ```
 
-Add the following lines to the bottom of the file.
-
-:::info
-:fire: **Whitelisting IP address tip**: The `ignoreip` parameter accepts IP addresses, IP ranges or DNS hosts that you can specify to be allowed to connect. This is where you want to specify your local machine, local IP range or local domain, separated by spaces.
-
+3\. At the end of the `jail.local` file, add the following lines where `<PortNumber>` is the port number where SSH Server listens on the local computer, and `<Whitelist>` is a SPACE- and/or COMMA-separated list of IP addresses, CIDR masks or DNS host names that fail2ban does NOT ban:
 ```
-# Exampleignoreip = 192.168.1.0/24 127.0.0.1/8 
-```
-:::
-
-```bash
 [sshd]
 enabled = true
-port = <22 or your random port number>
+port = <PortNumber>
 filter = sshd
 logpath = /var/log/auth.log
 maxretry = 3
 # whitelisted IP addresses
-ignoreip = <list of whitelisted IP address, your local daily laptop/pc>
+ignoreip = <Whitelist>
 ```
 
-Save/close file.
+:::tip
+Add the static IP address of the computer that you use to administer your Cardano stake pool to `<Whitelist>` For more details, see an example [`jail.conf`](https://github.com/fail2ban/fail2ban/blob/master/config/jail.conf) file.
+:::
 
-Restart fail2ban for settings to take effect.
+4\. Save and close the `jail.local` file.
 
+5\. To restart fail2ban, type:
 ```
 sudo systemctl restart fail2ban
 ```
+
+<!-- 250920 - START HERE -->
 
 ## Configuring a Firewall <a href="#ufw" id="ufw"></a>
 
