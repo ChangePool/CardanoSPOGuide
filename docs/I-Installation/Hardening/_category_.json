@@ -1,0 +1,12 @@
+{
+  "label": "Hardening Ubuntu",
+  "position": 10,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Hardening Ubuntu",
+    "slug": "/Hardening",
+    "description": "Cardano stake pools operating on Mainnet hold significant value. Therefore, you need to secure each computer hosting an instance of Cardano Node, especially in your Mainnet stake pool configuration. Hardening a computer involves reducing the number of vulnerabilities and entry points that attackers may exploit:"
+  }
+}

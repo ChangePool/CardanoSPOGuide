@@ -1,0 +1,70 @@
+---
+title: "Securing Shared Memory"
+sidebar_label: "Securing Shared Memory"
+slug: /Hardening/Memory
+hide_title: false
+sidebar_position: 20
+description: ""
+---
+
+import React from 'react';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+
+
+    </div>
+  );
+}
+
+<!-- <HTMLContent /> -->
+
+In Linux operating systems, shared memory allows multiple processes to access a common region of memory for fast, high-speed data exchange and communication. Any changes to shared memory are visible to all processes having access to the memory region. Shared memory is the most efficient form of inter-process communication (IPC).
+
+Attackers may exploit shared memory to execute arbitrary code or escalate execution privileges.
+
+Securing shared memory may involve modifying mount options for the shared memory filesystem to prevent:
+
+* Writing data
+* Executing arbitrary code
+* Escalating privileges
+* Interpreting files that provide direct access to hardware devices
+
+:::warning
+Ensure that measures you implement to secure shared memory do not interfere with the operation of any applications running on the computer. For example, Web browsers may require read and write access to shared memory for rendering and caching.
+:::
+
+**To secure shared memory:**
+
+1\. Using a terminal window, type:
+```
+sudo nano /etc/fstab
+```
+
+2\. At the end of the `fstab` file, add the following line to mount the shared memory filesystem securely using read-write access:
+```
+tmpfs /run/shm tmpfs defaults,nodev,nosuid,noexec 0 0
+```
+
+<center><strong>OR</strong></center>
+
+If you are sure that no applications on the computer may require write access to the shared memory filesystem, then add the following line to mount the filesystem using read-only access:
+```
+tmpfs /run/shm tmpfs ro,noexec,nosuid 0 0
+```
+
+3\. Save and close the `fstab` file, and then reboot the computer.
+
+<!-- The following options have been considered:
+tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0
+none /run/shm tmpfs rw,noexec,nosuid,nodev 0 0
+tmpfs /run/shm tmpfs ro,noexec,nosuid 0 0
+
+tmpfs /run/shm tmpfs defaults,nodev,nosuid,noexec 0 0 is compatible with PostreSQL
+     
+For more details, see the AI results of the following Google searches:
+  - "ubuntu fstab none /run/shm tmpfs rw,noexec,nosuid,nodev 0 0 vs tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0"
+  - "list of applications having issues with read-only shared memory ubuntu"
+-->

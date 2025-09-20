@@ -1,0 +1,37 @@
+---
+title: "Validating Network Connections"
+sidebar_label: "Validating Network Connections"
+slug: /Hardening/Network
+hide_title: false
+sidebar_position: 35
+description: ""
+---
+
+import React from 'react';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+
+
+    </div>
+  );
+}
+
+<!-- <HTMLContent /> -->
+
+To maintain a secure server, regularly review the ports on your computer that are open and listening for incoming connections. Ensure that all open ports are authorized and needed.
+
+**To display a detailed list of active network connections:**
+
+1\. Using a terminal window, type:
+```
+ss -tulpn
+```
+
+<!-- September 19, 2025 - ss is newer than netstat and preferred
+```
+netstat -tulpn
+```
+-->

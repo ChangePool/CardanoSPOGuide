@@ -1,0 +1,59 @@
+---
+title: "Installing Fail2ban"
+sidebar_label: "Installing Fail2ban"
+slug: /Hardening/fail2ban
+hide_title: false
+sidebar_position: 25
+description: ""
+---
+
+import React from 'react';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+
+
+    </div>
+  );
+}
+
+<!-- <HTMLContent /> -->
+
+[Fail2ban](https://github.com/fail2ban/fail2ban) is an open-source software that protects servers from intrusion by monitoring log files for suspicious activities, such as brute-force login attempts, and automatically banning offending IP addresses using firewall rules.
+
+**To install fail2ban:**
+
+1\. Using a terminal window, type:
+```
+sudo apt-get install fail2ban
+```
+
+2\. To configure fail2ban, type:
+```
+sudo nano /etc/fail2ban/jail.local
+```
+
+3\. At the end of the `jail.local` file, add the following lines where `<PortNumber>` is the port number where SSH Server listens on the local computer, and `<Whitelist>` is a `SPACE`- and/or `COMMA`-separated list of IP addresses, CIDR masks or DNS host names that fail2ban does NOT ban:
+```
+[sshd]
+enabled = true
+port = <PortNumber>
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+# whitelisted IP addresses
+ignoreip = <Whitelist>
+```
+
+:::tip
+Add the static IP address of the computer that you use to administer your Cardano stake pool to `<Whitelist>` For more details, see an example [`jail.conf`](https://github.com/fail2ban/fail2ban/blob/master/config/jail.conf) file.
+:::
+
+4\. Save and close the `jail.local` file.
+
+5\. To restart fail2ban, type:
+```
+sudo systemctl restart fail2ban
+```

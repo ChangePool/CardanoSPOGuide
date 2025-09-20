@@ -1,0 +1,34 @@
+---
+title: "Disabling the Root Account"
+sidebar_label: "Disabling the Root Account"
+slug: /Hardening/Root
+hide_title: false
+sidebar_position: 15
+description: ""
+---
+
+import React from 'react';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+
+
+    </div>
+  );
+}
+
+<!-- <HTMLContent /> -->
+
+The `root` account is the superuser account having unlimited administrative privileges to manage your computer. In Ubuntu 22.04, the `root` account is disabled by default.
+
+Disabling the `root` account improves security because the known `root` username provides attackers a potential opportunity to crack a single password in order to gain full access to your computer. Disabling the `root` account also protects you from consquences of mistakes that you may make. For example, running an `rm` command accidentally as the `root` user may delete all files on your computer.
+
+**To disable the `root` account:**
+
+1. Using a terminal window, type `sudo passwd -l root` to lock the password for the `root` user.
+
+:::note
+If you need to enable the `root` account, type `sudo passwd -u root` to unlock the password for the `root` user.
+:::
