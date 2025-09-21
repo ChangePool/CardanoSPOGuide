@@ -1,0 +1,167 @@
+---
+title: "Setting Up a Firewall"
+sidebar_label: "Setting Up a Firewall"
+slug: /Hardening/Firewall
+hide_title: false
+sidebar_position: 30
+description: ""
+---
+
+import React from 'react';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+
+
+    </div>
+  );
+}
+
+<!-- <HTMLContent /> -->
+
+In Linux, Uncomplicated Firewall (UFW) acts as a simplified wrapper around the powerful and complex `iptables` firewall management tool.
+
+By default, `iptables` firewall rules do NOT persist when a computer reboots. The `iptables-persistent` package automates saving and restoring `iptables` firewall rules when a computer boots.
+
+You can use UFW together with `iptables-persistent` to manage network traffic effectively on computers hosting Cardano Node instances in a stake pool configuration.
+
+## Installing iptables-persistent
+
+When using UFW and `iptables-persistent`, you need to configure UFW to load after `iptables-persistent` when the computer boots.
+
+**To install `iptables-persistent` and configure the UFW service:**
+
+1\. Using a terminal window, type:
+```
+sudo apt-get install iptables-persistent
+```
+
+2\. To configure UFW to load after `iptables-persistent`, type:
+```
+sudo nano /lib/systemd/system/ufw.service
+```
+
+3\. In the `ufw.service` file, edit the following lines in the `[Unit]` block, and then save and close the file:
+```
+Wants=network-pre.target netfilter-persistent.service local-fs.target
+After=netfilter-persistent.service local-fs.target
+```
+
+:::note
+The `iptables-persistent` package uses `netfilter-persistent.service`
+:::
+
+4\. To apply the configuration changes, type:
+```
+sudo systemctl daemon-reload
+```
+
+## Protecting Against Denial of Service Attacks
+
+To protect the relay nodes in your stake pool configuration against Denial of Service (DOS) attacks, you can create an `iptables` rule on each relay that limits the number of connections from the same IP address to the port where Cardano Node listens.
+
+**To create a persistent `iptables` rule to protect against DOS attacks:**
+
+1\. To ensure that `iptables` starts with an empty ruleset, using a terminal window type:
+```
+sudo ufw disable
+```
+
+2\. Reboot the computer.
+
+3\. Using a terminal window, type the following commands where `<CardanoNodePort>` is the port number where the Cardano Node instance running on the local computer listens and `<MaxConnections>` is the maximum number of connections allowed from an IP address:
+```
+sudo iptables -I INPUT -p tcp -m tcp --dport <CardanoNodePort> --tcp-flags FIN,SYN,RST,ACK SYN -m connlimit --connlimit-above <MaxConnections> --connlimit-mask 32 --connlimit-saddr -j REJECT --reject-with tcp-reset
+sudo ip6tables -I INPUT -p tcp -m tcp --dport <CardanoNodePort> --tcp-flags FIN,SYN,RST,ACK SYN -m connlimit --connlimit-above <MaxConnections> --connlimit-mask 128 --connlimit-saddr -j REJECT --reject-with tcp-reset
+```
+
+:::note
+If you follow the *How to Set Up a Cardano Stake Pool* guide to create a stake pool having one relay node, then `<CardanoNodePort>` is 6000 and using the value 5 for `<MaxConnections>` is sufficient. If you set up additional relays, then depending on your network each Cardano Node instance may need to listen using a different port number.
+:::
+
+4\. To verify the rules that you applied in step 3, type:
+```
+sudo iptables -vnL
+sudo ip6tables -vnL
+```
+
+5\. To save the current `iptables` rules to persist when the computer reboots, type:
+```
+sudo su -c 'iptables-save > /etc/iptables/rules.v4'
+sudo su -c 'ip6tables-save > /etc/iptables/rules.v6'
+```
+
+## Configuring Uncomplicated Firewall
+
+On computers in your stake pool configuration, you need to configure UFW to allow incoming connections to the following applications:
+
+* SSH Server
+* Cardano Node
+
+**To configure UFW on computers in your stake pool configuration:**
+
+1\. Prior to enabling UFW, type the following command where `<PortNumber>` is the port where the SSH Server listens:
+```
+sudo ufw allow <PortNumber>/tcp
+```
+
+:::note
+The command opens the port where the SSH Server listens to all TCP traffic.
+:::
+
+2\. On a relay node, type the following command where `<PortNumber>` is the port where the local instance of Cardano Node listens:
+```
+sudo ufw allow <PortNumber>/tcp
+```
+
+<center><strong>OR</strong></center>
+
+On the block-producing node, type the following command where `<IPAddress>` is the IP address of a relay node in your stake pool configuration, and `<PortNumber>` is the port where the local instance of Cardano Node listens:
+```
+sudo ufw allow proto tcp from <IPAddress> to any port <PortNumber>
+```
+
+:::note
+The command that you type on the block producer opens the port where Cardano Node listens to TCP traffic only from the IP address that you specify.
+:::
+
+3\. On the block-producing node, if your stake pool configuration uses multiple relay nodes, then repeat step 2 for each relay.
+
+4\. To enable UFW, type:
+```
+sudo ufw enable
+```
+
+5\. To display the detailed status of UFW, type:
+```
+sudo ufw status verbose
+```
+
+6\. Repeat the procedure for each computer in your stake pool configuration.
+
+For more details on using UFW, refer to the [manual page](https://manpages.ubuntu.com/manpages/questing/en/man8/ufw.8.html) for example.
+
+## Verifying Port Status
+
+To verify that ports are open or closed on computers in your stake pool configuration, use an online service such as [you get signal](https://www.yougetsignal.com/tools/open-ports/) or [CanYouSeeMe.org](https://canyouseeme.org)
+
+## Listing Connections to a Port
+
+Listing all IP addresses connected to a specific port on a computer may also be useful.
+
+**To list all current connections to a port on the local computer:**
+
+1\. Using a terminal window, type the following command where `<PortNumber>` is the port number for which you want to list connections:
+```
+sudo netstat -enp | grep ":<PortNumber>" | awk {'print $5'} | cut -d ':' -f 1 | sort | uniq -c | sort
+```
+
+-----
+
+DDoS/Syn attacks can be complex and can take down a node. A single iptables rule may not be sufficient to protect or mitigate against more modern attacks. Moreover, iptables rules added via the terminal are forgotten if the machine or the iptables service is restarted.
+
+Carden Pool [CRPL] provides a script that configures and deploys iptables rules specifically designed to protect from various DDoS attack vectors, ensuring the persistence of these rules even after reboots.
+
+Further information can be found in the [**Carden Pool GitHub repository**](https://github.com/CardenPool/stakepool-DDoS-defense).
