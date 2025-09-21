@@ -1,6 +1,6 @@
 ---
-title: "Setting Up a Firewall"
-sidebar_label: "Setting Up a Firewall"
+title: "Maintaining a Firewall"
+sidebar_label: "Maintaining a Firewall"
 slug: /Hardening/Firewall
 hide_title: false
 sidebar_position: 30
@@ -95,7 +95,7 @@ sudo su -c 'ip6tables-save > /etc/iptables/rules.v6'
 
 ## Configuring Uncomplicated Firewall
 
-On computers in your stake pool configuration, you need to configure UFW to allow incoming connections to the following applications:
+By default, when enabled UFW denies all incoming traffic and allows outgoing traffic. To get started in the *How to Set Up a Cardano Stake Pool* guide, on computers in your stake pool configuration you need to configure UFW to allow incoming traffic to the following applications:
 
 * SSH Server
 * Cardano Node
@@ -118,7 +118,7 @@ sudo ufw allow <PortNumber>/tcp
 
 <center><strong>OR</strong></center>
 
-On the block-producing node, type the following command where `<IPAddress>` is the IP address of a relay node in your stake pool configuration, and `<PortNumber>` is the port where the local instance of Cardano Node listens:
+On the block-producing node, type the following command where `<IPAddress>` is the static IP address of a relay node in your stake pool configuration, and `<PortNumber>` is the port where the local instance of Cardano Node listens:
 ```
 sudo ufw allow proto tcp from <IPAddress> to any port <PortNumber>
 ```
@@ -147,13 +147,30 @@ For more details on using UFW, refer to the [manual page](https://manpages.ubunt
 
 To verify that ports are open or closed on computers in your stake pool configuration, use an online service such as [you get signal](https://www.yougetsignal.com/tools/open-ports/) or [CanYouSeeMe.org](https://canyouseeme.org)
 
+## Validating Ports
+
+To maintain a secure server, regularly review the ports on your computer that are open and listening for incoming connections. Ensure that all open ports are authorized and needed.
+
+**To display a detailed list of active network connections:**
+
+1\. Using a terminal window, type:
+```
+ss -tulpn
+```
+
+<!-- September 19, 2025 - ss is newer than netstat and preferred
+```
+netstat -tulpn
+```
+-->
+
 ## Listing Connections to a Port
 
-Listing all IP addresses connected to a specific port on a computer may also be useful.
+Listing all IP addresses connecting to a specific port on a computer may also be useful.
 
-**To list all current connections to a port on the local computer:**
+**To list all current connections to a port:**
 
-1\. Using a terminal window, type the following command where `<PortNumber>` is the port number for which you want to list connections:
+1\. Using a terminal window, type the following command where `<PortNumber>` is the port number for which you want to list connections on the local computer:
 ```
 sudo netstat -enp | grep ":<PortNumber>" | awk {'print $5'} | cut -d ':' -f 1 | sort | uniq -c | sort
 ```
