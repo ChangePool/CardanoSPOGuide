@@ -58,11 +58,11 @@ The `iptables-persistent` package uses `netfilter-persistent.service`
 sudo systemctl daemon-reload
 ```
 
-## Protecting Against Denial of Service Attacks
+## Protecting Against Denial-of-Service Attacks
 
-To protect the relay nodes in your stake pool configuration against Denial of Service (DOS) attacks, you can create an `iptables` rule on each relay that limits the number of connections from the same IP address to the port where Cardano Node listens.
+A Denial-of-Service (DoS) attack may force a computer offline. To protect the relay nodes in your stake pool configuration against basic DoS attacks, you can create an `iptables` rule on each relay that limits the number of connections from the same IP address to the port where Cardano Node listens.
 
-**To create a persistent `iptables` rule to protect against DOS attacks:**
+**To create a persistent `iptables` rule to protect against DoS attacks:**
 
 1\. To ensure that `iptables` starts with an empty ruleset, using a terminal window type:
 ```
@@ -92,6 +92,12 @@ sudo ip6tables -vnL
 sudo su -c 'iptables-save > /etc/iptables/rules.v4'
 sudo su -c 'ip6tables-save > /etc/iptables/rules.v6'
 ```
+
+A single `iptables` rule may not protect against a more complex DoS attack.
+
+:::note
+For an example showing how you may safeguard against a range of Distributed Denial-of-Service (DDoS) attack vectors, refer to the script that [Carden Pool [CRPL]](https://github.com/CardenPool/stakepool-DDoS-defense) offers.
+:::
 
 ## Configuring Uncomplicated Firewall
 
@@ -177,12 +183,9 @@ sudo netstat -enp | grep ":<PortNumber>" | awk {'print $5'} | cut -d ':' -f 1 | 
 
 ## Conclusion
 
-You have now configured a basic firewall to help secure your stake pool. As you work through the *How to Set Up a Cardano Stake Pool* guide, periodically you may need to adjust UFW rules to allow additional applications that you may install on computers in your stake pool configuration to function. Always aim to minimize potential entry points that may be used to attack computers comprising your Cardano stake pool.
+You have now configured a basic firewall to help secure your stake pool.
 
------
+As you work through the *How to Set Up a Cardano Stake Pool* guide, periodically you may need to adjust UFW rules to allow additional applications that you may install on computers in your stake pool configuration to function.
 
-DDoS/Syn attacks can be complex and can take down a node. A single iptables rule may not be sufficient to protect or mitigate against more modern attacks. Moreover, iptables rules added via the terminal are forgotten if the machine or the iptables service is restarted.
+Continue learning about best practices for hardening Ubuntu, and always aim to minimize potential entry points that may be used to attack computers comprising your Cardano stake pool.
 
-Carden Pool [CRPL] provides a script that configures and deploys iptables rules specifically designed to protect from various DDoS attack vectors, ensuring the persistence of these rules even after reboots.
-
-Further information can be found in the [**Carden Pool GitHub repository**](https://github.com/CardenPool/stakepool-DDoS-defense).
