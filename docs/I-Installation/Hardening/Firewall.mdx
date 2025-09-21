@@ -175,6 +175,10 @@ Listing all IP addresses connecting to a specific port on a computer may also be
 sudo netstat -enp | grep ":<PortNumber>" | awk {'print $5'} | cut -d ':' -f 1 | sort | uniq -c | sort
 ```
 
+## Considerations
+
+As you work through the *How to Set Up a Cardano Stake Pool* guide, periodically you may need to adjust UFW rules to allow additional applications that you may install on computers in your stake pool configuration to function.
+
 -----
 
 DDoS/Syn attacks can be complex and can take down a node. A single iptables rule may not be sufficient to protect or mitigate against more modern attacks. Moreover, iptables rules added via the terminal are forgotten if the machine or the iptables service is restarted.
