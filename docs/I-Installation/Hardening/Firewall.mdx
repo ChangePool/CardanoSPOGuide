@@ -181,6 +181,26 @@ Listing all IP addresses connecting to a specific port on a computer may also be
 sudo netstat -enp | grep ":<PortNumber>" | awk {'print $5'} | cut -d ':' -f 1 | sort | uniq -c | sort
 ```
 
+:::note
+In Linux, the pipe symbol (`|`) is an operator used to redirect the output of one command as the input of another command.
+:::
+
+In order, the command above:
+
+1\. `netstat -enp`—Retrieves a text list of all network connections, with one network connection per line
+
+2\. `grep ":<PortNumber>"`—Using the list of all network connections as input, filters to include only connections containing the text `:<PortNumber>`
+
+3\. `awk {'print $5'}`—Retrieves the fifth field in each remaining line of text, using one or more SPACE or TAB characters as the separator, effectively retrieving the remote IP address of each connection
+
+4\. `cut -d ':' -f 1`—Retrieves the first field in each line, using a colon character (:) as the separator, effectively dropping the port number from each remote IP address.
+
+5\. `sort`—Sorts the remaining text list of IP addresses alphabetically
+
+6\. `uniq -c`—Merges adjacent matching lines, prefixed by the number of occurrences
+
+7\. `sort`—Sorts the merged list by the number of occurrences followed by IP address, from lowest to highest
+
 ## Conclusion
 
 You have now configured a basic firewall to help secure your stake pool.
