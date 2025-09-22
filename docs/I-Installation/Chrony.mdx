@@ -19,4 +19,69 @@ export function HTMLContent() {
     );
 }
 
-<HTMLContent />
+<!-- <HTMLContent /> -->
+
+To operate as part of the Cardano network and produce blocks successfully, the system clock on computers running Cardano Node must be accurate.
+
+[Chrony](https://chrony-project.org/)—an implementation of the Network Time Protocol (NTP)—synchronizes the system clock on a computer with NTP servers.
+
+Set up Chrony on all computers in your stake pool configuration.
+
+**To install Chrony:**
+
+1\. Using a terminal window, type:
+```
+sudo apt-get install chrony
+```
+
+2\. to configure Chrony, type:
+```
+sudo nano /etc/chrony/chrony.conf
+```
+
+3\. In the `chrony.conf` file, add or edit the following lines, and then save and close the file:
+```
+# Comment out default sources
+#pool ntp.ubuntu.com        iburst maxsources 4
+#pool 0.ubuntu.pool.ntp.org iburst maxsources 1
+#pool 1.ubuntu.pool.ntp.org iburst maxsources 1
+#pool 2.ubuntu.pool.ntp.org iburst maxsources 2
+
+# Add up to 3 sources from each of the following pools, polling every 64 to 1024 seconds
+# and ignoring round trips longer than 3 seconds
+pool time.google.com iburst minpoll 6 maxpoll 10 maxdelay 3 maxsources 3
+pool ntp.ubuntu.com  iburst minpoll 6 maxpoll 10 maxdelay 3 maxsources 3
+pool us.pool.ntp.org iburst minpoll 6 maxpoll 10 maxdelay 3 maxsources 3
+
+# Stop bad estimates upsetting machine clock
+maxupdateskew 5.0
+
+# Step the system clock instead of slewing if the adjustment is larger than 0.1 seconds
+makestep 0.1 -1
+```
+
+:::note
+For details on directives in the `chrony.conf` file, see the [manual page](https://chrony-project.org/doc/3.4/chrony.conf.html).
+:::
+
+4\. To restart Chrony, type:
+```
+sudo systemctl restart chronyd.service
+```
+
+5\. Repeat the procedure on each computer in your stake pool configuration.
+
+## :robot: Useful Commands
+
+To use Chrony, you may find the following commands useful:
+
+
+```
+# Display a list of time sources that chronyc currently uses and tracks
+chronyc sources
+# Display parameters related to system clock performance
+chronyc tracking
+# Configure timezone settings on your computer
+sudo dpkg-reconfigure tzdata
+```
+
