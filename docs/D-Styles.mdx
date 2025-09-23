@@ -56,9 +56,18 @@ export function HTMLContent() {
 
       {/* To create comments inside JSX elements, surround a JavaScript multiline comment using braces */}
 
-      <p><i>Appendix D</i> explains how to revise the <i>How to Set Up a Cardano Stake Pool</i> guide. You can create content for the Guide using Markdown or HTML.</p>
-      <p><i>Appendix D</i> includes a style guide showing you in context how to use all available HTML styles.</p>
+      <p><i>Appendix D</i> explains how to revise the <i>How to Set Up a Cardano Stake Pool, Version 2.0</i> guide.</p>
+
+      <p>The <i>How to Set Up a Cardano Stake Pool</i> guide is created using <a href="https://docusaurus.io/" target="_blank">Docusaurus</a>, a project by <a href="https://opensource.fb.com/projects/docusaurus/" target="_blank">Meta Open Source</a> designed for building optimized Web sites quickly. Built using <a href="https://nodejs.org/en" target="_blank">Node.js<sup>®</sup></a> and <a href="https://react.dev/" target="_blank">React</a>, Docusaurus is platform agnostic.</p>
+
+      <p>Source files for the Guide are available on <a href="https://github.com/ChangePool/CardanoSPOGuide" target="_blank">GitHub</a> for download.</p>
+
+      <p>To edit the Guide, CoinCashew recommends using the <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a> source code editor.</p>
+
+      <p>You can create content for the Guide using Markdown or HTML. <i>Appendix D</i> includes a style guide showing you in context how to use all available HTML styles, as well as Markdown syntax specific to Docusaurus.</p>
+
       <h1>Editing the Guide</h1>
+
       <p>TO-DO: Explain how to clone the GitHub repository; install Docusaurus; set up snippets using VSCode; and, edit the Guide (including an explanation of the relative folder and file structure of the Docusaurus site).</p>
       <p>If you plan to develop content using HTML, then add the code snippets provided in the file <code>/tools/vscode/html-snippets.json</code> to VSCode, where the file path is relative to the root folder of the Docusaurus Web site for the <i>How to Set Up a Cardano Stake Pool</i> guide.</p>
       <table class="box">
@@ -293,6 +302,14 @@ export function HTMLContent() {
         <li>Phasellus pellentesque ex a felis ullamcorper laoreet. Phasellus eu cursus arcu, id varius nunc. Suspendisse eget nisl quis sem iaculis viverra. Maecenas sit amet vehicula sapien.</li>
       </ol>
       <p>Curabitur accumsan ante sed magna eleifend volutpat. Quisque porta id tellus et consectetur. Aliquam pellentesque, erat non laoreet dignissim, erat justo pulvinar velit, sit amet dapibus ante mi non risus. Praesent elementum sem eu velit iaculis interdum. Ut augue velit, consectetur id hendrerit vel, ultricies ac quam. Vivamus ut pharetra massa. Proin vulputate pulvinar tortor, fermentum imperdiet est viverra vitae. Sed vulputate eleifend feugiat.</p>
+
+      <p class="pi">To create a single-step procedure:</p>
+      <ul>
+        <li>This is a single procedure step.</li>
+      </ul>
+
+      <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nulla purus tellus, maximus maximus pretium sit amet, consectetur a quam. Aenean mollis rhoncus metus, vitae iaculis urna bibendum id. Mauris placerat finibus urna vel commodo. Suspendisse tincidunt, dolor eget tristique ultrices, sem nunc placerat quam, non ultricies odio est a sapien. Nam viverra varius iaculis. Donec rutrum imperdiet arcu vitae scelerisque.</p>
+
     </div>
   );
 }
@@ -303,7 +320,7 @@ export function HTMLContent() {
 
 <!-- To create comments in Markdown (MD), use HTML comments -->
 
-# Markdown Style Guide
+## Markdown Style Guide
 
 In Docusaurus, the following [admonitions](https://docusaurus.io/docs/next/markdown-features/admonitions) are available when using Markdown:
 
