@@ -71,7 +71,7 @@ sudo ufw disable
 
 2\. Reboot the computer.
 
-3\. Using a terminal window, type the following commands where `<CardanoNodePort>` is the port number where the Cardano Node instance running on the local computer listens and `<MaxConnections>` is the maximum number of connections allowed from an IP address:
+3\. Using a terminal window, type the following commands where `<CardanoNodePort>` is the port number where the Cardano Node instance running on the local computer listens and `<MaxConnections>` is the maximum number of connections to allow from an IP address:
 ```
 sudo iptables -I INPUT -p tcp -m tcp --dport <CardanoNodePort> --tcp-flags FIN,SYN,RST,ACK SYN -m connlimit --connlimit-above <MaxConnections> --connlimit-mask 32 --connlimit-saddr -j REJECT --reject-with tcp-reset
 sudo ip6tables -I INPUT -p tcp -m tcp --dport <CardanoNodePort> --tcp-flags FIN,SYN,RST,ACK SYN -m connlimit --connlimit-above <MaxConnections> --connlimit-mask 128 --connlimit-saddr -j REJECT --reject-with tcp-reset
