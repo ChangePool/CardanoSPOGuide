@@ -82,6 +82,7 @@
 			"slug: /$3",
 			"hide_title: $4false",
 			"sidebar_position: $5",
+			"description: \"$6\"",
 			"---\n",
 			"$6"
 		],
@@ -97,12 +98,13 @@
 			"slug: /$3",
 			"hide_title: $4false",
 			"sidebar_position: $5",
+			"description: \"$6\"",
 			"---\n",
 			"import React from 'react';\n",
 			"export function HTMLContent() {",
 			"\treturn (",
 			"\t\t<div>\n",
-			"\t\t\t$6\n",
+			"\t\t\t$7\n",
 		    "\t\t</div>",
 			"\t);",
 			"}",
@@ -116,7 +118,7 @@
 		"prefix": "Code Block",
 		"body": [
 			"<pre>",
-			"\t{$1<ConstantName>}",
+			"\t$1{<ConstantName>}",
 			"\t|",
 			"\t$2<br />",
 			"\t&nbsp;&nbsp;<br />",
@@ -149,7 +151,7 @@
 		"prefix": "Table",
 		"body": [
 			"<table class=\"center\">",
-			"\t<caption>Table 1 $1Caption</caption>",
+			"\t<caption>Table 1 $1</caption>",
 			"\t<tbody>",
 			"\t\t<tr>",
 			"\t\t\t<th width=\"50%\"><p>$2Column 1 Heading</p></th>",
@@ -216,5 +218,36 @@
 			"</table>"
 		],
 		"description": "Snippet for inserting a box labeled Credit"
+	},
+
+	"Import MDX Tabs Component": {
+		"prefix": "Tabs Component",
+		"body": [
+			"import Tabs from '@theme/Tabs';",
+			"import TabItem from '@theme/TabItem';"
+		],
+		"description": "Snippet for importing the MDX Tabs component in Docusaurus, required to display Tabs in Markdown"
+	},
+
+	"CoinCashew Guide Markdown Tabs": {
+		"prefix": "Tabs",
+		"body": [
+			"<Tabs>",
+			"\t<TabItem value=\"$1\" label=\"$2\" default>",
+			"\t</TabItem>",
+			"\t<TabItem value=\"$3\" label=\"$4\">",
+			"\t</TabItem>",
+			"</Tabs>"
+		],
+		"description": "Snippet for inserting tabs in Docusaurus Markdown. See also the Tabs Component snippet."
+	},
+
+	"CoinCashew Guide Markdown Image": {
+		"prefix": "Image",
+		"body": [
+			"![$1](@site/static/img/$2)"
+		],
+		"description": "Snippet for inserting an image in Docusaurus Markdown"
 	}
+
 }
