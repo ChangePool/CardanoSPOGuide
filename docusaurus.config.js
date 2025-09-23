@@ -219,7 +219,8 @@ const config = {
         ],
         // August 17, 2025 - License the Guide in the public domain
         //copyright: `Copyright © ${new Date().getFullYear()} | Presented by CoinCashew | Built Using Docusaurus.`,
-        copyright: 'Creative Commons Attribution 4.0 International | Presented by CoinCashew | Built Using Docusaurus',
+        // copyright: 'Creative Commons Attribution 4.0 International | Presented by CoinCashew | Created Using Docusaurus',
+        copyright: 'Hosted by <a href="https://coincashew.io" target="_blank">Change [CHG] Stake Pool</a> | Presented by CoinCashew | Created Using Docusaurus',
       },
       prism: {
         theme: prismThemes.github,
