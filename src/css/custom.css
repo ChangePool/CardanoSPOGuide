@@ -218,6 +218,7 @@ p.pi
 
 pre
 {
+  text-indent: 0pt; /* Required explicitly when pre tags appear inside ordered list items */
   margin-top: 12pt;
   margin-bottom: 12pt;
 }
