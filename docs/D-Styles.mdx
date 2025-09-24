@@ -3,6 +3,7 @@ title: "Appendix D: Workflow, Styles & Standards"
 sidebar_label: "Appendix D: Workflow, Styles & Standards"
 slug: /AppendixD
 hide_title: false
+hide_table_of_contents: true
 sidebar_position: 85
 description: "How to revise the Guide"
 ---
@@ -26,6 +27,7 @@ title: "<TopicTitle>"
 sidebar_label: "<TopicSidebarLabel>"
 slug: /<UniqueURLSegmentToTopic>
 hide_title: <TitleStatus>
+hide_table_of_contents: <TOCStatus>
 sidebar_position: <SidebarPositionNumber>
 description: "<Description>"
 ---
@@ -181,6 +183,8 @@ export function HTMLContent() {
         </tbody>
       </table>
 
+      <p>For details on creating a pull request to submit content that you create to CoinCashew for publication in the Guide, see the topic <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork" target="_blank">Creating a Pull Request from a Fork</a>.</p>
+
       <h2>Installing and Configuring Visual Studio Code</h2>
 
       <p>Visual Studio Code (VS Code) is a free, lightweight and powerful source code editor developed by Microsoft for Windows, macOS and Linux. VS Code is highly customizable and user friendly, offering features such as syntax highlighting, intelligent code completion and Git integration.</p>
@@ -207,9 +211,9 @@ export function HTMLContent() {
             <li>In the <b>Files: Associations</b> setting, click the <b>Add Item</b> button. In the <b>Item</b> field type <b>*.mdx</b>, then in the <b>Value</b> field type <b>html</b>, and then click <b>OK</b></li>
           </ol>
         </li>
-        <li>For details on using VS Code to submit content that you create to your fork of the CardanoSPOGuide repository, see the section <a href="https://code.visualstudio.com/docs/sourcecontrol/intro-to-git#_staging-and-committing-code-changes" target="_blank">Staging and Committing Code Changes</a>.</li>
-        <li>For details on creating a pull request to submit content that you create to CoinCashew for publication, see the topic <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork" target="_blank">Creating a Pull Request from a Fork</a>.</li>
       </ol>
+
+      <p>For details on using VS Code to submit content that you create to your fork of the CardanoSPOGuide repository, see the section <a href="https://code.visualstudio.com/docs/sourcecontrol/intro-to-git#_staging-and-committing-code-changes" target="_blank">Staging and Committing Code Changes</a>.</p>
 
       <h1>HTML Style Guide</h1>
 
@@ -280,7 +284,7 @@ export function HTMLContent() {
 
         {CodeSample}
       </pre>
-      <p>Create new topics in the <code>/docs</code> subfolder using <code>.MDX</code> as the file name extension. To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar; and, <code>&lt;Description&gt;</code> is a brief summary of the topic that displays in a sidebar category for the topic:</p>
+      <p>Create new topics in the <code>/docs</code> subfolder using <code>.MDX</code> as the file name extension. To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; <code>&lt;TOCStatus&gt;</code> is a Boolean value determinig whether or not the table of contents appears in the top right corner of a topic; <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar; and, <code>&lt;Description&gt;</code> is a brief summary of the topic that displays in a sidebar category for the topic:</p>
 
       <pre>
         {NewTopicTemplate}
