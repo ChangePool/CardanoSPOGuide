@@ -87,10 +87,11 @@
 			"sidebar_label: \"$2\"",
 			"slug: /$3",
 			"hide_title: $4false",
-			"sidebar_position: $5",
-			"description: \"$6\"",
+			"hide_table_of_contents: $5false",
+			"sidebar_position: $6",
+			"description: \"$7\"",
 			"---\n",
-			"$6"
+			"$8"
 		],
 		"description": "Template for new topics using Markdown in the CoinCashew Guide Web site created using Docusaurus"
 	},
@@ -103,14 +104,15 @@
 			"sidebar_label: \"$2\"",
 			"slug: /$3",
 			"hide_title: $4false",
-			"sidebar_position: $5",
-			"description: \"$6\"",
+			"hide_table_of_contents: $5true",
+			"sidebar_position: $6",
+			"description: \"$7\"",
 			"---\n",
 			"import React from 'react';\n",
 			"export function HTMLContent() {",
 			"\treturn (",
 			"\t\t<div>\n",
-			"\t\t\t$7\n",
+			"\t\t\t$8\n",
 		    "\t\t</div>",
 			"\t);",
 			"}",
@@ -171,6 +173,14 @@
 			"</table>"
 		],
 		"description": "Snippet for inserting a table"
+	},
+
+	"CoinCashew Guide Bookmark": {
+		"prefix": "Bookmark",
+		"body": [
+			"<a id=\"$1\" />"
+		],
+		"description": "Snippet for inserting a bookmark"
 	},
 
 	"CoinCashew Guide Hyperlink": {
@@ -254,6 +264,14 @@
 			"![$1](@site/static/img/$2)"
 		],
 		"description": "Snippet for inserting an image in Docusaurus Markdown"
+	},
+
+	"CoinCashew Guide OR Paragraph": {
+		"prefix": "OR",
+		"body": [
+			"<center><strong>OR</strong></center>"
+		],
+		"description": "Snippet for inserting the word OR in Docusaurus HTML or Markdown"
 	}
 
 }
