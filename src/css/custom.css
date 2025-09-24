@@ -44,13 +44,83 @@ a:not(.menu__link, .navbar__link, .footer__link-item)
 }
 
 /* Style hyperlinks in the header */
+/*
+a.navbar__link
+{
+  color: var(--ifm-menu-color);
+}
+*/
+
 a.navbar__link:hover
 {
   color: light-dark(#BF9004,#BF9004);
 }
 
+/* September 2, 2025 - Style the Typesense Search bar */
+[data-theme='light'] .DocSearch {
+  /* --docsearch-primary-color: var(--ifm-color-primary); */
+  /* --docsearch-text-color: var(--ifm-font-color-base); */
+  --docsearch-muted-color: var(--ifm-color-secondary-darkest);
+  --docsearch-container-background: rgba(94, 100, 112, 0.7);
+  /* Modal */
+  --docsearch-modal-background: var(--ifm-color-secondary-lighter);
+  /* Search box */
+  --docsearch-searchbox-background: var(--ifm-color-secondary);
+  --docsearch-searchbox-focus-background: var(--ifm-color-white);
+  /* September 2, 2025 - Set the color of the Search bar border when hovering */
+  /* --docsearch-searchbox-shadow: inset 0 0 0 2px var(--docsearch-primary-color); */
+  --docsearch-searchbox-shadow: inset 0 0 0 2px rgba(191, 144, 4, 0.7);
+  /* Hit */
+  --docsearch-hit-color: var(--ifm-font-color-base);
+  --docsearch-hit-active-color: var(--ifm-color-white);
+  --docsearch-hit-background: var(--ifm-color-white);
+  /* Footer */
+  --docsearch-footer-background: var(--ifm-color-white);
+}
+
+/* September 2, 2025 - Set the color of the magnifying glass in the Typesense modal dialog */
+.DocSearch-Search-Icon
+{
+  color: rgba(191, 144, 4, 0.7);
+}
+
+/* September 24, 2025 - Set the font for the Search placeholder text */
+.DocSearch-Button-Placeholder
+{
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 400; /* Regular */
+}
+
+[data-theme='dark'] .DocSearch {
+  --docsearch-text-color: var(--ifm-font-color-base);
+  --docsearch-muted-color: var(--ifm-color-secondary-darkest);
+  --docsearch-container-background: rgba(47, 55, 69, 0.7);
+  /* Modal */
+  --docsearch-modal-background: var(--ifm-background-color);
+  /* Search box */
+  --docsearch-searchbox-background: var(--ifm-background-color);
+  --docsearch-searchbox-focus-background: var(--ifm-color-black);
+  /* Hit */
+  --docsearch-hit-color: var(--ifm-font-color-base);
+  --docsearch-hit-active-color: var(--ifm-color-white);
+  --docsearch-hit-background: var(--ifm-color-emphasis-100);
+  /* Footer */
+  --docsearch-footer-background: var(--ifm-background-surface-color);
+  --docsearch-key-gradient: linear-gradient(
+    -26.5deg,
+    var(--ifm-color-emphasis-200) 0%,
+    var(--ifm-color-emphasis-100) 100%
+  );
+}
+
 /* Style hyperlinks in the footer */
 a.footer__link-item:hover
+{
+  color: light-dark(#BF9004,#BF9004);
+}
+
+/* Style hyperlinks in the copyright text */
+.footer__copyright a
 {
   color: light-dark(#BF9004,#BF9004);
 }
@@ -203,6 +273,14 @@ ul.tabs li.tabs__item--active
 {
   color: light-dark(#0033ad,#0033dd);
   border-bottom-color: light-dark(#0033ad,#0033dd);
+}
+
+/* Style single-step procedures */
+ul.ss
+{
+  list-style-image: url("/static/img/SSBullet.png");
+  /* In case the image fails to load, set a fallback list-style-type */
+  list-style-type: disc;
 }
 
 p
@@ -361,56 +439,6 @@ table.center p
 {
   margin-top: 6pt;
   margin-bottom: 6pt;
-}
-
-/* September 2, 2025 - Style the Typesense Search bar */
-[data-theme='light'] .DocSearch {
-  /* --docsearch-primary-color: var(--ifm-color-primary); */
-  /* --docsearch-text-color: var(--ifm-font-color-base); */
-  --docsearch-muted-color: var(--ifm-color-secondary-darkest);
-  --docsearch-container-background: rgba(94, 100, 112, 0.7);
-  /* Modal */
-  --docsearch-modal-background: var(--ifm-color-secondary-lighter);
-  /* Search box */
-  --docsearch-searchbox-background: var(--ifm-color-secondary);
-  --docsearch-searchbox-focus-background: var(--ifm-color-white);
-  /* September 2, 2025 - Set the color of the Search bar border when hovering */
-  /* --docsearch-searchbox-shadow: inset 0 0 0 2px var(--docsearch-primary-color); */
-  --docsearch-searchbox-shadow: inset 0 0 0 2px rgba(191, 144, 4, 0.7);
-  /* Hit */
-  --docsearch-hit-color: var(--ifm-font-color-base);
-  --docsearch-hit-active-color: var(--ifm-color-white);
-  --docsearch-hit-background: var(--ifm-color-white);
-  /* Footer */
-  --docsearch-footer-background: var(--ifm-color-white);
-}
-
-/* September 2, 2025 - Set the color of the magnifying glass in the Typesense modal dialog */
-.DocSearch-Search-Icon
-{
-  color: rgba(191, 144, 4, 0.7);
-}
-
-[data-theme='dark'] .DocSearch {
-  --docsearch-text-color: var(--ifm-font-color-base);
-  --docsearch-muted-color: var(--ifm-color-secondary-darkest);
-  --docsearch-container-background: rgba(47, 55, 69, 0.7);
-  /* Modal */
-  --docsearch-modal-background: var(--ifm-background-color);
-  /* Search box */
-  --docsearch-searchbox-background: var(--ifm-background-color);
-  --docsearch-searchbox-focus-background: var(--ifm-color-black);
-  /* Hit */
-  --docsearch-hit-color: var(--ifm-font-color-base);
-  --docsearch-hit-active-color: var(--ifm-color-white);
-  --docsearch-hit-background: var(--ifm-color-emphasis-100);
-  /* Footer */
-  --docsearch-footer-background: var(--ifm-background-surface-color);
-  --docsearch-key-gradient: linear-gradient(
-    -26.5deg,
-    var(--ifm-color-emphasis-200) 0%,
-    var(--ifm-color-emphasis-100) 100%
-  );
 }
 
 /* September 2, 2025 - Style the Next and Previous buttons that display at the bottom of topics */
