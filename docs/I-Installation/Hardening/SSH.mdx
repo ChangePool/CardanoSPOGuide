@@ -64,7 +64,7 @@ In Linux, the tilde (~) symbol represents the home directory for the current use
 ssh-copy-id -i $HOME/.ssh/<KeyFileName>.pub <Username>@<SSHServer>
 ```
 
-5.\ To connect to the computer hosting the SSH Server, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server listens:
+5\. To connect to the computer hosting the SSH Server, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server listens:
 ```bash
 ssh cardano@<SSHServer>
 ```
@@ -115,7 +115,7 @@ SSH port forwarding allows you to connect from a local computer to a service run
 
 **To use port forwarding to access a service running on a remote computer securely:**
 
-1\. Using a terminal window, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server listens, `<PortNumber>` is the port number where the SSH Server listens, `<LocalPort>` is the port number on the local computer that you use to connect to the remote service, `<RemoteHost>` is the IP address or domain name of the target computer that the SSH Server can reach, and `<RemotePort>` is the port number on the `<RemoteHost>` computer where SSH forwards traffic and the remote service listens:
+- Using a terminal window, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server listens, `<PortNumber>` is the port number where the SSH Server listens, `<LocalPort>` is the port number on the local computer that you use to connect to the remote service, `<RemoteHost>` is the IP address or domain name of the target computer that the SSH Server can reach, and `<RemotePort>` is the port number on the `<RemoteHost>` computer where SSH forwards traffic and the remote service listens:
 ```
 ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber> -L <LocalPort>:<RemoteHost>:<RemotePort>
 ```

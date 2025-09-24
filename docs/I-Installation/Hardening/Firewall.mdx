@@ -160,7 +160,7 @@ To maintain a secure server, regularly review the ports on your computer that ar
 
 **To display a detailed list of active network connections:**
 
-1\. Using a terminal window, type:
+- Using a terminal window, type:
 ```
 ss -tulpn
 ```
@@ -177,7 +177,7 @@ Listing all IP addresses connecting to a specific port on a computer may also be
 
 **To list all current connections to a port:**
 
-1\. Using a terminal window, type the following command where `<PortNumber>` is the port number for which you want to list connections on the local computer:
+- Using a terminal window, type the following command where `<PortNumber>` is the port number for which you want to list connections on the local computer:
 ```
 sudo netstat -enp | grep ":<PortNumber>" | awk {'print $5'} | cut -d ':' -f 1 | sort | uniq -c | sort
 ```
