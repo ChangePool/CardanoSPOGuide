@@ -54,6 +54,12 @@
 		"body": "&gt;"
 	},
 
+	"< and > HTML Entities": {
+		"prefix": "Carets",
+		"body": "&lt;$1&gt;",
+		"description": "Left and right carets"
+	},
+
 	"\" HTML Entity": {
 		"prefix": "Quotation Mark",
 		"body": "&quot;"
