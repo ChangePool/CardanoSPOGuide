@@ -225,7 +225,7 @@ export function HTMLContent() {
 
       <p>For details on using VS Code to submit content that you create to your fork of the CardanoSPOGuide repository, see the section <a href="https://code.visualstudio.com/docs/sourcecontrol/intro-to-git#_staging-and-committing-code-changes" target="_blank">Staging and Committing Code Changes</a>.</p>
 
-      <h1>HTML Style Guide</h1>
+      <a id="html-style-guide" /><h1>HTML Style Guide</h1>
 
       <p>In the comprehensive sample text below, parentheses contain one of the following to show you how to use each style:</p>
         <ul>
@@ -246,7 +246,19 @@ export function HTMLContent() {
         </tbody>
       </table>
       <p>Morbi vulputate elit sapien, a dignissim tortor vulputate eu. Nam imperdiet sapien vulputate, malesuada enim sit amet, venenatis ipsum. Morbi fringilla nunc sit amet iaculis accumsan. Suspendisse ultricies tempus augue, ut vulputate ipsum. Vivamus imperdiet fringilla lectus at porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et magna in dolor vulputate pulvinar. Nulla molestie rhoncus rutrum.</p>
-      <p>Here is a <a href="/AppendixD" target="_blank">hyperlink</a>. Set the <code>target="_blank"</code> attribute for external links only, to open a new tab.</p>
+      <p>Here is a <a href="/AppendixD">hyperlink</a> to an internal page in the Guide.</p>
+      
+      
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Only set the <code>target="_blank"</code> attribute for external links.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Here is a link to a <a href="#html-style-guide">bookmark</a> on the same page in the Guide. When defining bookmarks, use an anchor tag setting an <code>id</code> attribute such as <code>&lt;a id="html-style-guide" /&gt;</code> to ensure that clicking the link does not scroll under the fixed header at the top of the page.</p>
       <p><b>Bold</b>, <i>italic</i> and <b><i>bold italic</i></b> font weights and styles are available.</p>
 
       <h2>Heading 2 (<code>h2</code>)</h2>

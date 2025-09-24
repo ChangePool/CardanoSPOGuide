@@ -9,6 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&amp;display=swap');
 
 /* You can override the default Infima variables here. */
+/* September 24, 2025 - For more details, see https://gist.github.com/abhigyantrips/b828ca46b2460c6699c73e0162f6be80 */
 :root {
   --ifm-color-primary: #2e8555;
   --ifm-color-primary-dark: #29784c;
@@ -23,6 +24,8 @@
   --ifm-font-family-base: 'Ubuntu', sans-serif; /* For general text */
   --ifm-heading-font-family: 'Ubuntu', sans-serif; /* For headings */
   --ifm-font-family-monospace: 'Courier New', monospace; /* For code blocks (optional) */
+  /* September 24, 2025 - Set the Infima CSS variable indicating the height of the fixed header at the top of the page to the default value. The variable is used to calculate the scroll-margin-top property for bookmark links. */
+  --ifm-navbar-height: 3.75rem;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -35,6 +38,12 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure that clicking a bookmark link scrolls into view, not hidden under the fixed header at the top of the page */
+a
+{
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 0.5rem);
 }
 
 /* Set the color for hyperlinks in the content of the Guide, excluding hyperlinks in the sidebar, header and footer */
@@ -131,6 +140,11 @@ a.menu__link--active
   color: light-dark(#BF9004,#BF9004);
 }
 
+b
+{
+  font-weight: 500; /* Medium */
+}
+
 /* Style the breadcrumbs that display at the top of each topic */
 .breadcrumbs__item--active .breadcrumbs__link
 {
@@ -169,6 +183,7 @@ header h1
 {
   color: light-dark(#0033ad,#0033dd);
   font-weight: 500; /* Medium */
+  scroll-margin-top: 100pt;
 }
 
 h1
