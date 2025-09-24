@@ -144,9 +144,17 @@ export function HTMLContent() {
             sudo apt-get install git
           </pre>
         </li>
-        <li>Navigate to the folder on your computer where you store Docusaurus project Web sites, and then type:
+        <li>To configure Git, type the following commands where <code>&lt;UserName&gt;</code> is your Git user name, and <code>&lt;EmailAddress&gt;</code> is your e-mail address:
+        <pre>
+          git config --global user.name "&lt;UserName&gt;"<br />
+          git config --global user.email &lt;EmailAddress&gt;
+        </pre></li>
+        <li>Using a Web browser, log in to your <a href="https://github.com/" target="_blank">GitHub</a> account.</li>
+        <li>Navigate to the <a href="https://github.com/ChangePool/CardanoSPOGuide" target="_blank">CardanoSPOGuide</a> repository, then click the <b>Fork</b> button, and then scroll down to click the green <b>Create Fork</b> button.</li>
+
+        <li>Using a terminal window, navigate to the folder on your computer where you store Docusaurus project Web sites, and then type the following commands where <code>&lt;ForkedRepository&gt;</code> is the URL to the fork of the CardanoSPOGuide repository that you created in step 4:
           <pre>
-            git clone https://github.com/ChangePool/CardanoSPOGuide<br />
+            git clone &lt;ForkedRepository&gt;<br />
             cd ./CardanoSPOGuide<br />
             npm install
           </pre>
@@ -199,7 +207,8 @@ export function HTMLContent() {
             <li>In the <b>Files: Associations</b> setting, click the <b>Add Item</b> button. In the <b>Item</b> field type <b>*.mdx</b>, then in the <b>Value</b> field type <b>html</b>, and then click <b>OK</b></li>
           </ol>
         </li>
-        <li>For details on using VS Code to submit content to your fork of the CardanoSPOGuide repository, see the topic <a href="https://code.visualstudio.com/docs/sourcecontrol/intro-to-git" target="_blank">Introduction to Git in VS Code</a>.</li>
+        <li>For details on using VS Code to submit content that you create to your fork of the CardanoSPOGuide repository, see the section <a href="https://code.visualstudio.com/docs/sourcecontrol/intro-to-git#_staging-and-committing-code-changes" target="_blank">Staging and Committing Code Changes</a>.</li>
+        <li>For details on creating a pull request to submit content that you create to CoinCashew for publication, see the topic <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork" target="_blank">Creating a Pull Request from a Fork</a>. </li>
       </ol>
 
       <h1>HTML Style Guide</h1>
