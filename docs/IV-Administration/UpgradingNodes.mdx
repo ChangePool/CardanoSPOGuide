@@ -73,7 +73,7 @@ If the command displays the latest version number, then the upgrade is successfu
 
 ### Guild LiveView
 
-[Guild Operators](https://cardano-community.github.io/guild-operators/) maintains a set of tools to simplify operating a Cardano stake pool, including [Guild LiveView](https://cardano-community.github.io/guild-operators/Scripts/gliveview/). If you use the gLiveView dashboard, then ensure that you are using the latest version prior to upgrading your Cardano node.
+[Guild Operators](https://cardano-community.github.io/guild-operators/) maintains a set of tools to simplify operating a Cardano stake pool, including [Guild LiveView](https://cardano-community.github.io/guild-operators/Scripts/gliveview/). If you use the gLiveView dashboard, then ensure that you are using the latest version prior to upgrading Cardano Node.
 
 :::info
 In the [Common `env`](https://cardano-community.github.io/guild-operators/Scripts/env/) file for Guild Operator scripts, by default the `UPDATE_CHECK` user variable is set to check for updates to scripts when you start `gLiveView.sh`. If your implementation displays the message `Checking for script updates` when gLiveView starts and you install available updates when prompted, then you do NOT need to complete the following procedure.
@@ -173,7 +173,7 @@ A new Cardano Node release may include updated configuration files. If configura
 
 **To download and install new Cardano Node configuration files:**
 
-1. To stop an instance of Cardano Node, type the following command in a terminal window where `<CardanoServiceName>` is the name of the systemd service running your Cardano node:
+1. To stop an instance of Cardano Node, type the following command in a terminal window where `<CardanoServiceName>` is the name of the systemd service running Cardano Node:
 
 ```bash
 sudo systemctl stop <CardanoServiceName>.service
@@ -310,7 +310,7 @@ $(./scripts/bin-path.sh cardano-cli) version
 
 **To install the binaries that you compiled:**
 
-1. If your Cardano Node instance is running, then type the following command to stop the node where `<CardanoServiceName>` is the name of the systemd service running your node:
+1. If Cardano Node is running, then type the following command to stop the node where `<CardanoServiceName>` is the name of the systemd service running your node:
 
 ```bash
 sudo systemctl stop <CardanoServiceName>.service
@@ -339,7 +339,7 @@ cardano-node version
 cardano-cli version
 ```
 
-2\. Start your Cardano node systemd service to finish the upgrade process.
+2\. To finish the upgrade process, start the Cardano Node systemd service.
 
 ```bash
 sudo systemctl start cardano-node
