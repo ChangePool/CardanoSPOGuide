@@ -179,6 +179,14 @@ figcaption
   margin-top: 6pt;
 }
 
+/* Center figures horizontally */
+figure img
+{
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
 header h1
 {
   color: light-dark(#0033ad,#0033dd);
