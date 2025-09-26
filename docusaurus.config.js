@@ -31,7 +31,36 @@ const config = {
   projectName: 'CardanoSPOGuide', // Usually your repo name.
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  // September 26, 2025 - The onBrokenMarkdownLinks configuration option is deprecated in Docusaurus v4
+  // onBrokenMarkdownLinks: 'warn',
+
+  // September 26, 2025 - The following Markdown configuration is introduced in Docusaurus v3.9.1 For more details, see https://docusaurus.io/docs/api/docusaurus-config
+  markdown: {
+    format: 'mdx',
+    mermaid: true,
+    emoji: true,
+    preprocessor: ({filePath, fileContent}) => {
+      return fileContent.replaceAll('{{MY_VAR}}', 'MY_VALUE');
+    },
+    parseFrontMatter: async (params) => {
+      const result = await params.defaultParseFrontMatter(params);
+      result.frontMatter.description =
+        result.frontMatter.description?.replaceAll('{{MY_VAR}}', 'MY_VALUE');
+      return result;
+    },
+    mdx1Compat: {
+      comments: true,
+      admonitions: true,
+      headingIds: true,
+    },
+    anchors: {
+      maintainCase: true,
+    },
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+      onBrokenMarkdownImages: 'throw',
+    },
+  },
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
