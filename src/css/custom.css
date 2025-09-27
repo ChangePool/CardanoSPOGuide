@@ -246,7 +246,7 @@ ol li
 }
 
 /* Set the numbering style for first-level ordered lists */
-ol li:before
+ol li:not(ul li, ol ol li):before
 {
   content: counter(item, decimal) ". ";
   counter-increment: item;
@@ -284,6 +284,19 @@ ul:not(.theme-doc-sidebar-menu, .menu__list)
 ul:not(.theme-doc-sidebar-menu) ul
 {
   margin-top: 4pt;
+}
+
+/* Style unordered lists appearing in ordered list items */
+ol li ul:not(.theme-doc-sidebar-menu)
+{
+  margin-top: 4pt;
+  list-style-type: disc;
+}
+
+ol li ul:not(.theme-doc-sidebar-menu) li
+{
+  /* padding-left: 4pt; */
+  text-indent: 0pt;
 }
 
 ul:not(.menu__list) li
