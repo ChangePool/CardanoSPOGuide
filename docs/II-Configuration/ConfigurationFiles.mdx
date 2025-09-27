@@ -3,7 +3,7 @@ title: "Downloading Configuration Files"
 sidebar_label: "Downloading Configuration Files"
 slug: /ConfigurationFiles
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 5
 description: ""
 ---
@@ -14,7 +14,23 @@ export function HTMLContent() {
   return (
     <div>
 
-      {/* INSERT HTML HERE */}
+      <p>Running the Cardano Node software requires multiple configuration files. You must download the configuration files on each computer hosting an instance of Cardano Node in your stake pool configuration.</p>
+
+      <p class="pi">To download Cardano Node configuration files:</p>
+
+      <ol>
+        <li>On the computer hosting your block-producing node, using a Web browser navigate to the <a href="https://book.play.dev.cardano.org/environments.html" target="_blank">Environments</a> page, then click the link for your environment, and then click to download each configuration file using the default file name in the folder that you set for the <code>$NODE_HOME</code> environment variable.
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">You set the <code>NODE_HOME</code> environment variable and created the corresponding folder when <a href="/GHC">Installing GHC and Cabal</a>.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>On each computer hosting a relay or block-producing node in your stake pool configuration, repeat step 1</li>
+      </ol>
 
     </div>
   );
