@@ -197,6 +197,12 @@ lrwxrwxrwx root root libsodium.so.23 -> libsodium.so.23.3.0
 sudo ldconfig
 ```
 
+6\. To verify that the IOHK Sodium shared library is recognized, type <code>ldconfig -p | grep libsodium</code> and then confirm that the output includes the following lines:
+```
+libsodium.so.23 (libc6,x86-64) => /usr/local/lib/libsodium.so.23
+libsodium.so (libc6,x86-64) => /usr/local/lib/libsodium.so
+```
+
 ## Installing the blst Library
 
 **To install the `blst` library on your air-gapped, offline computer without connecting to the Internet:**
