@@ -65,6 +65,15 @@ If you do not know the location of the `cardano-cli` binary, then type `which ca
 sudo chmod +x /usr/local/bin/cardano-cli
 ```
 
+<table class="box">
+  <tbody>
+    <tr>
+      <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+      <td class="boxText"><p class="boxText">To list shared libraries that Cardano CLI requires to run as well as the full path where the dynamic linker expects to find the libraries, type <code>ldd /usr/local/bin/cardano-cli</code> and then notice that the output includes the following lines:<pre>libsodium.so.23 => /usr/local/lib/libsodium.so.23<br />libsecp256k1.so.2 => /usr/local/lib/libsecp256k1.so.2</pre></p></td>
+    </tr>
+  </tbody>
+</table>
+
 ## Setting the NODE\_HOME Environment Variable
 
 For convenience when following the CoinCashew guide, create a `NODE_HOME` environment variable on your air-gapped, offline computer set to the same file path that you set on your block-producing and relay nodes when [Installing GHC and Cabal](/GHC).
@@ -146,6 +155,11 @@ lrwxrwxrwx root root libsecp256k1.so.2 -> libsecp256k1.so.2.0.2
 sudo ldconfig
 ```
 
+10\. To verify that the `libsecp256k1` library is recognized, type <code>ldconfig -p | grep libsecp256k1</code> and then confirm that the output includes the following line:
+```
+libsecp256k1.so.2 (libc6,x86-64) => /usr/local/lib/libsecp256k1.so.2
+```
+
 ## Installing Sodium
 
 On your air-gapped, offline computer, without connecting to the Internet install the Sodium release that IOHK maintains.
@@ -197,11 +211,11 @@ lrwxrwxrwx root root libsodium.so.23 -> libsodium.so.23.3.0
 sudo ldconfig
 ```
 
-6\. To verify that the IOHK Sodium shared library is recognized, type <code>ldconfig -p | grep libsodium</code> and then confirm that the output includes the following lines:
+6\. To verify that the IOHK Sodium shared library is recognized, type <code>ldconfig -p | grep libsodium</code> and then confirm that the output includes the following line:
 ```
 libsodium.so.23 (libc6,x86-64) => /usr/local/lib/libsodium.so.23
-libsodium.so (libc6,x86-64) => /usr/local/lib/libsodium.so
 ```
+<!-- libsodium.so (libc6,x86-64) => /usr/local/lib/libsodium.so -->
 
 ## Installing the blst Library
 
