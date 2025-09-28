@@ -3,7 +3,7 @@ title: "Automating Cardano Node Startup"
 sidebar_label: "Automating Cardano Node Startup"
 slug: /AutomatingStartup
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 20
 description: ""
 ---
@@ -20,5 +20,119 @@ export function HTMLContent() {
   );
 }
 
-<HTMLContent />
+<!-- <HTMLContent /> -->
+
+To run an instance of Cardano Node, create a bash script to configure options.
+
+Also, implement Cardano Node as a `systemd` service. Running Cardano Node as a `systemd` service helps maximize the uptime of your stake pool by restarting the stake pool automatically if any stake pool processes may crash, or when the computer reboots.
+
+<table class="box">
+  <tbody>
+    <tr>
+      <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+      <td class="boxText"><p class="boxText">The following procedure configures options for all the nodes in your stake pool configuration—including the block-producing node—to operate as relay nodes. Temporarily configuring the block-producing node to operate as a relay node is sufficient for [Starting the Nodes](/StartingNodes) in order to synchronize a local copy of the Cardano blockchain ledger. Every node in a stake pool configuration, including the block-producing node, stores a local copy of the Cardano ledger. The topic [Generating Keys for the Block-producing Node](/GeneratingNodeKeys) explains how to configure the block-producing node with the functionality required to produce blocks.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+**To create a startup script and service for an instance of Cardano Node:**
+
+1\. On the computer hosting your block-producing node, using a terminal window type the following command to navigate to the folder containing configuration files and scripts related to operating the Cardano Node software:
+```bash
+cd $NODE_HOME
+```
+
+:::info
+You set the `$NODE_HOME` environment variable when [Installing GHC and Cabal](/GHC).
+:::
+
+2\. To retrieve the values of the `$NODE_HOME` and `$USER` environment variables, type:
+```bash
+echo $NODE_HOME
+echo $USER
+```
+
+3\. In the folder where you navigated in step 1, using a text editor create a file named `startCardanoNode.sh` and then add the following contents to the file where `<NodeHomeValue>` is the value of your `$NODE_HOME` environment variable that you retrieved in step 2, and `<ConfigFileName>` is `config-bp.json` on your block-producing node and `config.json` on all your relay nodes:
+```bash
+#!/bin/bash
+#
+# Set variables to indicate Cardano Node options
+#
+# Set a variable to indicate the port where the Cardano Node instance listens
+PORT=6000
+# Set a variable to indicate the local IP address of the computer where Cardano Node runs
+# 0.0.0.0 listens on all local IP addresses for the computer
+HOSTADDR=0.0.0.0
+# Set a variable to indicate the file path to your topology file
+TOPOLOGY=<NodeHomeValue>/topology.json
+# Set a variable to indicate the folder where Cardano Node stores blockchain ledger data
+DB_PATH=<NodeHomeValue>/db
+# Set a variable to indicate the path to the Cardano Node socket for Inter-process communication (IPC)
+SOCKET_PATH=<NodeHomeValue>/db/socket
+# Set a variable to indicate the file path to your main Cardano Node configuration file
+CONFIG=<NodeHomeValue>/<ConfigFileName>
+#
+# Run Cardano Node using the options that you set using variables
+#
+/usr/local/bin/cardano-node run --topology ${TOPOLOGY} --database-path ${DB_PATH} --socket-path ${SOCKET_PATH} --host-addr ${HOSTADDR} --port ${PORT} --config ${CONFIG}
+```
+
+:::info
+You configured the `topology.json` file when [Configuring Topology](/ConfiguringTopology). You downloaded the `config-bp.json` and `config.json` files when [Downloading Configuration Files](/ConfigurationFiles).
+:::
+
+4\. Save and close the `startCardanoNode.sh` file.
+
+5\. To set execute permissions for the `startCardanoNode.sh` file, type:
+```bash
+chmod +x $NODE_HOME/startCardanoNode.sh
+```
+
+6\. To create the folder where the Cardano Node instance stores blockchain data, type:
+```bash
+mkdir $NODE_HOME/db
+```
+
+7\. To run Cardano Node as a service, using a text editor create a file named `cardano-node.service` and then add the following contents to the file where `<UserValue>` is the value of your `$USER` environment variable and `<NodeHomeValue>` is the value of your `$NODE_HOME` environment variable that you retrieved in step 2:
+```bash
+# The Cardano Node service (part of systemd)
+# file: /etc/systemd/system/cardano-node.service  
+  
+[Unit]
+Description       = Cardano Node Service
+Wants             = network-online.target
+After             = network-online.target  
+  
+[Service]
+User              = <UserValue>
+Type              = simple
+WorkingDirectory  = <NodeHomeValue>
+ExecStart         = /bin/bash -c '<NodeHomeValue>/startCardanoNode.sh'
+KillSignal        = SIGINT
+RestartKillSignal = SIGINT
+TimeoutStopSec    = 90
+LimitNOFILE       = 32768
+Restart           = always
+RestartSec        = 5
+SyslogIdentifier  = cardano-node  
+  
+[Install]
+WantedBy          = multi-user.target
+```
+
+8\. Save and close the `cardano-node.service` file.
+
+9\. To move the `cardano-node.service` file to the folder `/etc/systemd/system` and set file permissions, type:
+```bash
+sudo mv $NODE_HOME/cardano-node.service /etc/systemd/system/cardano-node.service
+sudo chmod 644 /etc/systemd/system/cardano-node.service
+```
+
+10\. To start Cardano Node as a service when the computer boots, type:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable cardano-node.service
+```
+
+11\. Repeat steps 1 to 10 on each computer hosting a relay node in your stake pool configuration.
 

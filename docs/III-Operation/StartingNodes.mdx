@@ -20,5 +20,58 @@ export function HTMLContent() {
   );
 }
 
-<HTMLContent />
+<!-- <HTMLContent /> -->
+
+- To start the node, reboot the computer OR type `sudo systemctl start cardano-node`
+- To monitor your nodes synchronizing, type `journalctl -fu cardano-node`
+
+## Managing Services
+
+To help administer an instance of Cardano Node running as a `systemd` service, use the following commands:
+```
+# Display the status of the service
+sudo systemctl status cardano-node
+# Restart the service
+sudo systemctl reload-or-restart cardano-node
+# Stop the service
+sudo systemctl stop cardano-node
+```
+
+<table class="box">
+  <tbody>
+    <tr>
+      <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+      <td class="boxText"><p class="boxText">For more details on using the `systemctl` utility to manage services, see the <a href="https://man7.org/linux/man-pages/man1/systemctl.1.html" target="_blank">manual page</a>.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+## Monitoring Cardano Node Log Files
+
+Regular monitoring of log files is essential for determining how an instance of Cardano Node is running.
+
+**To display and filter Cardano Node log files:**
+```
+# Show the most recent journal entries, and continuously print new entries as they are appended to the journal
+journalctl --unit=cardano-node --follow
+# Show entries appended to the journal since midnight the day before today
+journalctl --unit=cardano-node --since=yesterday
+# Show entries appended to the journal on the current day
+journalctl --unit=cardano-node --since=today
+# Show entries appended to the journal on July 29, 2025 between midnight and noon
+journalctl --unit=cardano-node --since='2025-07-29 00:00:00' --until='2025-07-29 12:00:00'
+```
+
+<table class="box">
+  <tbody>
+    <tr>
+      <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+      <td class="boxText"><p class="boxText">For more details on using the `journalctl` utility, see the <a href="https://man7.org/linux/man-pages/man1/journalctl.1.html" target="_blank">manual page</a>.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+## Improving Cardano Node Performance
+
+If you are not satisfied with the performance of an instance of Cardano Node, then see the topic [Configuring GHC Runtime Options](/ConfiguringGHCRuntime).
 
