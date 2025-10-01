@@ -3,7 +3,7 @@ title: "Starting the Nodes"
 sidebar_label: "Starting the Nodes"
 slug: /StartingNodes
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 5
 description: ""
 ---
@@ -22,9 +22,78 @@ export function HTMLContent() {
 
 <!-- <HTMLContent /> -->
 
-- To start the node, reboot the computer OR type `sudo systemctl start cardano-node`
-- To monitor your nodes synchronizing, type `journalctl -fu cardano-node`
-- Move `gLiveView` reference to *Appendix C*
+Now, you are ready to start the Cardano Node instances in your stake pool configuration. Initially when you start Cardano Node, the instance begins synchronizing a local copy of the Cardano blockchain ledger with the network.
+
+<p class="pi">To start each instance of Cardano Node in your stake pool configuration:</p>
+
+<ol>
+  <li>On a computer hosting a relay node, using a terminal window type the command <code>sudo systemctl start cardano-node</code><center><strong>OR</strong></center>Reboot the computer.</li>
+  <li>Repeat step 1 on all computers comprising your stake pool configuration.</li>
+</ol>
+
+To monitor the progress of a Cardano Node instance synchronizing a local copy of the the blockchain with the network, follow the log files.
+
+<p class="pi">To follow the log files for an instance of Cardano Node:</p>
+
+<ul class="ss">
+  <li>Using a terminal window on the computer hosting the instance of Cardano Node that you want to monitor, type <code>journalctl --follow --unit cardano-node</code></li>
+</ul>
+
+
+Here is a sample of Cardano Node logs showing progress when beginning to synchronize the Cardano Mainnet blockchain ledger:
+```
+...
+
+[ChainDB.OpenEvent.StartedOpeningDB](Info,7) Started opening Chain DB
+[ChainDB.OpenEvent.StartedOpeningImmutableDB](Info,7) Started opening Immutable DB
+[ChainDB.ImmDbEvent.NoValidLastLocation](Info,7) No valid last location was found. Starting from Genesis.
+[ChainDB.OpenEvent.OpenedImmutableDB](Info,7) Opened imm db with immutable tip at genesis (origin) and chunk 0
+[ChainDB.OpenEvent.StartedOpeningVolatileDB](Info,7) Started opening Volatile DB
+[ChainDB.OpenEvent.OpenedVolatileDB](Info,7) Opened empty Volatile DB
+[ChainDB.OpenEvent.StartedOpeningLgrDB](Info,7) Started opening Ledger DB
+[ChainDB.LedgerEvent.Replay.ReplayStart.ReplayFromGenesis](Info,7) Replaying ledger from genesis
+[ChainDB.OpenEvent.OpenedLgrDB](Info,7) Opened lgr db
+[ChainDB.InitChainSelEvent.StartedInitChainSelection](Info,7) Started initial chain selection
+[ChainDB.InitChainSelEvent.InitialChainSelected](Info,7) Initial chain selected
+[ChainDB.OpenEvent.OpenedDB](Info,7) Opened db with immutable tip at genesis (origin) and tip genesis (origin)
+[BlockchainTime.CurrentSlotUnknown](Warning,7) Too far from the chain tip to determine the current slot number for the time 2025-09-30 14:52:02.376068601 UTC
+[ChainDB.AddBlockEvent.AddedToCurrentChain](Notice,29) Chain extended, new tip: d2d90d10993b3eb309f5485a5413cb9c9fe4f088e79b7b4e815dbbe8fcb8e4b7 at slot 0
+[Shutdown.ArmedAt](Warning,7) Will terminate upon reaching NoShutdown
+[Startup.DiffusionInit.CreateSystemdSocketForSnocketPath](Info,48) {"data":{"kind":"CreateSystemdSocketForSnocketPath","path":"LocalAddress \"/home/cardano/cardano-node/db/socket\""}}
+[Startup.DiffusionInit.CreatedLocalSocket](Info,48) {"data":{"kind":"CreatedLocalSocket","path":"LocalAddress \"/home/cardano/cardano-node/db/socket\""}}
+
+...
+
+[Net.InboundGovernor.Remote.InboundGovernorCounters](Info,49) TrInboundGovernorCounters (Counters {coldPeersRemote = 0, idlePeersRemote = 3, warmPeersRemote = 0, hotPeersRemote = 0})
+[Net.InboundGovernor.Remote.InboundGovernorCounters](Info,49) TrInboundGovernorCounters (Counters {coldPeersRemote = 0, idlePeersRemote = 4, warmPeersRemote = 0, hotPeersRemote = 0})
+[ChainDB.AddBlockEvent.TrySwitchToAFork](Info,29) Block fits onto some fork: 89d9b5a5b8ddc8d7e5a6795e9774d97faf1efea59b2caf7eaf9f8c5b32059df4 at slot 0
+[ChainDB.AddBlockEvent.SwitchedToAFork](Notice,29) Switched to a fork, new tip: 6c225dd71cdf484cbffecde79a569b9727ebfca3db064e3aaf1aee8337119d9a at slot 45
+[ChainDB.AddBlockEvent.AddedToCurrentChain](Notice,29) Chain extended, new tip: 7baa9a99d60983e2a488b3e9ba020cf76bd27ee017d9508ff78d306b5555ba67 at slot 46
+[ChainDB.AddBlockEvent.AddedToCurrentChain](Notice,29) Chain extended, new tip: 2e82c907016c071984938e2456240e7d4fadc44f8f9ffdf537c18f59c5f815fb at slot 47
+[ChainDB.AddBlockEvent.AddedToCurrentChain](Notice,29) Chain extended, new tip: 40fe6004b68fe18e6b567fb10de014eb239c29c37d9ebe8b0a89fa615b4701c6 at slot 48
+[ChainDB.AddBlockEvent.AddedToCurrentChain](Notice,29) Chain extended, new tip: 4894cf45d5235e3af04db4f819ed14dfbb9f69e5f7c48d71ca4565a254fc4ca3 at slot 49
+[ChainDB.AddBlockEvent.AddedToCurrentChain](Notice,29) Chain extended, new tip: 5625f72d4f8782615399242c8d2b2363a552deae8f096f7696f1ff2e3bea206a at slot 329
+[ChainDB.AddBlockEvent.AddedToCurrentChain](Notice,29) Chain extended, new tip: b05bcd58db0c7a31587633e3f60adb14fa8742e8be4aa95ff6e057cef0f6060a at slot 615
+[ChainDB.AddBlockEvent.AddedToCurrentChain](Notice,29) Chain extended, new tip: 74f42483f39dba1e43facaf3ee205da6d9040bee983b1951e4a6be064834c8ba at slot 853
+[ChainDB.AddBlockEvent.AddedToCurrentChain](Notice,29) Chain extended, new tip: 8b96a0f5853d866f5fc4837ba8e0bf46a19931949934ba6e289a2c25a73cc9a2 at slot 1132
+
+...
+```
+
+Following a timestamp, each line in Cardano Node log files begins with the name of a trace enclosed in square brackets (`[` and `]`), followed by the logging data generated by the trace. Traces use a hierarchical structure. The naming convention for traces separates each tier in the hierarchy using a period (`.`) character. Each trace logs a different aspect of Cardano Node operation.
+
+<!-- September 30, 2025 - The preceeding paragraph is accurate for log files that Cardano Tracer generates, as well as log files generated without using Cardano Tracer. -->
+
+As of September 2025, the size of the Cardano Mainnet blockchain ledger is approximately 215 GB. Synchronizing local copies of the Cardano blockchain ledger with the network may take more than 24 hours. 
+
+<table class="box">
+  <tbody>
+    <tr>
+      <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+      <td class="boxText"><p class="boxText">If you trust a copy of the Cardano blockchain ledger that an instance of Cardano Node synchronizes, then you can copy the folder specified using the <code>DB_PATH</code> variable in the <code>startCardanoNode.sh</code> script when <a href="AutomatingStartup">Automating Cardano Node Startup</a> to another computer hosting Cardano Node in order to save time.</p></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Managing Services
 
@@ -72,7 +141,29 @@ journalctl --unit=cardano-node --since='2025-07-29 00:00:00' --until='2025-07-29
   </tbody>
 </table>
 
-## Improving Cardano Node Performance
+If you prefer, you can use a different log file viewer—such as [The Logfile Navigator](https://lnav.org/) or [glogg](https://glogg.bonnefon.org/) for example—to examine the output of a `journalctl` command more easily.
 
-If you are not satisfied with the performance of an instance of Cardano Node, then see the topic [Configuring GHC Runtime Options](/ConfiguringGHCRuntime).
+**To review Cardano Node log files using The Logfile Navigator:**
+
+1\. To install The Logfile Navigator, using a terminal window type:
+```
+sudo apt-get install lnav
+```
+
+2\. To follow Cardano Node log files using The Logfile Navigator, type:
+```
+journalctl --unit=cardano-node --follow | lnav
+```
+
+**To review Cardano Node log files using `glogg`:**
+
+1\. To install `glogg` type:
+```
+sudo apt-get install glogg
+```
+
+2\. To display log entries that Cardano Node generated within a date range using `glogg` type:
+```
+journalctl --unit=cardano-node --since='2025-07-29 00:00:00' --until='2025-07-29 12:00:00' | glogg
+```
 
