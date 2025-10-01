@@ -1,6 +1,6 @@
 ---
-title: "Starting the Nodes"
-sidebar_label: "Starting the Nodes"
+title: "Starting the Nodes and Monitoring the Log"
+sidebar_label: "Starting the Nodes and Monitoring the Log"
 slug: /StartingNodes
 hide_title: false
 hide_table_of_contents: true
@@ -22,7 +22,7 @@ export function HTMLContent() {
 
 <!-- <HTMLContent /> -->
 
-Now, you are ready to start the Cardano Node instances in your stake pool configuration. Initially when you start Cardano Node, the instance begins synchronizing a local copy of the Cardano blockchain ledger with the network.
+Now, the Cardano Node instances in your stake pool configuration are ready to start. Initially when you start Cardano Node, the instance begins synchronizing a local copy of the Cardano blockchain ledger with the network.
 
 <table class="box">
   <tbody>
@@ -136,7 +136,7 @@ journalctl --unit=cardano-node --since='2025-07-29 00:00:00' --until='2025-07-29
 
 For more details on using the `journalctl` utility, see the [manual page](https://man7.org/linux/man-pages/man1/journalctl.1.html).
 
-If you prefer, you can also use a different log viewer—such as [The Logfile Navigator](https://lnav.org/) or [glogg](https://glogg.bonnefon.org/) for example—to examine the output of a `journalctl` command more easily.
+If you prefer, you can also use a different log viewer—such as [The Logfile Navigator](https://lnav.org/) or [glogg](https://glogg.bonnefon.org/) for example—to review the log more easily.
 
 **To review the Cardano Node log using The Logfile Navigator:**
 
