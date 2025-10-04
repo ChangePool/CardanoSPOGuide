@@ -4,28 +4,24 @@ sidebar_label: "Monitoring Metrics"
 slug: /MonitoringMetrics
 hide_title: false
 hide_table_of_contents: true
-sidebar_position: 10
+sidebar_position: 20
 description: ""
 ---
 
 import React from 'react';
 
+import CodeBlock from '@theme/CodeBlock';
+import Dashboard from '!!raw-loader!/txt/Dashboard.sh';
+
 export function HTMLContent() {
+  
   return (
     <div>
 
       {/* INSERT HTML HERE */}
 
-      -----
-
-      <p>Use a relay (and previewnode) to create the content (in the Guide, the block producer is not configured yet).</p>
-
-      <p>Document using EKG only (whatever is enabled by default in CN v10.5.1 when Cardano Tracer is disabled, based on the configuration files; do NOT explain Prometheus yet because the Prometheus endpoint moves to Cardano Tracer and that would involve more work to update later... updating only content for EKG would probably be relatively easy when the old tracing system is deprecated). Explain the hasEKG option in config.json pertaining to EKG.</p>
-
-      -----
-
-      <p>Cardano Node trace objects, which add log entries, may also produce metrics for monitoring node status. By default, Cardano Node enables a proprietary endpoint named EKG, as well as a <a href="https://prometheus.io/" target="_blank">Prometheus</a> endpoint, so that you can to display current metrics using a Web browser, or query current metrics using a terminal window or Bash script.</p>
-
+      <p>Cardano Node trace objects, which add log entries, may also produce metrics for monitoring node status. By default, Cardano Node enables a proprietary endpoint named EKG, as well as a <a href="https://prometheus.io/" target="_blank">Prometheus</a> endpoint. For example, you can display or query metrics using a Web browser, terminal window or Bash script.</p>
+        
       <h2>Displaying Metrics Using a Web Browser</h2>
 
       <p class="pi">To display current metrics for the instance of Cardano Node running on the local computer using a Web browser:</p>
@@ -77,17 +73,28 @@ export function HTMLContent() {
         <li><b>cardano.node.metrics.connectionManager.outgoingConns</b>—The total number of network peers that the local Cardano Node instance is using to populate the local copy of the blockchain ledger </li>
         <li><b>cardano.node.metrics.served.block.count.int</b>—The number of blocks fetched from the local copy of the blockchain ledger by incoming peers</li>
         <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfOne</b>—The percentage of blocks that the local Cardano Node instance currently propagates within one second of production</li>
-        <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfThree</b>—The percentage of blocks that the local Cardano Node instance currently propagates within three seconds of production</li>
+        <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfThree</b>—The percentage of blocks that the local Cardano Node instance currently propagates within three seconds of production
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+                <td class="boxText"><p class="boxText">A healthy node propagates more than 95 percent of blocks within three seconds of production. To troubleshoot issues related to block progagation, examine network speed and your stake pool <a href="/ConfiguringTopology">topology</a>.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
         <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfFive</b>—The percentage of blocks that the local Cardano Node instance currently propagates within five seconds of production</li>
         <li><b>cardano.node.metrics.RTS.gcHeapBytes.int</b>—In bytes, the amount of memory currently allocated to the local instance of Cardano Node</li>
         <li><b>cardano.node.metrics.RTS.gcLiveBytes.int</b>—In bytes, the amount of data in memory currently potentially usable by the local instance of Cardano Node</li>
       </ul>
 
+      <p>To convert the name of an EKG metric to the corresponding Prometheus metric, replace period (<code>.</code>) characters with underscore (<code>_</code>) characters.</p>
+
       <table class="box">
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">To convert the name of an EKG metric to the corresponding Prometheus metric, replace period (<code>.</code>) characters with underscore (<code>_</code>) characters.</p></td>
+            <td class="boxText"><p class="boxText">If a trace is not triggered, then metrics do NOT include the corresponding metric.</p></td>
           </tr>
         </tbody>
       </table>
@@ -113,20 +120,16 @@ export function HTMLContent() {
         </tbody>
       </table>
 
-      <h2>Incorporating Metrics in Bash Scripts</h2>
+      <h2>Creating a Dashboard</h2>
 
+      <p>The following Bash script shows you how to use metrics to create a dashboard for monitoring Cardano Node instances in your stake pool configuration:</p>
+      <CodeBlock>
+        {Dashboard}
+      </CodeBlock>
 
+      <h2>Additional Resources</h2>
 
-
-
-      <code>curl -s -H 'Accept: application/json' http://localhost:12788/ | jq -r '.cardano.node.metrics.blockfetchclient.blockdelay.cdfOne.val'</code>
-
-
-      <h2>Conclusion</h2>
-
-      <p>Now you know how to create a dashboard for monitoring your Cardano stake pool.</p>
-
-      <p>For some third-party dashboards available in the Cardano community, see <a href="/Community">Appendix C: Community Projects</a>.</p>
+      <p>For some additional third-party dashboards available in the Cardano community, see <a href="/Community">Appendix C: Community Projects</a>.</p>
 
     </div>
   );
