@@ -11,7 +11,7 @@ description: ""
 import React from 'react';
 
 import CodeBlock from '@theme/CodeBlock';
-import Dashboard from '!!raw-loader!/txt/Dashboard.sh';
+import Dashboard from '!!raw-loader!/txt/NodeView.sh';
 
 export function HTMLContent() {
   
@@ -20,7 +20,7 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
-      <p>Cardano Node trace objects, which add log entries, may also produce metrics for monitoring node status. By default, Cardano Node enables a proprietary endpoint named EKG, as well as a <a href="https://prometheus.io/" target="_blank">Prometheus</a> endpoint. For example, you can display or query metrics using a Web browser, terminal window or Bash script.</p>
+      <p>Cardano Node trace objects, which add log entries, may also produce metrics for monitoring node status. By default, Cardano Node enables a proprietary endpoint named EKG, as well as a <a href="https://prometheus.io/" target="_blank">Prometheus</a> endpoint. You can display or query metrics using a Web browser, terminal window or Bash script for example.</p>
         
       <h2>Displaying Metrics Using a Web Browser</h2>
 
@@ -72,8 +72,8 @@ export function HTMLContent() {
         <li><b>cardano.node.metrics.connectionManager.incomingConns</b>—The total number of remote Cardano Node instances—network peers—populating the network using blocks from the local copy of the blockchain ledger</li>
         <li><b>cardano.node.metrics.connectionManager.outgoingConns</b>—The total number of network peers that the local Cardano Node instance is using to populate the local copy of the blockchain ledger </li>
         <li><b>cardano.node.metrics.served.block.count.int</b>—The number of blocks fetched from the local copy of the blockchain ledger by incoming peers</li>
-        <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfOne</b>—The percentage of blocks that the local Cardano Node instance currently propagates within one second of production</li>
-        <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfThree</b>—The percentage of blocks that the local Cardano Node instance currently propagates within three seconds of production
+        <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfOne</b>—The percentage of blocks that the Cardano Node instance currently propagates within one second of production</li>
+        <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfThree</b>—The percentage of blocks that the Cardano Node instance currently propagates within three seconds of production
           <table class="box">
             <tbody>
               <tr>
@@ -83,9 +83,13 @@ export function HTMLContent() {
             </tbody>
           </table>
         </li>
-        <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfFive</b>—The percentage of blocks that the local Cardano Node instance currently propagates within five seconds of production</li>
-        <li><b>cardano.node.metrics.RTS.gcHeapBytes.int</b>—In bytes, the amount of memory currently allocated to the local instance of Cardano Node</li>
-        <li><b>cardano.node.metrics.RTS.gcLiveBytes.int</b>—In bytes, the amount of data in memory currently potentially usable by the local instance of Cardano Node</li>
+        <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfFive</b>—The percentage of blocks that the Cardano Node instance currently propagates within five seconds of production</li>
+        <li><b>cardano.node.metrics.RTS.gcHeapBytes.int</b>—In bytes, the amount of memory currently allocated to the Cardano Node instance</li>
+        <li><b>cardano.node.metrics.RTS.gcLiveBytes.int</b>—In bytes, the amount of data in memory currently potentially usable by the Cardano Node instance</li>
+        <li><b>cardano.node.metrics.forging_enabled</b>—An integer Boolean value (<code>0</code> or <code>1</code>) indicating whether the Cardano Node instance is operating as a block producer or relay</li>
+        <li><b>cardano.node.metrics.Forge.node-is-leader.int</b>—The number of blocks that the Cardano Node instance prepared</li>
+        <li><b>cardano.node.metrics.Forge.adopted.int</b>—The number of blocks prepared by the Cardano Node instance that the network accepted</li>
+        <li><b>cardano.node.metrics.Forge.didnt-adopt.int</b>—The number of blocks that the Cardano Node instance failed to prepare due to an error occurring within the software application</li>
       </ul>
 
       <p>To convert the name of an EKG metric to the corresponding Prometheus metric, replace period (<code>.</code>) characters with underscore (<code>_</code>) characters.</p>
@@ -94,7 +98,7 @@ export function HTMLContent() {
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">If a trace is not triggered, then metrics do NOT include the corresponding metric.</p></td>
+            <td class="boxText"><p class="boxText">If a trace is not triggered, then metrics do NOT include the corresponding metric. When the Cardano Node instance restarts, metrics reset.</p></td>
           </tr>
         </tbody>
       </table>

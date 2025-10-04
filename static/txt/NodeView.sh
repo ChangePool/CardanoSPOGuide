@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# The following Bash script polls metrics for the local Cardano Node instance
+# The following script polls metrics for the local Cardano Node instance
 # every five seconds, and then displays a dashboard for the user.
 #
 # To exit the script, press CTRL+C
@@ -27,21 +27,26 @@ while true
 do
 
   # Retrieve current metric values for the Cardano Node instance using the EKG endpoint
+  # NOTE: If you changed the IP address or port where the EKG endpoint listens, then update the URL accordingly
   ekg_metrics=$(curl -s -H 'Accept: application/json' http://localhost:12788/)
 
-  # From the EKG metrics, retrieve metrics that the dashboard displays
+  # From the EKG metrics, retrieve metrics that the dashboard displays, setting alternatives for NULL values
   dashboard_metrics=$(jq -r '
-    .cardano.node.metrics.epoch.int.val,
-    .cardano.node.metrics.slotInEpoch.int.val,
-    .cardano.node.metrics.blockNum.int.val,
-    .cardano.node.metrics.connectionManager.incomingConns.val,
-    .cardano.node.metrics.connectionManager.outgoingConns.val,
-    .cardano.node.metrics.served.block.count.int.val,
-    .cardano.node.metrics.blockfetchclient.blockdelay.cdfOne.val,
-    .cardano.node.metrics.blockfetchclient.blockdelay.cdfThree.val,
-    .cardano.node.metrics.blockfetchclient.blockdelay.cdfFive.val,
-    .cardano.node.metrics.RTS.gcHeapBytes.int.val,
-    .cardano.node.metrics.RTS.gcLiveBytes.int.val' <<< "${ekg_metrics}")
+    .cardano.node.metrics.epoch.int.val // 0,
+    .cardano.node.metrics.slotInEpoch.int.val // 0,
+    .cardano.node.metrics.blockNum.int.val // 0,
+    .cardano.node.metrics.connectionManager.incomingConns.val // 0,
+    .cardano.node.metrics.connectionManager.outgoingConns.val // 0,
+    .cardano.node.metrics.served.block.count.int.val // 0,
+    .cardano.node.metrics.blockfetchclient.blockdelay.cdfOne.val // 0,
+    .cardano.node.metrics.blockfetchclient.blockdelay.cdfThree.val // 0,
+    .cardano.node.metrics.blockfetchclient.blockdelay.cdfFive.val // 0,
+    .cardano.node.metrics.RTS.gcHeapBytes.int.val // 0,
+    .cardano.node.metrics.RTS.gcLiveBytes.int.val // 0,
+    .cardano.node.metrics.forging_enabled.val // 0,
+    .cardano.node.metrics.Forge["node-is-leader"].int.val // 0,
+    .cardano.node.metrics.Forge.adopted.int.val // 0,
+    .cardano.node.metrics.Forge["didnt-adopt"].int.val // 0' <<< "${ekg_metrics}")
 
   # Assign the list of metrics that the dashboard displays to an array
   dashboard_metrics_arr=($(echo "${dashboard_metrics}"))
@@ -58,6 +63,10 @@ do
   block_delay_5s=${dashboard_metrics_arr[8]}
   mem_heap=${dashboard_metrics_arr[9]}
   mem_live=${dashboard_metrics_arr[10]}
+  block_producer=${dashboard_metrics_arr[11]}
+  blocks_produced=${dashboard_metrics_arr[12]}
+  blocks_adopted=${dashboard_metrics_arr[13]}
+  blocks_invalid=${dashboard_metrics_arr[14]}
 
   # Format and round percentages for display
   block_delay_1s=$(echo "scale=1; ((${block_delay_1s} * 1000) + 0.5) / 10" | bc)
@@ -87,6 +96,9 @@ do
   block_count=$(printf "%-5s" "${block_count}")
   mem_heap=$(printf "%-7s" "${mem_heap}")
   mem_live=$(printf "%-7s" "${mem_live}")
+  blocks_produced=$(printf "%-2s" "${blocks_produced}")
+  blocks_adopted=$(printf "%-2s" "${blocks_adopted}")
+  blocks_invalid=$(printf "%-2s" "${blocks_invalid}")
 
   # To create fixed widths, add leading spaces to values as needed
   block_delay_1s=$(printf "%*s%s" $((5 - ${#block_delay_1s})) "" "${block_delay_1s}")
@@ -131,6 +143,16 @@ do
   echo -e "${LightGreen}${Underline}Block Propagation${NoColor}"
   echo -e "  Count    Within: 1 Second   3 Seconds   5 Seconds"
   echo -e "  ${LightCyan}${block_count}${NoColor}             ${LightCyan}${block_delay_1s}%${NoColor}     ${LightCyan}${block_delay_3s}%${NoColor}      ${LightCyan}${block_delay_5s}%${NoColor}"
+
+  # If the node is a block producer, then display block production metrics
+  if [ ${block_producer} -eq 1 ]
+  then
+
+    echo
+    echo -e "${LightGreen}${Underline}Block Production${NoColor}"
+    echo -e "  Prepared: ${LightCyan}${blocks_produced}${NoColor}      Accepted: ${LightCyan}${blocks_adopted}${NoColor}    Invalid: ${LightCyan}${blocks_invalid}${NoColor}"
+
+  fi
 
   echo
   echo -e "${LightGreen}${Underline}Memory Usage${NoColor}"
