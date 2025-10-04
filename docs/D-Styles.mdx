@@ -10,12 +10,15 @@ description: "How to revise the Guide"
 
 import React from 'react';
 
+import CodeBlock from '@theme/CodeBlock';
+import SampleText from '!!raw-loader!/txt/SampleText.txt';
+
 export function HTMLContent() {
 
   /* To create comments in JavaScript XML (JSX) outside elements, use JavaScript comments */
 
   /* Define a multiline string to preserve whitespace in a code block */
-  const CodeSample = `function Code()
+  const SampleCode = `function Code()
 {
   Sample Code;
   Sample Code;
@@ -289,8 +292,6 @@ export function HTMLContent() {
         &nbsp;&nbsp;Sample Code;<br />
         &#125;
       </pre>
-      <p>Fusce et rhoncus tellus. Nunc vehicula turpis a turpis porttitor vulputate vel vitae arcu. Nulla facilisi. Phasellus vulputate eros eget varius finibus.</p>
-      <p>Praesent interdum urna eu nisl eleifend, ut placerat quam porttitor. Phasellus risus ex, sodales in odio nec, pretium consequat lacus. Sed tempus eleifend erat, at tincidunt felis semper nec.</p>
       <table class="box">
         <tbody>
           <tr>
@@ -302,10 +303,19 @@ export function HTMLContent() {
       <p>To preserve whitespace in a code block, assign a multiline string to a constant, and then reference the constant in a <code>pre</code> tag:</p>
       <pre>
 
-        {/* The CodeSample constant is set in the definition of the HTMLContent function */}
+        {/* The SampleCode constant is set in the definition of the HTMLContent function */}
 
-        {CodeSample}
+        {SampleCode}
       </pre>
+
+      <p>To include large code samples or other text, you can import and display text files:</p>
+      <CodeBlock>
+
+        {/* The CodeBlock and SampleText components are imported at the beginning of the D-Styles.mdx file. */}
+
+        {SampleText}
+      </CodeBlock>
+
       <p>Create new topics in the <code>/docs</code> subfolder using <code>.MDX</code> as the file name extension. To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; <code>&lt;TOCStatus&gt;</code> is a Boolean value determinig whether or not the table of contents appears in the top right corner of a topic; <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar; and, <code>&lt;Description&gt;</code> is a brief summary of the topic that displays in a sidebar category for the topic:</p>
 
       <pre>

@@ -34,14 +34,19 @@
 		"body": "&amp;"
 	},
 
-	"{ HTML Entity": {
-		"prefix": "Left Brace",
-		"body": "&#123;"
-	},
+	//"{ HTML Entity": {
+	//	"prefix": "Left Brace",
+	//	"body": "&#123;"
+	//},
 
-	"} HTML Entity": {
-		"prefix": "Right Brace",
-		"body": "&#125;"
+	//"} HTML Entity": {
+	//	"prefix": "Right Brace",
+	//	"body": "&#125;"
+	//},
+
+	"{ and } HTML Entities": {
+		"prefix": "Curly Braces",
+		"body": "&#123;$1&#125;"
 	},
 
 	"< HTML Entity": {
@@ -122,26 +127,44 @@
 		"description": "Template for new topics using HTML in the CoinCashew Guide Web site created using Docusaurus"
 	},
 
+	"CoinCashew Guide Multiline String": {
+		"prefix": "Code Block Constant",
+		"body": [
+			"const $1 = `$2`;"
+		],
+		"description": "Snippet for defining a multiline string in the definition of a JSX function, used to preserve whitespace in a code block"
+	},
+
 	"CoinCashew Guide Code Block": {
 		"prefix": "Code Block",
 		"body": [
 			"<pre>",
-			"\t$1{<ConstantName>}",
-			"\t|",
+			"\t{$1}",
 			"\t$2<br />",
 			"\t&nbsp;&nbsp;<br />",
 			"\t<br />",
 			"</pre>"
 		],
-		"description": "Snippet for a code block. See also the Multiline String snippet."
+		"description": "Snippet for a code block. See also the Code Block Constant snippet."
 	},
 
-	"CoinCashew Guide Multiline String": {
-		"prefix": "Multiline String",
+	"CoinCashew Guide Import Text File":{
+		"prefix": "Text File Import",
 		"body": [
-			"const $1<ConstantName> = `$2<MultilineString>`;"
+			"import CodeBlock from '@theme/CodeBlock';",
+			"import $1 from '!!raw-loader!/txt/$2';"
 		],
-		"description": "Snippet for defining a multiline string in the definition of a JSX function, used to preserve whitespace in a code block"
+		"description": "Snippet for importing a text file"
+	},
+
+		"CoinCashew Guide Imported Text":{
+		"prefix": "Text File",
+		"body": [
+			"<CodeBlock>",
+			"\t{$1}",
+			"</CodeBlock>"
+		],
+		"description": "Snippet for inserting text imported using a file. See also the Text File Import snippet."
 	},
 
 	"CoinCashew Guide Figure": {
@@ -149,7 +172,7 @@
 		"body": [
 			"<figure>",
 			"\t<img src=\"img/$1<ImageFileName>\" />",
-			"\t<figcaption>Figure $2<Number> $3<CaptionText></figcaption>",
+			"\t<figcaption>Figure $2</figcaption>",
 			"</figure>"
 		],
 		"description": "Snippet for inserting a figure"
@@ -236,6 +259,21 @@
 		"description": "Snippet for inserting a box labeled Credit"
 	},
 
+	"CoinCashew Guide Challenge Box": {
+		"prefix": "Challenge Box",
+		"body": [
+			"<table class=\"box\">",
+			"\t<tbody>",
+			"\t\t<tr>",
+			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Challenge<br /><img src=\"img/BoxChallenge.png\" alt=\"Challenge\" /></p></td>",
+			"\t\t\t<td class=\"boxText\"><p class=\"boxText\">$1</p></td>",
+			"\t\t</tr>",
+			"\t</tbody>",
+			"</table>"
+		],
+		"description": "Snippet for inserting a box labeled Challenge"
+	},
+
 	"Import MDX Tabs Component": {
 		"prefix": "Tabs Component",
 		"body": [
@@ -272,6 +310,26 @@
 			"<center><strong>OR</strong></center>"
 		],
 		"description": "Snippet for inserting the word OR in Docusaurus HTML or Markdown"
+	},
+
+	"CoinCashew Procedure Introduction": {
+		"prefix": "Procedure Introduction",
+		"body": [
+			"<p class=\"pi\">$1:</p>"
+		],
+		"description": "Snippet for inserting a procedure introduction"
+	},
+
+	"CoinCashew Guide Single-step Procedure": {
+		"prefix": "Single-step Procedure",
+		"body": [
+			"<p class=\"pi\">To $1:</p>",
+			"",
+			"<ul class=\"ss\">",
+			"\t<li>$2</li>",
+			"</ul>"
+		],
+		"description": "Snippet for inserting a single-step procedure"
 	}
 
 }
