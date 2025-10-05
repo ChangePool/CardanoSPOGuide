@@ -74,7 +74,13 @@ CONFIG=<NodeHomeValue>/<ConfigFileName>
 #
 # Run Cardano Node using the options that you set using variables
 #
-/usr/local/bin/cardano-node run --topology ${TOPOLOGY} --database-path ${DB_PATH} --socket-path ${SOCKET_PATH} --host-addr ${HOSTADDR} --port ${PORT} --config ${CONFIG}
+/usr/local/bin/cardano-node run \
+  --topology ${TOPOLOGY} \
+  --database-path ${DB_PATH} \
+  --socket-path ${SOCKET_PATH} \
+  --host-addr ${HOSTADDR} \
+  --port ${PORT} \
+  --config ${CONFIG}
 ```
 
 :::info

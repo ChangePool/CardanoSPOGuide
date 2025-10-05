@@ -4,7 +4,7 @@ sidebar_label: "Generating Payment and Stake Keys"
 slug: /GeneratingWalletKeys
 hide_title: false
 hide_table_of_contents: false
-sidebar_position: 25
+sidebar_position: 20
 description: ""
 ---
 
@@ -21,4 +21,13 @@ export function HTMLContent() {
 }
 
 <HTMLContent />
+
+Cardano uses numerous cryptographic key pairs to secure your wallet and stake pool. A key pair is comprised of a public verification key file having the `.vkey` file name extension and a secret key file having the `.skey` extension. You use key pairs to generate addresses and certificates securely.
+
+To operate a stake pool, you need to create the following addresses for a wallet:
+
+- **Payment Address**—Used to store, receive and send money
+- **Stake Address**—Used to store and withdraw rewards, as well as to define the stake pool owner, reward accounts and stake pool delegation
+
+For more details, see [Cardano Key Pairs](https://developers.cardano.org/docs/operate-a-stake-pool/cardano-key-pairs/).
 
