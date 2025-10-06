@@ -157,7 +157,13 @@ b.navbar__title
   font-weight: 700; /* Bold */
 }
 
-/* For code blocks, use the pre tag instead
+/* For inline code, use the code tag */
+code
+{
+  font-weight: 400; /* Normal */
+}
+
+/* For code blocks, use the pre tag
 code.block
 {
   display: inline-block;
@@ -332,6 +338,7 @@ p.pi
 
 pre
 {
+  font-weight: 400; /* Normal */
   text-indent: 0pt; /* Required explicitly when pre tags appear inside ordered list items */
   margin-top: 12pt;
   margin-bottom: 12pt;
@@ -363,6 +370,11 @@ table.box
 
         margin-top: 12pt;
         margin-bottom: 10.5pt;
+}
+
+td
+{
+  font-weight: 300; /* Light */
 }
 
 table.box td
