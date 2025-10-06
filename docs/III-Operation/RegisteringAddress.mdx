@@ -3,7 +3,7 @@ title: "Registering Your Stake Address"
 sidebar_label: "Registering Your Stake Address"
 slug: /RegisteringAddress
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 25
 description: ""
 ---
@@ -22,4 +22,16 @@ export function HTMLContent() {
 
 <HTMLContent />
 
-<!-- The local blockchain instance must be synchronized in order to get an accurate tip calculation, required to submit the transaction to register the stake address. The current topic now appears earlier in the guide than the Generating Keys for the Block Producer topic, so copy the related content from there. -->
+<p>Pledge is the stake that you delegate to your own pool, serving as a security measure and indicating your commitment to the Cardano ecosystem.</p>
+  
+<p>Using a transaction, you must register on the blockchain the stake address associated with a payment address containing funds that you want to pledge.</p>
+
+<p><i>Figure 1</i> provides an overview of the process to create a transaction using the Cardano Command Line Interface (CLI).</p>
+
+<figure>
+  <img src="img/TransactionOverview.png" />
+  <figcaption>Figure 1 Creating a Transaction using Cardano CLI</figcaption>
+</figure>
+
+<!-- The local blockchain instance must be synchronized in order to get an accurate tip calculation, required to submit the transaction to register the stake address. The current topic now appears earlier in the guide than the Generating Keys for the Block Producer topic, so copy (do NOT move) the related content from there. -->
+
