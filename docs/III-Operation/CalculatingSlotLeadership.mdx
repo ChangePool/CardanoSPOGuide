@@ -29,7 +29,7 @@ export function HTMLContent() {
   <figcaption>Figure 1 Estimating Cardano Mainnet Stake Pool Block Production Rate</figcaption>
 </figure>
 
-<p><i>Figure 2</i> illustrates the process that Cardano uses to calculate the slot leadership schedule for stake pools to produce blocks.</p>
+<p><i>Figure 2</i> illustrates the process that Cardano uses to calculate the slot leadership schedule for stake pools to prepare blocks.</p>
 
 <figure>
   <img src="img/BlockProductionProcess.png" />
@@ -38,13 +38,13 @@ export function HTMLContent() {
 
 ## Log Entries Related to Block Production
 
-In the Cardano Node log for the block-producing node in your stake pool configuration, the `Forge.Loop.NodeNotLeader` trace adds an entry for every slot when your stake pool is NOT elected to produce a block. For example:
+In the Cardano Node log for the block-producing node in your stake pool configuration, the `Forge.Loop.NodeNotLeader` trace adds an entry for every slot when your stake pool is NOT elected to prepare a block. For example:
 
 ```
 [cardanonode:Forge.Loop.NodeNotLeader](Info,94) Not leading slot 91529678
 ```
 
-In a slot when your stake pool is elected to produce a block, the log for the block producer includes timestamped entries that the `Forge.loop.NodeIsLeader` and `Forge.Loop.AdoptedBlock` traces add. For example:
+In a slot when your stake pool is elected to prepare a block, the log for the block producer includes timestamped entries that the `Forge.loop.NodeIsLeader` and `Forge.Loop.AdoptedBlock` traces add. For example:
 
 ```
 [cardanonode:Forge.Loop.NodeIsLeader](Info,94) Leading slot 91529679
@@ -53,15 +53,15 @@ In a slot when your stake pool is elected to produce a block, the log for the bl
 
 <!-- October 1, 2025 - The sample log entries are taken from an instance of Cardano Node operating in the Preview Testnet environment. -->
 
-The `Forge.Loop.NodeIsLeader` log entry indicates that the local Cardano Node instance is producing a block for the specified slot.
+The `Forge.Loop.NodeIsLeader` log entry indicates that the local Cardano Node instance is preparing a block for the specified slot.
 
-The `Forge.Loop.AdoptedBlock` log entry indicates that the Cardano network accepted the block that your stake pool produced and submitted. Rarely, the network may need to reject a block after accepting the block. To confirm that a block your stake pool produces is added to the Cardano blockchain ledger successfully, search for the block hash included in the `Forge.Loop.AdoptedBlock` log entry using a Cardano [blockchain explorer](https://explorer.cardano.org/).
+The `Forge.Loop.AdoptedBlock` log entry indicates that the Cardano network accepted the block that your stake pool prepared and submitted. Rarely, the network may need to reject a block after accepting the block. To confirm that a block your stake pool prepares is added to the Cardano blockchain ledger successfully, search for the block hash included in the `Forge.Loop.AdoptedBlock` log entry using a Cardano [blockchain explorer](https://explorer.cardano.org/).
 
 <table class="box">
   <tbody>
     <tr>
       <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
-      <td class="boxText"><p class="boxText">Your stake pool only receives fees for blocks the pool produces that are successfully added to the blockchain ledger.</p></td>
+      <td class="boxText"><p class="boxText">Your stake pool only receives fees for blocks the pool prepares that are successfully added to the blockchain ledger.</p></td>
     </tr>
   </tbody>
 </table>
