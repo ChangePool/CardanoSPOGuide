@@ -24,13 +24,13 @@ while read -r utxo; do
         utxo_balance=$(jq -r '.value.lovelace' <<< "${values}")
         total_balance=$((${total_balance}+${utxo_balance}))
         echo "TxHash: ${hash}#${idx}"
-        echo "ADA: ${utxo_balance}"
+        echo "UTXO Balance: ${utxo_balance} Lovelace"
         tx_in="${tx_in} --tx-in ${hash}#${idx}"
 		txcnt=$((txcnt + 1))
     fi
 done <<< "$(jq -r 'keys[]' <<< "${utxo_json}")"
 
 echo
-echo "Total available ADA balance: ${total_balance}"
+echo "Total available balance: ${total_balance} Lovelace"
 echo "Number of UTXOs: ${txcnt}"
 echo "Final --tx-in string:${tx_in}"
