@@ -1,0 +1,381 @@
+---
+title: "Creating a Wallet"
+sidebar_label: "Creating a Wallet"
+slug: /CreatingWallet
+hide_title: false
+hide_table_of_contents: true
+sidebar_position: 20
+description: ""
+---
+
+import React from 'react';
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+      {/* INSERT HTML HERE */}
+
+      <p>To operate a stake pool, you need to create the following addresses for a wallet:</p>
+
+      <ul>
+        <li><b>Payment Address</b>—Used to store, receive and send money</li>
+        <li><b>Stake Address</b>—Used to store and withdraw rewards, as well as to define the stake pool owner, reward accounts and stake pool delegation</li>
+      </ul>
+
+      <p>You can create a wallet for your stake pool using key pairs or a seed phrase. While creating a wallet using keys is simpler, using a seed phrase offers the convenience of accessing the rewards account for your stake pool using an online, Desktop or Mobile <a href="https://docs.cardano.org/about-cardano/new-to-cardano/types-of-wallets" target="_blank">wallet</a>.</p>
+
+      <p>If you create a wallet using a seed phrase, then you can generate the keys for the wallet. If you create a wallet using keys, then generating the seed phrase for the wallet is NOT possible.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+            <td class="boxText"><p class="boxText">For security, generate key pairs, addresses and the optional seed phrase using your air-gapped, offline computer.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1>Using Keys</h1>
+
+      <p class="pi">To create a new wallet using a terminal window on your air-gapped, offline computer:</p>
+
+      <ol>
+        <li>To generate a new payment address key pair using the file names <code>payment.vkey</code> and <code>payment.skey</code> type:
+          <pre>
+            cd $NODE_HOME<br />
+            cardano-cli conway address key-gen \<br />
+            &nbsp;&nbsp;--verification-key-file payment.vkey \<br />
+            &nbsp;&nbsp;--signing-key-file payment.skey
+          </pre>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">You copied the Cardano CLI binary when <a href="/OfflineComputer">Configuring an Air-gapped, Offline Computer</a>.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To generate a new stake address key pair using the file names <code>stake.vkey</code> and <code>stake.skey</code> type:
+          <pre>
+            cardano-cli conway stake-address key-gen \<br />
+            &nbsp;&nbsp;--verification-key-file stake.vkey \<br />
+            &nbsp;&nbsp;--signing-key-file stake.skey
+          </pre>
+        </li>
+        <li>To generate a stake address for Mainnet using the file name <code>stake.addr</code> type:
+          <pre>
+            cardano-cli conway stake-address build \<br />
+            &nbsp;&nbsp;--stake-verification-key-file stake.vkey \<br />
+            &nbsp;&nbsp;--out-file stake.addr \<br />
+            &nbsp;&nbsp;--mainnet
+          </pre>
+          <center><strong>OR</strong></center>
+          To generate a stake address for a testnet environment, type the following command where <code>&lt;MagicNumber&gt;</code> is the network magic number for the testnet network that you use:
+          <pre>
+            cardano-cli conway stake-address build \<br />
+            &nbsp;&nbsp;--stake-verification-key-file stake.vkey \<br />
+            &nbsp;&nbsp;--out-file stake.addr \<br />
+            &nbsp;&nbsp;--testnet-magic &lt;MagicNumber&gt;
+          </pre>
+        </li>
+        <li>To generate a payment address for Mainnet using the file name <code>payment.addr</code> that is coupled with the stake address you created in step 3, type:
+          <pre>
+            cardano-cli conway address build \<br />
+            &nbsp;&nbsp;--payment-verification-key-file payment.vkey \<br />
+            &nbsp;&nbsp;--stake-verification-key-file stake.vkey \<br />
+            &nbsp;&nbsp;--out-file payment.addr \<br />
+            &nbsp;&nbsp;--mainnet
+          </pre>
+          <center><strong>OR</strong></center>
+          To generate a payment address for a testnet environment, type the following command where <code>&lt;MagicNumber&gt;</code> is the network magic number for the testnet network that you use:
+          <pre>
+            cardano-cli conway address build \<br />
+            &nbsp;&nbsp;--payment-verification-key-file payment.vkey \<br />
+            &nbsp;&nbsp;--stake-verification-key-file stake.vkey \<br />
+            &nbsp;&nbsp;--out-file payment.addr \<br />
+            &nbsp;&nbsp;--testnet-magic &lt;MagicNumber&gt;
+          </pre>
+        </li>
+        <li>Back up the files containing the payment address and stake address as well as the corresponding public verification and secret keys using a secure and comprehensive backup strategy.</li>
+        <li>Using removable media, copy the <code>payment.addr</code> file to the <code>$NODE_HOME</code> folder on your block-producing node.</li>
+      </ol>
+
+      <h1>Using a Seed Phrase</h1>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <h1>Funding Your Payment Address</h1>
+
+      <p>Pledge is the stake that you delegate to your own pool, serving as a security measure and indicating your commitment to the Cardano ecosystem. Using a wallet, send funds that you want to pledge from another account you control to the new payment address.</p>
+
+      <p class="pi">To fund the new payment address:</p>
+
+      <ol>
+        <li>To display the new payment address, using a terminal window type:
+          <pre>
+            cat $NODE_HOME/payment.addr
+          </pre>
+        </li>
+        <li>Using a wallet of your choice, send funds that you want to pledge to the address that displays in step 1</li>
+        <li>Wait a few moments for the transaction to complete. To verify the transaction, type the following command using a terminal window on the block-producing node to display the list of Unspent Transaction Output (UTXOs) available for the new payment address, and then find the UTXO for the funds that you sent in step 2:
+          <pre>
+            cardano-cli conway query utxo --output-json \<br />
+            &nbsp;&nbsp;--address $(cat $NODE_HOME/payment.addr) \<br />
+            &nbsp;&nbsp;--mainnet
+          </pre>
+        </li>
+      </ol>
+
+      <p>The UTXO query displays JSON output similar to the following—where the key is the transaction hash, followed by a hash (<code>#</code>) character, and then followed by the transaction index—displaying the value of the UTXO in Lovelace:</p>
+
+      <pre>
+        &#123;<br />
+        &nbsp;&nbsp;"4f26e87038f6657ea9429732685c43525685506816420dc5f0e50c692d3387e6#0": &#123;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"address": "addr_test1qzkdq88knvkrycp40zv9mtdejqqjqwklvzcjmvlj8erjgx5q628ecngj4yjr4dmtfqwj76qcqrwclgwvn39hm4hcy9eqcsza02",<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"datum": null,<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"datumhash": null,<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"inlineDatum": null,<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"inlineDatumRaw": null,<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"referenceScript": null,<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"value": &#123;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"lovelace": 9997654786<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&#125;<br />
+        &nbsp;&nbsp;&#125;<br />
+        &#125;
+      </pre>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Named after the English mathematician and writer Ada Lovelace, the sub-unit of ADA is the Lovelace. 1 ADA is comprised of 1,000,000 Lovelace.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+
+
+    </div>
+  );
+}
+
+<HTMLContent />
+
+
+
+
+  ## Using a Seed Phrase
+
+  To create a wallet using a seed phrase, use [Cardano Wallet](https://github.com/cardano-foundation/cardano-wallet).
+
+
+
+
+
+
+    :::info
+Credits to [ilap](https://gist.github.com/ilap/3fd57e39520c90f084d25b0ef2b96894) for creating this process.
+:::
+
+Create a 15-word or 24-word length shelley compatible mnemonic with [Daedalus](https://daedaluswallet.io) or [Yoroi](broken-reference) on a offline machine preferred.
+
+Using your online block producer node, download `cardano-wallet`
+
+```bash
+###
+### On block producer node,
+###
+cd $NODE_HOME
+wget https://github.com/input-output-hk/cardano-wallet/releases/download/v2022-08-16/cardano-wallet-v2022-08-16-linux64.tar.gz
+```
+
+
+
+Transfer the **cardano-wallet** to your **air-gapped offline machine** via USB key or other removable media.
+
+Extract the wallet files and cleanup.
+
+```bash
+###
+### On air-gapped offline machine,
+###
+tar -xvf cardano-wallet-v2022-08-16-linux64.tar.gz
+rm cardano-wallet-v2022-08-16-linux64.tar.gz
+cd cardano-wallet-v2022-08-16-linux64
+```
+
+Create`extractPoolStakingKeys.sh` script.
+
+```bash
+###
+### On air-gapped offline machine,
+###
+cat > extractPoolStakingKeys.sh << HERE
+#!/bin/bash 
+
+CADDR=\${CADDR:=\$( which cardano-address )}
+[[ -z "\$CADDR" ]] && ( echo "cardano-address cannot be found, exiting..." >&2 ; exit 127 )
+
+CCLI=\${CCLI:=\$( which cardano-cli )}
+[[ -z "\$CCLI" ]] && ( echo "cardano-cli cannot be found, exiting..." >&2 ; exit 127 )
+
+OUT_DIR="\$1"
+[[ -e "\$OUT_DIR"  ]] && {
+       	echo "The \"\$OUT_DIR\" is already exist delete and run again." >&2 
+       	exit 127
+} || mkdir -p "\$OUT_DIR" && pushd "\$OUT_DIR" >/dev/null
+
+shift
+MNEMONIC="\$*"
+
+# Generate the master key from mnemonics and derive the stake account keys 
+# as extended private and public keys (xpub, xprv)
+echo "\$MNEMONIC" |\
+"\$CADDR" key from-recovery-phrase Shelley > root.prv
+
+cat root.prv |\
+"\$CADDR" key child 1852H/1815H/0H/2/0 > stake.xprv
+
+cat root.prv |\
+"\$CADDR" key child 1852H/1815H/0H/0/0 > payment.xprv
+
+TESTNET=0
+MAINNET=1
+NETWORK=\$MAINNET
+
+cat payment.xprv |\
+"\$CADDR" key public --with-chain-code | tee payment.xpub |\
+"\$CADDR" address payment --network-tag \$NETWORK |\
+"\$CADDR" address delegation \$(cat stake.xprv | "\$CADDR" key public --with-chain-code | tee stake.xpub) |\
+tee base.addr_candidate |\
+"\$CADDR" address inspect
+echo "Generated from 1852H/1815H/0H/{0,2}/0"
+cat base.addr_candidate
+echo
+
+# XPrv/XPub conversion to normal private and public key, keep in mind the 
+# keypars are not a valid Ed25519 signing keypairs.
+TESTNET_MAGIC="--testnet-magic 1097911063"
+MAINNET_MAGIC="--mainnet"
+MAGIC="\$MAINNET_MAGIC"
+
+SESKEY=\$( cat stake.xprv | bech32 | cut -b -128 )\$( cat stake.xpub | bech32)
+PESKEY=\$( cat payment.xprv | bech32 | cut -b -128 )\$( cat payment.xpub | bech32)
+
+cat << EOF > stake.skey
+{
+    "type": "StakeExtendedSigningKeyShelley_ed25519_bip32",
+    "description": "",
+    "cborHex": "5880\$SESKEY"
+}
+EOF
+
+cat << EOF > payment.skey
+{
+    "type": "PaymentExtendedSigningKeyShelley_ed25519_bip32",
+    "description": "Payment Signing Key",
+    "cborHex": "5880\$PESKEY"
+}
+EOF
+
+"\$CCLI" key verification-key --signing-key-file stake.skey --verification-key-file stake.evkey
+"\$CCLI" key verification-key --signing-key-file payment.skey --verification-key-file payment.evkey
+
+"\$CCLI" key non-extended-key --extended-verification-key-file payment.evkey --verification-key-file payment.vkey
+"\$CCLI" key non-extended-key --extended-verification-key-file stake.evkey --verification-key-file stake.vkey
+
+
+"\$CCLI" stake-address build --stake-verification-key-file stake.vkey \$MAGIC > stake.addr
+"\$CCLI" address build --payment-verification-key-file payment.vkey \$MAGIC > payment.addr
+"\$CCLI" address build \
+    --payment-verification-key-file payment.vkey \
+    --stake-verification-key-file stake.vkey \
+    \$MAGIC > base.addr
+
+echo "Important the base.addr and the base.addr_candidate must be the same"
+diff base.addr base.addr_candidate
+popd >/dev/null
+HERE
+```
+
+Add permissions and export PATH to use the binaries.
+
+```bash
+###
+### On air-gapped offline machine,
+###
+chmod +x extractPoolStakingKeys.sh
+export PATH=$PATH:$(pwd)
+```
+
+Extract your keys. Update the command with your mnemonic phrase.
+
+```bash
+###
+### On air-gapped offline machine,
+###
+./extractPoolStakingKeys.sh extractedPoolKeys/ <15|24-word length mnemonic>
+```
+
+:::danger
+**Important**: The **base.addr** and the **base.addr\_candidate** must be the same. Review the screen output.
+:::
+
+Your new staking keys are in the folder `extractedPoolKeys/`
+
+Now move `payment/stake` key pair over to your `$NODE_HOME` for use with your stake pool.
+
+```bash
+###
+### On air-gapped offline machine,
+###
+cd extractedPoolKeys/
+cp stake.vkey stake.skey stake.addr payment.vkey payment.skey base.addr $NODE_HOME
+cd $NODE_HOME
+#Rename to base.addr file to payment.addr
+mv base.addr payment.addr
+```
+
+:::info
+**payment.addr**, or also known as base.addr from this extraction script, will be the cardano address which holds your pool's pledge.
+:::
+
+Clear the bash history in order to protect your mnemonic phrase and remove the `cardano-wallet` files.
+
+```bash
+###
+### On air-gapped offline machine,
+###
+history -c && history -w
+```
+
+Finally close all your terminal windows and open new ones with zero history.
+
+Awesome. Now you can track your pool rewards in your wallet.
+
+
+
+
+

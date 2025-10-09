@@ -22,9 +22,7 @@ export function HTMLContent() {
 
 <HTMLContent />
 
-<p>Pledge is the stake that you delegate to your own pool, serving as a security measure and indicating your commitment to the Cardano ecosystem.</p>
-  
-<p>Using a transaction, you must register on the blockchain the stake address associated with a payment address containing funds that you want to pledge.</p>
+<p>Pledge is the stake that you delegate to your own pool, serving as a security measure and indicating your commitment to the Cardano ecosystem. Using a transaction, you must register on the blockchain the stake address associated with a payment address containing funds that you want to pledge.</p>
 
 <p><i>Figure 1</i> provides an overview of the process to create a transaction using the Cardano Command Line Interface (CLI).</p>
 
@@ -34,4 +32,24 @@ export function HTMLContent() {
 </figure>
 
 <!-- The local blockchain instance must be synchronized in order to get an accurate tip calculation, required to submit the transaction to register the stake address. The current topic now appears earlier in the guide than the Generating Keys for the Block Producer topic, so copy (do NOT move) the related content from there. -->
+
+<!-- TO-DO: Incorporate the step to retrieve current protocol parameters in the common content used to prepare transactions throughout the Guide (save params.json in the same folder as downloaded configuration files):-->
+
+First, obtain the protocol-parameters.
+
+On the block-producing node, using a terminal window type the following command to query Mainnet protocol parameters:
+```bash
+cardano-cli conway query protocol-parameters \
+    --mainnet \
+    --out-file $NODE_HOME/params.json
+```
+
+<center><strong>OR</strong></center>
+
+Type the following command to query testnet environment protocol parameters, where `<MagicNumber>` is the network magic number for the testnet network that you use:
+  ```bash
+  cardano-cli conway query protocol-parameters \
+    --testnet-magic <MagicNumber> \
+    --out-file $NODE_HOME/params.json
+  ```
 

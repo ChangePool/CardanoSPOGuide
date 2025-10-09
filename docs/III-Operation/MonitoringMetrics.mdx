@@ -22,7 +22,7 @@ export function HTMLContent() {
 
       <p>Cardano Node trace objects, which add log entries, may also produce metrics for monitoring node status. By default, Cardano Node enables a proprietary endpoint named EKG, as well as a <a href="https://prometheus.io/" target="_blank">Prometheus</a> endpoint. You can display or query metrics using a Web browser, terminal window or Bash script for example.</p>
         
-      <h2>Displaying Metrics Using a Web Browser</h2>
+      <h1>Displaying Metrics Using a Web Browser</h1>
 
       <p class="pi">To display current metrics for the instance of Cardano Node running on the local computer using a Web browser:</p>
       
@@ -51,22 +51,13 @@ export function HTMLContent() {
         </tbody>
       </table>
 
-      <h2>Useful Metrics</h2>
+      <h1>Useful Metrics</h1>
 
       <p>As a starting point to monitor an instance of Cardano Node, you may find the following EKG metrics most useful:</p>
 
       <ul>
         <li><b>cardano.node.metrics.epoch.int</b>—The epoch number of the tip of the local copy of the Cardano blockchain ledger. In the Cardano ecosystem, each epoch is five days in duration.</li>
-        <li><b>cardano.node.metrics.slotInEpoch.int</b>—The slot number of the tip of the local copy of the Cardano blockchain ledger since the beginning of the tip epoch. A slot occurs every second. Therefore, each epoch is comprised of 432,000 slots.
-          <table class="box">
-            <tbody>
-              <tr>
-                <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
-                <td class="boxText"><p class="boxText">For the current epoch and relative slot number of the Cardano network, see a <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>. When the epoch and slot number of a local copy of the ledger match the current epoch and slot number of the network, then the local Cardano Node instance is synchronized.</p></td>
-              </tr>
-            </tbody>
-          </table>
-        </li>
+        <li><b>cardano.node.metrics.slotInEpoch.int</b>—The slot number of the tip of the local copy of the Cardano blockchain ledger since the beginning of the tip epoch. A slot occurs every second. Therefore, each epoch is comprised of 432,000 slots.</li>
         {/* <!-- <li><b>cardano.node.metrics.slotNum.int</b>—The slot number of the tip of the local copy of the Cardano blockchain since the start of the ledger</li> --> */}
         <li><b>cardano.node.metrics.blockNum.int</b>—The number of the most recent block produced since the start of the ledger, also referred to as the block height. Generally, the Cardano protocol produces a block approximately every 20 seconds.</li>
         <li><b>cardano.node.metrics.connectionManager.incomingConns</b>—The total number of remote Cardano Node instances—network peers—populating the network using blocks from the local copy of the blockchain ledger</li>
@@ -103,7 +94,7 @@ export function HTMLContent() {
         </tbody>
       </table>
 
-      <h2>Querying Metrics Using a Terminal Window</h2>
+      <h1>Querying Metrics Using a Terminal Window</h1>
 
       <p>When querying the EKG endpoint using a terminal window, retrieve results using JavaScript Object Notation (JSON) format, and then parse the JSON output using <a href="https://jqlang.org/" target="_blank">jq</a></p>
 
@@ -124,14 +115,31 @@ export function HTMLContent() {
         </tbody>
       </table>
 
-      <h2>Creating a Dashboard</h2>
+      <h1>Creating a Dashboard</h1>
 
       <p>The following Bash script shows you how to use metrics to create a dashboard for monitoring Cardano Node instances in your stake pool configuration:</p>
       <CodeBlock>
         {Dashboard}
       </CodeBlock>
 
-      <h2>Additional Resources</h2>
+      <h1>Wait...</h1>
+
+      <p>Prior to continuing with the <i>How to Set Up a Cardano Stake Pool</i> guide, wait for the local copy of the Cardano blockchain ledger on each computer in your stake pool configuration to synchronize fully with the network.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+            <td class="boxText"><p class="boxText">If the local copy of the ledger is not synchronized fully, then some commands may fail. If the local instance of Cardano Node is not running, then the following message may display:<pre>cardano-cli: Network.Socket.connect: : does not exist (No such file or directory)</pre></p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>As of September 2025, the size of the Cardano Mainnet blockchain ledger is approximately 215 GB. Synchronizing local copies of the Cardano blockchain ledger with the network may take more than 24 hours.</p>
+
+      <p>For the current epoch and relative slot number of the Cardano network, see a <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>. When the epoch and slot number of a local copy of the ledger match the current epoch and slot number of the network, then the local Cardano Node instance is synchronized.</p>
+
+      <h1>Additional Resources</h1>
 
       <p>For some additional third-party dashboards available in the Cardano community, see <a href="/Community">Appendix C: Community Projects</a>.</p>
 
