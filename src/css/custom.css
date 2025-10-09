@@ -258,7 +258,7 @@ ol li:not(ul li, ol ol li):before
   counter-increment: item;
   display: inline-block; /* Required for applying width to pseudo-elements */
   width: 4pt; /* Set your desired fixed width for item numbers */
-  text-indent: -11pt; /* Set a hanging indent for item numbers */
+  text-indent: -15pt; /* Set a hanging indent for item numbers */
 }
 
 /* Set the numbering style for second-level ordered lists */

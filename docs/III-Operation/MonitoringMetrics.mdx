@@ -130,12 +130,12 @@ export function HTMLContent() {
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
-            <td class="boxText"><p class="boxText">If the local copy of the ledger is not synchronized fully, then some commands may fail. If the local instance of Cardano Node is not running, then the following message may display:<pre>cardano-cli: Network.Socket.connect: : does not exist (No such file or directory)</pre></p></td>
+            <td class="boxText"><p class="boxText">If the local instance of Cardano Node is not running, then the following error message may display when you run a command:<pre>cardano-cli: Network.Socket.connect: : does not exist (No such file or directory)</pre>If the local copy of the ledger is not fully synchronized, then commands may fail.</p></td>
           </tr>
         </tbody>
       </table>
 
-      <p>As of September 2025, the size of the Cardano Mainnet blockchain ledger is approximately 215 GB. Synchronizing local copies of the Cardano blockchain ledger with the network may take more than 24 hours.</p>
+      <p>As of September 2025, the size of the Cardano Mainnet blockchain ledger is approximately 215 GB. Synchronizing local copies of the Cardano blockchain ledger with the network from the beginning may take more than 24 hours.</p>
 
       <p>For the current epoch and relative slot number of the Cardano network, see a <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>. When the epoch and slot number of a local copy of the ledger match the current epoch and slot number of the network, then the local Cardano Node instance is synchronized.</p>
 

@@ -10,46 +10,160 @@ description: ""
 
 import React from 'react';
 
+import CodeBlock from '@theme/CodeBlock';
+import SaveParameters from '!!raw-loader!/txt/SaveParameters.sh';
+import QueryTip from '!!raw-loader!/txt/QueryTip.sh';
+import TallyUTXOs from '!!raw-loader!/txt/TallyUTXOs.sh';
+import SubmitTransaction from '!!raw-loader!/txt/SubmitTransaction.sh';
+
 export function HTMLContent() {
   return (
     <div>
 
       {/* INSERT HTML HERE */}
 
+      <p>In the Cardano ecosystem, you must register on the blockchain the stake address associated with a payment address containing funds that you plan to stake or pledge.</p>
+
+      <p>Therefore, you need to create a transaction registering the stake address associated with the payment address containing funds that you plan to pledge to your stake pool.</p>
+
+      <p><i>Figure 1</i> provides an overview of the process to prepare and submit a transaction using the Cardano Command Line Interface (CLI).</p>
+
+      <figure>
+        <img src="img/TransactionOverview.png" />
+        <figcaption>Figure 1 Creating a Transaction using Cardano CLI</figcaption>
+      </figure>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">The following procedure explains how to register a stake address on Mainnet. If you are registering a stake address in a testnet environment, then replace each instance of the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the testnet network that you use.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="pi">To register a stake address on the blockchain:</p>
+
+      <ol>
+        <li>On the block-producing node, using a terminal window type the following commands to save protocol parameters in a file using JSON format:
+          <CodeBlock>
+            {SaveParameters}
+          </CodeBlock>
+          
+        </li>
+        <li>To retrieve the amount in Lovelace of the deposit required to register a stake address, type:
+          <pre>
+            stakeAddressDeposit=$(cat $NODE_HOME/params.json | jq -r '.stakeAddressDeposit')<br />
+            echo stakeAddressDeposit: $&#123;stakeAddressDeposit&#125;
+          </pre>
+        </li>
+        <li>To create a stake address registration certificate, type:
+          <pre>
+            cardano-cli conway stake-address registration-certificate \<br />
+            &nbsp;&nbsp;--stake-verification-key-file stake.vkey \<br />
+            &nbsp;&nbsp;--key-reg-deposit-amt $&#123;stakeAddressDeposit&#125; \<br />
+            &nbsp;&nbsp;--out-file stake.cert
+          </pre>
+        </li>
+        <li>To query the slot number of the current tip of the ledger, type:
+          <CodeBlock>
+            {QueryTip}
+          </CodeBlock>
+        </li>
+        <li>To retrieve the UTXOs available for your payment address and calculate the balance, type:
+          <CodeBlock>
+            {TallyUTXOs}
+          </CodeBlock>
+        </li>
+        <li>To build a temporary transaction used to calculate the transaction fee, type:
+          <pre>
+            cardano-cli conway transaction build-raw \<br />
+            $&#123;tx_in&#125; \<br />
+            &nbsp;&nbsp;--tx-out $(cat $NODE_HOME/payment.addr)+$(( $&#123;total_balance&#125; - $&#123;stakeAddressDeposit&#125; )) \<br />
+            &nbsp;&nbsp;--invalid-hereafter $(( $&#123;currentSlot&#125; + 10000 )) \<br />
+            &nbsp;&nbsp;--fee 200000 \<br />
+            &nbsp;&nbsp;--out-file tx.tmp \<br />
+            &nbsp;&nbsp;--certificate stake.cert
+          </pre>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">The <code>--invalid-hereafter</code> option sets the slot when the transaction expires. The above transaction expires 10,000 seconds—about 2 hours and 45 minutes—after the current slot.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To calculate the fee for the transaction, type:
+          <pre>
+            fee=$(cardano-cli conway transaction calculate-min-fee \<br />
+            &nbsp;&nbsp;--tx-body-file tx.tmp \<br />
+            &nbsp;&nbsp;--tx-in-count $&#123;txcnt&#125; \<br />
+            &nbsp;&nbsp;--tx-out-count 1 \<br />
+            &nbsp;&nbsp;--mainnet \<br />
+            &nbsp;&nbsp;--witness-count 2 \<br />
+            &nbsp;&nbsp;--byron-witness-count 0 \<br />
+            &nbsp;&nbsp;--protocol-params-file params.json | jq -r '.fee')<br />
+            echo fee: $fee
+          </pre>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">When calculating the fee for a transaction, the <code>--witness-count</code> option indicates the number of keys signing the transaction. You must sign a transaction submitting a stake address registration certificate to the blockchain using the secret—private—key for the payment address spending the input, as well as the secret key for the stake address to register.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To calculate change from the transaction, type:
+          <pre>
+            txOut=$(($&#123;total_balance&#125;-$&#123;stakeAddressDeposit&#125;-$&#123;fee&#125;))<br />
+            echo Change Output: $&#123;txOut&#125;
+          </pre>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">If change from the transaction is a negative number, then funds are insufficient. If funds are insufficient, then the transaction fails.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To build the transaction, type:
+          <pre>
+            cardano-cli conway transaction build-raw \<br />
+            $&#123;tx_in&#125; \<br />
+            &nbsp;&nbsp;--tx-out $(cat $NODE_HOME/payment.addr)+$&#123;txOut&#125; \<br />
+            &nbsp;&nbsp;--invalid-hereafter $(( $&#123;currentSlot&#125; + 10000 )) \<br />
+            &nbsp;&nbsp;--fee $&#123;fee&#125; \<br />
+            &nbsp;&nbsp;--certificate-file stake.cert \<br />
+            &nbsp;&nbsp;--out-file tx.raw
+          </pre>
+        </li>
+        <li>Copy the <code>tx.raw</code> file that you created in step 9 to the <code>$NODE_HOME</code> folder on your air-gapped, offline computer, and then using a terminal window type the following command to sign the transaction:
+          <pre>
+            cardano-cli conway transaction sign \<br />
+            &nbsp;&nbsp;--tx-body-file tx.raw \<br />
+            &nbsp;&nbsp;--signing-key-file payment.skey \<br />
+            &nbsp;&nbsp;--signing-key-file stake.skey \<br />
+            &nbsp;&nbsp;--mainnet \<br />
+            &nbsp;&nbsp;--out-file tx.signed
+          </pre>
+        </li>
+        <li>Copy the <code>tx.signed</code> file that you created in step 10 to the <code>$NODE_HOME</code> folder on the block-producing node, and then using a terminal window type the following command to submit the transaction to the network:
+        <CodeBlock>
+          {SubmitTransaction}
+        </CodeBlock>
+      </li>
+      </ol>
+
+      <h1>Additional Resources</h1>
+
+      <p>For more details on creating transactions, see <a href="https://docs.cardano.org/developer-resources/transaction-tutorials" target="_blank">Transaction Tutorials</a>.</p>
+
     </div>
   );
 }
 
 <HTMLContent />
-
-<p>Using a transaction, you must register on the blockchain the stake address associated with a payment address containing funds that you want to pledge.</p>
-
-<p><i>Figure 1</i> provides an overview of the process to create a transaction using the Cardano Command Line Interface (CLI).</p>
-
-<figure>
-  <img src="img/TransactionOverview.png" />
-  <figcaption>Figure 1 Creating a Transaction using Cardano CLI</figcaption>
-</figure>
-
-<!-- The local blockchain instance must be synchronized in order to get an accurate tip calculation, required to submit the transaction to register the stake address. The current topic now appears earlier in the guide than the Generating Keys for the Block Producer topic, so copy (do NOT move) the related content from there. -->
-
-<!-- TO-DO: Incorporate the step to retrieve current protocol parameters in the common content used to prepare transactions throughout the Guide (save params.json in the same folder as downloaded configuration files):-->
-
-First, obtain the protocol-parameters.
-
-On the block-producing node, using a terminal window type the following command to query Mainnet protocol parameters:
-```bash
-cardano-cli conway query protocol-parameters \
-    --mainnet \
-    --out-file $NODE_HOME/params.json
-```
-
-<center><strong>OR</strong></center>
-
-Type the following command to query testnet environment protocol parameters, where `<MagicNumber>` is the network magic number for the testnet network that you use:
-  ```bash
-  cardano-cli conway query protocol-parameters \
-    --testnet-magic <MagicNumber> \
-    --out-file $NODE_HOME/params.json
-  ```
 

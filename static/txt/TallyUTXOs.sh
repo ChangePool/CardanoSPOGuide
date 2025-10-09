@@ -1,0 +1,36 @@
+# Retrieve the list of UTXOs available for your payment address
+utxo_json=$(cardano-cli conway query utxo --output-json \
+  --address $(cat $NODE_HOME/payment.addr) \
+  --mainnet)
+
+# Initialize variables
+tx_in=""
+total_balance=0
+txcnt=0
+
+# Loop through the list of UTXOs
+while read -r utxo; do
+    # Retrieve the values for the current UTXO
+    values=$(jq -r --arg k "${utxo}" '.[$k]' <<< "${utxo_json}")
+    # Retrieve datum associated with the UTXO
+    datum=$(jq -r '.datum' <<< "${values}")
+    # Retrieve the reference script associated with the UTXO
+    script=$(jq -r '.referenceScript' <<< "${values}")
+	# If limits on spending the UTXO may exist, then skip the UTXO
+    if [[ ${datum} == 'null' && ${script} == 'null' ]]
+    then
+        hash=${utxo%%#*}
+        idx=${utxo#*#}
+        utxo_balance=$(jq -r '.value.lovelace' <<< "${values}")
+        total_balance=$((${total_balance}+${utxo_balance}))
+        echo "TxHash: ${hash}#${idx}"
+        echo "ADA: ${utxo_balance}"
+        tx_in="${tx_in} --tx-in ${hash}#${idx}"
+		txcnt=$((txcnt + 1))
+    fi
+done <<< "$(jq -r 'keys[]' <<< "${utxo_json}")"
+
+echo
+echo "Total available ADA balance: ${total_balance}"
+echo "Number of UTXOs: ${txcnt}"
+echo "Final --tx-in string:${tx_in}"

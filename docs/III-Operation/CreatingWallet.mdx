@@ -10,9 +10,6 @@ description: ""
 
 import React from 'react';
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 export function HTMLContent() {
   return (
     <div>
@@ -23,10 +20,19 @@ export function HTMLContent() {
 
       <ul>
         <li><b>Payment Address</b>—Used to store, receive and send money</li>
-        <li><b>Stake Address</b>—Used to store and withdraw rewards, as well as to define the stake pool owner, reward accounts and stake pool delegation</li>
+        <li><b>Stake Address</b>—Used to store and withdraw rewards, as well as to define the stake pool owner, rewards accounts and stake pool delegation</li>
       </ul>
 
-      <p>You can create a wallet for your stake pool using key pairs or a seed phrase. While creating a wallet using keys is simpler, using a seed phrase offers the convenience of accessing the rewards account for your stake pool using an online, Desktop or Mobile <a href="https://docs.cardano.org/about-cardano/new-to-cardano/types-of-wallets" target="_blank">wallet</a>.</p>
+      <p>You can create a wallet for your stake pool using key pairs or a seed phrase. While creating a wallet using keys is simpler, using a seed phrase offers the convenience of accessing the rewards account holding the pledge for your stake pool using an online, Desktop or Mobile <a href="https://docs.cardano.org/about-cardano/new-to-cardano/types-of-wallets" target="_blank">wallet</a>.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Pledge is the stake that you delegate to the pool that you operate, serving as a security measure and indicating your commitment to the Cardano ecosystem.</p></td>
+          </tr>
+        </tbody>
+      </table>
 
       <p>If you create a wallet using a seed phrase, then you can generate the keys for the wallet. If you create a wallet using keys, then generating the seed phrase for the wallet is NOT possible.</p>
 
@@ -83,7 +89,7 @@ export function HTMLContent() {
             &nbsp;&nbsp;--testnet-magic &lt;MagicNumber&gt;
           </pre>
         </li>
-        <li>To generate a payment address for Mainnet using the file name <code>payment.addr</code> that is coupled with the stake address you created in step 3, type:
+        <li>To generate a payment address for Mainnet using the file name <code>payment.addr</code> that is associated with the stake address you created in step 3, type:
           <pre>
             cardano-cli conway address build \<br />
             &nbsp;&nbsp;--payment-verification-key-file payment.vkey \<br />
@@ -101,8 +107,8 @@ export function HTMLContent() {
             &nbsp;&nbsp;--testnet-magic &lt;MagicNumber&gt;
           </pre>
         </li>
-        <li>Back up the files containing the payment address and stake address as well as the corresponding public verification and secret keys using a secure and comprehensive backup strategy.</li>
-        <li>Using removable media, copy the <code>payment.addr</code> file to the <code>$NODE_HOME</code> folder on your block-producing node.</li>
+        <li>Carefully back up the files containing the payment address and stake address as well as the corresponding public verification and secret keys using a secure and comprehensive backup strategy.</li>
+        <li>Using removable media, copy the <code>stake.vkey</code> and <code>payment.addr</code> files to the <code>$NODE_HOME</code> folder on your block-producing node.</li>
       </ol>
 
       <h1>Using a Seed Phrase</h1>
@@ -113,20 +119,9 @@ export function HTMLContent() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
       <h1>Funding Your Payment Address</h1>
 
-      <p>Pledge is the stake that you delegate to your own pool, serving as a security measure and indicating your commitment to the Cardano ecosystem. Using a wallet, send funds that you want to pledge from another account you control to the new payment address.</p>
+      <p>Using a wallet, send funds that you want to pledge to your stake pool from another account you control to the new payment address.</p>
 
       <p class="pi">To fund the new payment address:</p>
 
@@ -136,7 +131,16 @@ export function HTMLContent() {
             cat $NODE_HOME/payment.addr
           </pre>
         </li>
-        <li>Using a wallet of your choice, send funds that you want to pledge to the address that displays in step 1</li>
+        <li>Using a wallet of your choice, send funds that you want to pledge to the address that displays in step 1
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+                <td class="boxText"><p class="boxText">If needed, create a transaction <a href="/SendingFunds">Sending Funds</a> to the new payment address.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
         <li>Wait a few moments for the transaction to complete. To verify the transaction, type the following command using a terminal window on the block-producing node to display the list of Unspent Transaction Output (UTXOs) available for the new payment address, and then find the UTXO for the funds that you sent in step 2:
           <pre>
             cardano-cli conway query utxo --output-json \<br />
@@ -168,14 +172,10 @@ export function HTMLContent() {
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">Named after the English mathematician and writer Ada Lovelace, the sub-unit of ADA is the Lovelace. 1 ADA is comprised of 1,000,000 Lovelace.</p></td>
+            <td class="boxText"><p class="boxText">Named after the English mathematician and writer Ada Lovelace, the currency symbol for ADA is ₳ and the sub-unit is the Lovelace. ₳1 is comprised of 1,000,000 Lovelace.</p></td>
           </tr>
         </tbody>
       </table>
-
-
-
-
 
     </div>
   );
