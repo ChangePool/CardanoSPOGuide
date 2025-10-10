@@ -11,7 +11,7 @@ description: "How to revise the Guide"
 import React from 'react';
 
 import CodeBlock from '@theme/CodeBlock';
-import SampleText from '!!raw-loader!/txt/SampleText.txt';
+import sampleText from '!!raw-loader!/txt/sampleText.txt';
 
 export function HTMLContent() {
 
@@ -308,12 +308,12 @@ export function HTMLContent() {
         {SampleCode}
       </pre>
 
-      <p>To include large code samples or other text, you can import and display <a href="/txt/SampleText.txt" target="_blank">text</a> files:</p>
+      <p>To include large code samples or other text, you can import and display <a href="/txt/sampleText.txt" target="_blank">text</a> files:</p>
       <CodeBlock>
 
-        {/* The CodeBlock and SampleText components are imported at the beginning of the D-Styles.mdx file. */}
+        {/* The CodeBlock and sampleText components are imported at the beginning of the D-Styles.mdx file. */}
 
-        {SampleText}
+        {sampleText}
       </CodeBlock>
 
       <p>Create new topics in the <code>/docs</code> subfolder using <code>.MDX</code> as the file name extension. To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; <code>&lt;TOCStatus&gt;</code> is a Boolean value determinig whether or not the table of contents appears in the top right corner of a topic; <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar; and, <code>&lt;Description&gt;</code> is a brief summary of the topic that displays in a sidebar category for the topic:</p>
