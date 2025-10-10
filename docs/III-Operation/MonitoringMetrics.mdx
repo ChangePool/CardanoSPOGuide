@@ -11,7 +11,7 @@ description: ""
 import React from 'react';
 
 import CodeBlock from '@theme/CodeBlock';
-import Dashboard from '!!raw-loader!/txt/NodeView.sh';
+import nodeView from '!!raw-loader!/txt/nodeView.sh';
 
 export function HTMLContent() {
   
@@ -119,7 +119,7 @@ export function HTMLContent() {
 
       <p>The following Bash script shows you how to use metrics to create a dashboard for monitoring Cardano Node instances in your stake pool configuration:</p>
       <CodeBlock>
-        {Dashboard}
+        {nodeView}
       </CodeBlock>
 
       <h1>Wait...</h1>

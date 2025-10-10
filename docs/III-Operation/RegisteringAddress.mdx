@@ -11,10 +11,10 @@ description: ""
 import React from 'react';
 
 import CodeBlock from '@theme/CodeBlock';
-import SaveParameters from '!!raw-loader!/txt/SaveParameters.sh';
-import QueryTip from '!!raw-loader!/txt/QueryTip.sh';
-import TallyUTXOs from '!!raw-loader!/txt/TallyUTXOs.sh';
-import SubmitTransaction from '!!raw-loader!/txt/SubmitTransaction.sh';
+import saveParameters from '!!raw-loader!/txt/saveParameters.sh';
+import queryTip from '!!raw-loader!/txt/queryTip.sh';
+import tallyUTXOs from '!!raw-loader!/txt/tallyUTXOs.sh';
+import submitTransaction from '!!raw-loader!/txt/submitTransaction.sh';
 
 export function HTMLContent() {
   return (
@@ -47,7 +47,7 @@ export function HTMLContent() {
       <ol>
         <li>On the block-producing node, using a terminal window type the following commands to save protocol parameters in a file using JSON format:
           <CodeBlock>
-            {SaveParameters}
+            {saveParameters}
           </CodeBlock>
           
         </li>
@@ -67,12 +67,12 @@ export function HTMLContent() {
         </li>
         <li>To query the slot number of the current tip of the ledger, type:
           <CodeBlock>
-            {QueryTip}
+            {queryTip}
           </CodeBlock>
         </li>
         <li>To retrieve the UTXOs available for your payment address and calculate the balance, type:
           <CodeBlock>
-            {TallyUTXOs}
+            {tallyUTXOs}
           </CodeBlock>
         </li>
         <li>To build a temporary transaction for calculating the transaction fee, type:
@@ -96,7 +96,7 @@ export function HTMLContent() {
         </li>
         <li>To calculate the fee for the transaction in Lovelace, type:
           <pre>
-            fee=$(cardano-cli conway transaction calculate-min-fee \<br />
+            fee=$(cardano-cli conway transaction calculate-min-fee --output-json \<br />
             &nbsp;&nbsp;--tx-body-file tx.tmp \<br />
             &nbsp;&nbsp;--tx-in-count $&#123;txcnt&#125; \<br />
             &nbsp;&nbsp;--tx-out-count 1 \<br />
@@ -104,7 +104,7 @@ export function HTMLContent() {
             &nbsp;&nbsp;--witness-count 2 \<br />
             &nbsp;&nbsp;--byron-witness-count 0 \<br />
             &nbsp;&nbsp;--protocol-params-file params.json | jq -r '.fee')<br />
-            echo fee: $fee
+            echo fee: $&#123;fee&#125;
           </pre>
           <table class="box">
             <tbody>
@@ -124,7 +124,7 @@ export function HTMLContent() {
             <tbody>
               <tr>
                 <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-                <td class="boxText"><p class="boxText">If change from the transaction is a negative number, then funds are insufficient. If funds are insufficient, then submitting the transaction fails.</p></td>
+                <td class="boxText"><p class="boxText">If change from the transaction is less than 1₳ then funds are insufficient. Transactions having insufficient funds fail when submitted to the network.</p></td>
               </tr>
             </tbody>
           </table>
@@ -152,7 +152,7 @@ export function HTMLContent() {
         </li>
         <li>Copy the <code>tx.signed</code> file that you created in step 10 to the <code>$NODE_HOME</code> folder on the block-producing node, and then using a terminal window type the following command to submit the transaction to the network:
           <CodeBlock>
-            {SubmitTransaction}
+            {submitTransaction}
           </CodeBlock>
         </li>
       </ol>

@@ -129,7 +129,7 @@ do
   # Clear the screen
   clear
 
-  echo -e "                   ${Black}${WhiteBackground} NodeView v1.0 ${NoColor}"
+  echo -e "                   ${Black}${WhiteBackground} nodeView v1.0 ${NoColor}"
   echo
   echo -e "${LightGreen}${Underline}Blockchain Ledger${NoColor}"
   echo -e "  Epoch Number: ${LightCyan}${epoch_num}${NoColor}         Slot in Epoch: ${LightCyan}${slot_in_epoch}${NoColor}"
