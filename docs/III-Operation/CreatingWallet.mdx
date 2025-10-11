@@ -12,6 +12,7 @@ import React from 'react';
 
 import CodeBlock from '@theme/CodeBlock';
 import createWallet from '!!raw-loader!/txt/createWallet.sh';
+import utxo from '!!raw-loader!/txt/utxo.json';
 
 export function HTMLContent() {
   return (
@@ -136,7 +137,7 @@ export function HTMLContent() {
             cp ./&lt;ArchiveFolder&gt;/configs/&lt;EnvironmentName&gt;/shelley-genesis.json $NODE_HOME
           </pre>
         </li>
-        <li>To add the Cardano Wallet binaries to the PATH environment variable temporarily, and then generate a 24-word seed phrase, type:
+        <li>To add Cardano Wallet as well as bundled Cardano CLI binaries to the PATH environment variable temporarily, and then generate a 24-word seed phrase, type:
           <pre>
             export PATH="$(pwd)/cardano-wallet-$&#123;RELEASETAG&#125;-linux64:$PATH"<br />
             cardano-wallet recovery-phrase generate --size 24 &gt; seed-phrase.dat
@@ -217,21 +218,9 @@ export function HTMLContent() {
 
       <p>The UTXO query displays JSON output similar to the following—where the key is the transaction hash, followed by a hash (<code>#</code>) character, and then followed by the transaction index—displaying the value of the UTXO in Lovelace:</p>
 
-      <pre>
-        &#123;<br />
-        &nbsp;&nbsp;"4f26e87038f6657ea9429732685c43525685506816420dc5f0e50c692d3387e6#0": &#123;<br />
-        &nbsp;&nbsp;&nbsp;&nbsp;"address": "addr_test1qzkdq88knvkrycp40zv9mtdejqqjqwklvzcjmvlj8erjgx5q628ecngj4yjr4dmtfqwj76qcqrwclgwvn39hm4hcy9eqcsza02",<br />
-        &nbsp;&nbsp;&nbsp;&nbsp;"datum": null,<br />
-        &nbsp;&nbsp;&nbsp;&nbsp;"datumhash": null,<br />
-        &nbsp;&nbsp;&nbsp;&nbsp;"inlineDatum": null,<br />
-        &nbsp;&nbsp;&nbsp;&nbsp;"inlineDatumRaw": null,<br />
-        &nbsp;&nbsp;&nbsp;&nbsp;"referenceScript": null,<br />
-        &nbsp;&nbsp;&nbsp;&nbsp;"value": &#123;<br />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"lovelace": 9997654786<br />
-        &nbsp;&nbsp;&nbsp;&nbsp;&#125;<br />
-        &nbsp;&nbsp;&#125;<br />
-        &#125;
-      </pre>
+      <CodeBlock>
+        {utxo}
+      </CodeBlock>
 
       <table class="box">
         <tbody>

@@ -49,7 +49,6 @@ export function HTMLContent() {
           <CodeBlock>
             {saveParameters}
           </CodeBlock>
-          
         </li>
         <li>To retrieve the amount in Lovelace of the deposit required to register a stake address, type:
           <pre>
@@ -103,7 +102,7 @@ export function HTMLContent() {
             &nbsp;&nbsp;--mainnet \<br />
             &nbsp;&nbsp;--witness-count 2 \<br />
             &nbsp;&nbsp;--byron-witness-count 0 \<br />
-            &nbsp;&nbsp;--protocol-params-file params.json | jq -r '.fee')<br />
+            &nbsp;&nbsp;--protocol-params-file $NODE_HOME/params.json | jq -r '.fee')<br />
             echo fee: $&#123;fee&#125;
           </pre>
           <table class="box">
