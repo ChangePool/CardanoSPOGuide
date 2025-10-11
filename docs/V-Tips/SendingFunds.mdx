@@ -3,7 +3,7 @@ title: "Sending Funds"
 sidebar_label: "Sending Funds"
 slug: /SendingFunds
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 5
 description: ""
 ---
@@ -23,13 +23,20 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
+       <p><i>Figure 1</i> provides an overview of the process to prepare and submit a transaction in the Cardano network using the Command Line Interface (CLI).</p>
+
+      <figure>
+        <img src="img/TransactionOverview.png" />
+        <figcaption>Figure 1 Creating a Transaction using Cardano CLI</figcaption>
+      </figure>
+
       <p>The following procedure shows you how to use Cardano CLI to create a transaction sending ADA to a payment address in the Mainnet environment.</p>
 
       <table class="box">
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">If you are registering a stake address in a testnet environment, then replace each instance of the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the testnet network that you use.</p></td>
+            <td class="boxText"><p class="boxText">If you are sending funds in a testnet environment, then replace each instance of the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the testnet network that you use.</p></td>
           </tr>
         </tbody>
       </table>
