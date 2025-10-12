@@ -22,8 +22,7 @@ import utxo from '!!raw-loader!/txt/utxo.json';
 export function HTMLContent() {
 
   // Replace placeholders in the imported calculateFee component with values
-  var calculateFeeSendingFunds = calculateFee.replace("{{tx-out-count}}", "2");
-  calculateFeeSendingFunds = calculateFeeSendingFunds.replace("{{witness-count}}", "1");
+  var calculateFeeSendingFunds = calculateFee.replace("{{witness-count}}", "1");
 
   // Replace placeholder in the imported signTransaction component with values
   var signTransactionSendingFunds = signTransaction.replace("{{signing-key-files}}", "--signing-key-file payment.skey \\\n  ");
@@ -94,6 +93,7 @@ export function HTMLContent() {
             cardano-cli conway transaction build-raw \<br />
             $&#123;tx_in&#125; \<br />
             &nbsp;&nbsp;--tx-out $(cat $NODE_HOME/payment.addr)+$(( $&#123;total_balance&#125; - 200000 - $&#123;amountToSend&#125; )) \<br />
+            &nbsp;&nbsp;--tx-out $&#123;destinationAddress&#125;+$&#123;amountToSend&#125; \<br />
             &nbsp;&nbsp;--invalid-hereafter $(( $&#123;currentSlot&#125; + 10000 )) \<br />
             &nbsp;&nbsp;--fee 200000 \<br />
             &nbsp;&nbsp;--out-file tx.tmp

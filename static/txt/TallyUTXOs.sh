@@ -6,7 +6,6 @@ utxo_json=$(cardano-cli conway query utxo --output-json \
 # Initialize variables
 tx_in=""
 total_balance=0
-txcnt=0
 
 # Loop through the list of UTXOs
 while read -r utxo; do
@@ -26,11 +25,9 @@ while read -r utxo; do
         echo "TxHash: ${hash}#${idx}"
         echo "UTXO Balance: ${utxo_balance} Lovelace"
         tx_in="${tx_in} --tx-in ${hash}#${idx}"
-		txcnt=$((txcnt + 1))
     fi
 done <<< "$(jq -r 'keys[]' <<< "${utxo_json}")"
 
 echo
 echo "Total available balance: ${total_balance} Lovelace"
-echo "Number of UTXOs: ${txcnt}"
 echo "Final --tx-in string:${tx_in}"

@@ -21,8 +21,7 @@ import submitTransaction from '!!raw-loader!/txt/submitTransaction.sh';
 export function HTMLContent() {
 
   // Replace placeholders in the imported calculateFee component with values
-  var calculateFeeRegisteringAddress = calculateFee.replace("{{tx-out-count}}", "1");
-  calculateFeeRegisteringAddress = calculateFeeRegisteringAddress.replace("{{witness-count}}", "2");
+  var calculateFeeRegisteringAddress = calculateFee.replace("{{witness-count}}", "2");
 
   // Replace placeholder in the imported signTransaction component with values
   var signTransactionRegisteringAddress = signTransaction.replace("{{signing-key-files}}", "--signing-key-file payment.skey \\\n  --signing-key-file stake.skey \\\n  ");
@@ -91,8 +90,8 @@ export function HTMLContent() {
             &nbsp;&nbsp;--tx-out $(cat $NODE_HOME/payment.addr)+$(( $&#123;total_balance&#125; - 200000 - $&#123;stakeAddressDeposit&#125; )) \<br />
             &nbsp;&nbsp;--invalid-hereafter $(( $&#123;currentSlot&#125; + 10000 )) \<br />
             &nbsp;&nbsp;--fee 200000 \<br />
-            &nbsp;&nbsp;--out-file tx.tmp \<br />
-            &nbsp;&nbsp;--certificate stake.cert
+            &nbsp;&nbsp;--certificate stake.cert \<br />
+            &nbsp;&nbsp;--out-file tx.tmp
           </pre>
           <table class="box">
             <tbody>
@@ -152,6 +151,19 @@ export function HTMLContent() {
           </CodeBlock>
         </li>
       </ol>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+            <td class="boxText"><p class="boxText">To display a draft, unsigned or signed transaction in a human-readable format, type the following command where <code>&lt;TransactionFileName&gt;</code> is the path to the transaction file that you want to inspect:
+              <pre>
+                cardano-cli debug transaction view --tx-file &lt;TransactionFileName&gt;
+              </pre>
+            </p></td>
+          </tr>
+        </tbody>
+      </table>
 
       <h1>Additional Resources</h1>
 
