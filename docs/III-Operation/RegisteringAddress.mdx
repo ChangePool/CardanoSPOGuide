@@ -74,11 +74,11 @@ export function HTMLContent() {
             {tallyUTXOs}
           </CodeBlock>
         </li>
-        <li>To build a temporary transaction for calculating the transaction fee, type:
+        <li>To build a draft transaction for calculating the minimum transaction fee, type:
           <pre>
             cardano-cli conway transaction build-raw \<br />
             $&#123;tx_in&#125; \<br />
-            &nbsp;&nbsp;--tx-out $(cat $NODE_HOME/payment.addr)+$(( $&#123;total_balance&#125; - $&#123;stakeAddressDeposit&#125; )) \<br />
+            &nbsp;&nbsp;--tx-out $(cat $NODE_HOME/payment.addr)+$(( $&#123;total_balance&#125; - 200000 - $&#123;stakeAddressDeposit&#125; )) \<br />
             &nbsp;&nbsp;--invalid-hereafter $(( $&#123;currentSlot&#125; + 10000 )) \<br />
             &nbsp;&nbsp;--fee 200000 \<br />
             &nbsp;&nbsp;--out-file tx.tmp \<br />
@@ -93,13 +93,12 @@ export function HTMLContent() {
             </tbody>
           </table>
         </li>
-        <li>To calculate the fee for the transaction in Lovelace, type:
+        <li>To calculate the minimum fee for the transaction in Lovelace, type:
           <pre>
             fee=$(cardano-cli conway transaction calculate-min-fee --output-json \<br />
             &nbsp;&nbsp;--tx-body-file tx.tmp \<br />
             &nbsp;&nbsp;--tx-in-count $&#123;txcnt&#125; \<br />
             &nbsp;&nbsp;--tx-out-count 1 \<br />
-            &nbsp;&nbsp;--mainnet \<br />
             &nbsp;&nbsp;--witness-count 2 \<br />
             &nbsp;&nbsp;--byron-witness-count 0 \<br />
             &nbsp;&nbsp;--protocol-params-file $NODE_HOME/params.json | jq -r '.fee')<br />
@@ -116,7 +115,7 @@ export function HTMLContent() {
         </li>
         <li>To calculate change from the transaction, type:
           <pre>
-            txOut=$(($&#123;total_balance&#125;-$&#123;stakeAddressDeposit&#125;-$&#123;fee&#125;))<br />
+            txOut=$(($&#123;total_balance&#125;-$&#123;fee&#125;-$&#123;stakeAddressDeposit&#125;))<br />
             echo Change: $&#123;txOut&#125;
           </pre>
           <table class="box">

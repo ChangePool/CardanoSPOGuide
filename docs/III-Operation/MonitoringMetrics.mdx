@@ -135,9 +135,20 @@ export function HTMLContent() {
         </tbody>
       </table>
 
+      <p>When a Cardano Node instance is synchronized with the network, the slot number increments by one each second, on average. When a Cardano Node instance is in the process of synchronizing, the slot number increases much more quickly.</p>
+
       <p>As of September 2025, the size of the Cardano Mainnet blockchain ledger is approximately 215 GB. Synchronizing local copies of the Cardano blockchain ledger with the network from the beginning may take more than 24 hours.</p>
 
-      <p>For the current epoch and relative slot number of the Cardano network, see a <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>. When the epoch and slot number of a local copy of the ledger match the current epoch and slot number of the network, then the local Cardano Node instance is synchronized.</p>
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">For the current epoch and slot number of the Cardano network, see a <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      {/* <!-- When the epoch and slot number of a local copy of the ledger match the current epoch and slot number of the network, then the local Cardano Node instance is synchronized. --> */}
 
       <h1>Additional Resources</h1>
 
