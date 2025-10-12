@@ -83,7 +83,7 @@ export function HTMLContent() {
             {tallyUTXOs}
           </CodeBlock>
         </li>
-        <li>To build a draft transaction for calculating the minimum transaction fee, type:
+        <li>To build a draft transaction for calculating the transaction fee, type:
           <pre>
             cardano-cli conway transaction build-raw \<br />
             $&#123;tx_in&#125; \<br />
@@ -102,7 +102,7 @@ export function HTMLContent() {
             </tbody>
           </table>
         </li>
-        <li>To calculate the current minimum fee for the transaction in Lovelace, type:
+        <li>To calculate the fee for the transaction in Lovelace, type:
           <CodeBlock>
             {calculateFeeRegisteringAddress}
           </CodeBlock>
