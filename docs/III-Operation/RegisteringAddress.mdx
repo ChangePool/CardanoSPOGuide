@@ -14,9 +14,19 @@ import CodeBlock from '@theme/CodeBlock';
 import saveParameters from '!!raw-loader!/txt/saveParameters.sh';
 import queryTip from '!!raw-loader!/txt/queryTip.sh';
 import tallyUTXOs from '!!raw-loader!/txt/tallyUTXOs.sh';
+import calculateFee from '!!raw-loader!/txt/calculateFee.sh';
+import signTransaction from '!!raw-loader!/txt/signTransaction.sh';
 import submitTransaction from '!!raw-loader!/txt/submitTransaction.sh';
 
 export function HTMLContent() {
+
+  // Replace placeholders in the imported calculateFee component with values
+  var calculateFeeRegisteringAddress = calculateFee.replace("{{tx-out-count}}", "1");
+  calculateFeeRegisteringAddress = calculateFeeRegisteringAddress.replace("{{witness-count}}", "2");
+
+  // Replace placeholder in the imported signTransaction component with values
+  var signTransactionRegisteringAddress = signTransaction.replace("{{signing-key-files}}", "--signing-key-file payment.skey \\\n  --signing-key-file stake.skey \\\n  ");
+
   return (
     <div>
 
@@ -70,7 +80,7 @@ export function HTMLContent() {
           </CodeBlock>
         </li>
         <li>To retrieve the UTXOs available for your payment address and calculate the balance, type:
-          <CodeBlock>
+          <CodeBlock language="bash">
             {tallyUTXOs}
           </CodeBlock>
         </li>
@@ -93,17 +103,10 @@ export function HTMLContent() {
             </tbody>
           </table>
         </li>
-        <li>To calculate the minimum fee for the transaction in Lovelace, type:
-          <pre>
-            fee=$(cardano-cli conway transaction calculate-min-fee --output-json \<br />
-            &nbsp;&nbsp;--tx-body-file tx.tmp \<br />
-            &nbsp;&nbsp;--tx-in-count $&#123;txcnt&#125; \<br />
-            &nbsp;&nbsp;--tx-out-count 1 \<br />
-            &nbsp;&nbsp;--witness-count 2 \<br />
-            &nbsp;&nbsp;--byron-witness-count 0 \<br />
-            &nbsp;&nbsp;--protocol-params-file $NODE_HOME/params.json | jq -r '.fee')<br />
-            echo fee: $&#123;fee&#125;
-          </pre>
+        <li>To calculate the current minimum fee for the transaction in Lovelace, type:
+          <CodeBlock>
+            {calculateFeeRegisteringAddress}
+          </CodeBlock>
           <table class="box">
             <tbody>
               <tr>
@@ -139,14 +142,9 @@ export function HTMLContent() {
           </pre>
         </li>
         <li>Copy the <code>tx.raw</code> file that you created in step 9 to the <code>$NODE_HOME</code> folder on your air-gapped, offline computer, and then using a terminal window type the following command to sign the transaction:
-          <pre>
-            cardano-cli conway transaction sign \<br />
-            &nbsp;&nbsp;--tx-body-file tx.raw \<br />
-            &nbsp;&nbsp;--signing-key-file payment.skey \<br />
-            &nbsp;&nbsp;--signing-key-file stake.skey \<br />
-            &nbsp;&nbsp;--mainnet \<br />
-            &nbsp;&nbsp;--out-file tx.signed
-          </pre>
+          <CodeBlock>
+            {signTransactionRegisteringAddress}
+          </CodeBlock>
         </li>
         <li>Copy the <code>tx.signed</code> file that you created in step 10 to the <code>$NODE_HOME</code> folder on the block-producing node, and then using a terminal window type the following command to submit the transaction to the network:
           <CodeBlock>

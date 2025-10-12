@@ -254,6 +254,10 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+        additionalLanguages: [
+          // October 12, 2025 - Enable syntax highlighting for Bash scripts
+          'bash',
+        ],
       },
       //
       // August 30, 2025 - Configure the Typesense integration
