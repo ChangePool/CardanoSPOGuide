@@ -12,6 +12,7 @@ import React from 'react';
 
 import CodeBlock from '@theme/CodeBlock';
 import sampleText from '!!raw-loader!/txt/sampleText.txt';
+import samplePlaceholder from '!!raw-loader!/txt/samplePlaceholder.sh';
 
 export function HTMLContent() {
 
@@ -53,6 +54,8 @@ export function HTMLContent() {
 <!-- <HTMLContent /> -->
 
 <!-- INSERT MARKDOWN CONTENT HERE -->`;
+
+  var samplePlaceholderAppendixD = samplePlaceholder.replace("{{witness-count}}", "3");
 
   return (
     <div>
@@ -323,12 +326,30 @@ fi`}
         {SampleCode}
       </pre>
 
-      <p>To include large code samples or other text, you can import and display <a href="/txt/sampleText.txt" target="_blank">text</a> files:</p>
+      <p>You can import and display any <a href="/txt/sampleText.txt" target="_blank">text</a> file:</p>
       <CodeBlock>
 
         {/* The CodeBlock and sampleText components are imported at the beginning of the D-Styles.mdx file. */}
 
         {sampleText}
+      </CodeBlock>
+
+      <p>Reusable code blocks may use placeholders:</p>
+
+      <CodeBlock language="bash">
+        {samplePlaceholder}
+      </CodeBlock>
+
+      <p>Replace placeholders with values in the definition of the HTMLContent function using string manipulation:</p>
+
+      <CodeBlock language="bash">
+        {`var samplePlaceholderAppendixD = samplePlaceholder.replace("\{\{witness-count\}\}", "3");`}
+      </CodeBlock>
+
+      <p>In the following code block, the placeholder is replaced with a value:</p>
+
+      <CodeBlock language="bash">
+        {samplePlaceholderAppendixD}
       </CodeBlock>
 
       <p>Create new topics in the <code>/docs</code> subfolder using <code>.MDX</code> as the file name extension. To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; <code>&lt;TOCStatus&gt;</code> is a Boolean value determinig whether or not the table of contents appears in the top right corner of a topic; <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar; and, <code>&lt;Description&gt;</code> is a brief summary of the topic that displays in a sidebar category for the topic:</p>
