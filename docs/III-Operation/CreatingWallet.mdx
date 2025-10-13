@@ -55,12 +55,12 @@ export function HTMLContent() {
 
       <ol>
         <li>To generate a new payment address key pair using the file names <code>payment.vkey</code> and <code>payment.skey</code> type:
-          <pre>
-            cd $NODE_HOME<br />
-            cardano-cli conway address key-gen \<br />
-            &nbsp;&nbsp;--verification-key-file payment.vkey \<br />
-            &nbsp;&nbsp;--signing-key-file payment.skey
-          </pre>
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+cardano-cli conway address key-gen \\
+  --verification-key-file payment.vkey \\
+  --signing-key-file payment.skey`}
+          </CodeBlock>
           <table class="box">
             <tbody>
               <tr>
@@ -121,27 +121,27 @@ export function HTMLContent() {
 
       <ol>
         <li>Using a terminal window on the computer designated as the block-producing node in your stake pool configuration, type the following commands to download the latest release of <a href="https://github.com/cardano-foundation/cardano-wallet" target="_blank">Cardano Wallet</a>:
-          <pre>
-            cd $NODE_HOME<br />
-            RELEASETAG=$(curl -s https://api.github.com/repos/cardano-foundation/cardano-wallet/releases/latest | jq -r .tag_name)<br />
-            wget https://github.com/cardano-foundation/cardano-wallet/releases/download/$&#123;RELEASETAG&#125;/cardano-wallet-$&#123;RELEASETAG&#125;-linux64.tar.gz<br />
-          </pre>
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+RELEASETAG=$(curl -s https://api.github.com/repos/cardano-foundation/cardano-wallet/releases/latest | jq -r .tag_name)
+wget https://github.com/cardano-foundation/cardano-wallet/releases/download/$\{RELEASETAG\}/cardano-wallet-$\{RELEASETAG\}-linux64.tar.gz`}
+          </CodeBlock>
         </li>
         <li>Using removable media, copy the TAR.GZ archive that you downloaded in step 1 to the <code>$NODE_HOME</code> folder on your air-gapped, offline computer, and then type the following command using a terminal window to extract the contents of the archive, where <code>&lt;ArchiveName&gt;</code> is the name of the file containing Cardano Wallet:
-          <pre>
-            tar -xvzf &lt;ArchiveName&gt;
-          </pre>
+          <CodeBlock language="bash">
+            {`tar -xvzf <ArchiveName>`}
+          </CodeBlock>
         </li>
         <li>To copy the <code>shelley-genesis.json</code> file for the environment that you use, type the following command where <code>&lt;ArchiveFolder&gt;</code> is the name of the folder where you extracted Cardano Wallet in step 2, and <code>&lt;EnvironmentName&gt;</code> is the name of the environment:
-          <pre>
-            cp ./&lt;ArchiveFolder&gt;/configs/&lt;EnvironmentName&gt;/shelley-genesis.json $NODE_HOME
-          </pre>
+          <CodeBlock language="bash">
+            {`cp ./<ArchiveFolder>/configs/<EnvironmentName>/shelley-genesis.json $NODE_HOME`}
+          </CodeBlock>
         </li>
         <li>To add Cardano Wallet as well as bundled Cardano CLI binaries to the PATH environment variable temporarily, and then generate a 24-word seed phrase, type:
-          <pre>
-            export PATH="$(pwd)/cardano-wallet-$&#123;RELEASETAG&#125;-linux64:$PATH"<br />
-            cardano-wallet recovery-phrase generate --size 24 &gt; seed-phrase.dat
-          </pre>
+          <CodeBlock language="bash">
+            {`export PATH="$(pwd)/cardano-wallet-$\{RELEASETAG\}-linux64:$PATH"
+cardano-wallet recovery-phrase generate --size 24 > seed-phrase.dat`}
+          </CodeBlock>
         </li>
 
         <li>Using a text editor, create a new file named <code>$NODE_HOME/createWallet.sh</code>, and then paste the following script into the file:
@@ -159,24 +159,24 @@ export function HTMLContent() {
           </table>
         </li>
         <li>Save and close the <code>createWallet.sh</code> file, and then type the following command to grant file permissions for executing the script:
-          <pre>
-            chmod +x createWallet.sh
-          </pre>
+          <CodeBlock language="bash">
+            {`chmod +x createWallet.sh`}
+          </CodeBlock>
         </li>
         <li>To generate keys and addresses for your wallet, type:
-          <pre>
-            ./createWallet.sh 0 wallet-keys $(cat seed-phrase.dat)
-          </pre>
+          <CodeBlock language="bash">
+            {`./createWallet.sh 0 wallet-keys $(cat seed-phrase.dat)`}
+          </CodeBlock>
         </li>
         <li>To prevent overwriting your seed phrase, type the following command to remove Cardano Wallet binaries where <code>&lt;ArchiveFolder&gt;</code> is the name of the folder where you extracted Cardano Wallet in step 2:
-          <pre>
-            rm -r $NODE_HOME/&lt;ArchiveFolder&gt;
-          </pre>
+          <CodeBlock language="bash">
+            {`rm -r $NODE_HOME/<ArchiveFolder>`}
+          </CodeBlock>
         </li>
         <li>To protect your seed phrase, type the following command to clear history:
-          <pre>
-            history -c && history -w
-          </pre>
+          <CodeBlock language="bash">
+            {`history -c && history -w`}
+          </CodeBlock>
         </li>
         <li>Close the terminal window that you used to create your wallet, and then open a new terminal window if needed.</li>
         <li>Carefully back up the <code>$NODE_HOME/seed-phrase.dat</code> file, as well as all files in the <code>$NODE_HOME/wallet-keys/</code> folder, using a secure and comprehensive backup strategy.</li>
@@ -191,9 +191,9 @@ export function HTMLContent() {
 
       <ol>
         <li>To display the new payment address, using a terminal window type:
-          <pre>
-            cat $NODE_HOME/payment.addr
-          </pre>
+          <CodeBlock language="bash">
+            {`cat $NODE_HOME/payment.addr`}
+          </CodeBlock>
         </li>
         <li>For a Mainnet payment address, use a wallet of your choice to send funds that you want to pledge to the address that displays in step 1
           <center><strong>OR</strong></center>
@@ -213,12 +213,17 @@ export function HTMLContent() {
             &nbsp;&nbsp;--address $(cat $NODE_HOME/payment.addr) \<br />
             &nbsp;&nbsp;--mainnet
           </pre>
+          <CodeBlock language="bash">
+            {`cardano-cli conway query utxo --output-json \\
+  --address $(cat $NODE_HOME/payment.addr) \\
+  --mainnet`}
+          </CodeBlock>
         </li>
       </ol>
 
       <p>The UTXO query displays JSON output similar to the following—where the key is the transaction hash, followed by a hash (<code>#</code>) character, and then followed by the transaction index—displaying the value of the UTXO in Lovelace:</p>
 
-      <CodeBlock>
+      <CodeBlock language="json">
         {utxo}
       </CodeBlock>
 

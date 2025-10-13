@@ -255,8 +255,9 @@ const config = {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
         additionalLanguages: [
-          // October 12, 2025 - Enable syntax highlighting for Bash scripts
+          // October 12, 2025 - Enable syntax highlighting for Bash scripts and JSON files
           'bash',
+          'json',
         ],
       },
       //

@@ -106,10 +106,10 @@ export function HTMLContent() {
         <li>When prompted to install the <code>create-docusaurus</code> package, type <code>y</code> and then press <code>ENTER</code>to proceed.</li>
         <li>When prompted to select a language, select <code>JavaScript</code> and then press <code>ENTER</code></li>
         <li>When the installation completes, to start the development server for the new project Web site, type:
-          <pre>
-            cd ./&lt;WebsiteName&gt;<br />
-            npx docusaurus start
-          </pre>
+          <CodeBlock language="bash">
+            {`cd ./<WebsiteName>
+npx docusaurus start`}
+          </CodeBlock>
         </li>
       </ol>
 
@@ -143,18 +143,18 @@ export function HTMLContent() {
 
       <ol>
         <li>To install Git, if you are using Linux then type the following commands using a terminal window:
-          <pre>
-            sudo apt-get update<br />
-            sudo apt-get install git
-          </pre>
+          <CodeBlock language="bash">
+            {`sudo apt-get update
+sudo apt-get install git`}
+          </CodeBlock>
           <center><strong>OR</strong></center>
           If you are using Windows, <a href="https://git-scm.com/downloads" target="_blank">download</a> a Standalone Installer, then run the EXE file that you downloaded, and then follow the instructions on screen to complete the installation.
         </li>
         <li>To configure Git, using a terminal window type the following commands where <code>&lt;UserName&gt;</code> is your Git user name, and <code>&lt;EmailAddress&gt;</code> is your e-mail address:
-          <pre>
-            git config --global user.name "&lt;UserName&gt;"<br />
-            git config --global user.email &lt;EmailAddress&gt;
-          </pre>
+          <CodeBlock language="bash">
+            {`git config --global user.name "<UserName>"
+git config --global user.email "<EmailAddress>"`}
+          </CodeBlock>
           <table class="box">
             <tbody>
               <tr>
@@ -168,11 +168,11 @@ export function HTMLContent() {
         <li>Navigate to the <a href="https://github.com/ChangePool/CardanoSPOGuide" target="_blank">CardanoSPOGuide</a> repository, then click the <b>Fork</b> button, and then scroll down to click the green <b>Create Fork</b> button.</li>
 
         <li>Using a terminal window, navigate to the folder on your computer where you store Docusaurus project Web sites, and then type the following commands where <code>&lt;ForkedRepository&gt;</code> is the URL to the fork of the CardanoSPOGuide repository that you created in step 4:
-          <pre>
-            git clone &lt;ForkedRepository&gt;<br />
-            cd ./CardanoSPOGuide<br />
-            npm install
-          </pre>
+          <CodeBlock language="bash">
+            {`git clone <ForkedRepository>
+cd ./CardanoSPOGuide
+npm install`}
+          </CodeBlock>
         </li>
         <li>To start the development server for the Guide, type <code>npx docusaurus start</code></li>
         <li>When you are ready to stop the development server, navigate to the terminal window running the development server, and then press <code>CTRL+C</code></li>
@@ -283,15 +283,30 @@ export function HTMLContent() {
           </tr>
         </tbody>
       </table>
-      <p>You can create <code>inline code</code> (<code>code</code>) or code blocks (<code>pre</code>):</p>
-      <pre>
-        function Code()<br />
-        &#123;<br />
-        &nbsp;&nbsp;Sample Code;<br />
-        &nbsp;&nbsp;Sample Code;<br />
-        &nbsp;&nbsp;Sample Code;<br />
-        &#125;
-      </pre>
+      <p>You can create <code>inline code</code> (<code>code</code>) or code blocks (<code>CodeBlock</code>). For example:</p>
+      
+      <CodeBlock language="bash" title="Bash">
+        {`if [ true ]
+then
+  # To escape the reserved backslash (\\) character, use a double backslash (\\\\)
+  echo "Sample Code" \\
+  | grep -i "code"
+fi`}
+      </CodeBlock>
+
+      <CodeBlock language="json" title="JSON">
+        {`{
+  "name": "How to Set Up a Cardano Stake Pool",
+  "parts": [
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V"
+  ]
+}`}
+      </CodeBlock>
+
       <table class="box">
         <tbody>
           <tr>
@@ -300,7 +315,7 @@ export function HTMLContent() {
           </tr>
         </tbody>
       </table>
-      <p>To preserve whitespace in a code block, assign a multiline string to a constant, and then reference the constant in a <code>pre</code> tag:</p>
+      <p>Alternately, to display a code block without the option of using syntax highlighting, assign a code block to a multiline string constant—preserving white space—and then reference the constant in a <code>pre</code> tag:</p>
       <pre>
 
         {/* The SampleCode constant is set in the definition of the HTMLContent function */}

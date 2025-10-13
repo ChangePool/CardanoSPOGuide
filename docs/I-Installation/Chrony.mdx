@@ -31,17 +31,17 @@ Set up Chrony on all computers in your stake pool configuration.
 **To install Chrony:**
 
 1\. Using a terminal window, type:
-```
+```bash
 sudo apt-get install chrony
 ```
 
 2\. To configure Chrony, type:
-```
+```bash
 sudo nano /etc/chrony/chrony.conf
 ```
 
 3\. In the `chrony.conf` file, add or edit the following lines, and then save and close the file:
-```
+```bash
 # Comment out default sources
 #pool ntp.ubuntu.com        iburst maxsources 4
 #pool 0.ubuntu.pool.ntp.org iburst maxsources 1
@@ -66,7 +66,7 @@ For details on directives in the `chrony.conf` file, see the [manual page](https
 :::
 
 4\. To restart Chrony, type:
-```
+```bash
 sudo systemctl restart chronyd.service
 ```
 
@@ -76,8 +76,7 @@ sudo systemctl restart chronyd.service
 
 To use Chrony, you may find the following commands useful:
 
-
-```
+```bash
 # Display a list of time sources that chronyc currently uses and tracks
 chronyc sources
 # Display parameters related to system clock performance

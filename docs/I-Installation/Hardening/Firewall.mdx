@@ -35,17 +35,17 @@ When using UFW and `iptables-persistent`, you need to configure UFW to load afte
 **To install `iptables-persistent` and configure the UFW service:**
 
 1\. Using a terminal window, type:
-```
+```bash
 sudo apt-get install iptables-persistent
 ```
 
 2\. To configure UFW to load after `iptables-persistent`, type:
-```
+```bash
 sudo nano /lib/systemd/system/ufw.service
 ```
 
 3\. In the `ufw.service` file, edit the following lines in the `[Unit]` block, and then save and close the file:
-```
+```bash
 Wants=network-pre.target netfilter-persistent.service local-fs.target
 After=netfilter-persistent.service local-fs.target
 ```
@@ -55,7 +55,7 @@ The `iptables-persistent` package uses `netfilter-persistent.service`
 :::
 
 4\. To apply the configuration changes, type:
-```
+```bash
 sudo systemctl daemon-reload
 ```
 
@@ -66,14 +66,14 @@ A Denial-of-Service (DoS) attack may force a computer offline. To protect the re
 **To create a persistent `iptables` rule to protect against DoS attacks:**
 
 1\. To ensure that `iptables` starts with an empty ruleset, using a terminal window type:
-```
+```bash
 sudo ufw disable
 ```
 
 2\. Reboot the computer.
 
 3\. Using a terminal window, type the following commands where `<CardanoNodePort>` is the port number where the Cardano Node instance running on the local computer listens and `<MaxConnections>` is the maximum number of connections to allow from an IP address:
-```
+```bash
 sudo iptables -I INPUT -p tcp -m tcp --dport <CardanoNodePort> --tcp-flags FIN,SYN,RST,ACK SYN -m connlimit --connlimit-above <MaxConnections> --connlimit-mask 32 --connlimit-saddr -j REJECT --reject-with tcp-reset
 sudo ip6tables -I INPUT -p tcp -m tcp --dport <CardanoNodePort> --tcp-flags FIN,SYN,RST,ACK SYN -m connlimit --connlimit-above <MaxConnections> --connlimit-mask 128 --connlimit-saddr -j REJECT --reject-with tcp-reset
 ```
@@ -83,13 +83,13 @@ If you follow the *How to Set Up a Cardano Stake Pool* guide to create a stake p
 :::
 
 4\. To verify the rules that you applied in step 3, type:
-```
+```bash
 sudo iptables -vnL
 sudo ip6tables -vnL
 ```
 
 5\. To save the current `iptables` rules to persist when the computer reboots, type:
-```
+```bash
 sudo su -c 'iptables-save > /etc/iptables/rules.v4'
 sudo su -c 'ip6tables-save > /etc/iptables/rules.v6'
 ```
@@ -110,7 +110,7 @@ By default, when enabled UFW denies all incoming traffic and allows outgoing tra
 **To configure UFW on computers in your stake pool configuration:**
 
 1\. Prior to enabling UFW, type the following command where `<PortNumber>` is the port where the SSH Server listens:
-```
+```bash
 sudo ufw allow <PortNumber>/tcp
 ```
 
@@ -119,14 +119,14 @@ The command opens the port where the SSH Server listens to all TCP traffic.
 :::
 
 2\. On a relay node, type the following command where `<PortNumber>` is the port where the local instance of Cardano Node listens:
-```
+```bash
 sudo ufw allow <PortNumber>/tcp
 ```
 
 <center><strong>OR</strong></center>
 
 On the block-producing node, type the following command where `<IPAddress>` is the static IP address of a relay node in your stake pool configuration, and `<PortNumber>` is the port where the local instance of Cardano Node listens:
-```
+```bash
 sudo ufw allow proto tcp from <IPAddress> to any port <PortNumber>
 ```
 
@@ -137,12 +137,12 @@ The command that you type on the block producer opens the port where Cardano Nod
 3\. On the block-producing node, if your stake pool configuration uses multiple relay nodes, then repeat step 2 for each relay.
 
 4\. To enable UFW, type:
-```
+```bash
 sudo ufw enable
 ```
 
 5\. To display the detailed status of UFW, type:
-```
+```bash
 sudo ufw status verbose
 ```
 
@@ -161,7 +161,7 @@ To maintain a secure server, regularly review the ports on your computer that ar
 **To display a detailed list of active network connections:**
 
 - Using a terminal window, type:
-```
+```bash
 ss -tulpn
 ```
 
@@ -178,7 +178,7 @@ Listing all IP addresses connecting to a specific port on a computer may also be
 **To list all current connections to a port:**
 
 - Using a terminal window, type the following command where `<PortNumber>` is the port number for which you want to list connections on the local computer:
-```
+```bash
 sudo netstat -enp | grep ":<PortNumber>" | awk {'print $5'} | cut -d ':' -f 1 | sort | uniq -c | sort
 ```
 

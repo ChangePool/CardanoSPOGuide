@@ -41,7 +41,7 @@ To monitor the progress of a Cardano Node instance synchronizing a local copy of
 
 
 Here is a sample of Cardano Node log entries showing progress when beginning to synchronize the Mainnet blockchain ledger:
-```
+```bash
 ...
 
 [ChainDB.OpenEvent.StartedOpeningDB](Info,7) Started opening Chain DB
@@ -100,7 +100,7 @@ In addition to log entries, trace objects may also produce metrics to help you m
 ## Managing Services
 
 To help administer an instance of Cardano Node running as a `systemd` service, use the following commands:
-```
+```bash
 # Display the status of the service
 sudo systemctl status cardano-node
 # Restart the service
@@ -116,7 +116,7 @@ For more details on using the `systemctl` utility to manage services, see the [m
 Regular monitoring of entries in the log is essential for determining how an instance of Cardano Node is running.
 
 **To display and filter the Cardano Node log:**
-```
+```bash
 # Show the most recent log entries, and continuously print new entries as they are appended to the log
 journalctl --unit=cardano-node --follow
 # Show entries appended to the log since midnight the day before today
@@ -134,24 +134,24 @@ If you prefer, you can also use a different log viewer—such as [The Logfile Na
 **To review the Cardano Node log using The Logfile Navigator:**
 
 1\. To install The Logfile Navigator, using a terminal window type:
-```
+```bash
 sudo apt-get install lnav
 ```
 
 2\. To follow Cardano Node log entries using The Logfile Navigator, type:
-```
+```bash
 journalctl --unit=cardano-node --follow | lnav
 ```
 
 **To review the Cardano Node log using `glogg`:**
 
 1\. To install `glogg` type:
-```
+```bash
 sudo apt-get install glogg
 ```
 
 2\. To display log entries that Cardano Node generated within a date range using `glogg` type:
-```
+```bash
 journalctl --unit=cardano-node --since='2025-07-29 00:00:00' --until='2025-07-29 12:00:00' | glogg
 ```
 

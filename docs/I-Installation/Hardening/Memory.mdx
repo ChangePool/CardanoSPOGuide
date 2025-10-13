@@ -40,19 +40,19 @@ Ensure that measures you implement to secure shared memory do not interfere with
 **To secure shared memory:**
 
 1\. Using a terminal window, type:
-```
+```bash
 sudo nano /etc/fstab
 ```
 
 2\. At the end of the `fstab` file, add the following line to mount the shared memory filesystem securely using read-write access:
-```
+```bash
 tmpfs /run/shm tmpfs defaults,nodev,nosuid,noexec 0 0
 ```
 
 <center><strong>OR</strong></center>
 
 If you are sure that no applications on the computer may require write access to the shared memory filesystem, then add the following line to mount the filesystem using read-only access:
-```
+```bash
 tmpfs /run/shm tmpfs ro,noexec,nosuid 0 0
 ```
 

@@ -27,17 +27,17 @@ export function HTMLContent() {
 **To install fail2ban:**
 
 1\. Using a terminal window, type:
-```
+```bash
 sudo apt-get install fail2ban
 ```
 
 2\. To configure fail2ban, type:
-```
+```bash
 sudo nano /etc/fail2ban/jail.local
 ```
 
 3\. At the end of the `jail.local` file, add the following lines where `<PortNumber>` is the port number where SSH Server listens on the local computer, and `<Whitelist>` is a `SPACE`- and/or `COMMA`-separated list of IP addresses, CIDR masks or DNS host names that fail2ban does NOT ban:
-```
+```bash
 [sshd]
 enabled = true
 port = <PortNumber>
@@ -55,6 +55,6 @@ Add the static IP address of the computer that you use to administer your Cardan
 4\. Save and close the `jail.local` file.
 
 5\. To restart fail2ban, type:
-```
+```bash
 sudo systemctl restart fail2ban
 ```

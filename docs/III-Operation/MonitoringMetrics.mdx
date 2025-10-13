@@ -37,16 +37,18 @@ export function HTMLContent() {
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
-            <td class="boxText"><p class="boxText">Using the following options in the <code>$&#123;NODE_HOME&#125;/config.json</code> or <code>$&#123;NODE_HOME&#125;/config-bp.json</code> file, you can set the IP address and port where the EKG and Prometheus endpoints listen. For options that you modify in the configuration file to take effect, you need to restart Cardano Node:<pre>
-              "hasEKG": [<br />
-              &nbsp;&nbsp;"127.0.0.1",<br />
-              &nbsp;&nbsp;12788<br />
-              ],<br />
-              "hasPrometheus": [<br />
-              &nbsp;&nbsp;"127.0.0.1",<br />
-              &nbsp;&nbsp;12798<br />
-              ]
-            </pre></p></td>
+            <td class="boxText"><p class="boxText">Using the following options in the <code>$&#123;NODE_HOME&#125;/config.json</code> or <code>$&#123;NODE_HOME&#125;/config-bp.json</code> file, you can set the IP address and port where the EKG and Prometheus endpoints listen. For options that you modify in the configuration file to take effect, you need to restart Cardano Node:
+              <CodeBlock language="json">
+                {`"hasEKG": [
+  "127.0.0.1",
+  12788
+],
+"hasPrometheus": [
+  "127.0.0.1",
+  12798
+]`}
+              </CodeBlock>
+            </p></td>
           </tr>
         </tbody>
       </table>

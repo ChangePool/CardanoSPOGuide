@@ -43,7 +43,7 @@ Implementing SSH key authentication and disabling SSH password authentication on
 **To implement SSH key authentication:**
 
 1\. To create a new SSH key pair, on a computer connecting to the SSH Server as a client, using a terminal window type:
-```
+```bash
 ssh-keygen -t ed25519
 ```
 
@@ -70,7 +70,7 @@ ssh cardano@<SSHServer>
 ```
 
 6\. To edit the `sshd_config` file on the computer hosting the SSH Server, type the following command in the remote terminal window:
-```
+```bash
 sudo nano /etc/ssh/sshd_config
 ```
 
@@ -95,12 +95,12 @@ If any of the lines containing keyword-argument pairs begin with a hash (#) char
 8\. Save and close the `sshd_config` file.
 
 9\. To validate the syntax of the `sshd_config` file, type:
-```
+```bash
 sudo sshd -t
 ```
 
 10\. If validating the `sshd_config` file returns no errors, then type the following command to restart the SSH Server:
-```
+```bash
 sudo systemctl restart sshd
 ```
 
@@ -116,12 +116,12 @@ SSH port forwarding allows you to connect from a local computer to a service run
 **To use port forwarding to access a service running on a remote computer securely:**
 
 - Using a terminal window, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server listens, `<PortNumber>` is the port number where the SSH Server listens, `<LocalPort>` is the port number on the local computer that you use to connect to the remote service, `<RemoteHost>` is the IP address or domain name of the target computer that the SSH Server can reach, and `<RemotePort>` is the port number on the `<RemoteHost>` computer where SSH forwards traffic and the remote service listens:
-```
+```bash
 ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber> -L <LocalPort>:<RemoteHost>:<RemotePort>
 ```
 
 For example, if a computer that you access remotely via SSH operates a server having an HTTP endpoint on port 3000, then the following command allows you to access the endpoint by visiting `http://localhost:3010` using a Web browser on the local computer:
-```
+```bash
 ssh -i ~/.ssh/id_ed25519 cardano@relaynode1.pool.example.net -p 1024 -L 3010:localhost:3000
 ```
 
@@ -144,7 +144,7 @@ The SSH configuration file located at `~/.ssh/config` on the client computer sto
 **To simplify logging in to a computer using SSH:**
 
 1\. On the client computer, type:
-```
+```bash
 nano ~/.ssh/config
 ```
 
@@ -160,7 +160,7 @@ Host cardano-server
 3\. Save and close the `config` file.
 
 4\. To log in using the connection details specified in the `config` file, type:
-```
+```bash
 ssh cardano-server
 ```
 
@@ -175,13 +175,13 @@ If you connect remotely to a computer hosting SSH Server to configure two-factor
 **To set up two-factor authentication for SSH:**
 
 1\. Using a terminal window on the computer hosting SSH Server, type:
-```
+```bash
 sudo apt-get update
 sudo apt install libpam-google-authenticator
 ```
 
 2\. To edit the Pluggable Authentication Module (PAM) configuration file, type:
-```
+```bash
 sudo nano /etc/pam.d/sshd
 ```
 
@@ -192,33 +192,33 @@ sudo nano /etc/pam.d/sshd
 ```
 
 4\. At the end of the `sshd` file, add the following line, and then save and close the file:
-```
+```bash
 auth required pam_google_authenticator.so
 ```
 
 5\. To edit the SSH Server configuration file, type:
-```
+```bash
 sudo nano /etc/ssh/sshd_config
 ```
 
 6\. In the `sshd_config` file, edit the following lines:
-```
+```bash
 UsePAM yes
 KbdInteractiveAuthentication yes
 ```
 
 7\. At the end of the `sshd_config` file, add the following line, and then save and close the file:
-```
+```bash
 AuthenticationMethods publickey,keyboard-interactive
 ```
 
 8\. To restart the SSH Server, type:
-```
+```bash
 sudo systemctl restart sshd.service
 ```
 
 9\. To configure Google Authenticator, type:
-```
+```bash
 google-authenticator
 ```
 
@@ -238,7 +238,7 @@ google-authenticator
 **To test two-factor authentication:**
 
 1\. On a client computer where you [Implemented Key Authentication](#implementing-key-authentication) and [Simplified Logging In](#simplifying-logging-in), open a terminal window and then type the following command:
-```
+```bash
 ssh cardano-server
 ```
 
@@ -253,12 +253,12 @@ The `/etc/ssh/sshd-config.d` directory contains configuration files processed in
 **To verify SSH Server settings:**
 
 1\. Using a terminal window on the computer hosting SSH Server, to display the options that the SSH Server currently applies, type:
-```
+```bash
 sudo sshd -T
 ```
 
 2\. Verify that the SSH Server applies the following options, where `<PortNumber>` is the port number that you set when [Implementing Key Authentication](#implementing-key-authentication):
-```
+```bash
 Port <PortNumber>
 PermitRootLogin prohibit-password
 PubkeyAuthentication yes
@@ -273,7 +273,7 @@ KbdInteractiveAuthentication yes
 4\. To resolve conflicting configuration options, create a file in the `/etc/ssh/sshd-config.d` directory having a file name that appears earlier in alphabetical order than the name of configuration files setting unwanted options, and then set the desired configuration options in the file you create. For example, if a configuration file named `50-cloud-init.conf` sets `PasswordAuthentication yes` then you may create a file named `01-custom-ssh.conf` containing `PasswordAuthentication no` to apply the necessary option.
 
 5\. To restart the SSH Server, type:
-```
+```bash
 sudo systemctl restart sshd.service
 ```
 
