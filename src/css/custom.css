@@ -519,3 +519,30 @@ strong, th
   font-weight: 500; /* Medium */
 }
 
+/* Hide the default Sidebar Collapse icon */
+.collapseSidebarButtonIcon_kv0_
+{
+  display: none;
+}
+
+/* Set a background image for the Sidebar Collapse button */
+.button.button--secondary.button--outline.collapseSidebarButton_PEFL
+{
+  background: url("/static/img/SidebarCollapse.svg") center/contain no-repeat;
+  background-size: 29px;
+  padding: 0px 149px;
+}
+
+/* Hide the default Sidebar Expand icon */
+.expandButtonIcon_i1dp
+{
+  display: none;
+}
+
+/* Set a background image for the Sidebar Expand button */
+.expandButton_TmdG
+{
+  background: url("/static/img/SidebarCollapse.svg") center/contain no-repeat;
+  background-size: 29px;
+}
+
