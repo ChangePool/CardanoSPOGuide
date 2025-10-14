@@ -82,10 +82,10 @@ do
   mem_live="${mem_live} GB"
 
   # Format numbers using the thousands separator for the current system locale
-  epoch_num=$(printf "%'d\n" "${epoch_num}")
-  slot_in_epoch=$(printf "%'d\n" "${slot_in_epoch}")
-  block_height=$(printf "%'d\n" "${block_height}")
-  block_count=$(printf "%'d\n" "${block_count}")
+  epoch_num=$(printf "%'d" "${epoch_num}")
+  slot_in_epoch=$(printf "%'d" "${slot_in_epoch}")
+  block_height=$(printf "%'d" "${block_height}")
+  block_count=$(printf "%'d" "${block_count}")
 
   # To create fixed widths, add trailing spaces to values as needed
   epoch_num=$(printf "%-5s" "${epoch_num}")
