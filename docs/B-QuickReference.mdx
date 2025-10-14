@@ -10,14 +10,259 @@ description: ""
 
 import React from 'react';
 
+import CodeBlock from '@theme/CodeBlock';
+
 export function HTMLContent() {
-    return (
-        <div>
+  return (
+    <div>
+    
+      <p>As a stake pool operator, you need to understand the logic of creating transactions in the Cardano ecosystem. Therefore, the <i>How to Set Up a Cardano Stake Pool</i> guide explains how to create transactions manually using the <code>transaction build-raw</code> command.</p>
 
+      <p>Cardano CLI also includes functionality to create transactions calculating the fee and change automatically. The <code>transaction build</code> command uses the following syntax, where <code>&lt;UTXOToSpend&gt;</code> is the transaction hash and index of the UTXO to consume; <code>&lt;ReceivingAddress&gt;</code> is the payment address receiving funds in the transaction; <code>&lt;ReceivingAmount&gt;</code> is the amount in Lovelace that the transaction sends to <code>&lt;ReceivingAddress&gt;</code>; and, <code>&lt;ChangeAddress&gt;</code> is the payment address receiving the change from the transaction:</p>
+        
+      <CodeBlock language="bash">
+        {`cardano-cli conway transaction build \\
+  --tx-in <UTXOToSpend> \\
+  --tx-out <ReceivingAddress>+<ReceivingAmount> \\
+  --change-address <ChangeAddress> \\
+  --out-file tx.raw`}
+      </CodeBlock>
+
+      <p>To withdraw rewards using the <code>transaction build</code> command, type the following command where <code>&lt;StakeAddress&gt;</code> is the stake address collecting rewards and <code>&lt;RewardBalance&gt;</code> is the entire balance of rewards in the account, in Lovelace:</p>
+
+      <CodeBlock language="bash">
+        {`cardano-cli conway transaction build \\
+  --tx-in <UTXOToSpend> \\
+  --withdrawal <StakeAddress>+<RewardBalance> \\
+  --change-address <ChangeAddress> \\
+  --witness-override 2 \\
+  --out-file tx.raw`}
+      </CodeBlock>
+
+      <p>As long as you have a current copy of the protocol parameters file—called <code>params.json</code> throughout the <i>How to Set Up a Cardano Stake Pool</i> guide—the <code>transaction build-raw</code> allows you to build transactions offline. To calculate the transaction fee, the <code>transaction build</code> command obtains protocol parameters in real time, requiring a connection to an active Cardano Node instance.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Using the <code>--invalid-hereafter</code> or <code>--invalid-before</code> option is optional. No time limit exists for submitting transactions that you build without using either option.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>In alphabetical order by description, <i>Table 1</i> lists certificate files required to build transactions, as well as signing key files required to sign transactions, for each type of transaction included in the <i>How to Set Up a Cardano Stake Pool</i> guide.</p>
+
+      <p><i>Appendix B</i> also includes the following sections:</p>
+
+      <ul>
+        <li><a href="#GeneratingCertificates">Generating Certificates</a> offers templates for commands to generate each type of certificate listed in <i>Table 1</i>.</li>
+        <li><a href="#SigningSubmittingTxs">Signing and Submitting Transactions</a> provides templates for commands to sign and submit transactions.</li>
+        <li><a href="#ViewingTxs">Viewing Transactions</a> explains how to display transaction files using a human-readable format.</li>
+      </ul>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Commands in <i>Appendix B</i> provide templates for the Mainnet environment. If you work in a Testnet environment, then replace each instance of the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><i>Appendix B</i> uses the following file name extensions:</p>
+
+      <ul>
+        <li><b>SKEY</b>—Secret signing key file</li>
+        <li><b>VKEY</b>—Public verification key file</li>
+        <li><b>CERT</b>—Certificate file</li>
+      </ul>
+
+      <table class="center">
+        <caption>Table 1 Transaction Quick Reference</caption>
+        <tbody>
+          <tr>
+            <th width="33%"><p>Description</p></th>
+            <th width="34%"><p>Required <code>--certificate-file</code> Option(s)</p></th>
+            <th width="34%"><p>Required <code>--signing-key-file</code> Option(s)</p></th>
+          </tr>
+          <tr>
+            <td class="center"><p>Sending Funds</p></td>
+            <td class="center"><p>N/A</p></td>
+            <td class="center"><p><code>payment.skey</code></p></td>
+          </tr>
+          <tr>
+            <td class="center"><p>Registering a Stake Address</p></td>
+            <td class="center"><p><code>stake.cert</code></p></td>
+            <td class="center"><p><code>payment.skey</code></p>
+              <p><code>stake.skey</code></p>
+            </td>
+          </tr>
+          <tr>
+            <td class="center"><p>Delegating to a Stake Pool</p></td>
+            <td class="center"><p><code>deleg.cert</code></p></td>
+            <td class="center"><p><code>payment.skey</code></p>
+              <p><code>stake.skey</code></p>
+            </td>
+          </tr>
+          <tr>
+            <td class="center"><p>Delegating to a Representative</p></td>
+            <td class="center"><p><code>vote-deleg.cert</code></p></td>
+            <td class="center"><p><code>payment.skey</code></p>
+              <p><code>stake.skey</code></p></td>
+          </tr>
+          <tr>
+            <td class="center"><p>Registering a Stake Pool</p></td>
+            <td class="center"><p><code>pool.cert</code></p>
+              <p><code>deleg.cert</code></p>
+            </td>
+            <td class="center"><p><code>payment.skey</code></p>
+              <p><code>stake.skey</code></p>
+              <p><code>node.skey</code></p>
+            </td>
+          </tr>
+          <tr>
+            <td class="center"><p>Updating Stake Pool Metadata</p></td>
+            <td class="center"><p><code>pool.cert</code></p>
+              <p><code>deleg.cert</code></p>
+            </td>
+            <td class="center"><p><code>payment.skey</code></p>
+              <p><code>stake.skey</code></p>
+              <p><code>node.skey</code></p></td>
+          </tr>
+          <tr>
+            <td class="center"><p>Withdrawing Rewards</p></td>
+            <td class="center"><p>N/A</p></td>
+            <td class="center"><p><code>payment.skey</code></p>
+              <p><code>stake.skey</code></p></td>
+          </tr>
+          <tr>
+            <td class="center"><p>Retiring a Stake Pool</p></td>
+            <td class="center"><p><code>pool.dereg</code></p></td>
+            <td class="center"><p><code>payment.skey</code></p>
+              <p><code>node.skey</code></p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <a id="GeneratingCertificates" />
+      <h1>Generating Certificates</h1>
+
+      <p>The following section provides templates for commands used to generate various certificates involved in operating a stake pool.</p>
+
+      <h2>Stake Address Registration Certificate <code>stake.cert</code></h2>
+
+      <CodeBlock language="bash">
+        {`cardano-cli conway stake-address registration-certificate \\
+  --stake-verification-key-file stake.vkey \\
+  --key-reg-deposit-amt 2000000 \\
+  --out-file stake.cert`}
+      </CodeBlock>
+
+      <h2>Stake Address Vote Delegation Certificate <code>vote-deleg.cert</code></h2>
+
+      <CodeBlock language="bash">
+        {`cardano-cli conway stake-address vote-delegation-certificate \\
+    --stake-verification-key-file stake.vkey \\
+    --always-abstain \\
+    --out-file vote-deleg.cert`}
+      </CodeBlock>
+
+      <h2>Stake Delegation Certificate <code>deleg.cert</code></h2>
+
+      <CodeBlock language="bash">
+        {`cardano-cli conway stake-address stake-delegation-certificate \\
+    --stake-verification-key-file stake.vkey \\
+    --cold-verification-key-file node.vkey \\
+    --out-file deleg.cert`}
+      </CodeBlock>
+
+      <center><strong>OR</strong></center>
+
+      <CodeBlock language="bash">
+        {`cardano-cli conway stake-address stake-delegation-certificate \\
+    --stake-verification-key-file stake.vkey \\
+    --stake-pool-id 9769cbc0c7c6dbdf1b50010434224ff0173c194af9b29894fc8f49c8 \\
+    --out-file deleg.cert`}
+      </CodeBlock>
+
+      <h2>Stake Pool Deregistration Certificate <code>pool.dereg</code></h2>
+
+      <CodeBlock language="bash">
+        {`cardano-cli conway stake-pool deregistration-certificate \\
+--cold-verification-key-file node.vkey \\
+--epoch $(bc <<< "$(curl -s -H 'Accept: application/json' http://localhost:12788/ | jq -r '.cardano.node.metrics.epoch.int.val') + 1") \\
+--out-file pool.dereg`}
+      </CodeBlock>
+
+      <h2>Stake Pool Registration Certificate <code>pool.cert</code></h2>
+
+      <CodeBlock language="bash">
+        {`cardano-cli conway stake-pool registration-certificate \\
+    --cold-verification-key-file node.vkey \\
+    --vrf-verification-key-file vrf.vkey \\
+    --pool-pledge 100000000 \\
+    --pool-cost 170000000 \\
+    --pool-margin 0.15 \\
+    --pool-reward-account-verification-key-file stake.vkey \\
+    --pool-owner-stake-verification-key-file stake.vkey \\
+    --mainnet \\
+    --single-host-pool-relay relaynode1.pool.example.net \\
+    --pool-relay-port 6000 \\
+    --metadata-url https://pool.example.net/md.json \\
+    --metadata-hash $(cardano-cli conway stake-pool metadata-hash --pool-metadata-file md.json) \\
+    --out-file pool.cert`}
+      </CodeBlock>
+
+      <a id="SigningSubmittingTxs" />
+      <h1>Signing and Submitting Transactions</h1>
+
+      <p>The following procedures provide templates for commands to sign and submit transactions.</p>
+
+      <p class="pi">To sign a transaction:</p>
+
+      <ol>
+        <li>Using removable media, copy the <code>tx.raw</code> file for the transaction from the computer where you built the transaction to your air-gapped, offline computer.</li>
+        <li>Using a terminal window on the air-gapped, offline computer type:
+          <CodeBlock language="bash">
+            {`cardano-cli conway transaction sign \\
+  --tx-body-file tx.raw \\
+  --signing-key-file payment.skey \\
+  --mainnet \\
+  --out-file tx.signed`}
+          </CodeBlock>
+        </li>
+      </ol>
+
+      <p class="pi">To submit a transaction:</p>
+
+      <ol>
+        <li>Using removable media, copy the <code>tx.signed</code> file for the transaction from your air-gapped, offline computer to the block-producing node in your stake pool configuration.</li>
+        <li>Using a terminal window on the block-producing node, type:
+          <CodeBlock language="bash">
+            {`cardano-cli conway transaction submit \\
+  --tx-file tx.signed \\
+  --mainnet`}
+          </CodeBlock>
+        </li>
+      </ol>
+
+      <a id="ViewingTxs" />
+      <h1>Viewing Transactions</h1>
+
+      <p class="pi">To display a draft, unsigned or signed transaction file using a human-readable format:</p>
             
+      <ul class="ss">
+        <li>Using a terminal window, type the following command where <code>&lt;TransactionFileName&gt;</code> is the path to the transaction file that you want to inspect:
+          <CodeBlock language="bash">
+            {`cardano-cli debug transaction view --tx-file <TransactionFileName>`}
+            </CodeBlock>
+        </li>
+      </ul>
 
-        </div>
-    );
+    </div>
+  );
 }
 
 <HTMLContent />
+

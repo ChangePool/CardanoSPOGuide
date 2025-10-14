@@ -66,7 +66,7 @@ export function HTMLContent() {
             <tbody>
               <tr>
                 <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
-                <td class="boxText"><p class="boxText">To ensure that your Cardano stake pool operating on Mainnet remains secure, do NOT use or store the cold keys for your stake pool on a computer that connects to a network or the Internet.</p></td>
+                <td class="boxText"><p class="boxText">To ensure that your Cardano stake pool operating on Mainnet remains secure, do NOT use or store the <code>node.skey</code> secret signing key file for your stake pool on a computer that connects to a network or the Internet.</p></td>
               </tr>
             </tbody>
           </table>
@@ -81,7 +81,18 @@ export function HTMLContent() {
             </tbody>
           </table>
         </li>
+        <li>Using removable media, copy the <code>$HOME/cold-keys/node.vkey</code> public verification key file to the <code>$NODE_HOME</code> folder on the computer designated as the block-producing node in your stake pool configuration.</li>
       </ol>
+
+
+
+      
+
+
+
+
+
+
 
       <p class="pi">To generate an operational certificate:</p>
 

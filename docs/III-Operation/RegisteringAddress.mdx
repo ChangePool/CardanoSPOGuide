@@ -90,7 +90,7 @@ $\{tx_in\} \\
   --tx-out $(cat $NODE_HOME/payment.addr)+$(( $\{total_balance\} - 200000 - $\{stakeAddressDeposit\} )) \\
   --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
   --fee 200000 \\
-  --certificate stake.cert \\
+  --certificate-file stake.cert \\
   --out-file tx.tmp`}
           </CodeBlock>
           <table class="box">
@@ -167,7 +167,7 @@ $\{tx_in\} \\
 
       <h1>Additional Resources</h1>
 
-      <p>For more details on creating transactions, see <a href="https://docs.cardano.org/developer-resources/transaction-tutorials" target="_blank">Transaction Tutorials</a>.</p>
+      <p>For more details on creating transactions, see <a href="https://docs.cardano.org/developer-resources/transaction-tutorials" target="_blank">Transaction Tutorials</a> and <a href="https://developers.cardano.org/docs/get-started/cardano-cli/basic-operations/get-started" target="_blank">Getting Started with Cardano CLI</a>.</p>
 
     </div>
   );
