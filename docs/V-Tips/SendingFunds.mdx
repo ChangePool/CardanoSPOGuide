@@ -140,11 +140,6 @@ $\{tx_in\} \\
           </CodeBlock>
         </li>
         <li>To verify that the funds you sent arrived, type the following command to display the list of Unspent Transaction Output (UTXOs) available for the payment address receiving funds in the transaction, and then find the UTXO for the funds that you sent:
-          <pre>
-            cardano-cli conway query utxo --output-json \<br />
-            &nbsp;&nbsp;--address $&#123;destinationAddress&#125; \<br />
-            &nbsp;&nbsp;--mainnet
-          </pre>
           <CodeBlock language="bash">
             {`cardano-cli conway query utxo --output-json \\
   --address $\{destinationAddress\} \\
