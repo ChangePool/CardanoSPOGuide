@@ -49,7 +49,8 @@ a
 /* Set the color for hyperlinks in the content of the Guide, excluding hyperlinks in the sidebar, header and footer */
 a:not(.menu__link, .navbar__link, .footer__link-item)
 {
-  color: #0033ad;
+  /* color: light-dark(#0033ad,#0033dd); */
+  color: light-dark(#0033ad,#629ddc);
 }
 
 /* Style hyperlinks in the header */
@@ -109,6 +110,8 @@ a.navbar__link:hover
   /* Search box */
   --docsearch-searchbox-background: var(--ifm-background-color);
   --docsearch-searchbox-focus-background: var(--ifm-color-black);
+  /* October 19, 2025 - Set the color of the Search bar border when hovering */
+  --docsearch-searchbox-shadow: inset 0 0 0 2px rgba(191, 144, 4, 0.7);
   /* Hit */
   --docsearch-hit-color: var(--ifm-font-color-base);
   --docsearch-hit-active-color: var(--ifm-color-white);
@@ -148,7 +151,7 @@ b
 /* Style the breadcrumbs that display at the top of each topic */
 .breadcrumbs__item--active .breadcrumbs__link
 {
-  color: light-dark(#0033ad,#0033dd);
+  color: light-dark(#0033ad,#629ddc);
 }
 
 b.navbar__title
@@ -195,32 +198,33 @@ figure img
 
 header h1
 {
-  color: light-dark(#0033ad,#0033dd);
+  color: light-dark(#0033ad,#629ddc);
   font-weight: 500; /* Medium */
   scroll-margin-top: 100pt;
 }
 
 h1
 {
-  color: #0033ad;
+  /* color: #0033ad; */
+  color: light-dark(#0033ad,#629ddc);
   font-weight: 500; /* Medium */
 }
 
 h2
 {
-  color: #0033ad;
+  color: light-dark(#0033ad,#629ddc);
   font-weight: 500; /* Medium */
 }
 
 h3
 {
-  color: #0033ad;
+  color: light-dark(#0033ad,#629ddc);
   font-weight: 500; /* Medium */
 }
 
 h4
 {
-  color: #0033ad;
+  color: light-dark(#0033ad,#629ddc);
   font-size: 13pt;
   font-style: italic;
   font-weight: 500; /* Medium */
@@ -313,8 +317,8 @@ ul:not(.menu__list) li
 /* Style tabs used in Markdown */
 ul.tabs li.tabs__item--active
 {
-  color: light-dark(#0033ad,#0033dd);
-  border-bottom-color: light-dark(#0033ad,#0033dd);
+  color: light-dark(#0033ad,#629ddc);
+  border-bottom-color: light-dark(#0033ad,#629ddc);
 }
 
 /* Style single-step procedures */
@@ -492,25 +496,25 @@ table.center p
 /* September 2, 2025 - Style the Next and Previous buttons that display at the bottom of topics */
 .pagination-nav__label
 {
-  color: light-dark(#0033ad,#0033dd);
+  color: light-dark(#0033ad,#629ddc);
 }
 
 /*
 .pagination-nav__sublabel
 {
-  color: light-dark(#0033ad,#0033dd);
+  color: light-dark(#0033ad,#629ddc);
 }
 */
 
 a.pagination-nav__link:hover
 {
-  border-color: light-dark(#0033ad,#0033dd);
+  border-color: light-dark(#0033ad,#629ddc);
 }
 
 /* Style the hyperlinks to topics that display on Category pages listed in the sidebar */
 a.card:hover
 {
-  border-color: light-dark(#0033ad,#0033dd);
+  border-color: light-dark(#0033ad,#629ddc);
 }
 
 /* Style markdown */
