@@ -96,7 +96,7 @@ $\{tx_in\} \\
   --tx-out $\{destinationAddress\}+$\{amountToSend\} \\
   --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
   --fee 200000 \\
-  --out-file tx.tmp`}
+  --out-file $NODE_HOME/tx.tmp`}
           </CodeBlock>
         </li>
         <li>To calculate the fee for the transaction, type:
@@ -126,10 +126,10 @@ $\{tx_in\} \\
   --tx-out $\{destinationAddress\}+$\{amountToSend\} \\
   --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
   --fee $\{fee\} \\
-  --out-file tx.raw`}
+  --out-file $NODE_HOME/tx.raw`}
           </CodeBlock>
         </li>
-        <li>Copy the <code>tx.raw</code> file that you created in step 9 to the <code>$NODE_HOME</code> folder on your air-gapped, offline computer, and then using a terminal window type the following command to sign the transaction:
+        <li>Copy the <code>tx.raw</code> file that you created in step 9 to the <code>$NODE_HOME</code> folder on your air-gapped, offline computer, and then using a terminal window type the following commands to sign the transaction:
           <CodeBlock language="bash">
             {signTransactionSendingFunds}
           </CodeBlock>

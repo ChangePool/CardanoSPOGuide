@@ -1,3 +1,3 @@
 cardano-cli conway transaction submit \
-  --tx-file tx.signed \
+  --tx-file $NODE_HOME/tx.signed \
   --mainnet

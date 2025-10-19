@@ -530,7 +530,7 @@ strong, th
 {
   background: url("/static/img/SidebarCollapse.svg") center/contain no-repeat;
   background-size: 25px;
-  padding: 0px 149px;
+  padding: 6x 149px;
 }
 
 /* Hide the default Sidebar Expand icon */

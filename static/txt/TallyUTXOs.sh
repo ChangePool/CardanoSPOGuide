@@ -15,7 +15,7 @@ while read -r utxo; do
     datum=$(jq -r '.datum' <<< "${values}")
     # Retrieve the reference script associated with the UTXO
     script=$(jq -r '.referenceScript' <<< "${values}")
-	# If limits on spending the UTXO may exist, then skip the UTXO
+    # If limits on spending the UTXO may exist, then skip the UTXO
     if [[ ${datum} == 'null' && ${script} == 'null' ]]
     then
         hash=${utxo%%#*}

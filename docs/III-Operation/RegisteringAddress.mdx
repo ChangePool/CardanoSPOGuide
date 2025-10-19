@@ -70,7 +70,7 @@ echo stakeAddressDeposit: $\{stakeAddressDeposit\}`}
             {`cardano-cli conway stake-address registration-certificate \\
   --stake-verification-key-file stake.vkey \\
   --key-reg-deposit-amt $\{stakeAddressDeposit\} \\
-  --out-file stake.cert`}
+  --out-file $NODE_HOME/stake.cert`}
           </CodeBlock>
         </li>
         <li>To query the slot number of the current tip of the ledger, type:
@@ -90,8 +90,8 @@ $\{tx_in\} \\
   --tx-out $(cat $NODE_HOME/payment.addr)+$(( $\{total_balance\} - 200000 - $\{stakeAddressDeposit\} )) \\
   --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
   --fee 200000 \\
-  --certificate-file stake.cert \\
-  --out-file tx.tmp`}
+  --certificate-file $NODE_HOME/stake.cert \\
+  --out-file $NODE_HOME/tx.tmp`}
           </CodeBlock>
           <table class="box">
             <tbody>
@@ -136,11 +136,11 @@ $\{tx_in\} \\
   --tx-out $(cat $NODE_HOME/payment.addr)+$\{txOut\} \\
   --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
   --fee $\{fee\} \\
-  --certificate-file stake.cert \\
-  --out-file tx.raw`}
+  --certificate-file $NODE_HOME/stake.cert \\
+  --out-file $NODE_HOME/tx.raw`}
           </CodeBlock>
         </li>
-        <li>Copy the <code>tx.raw</code> file that you created in step 9 to the <code>$NODE_HOME</code> folder on your air-gapped, offline computer, and then using a terminal window type the following command to sign the transaction:
+        <li>Copy the <code>tx.raw</code> file that you created in step 9 to the <code>$NODE_HOME</code> folder on your air-gapped, offline computer, and then using a terminal window type the following commands to sign the transaction:
           <CodeBlock language="bash">
             {signTransactionRegisteringAddress}
           </CodeBlock>

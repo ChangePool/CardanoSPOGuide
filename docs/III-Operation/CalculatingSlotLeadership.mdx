@@ -23,6 +23,12 @@ export function HTMLContent() {
         <figcaption>Figure 1 Cardano Block Production Process</figcaption>
       </figure>
 
+      {/* <!-- To monitor slot leadership, create a bash script running as a service that polls the cardano.node.metrics.slotInEpoch.int metric every six hours, or until the slot in epoch is greater than 310,000 Use the VE2.sh script as reference. When slotInEpoch > 310,000 run a slot leader check using cardano-cli and then append the results to a JSON file.
+       
+      Update the nodeView dashboard to read the JSON file, and then display Pending Blocks (as an integer), Next Block (as a date and time) and Countdown (in terms of time remaining until the next block is prepared) statistics as the first row in the Block Production area. Provide the revisions to the nodeView.sh script relatively, as lines to add. Write the functionality to read the JSON file and prepare the statistics as a function, then call the function, and then display the statistics.
+      
+      Develop, test and use the script on a day-to-day basis using a Testnet environment. --> */}
+
       <p><i>Figure 2</i> estimates the average block production rate for Cardano stake pools operating on Mainnet, based on stake size.</p>
 
       <figure>

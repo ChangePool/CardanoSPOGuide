@@ -33,7 +33,7 @@ export function HTMLContent() {
         <li><b>Operational Certificate</b>—<code>node.cert</code></li>
         <li><b>Incrementing Counter File</b>—<code>node.counter</code></li>
         <li><b>Cold Keys</b>—<code>node.vkey</code> and <code>node.skey</code></li>
-        <li><b>Registration Certificate</b>—<code>pool.cert</code></li>
+        <li><b>Stake Pool Registration Certificate</b>—<code>pool.cert</code></li>
         <li><b>VRF Keys</b>—<code>vrf.vkey</code> and <code>vrf.skey</code></li>
       </ul>
 
@@ -84,16 +84,6 @@ export function HTMLContent() {
         <li>Using removable media, copy the <code>$HOME/cold-keys/node.vkey</code> public verification key file to the <code>$NODE_HOME</code> folder on the computer designated as the block-producing node in your stake pool configuration.</li>
       </ol>
 
-
-
-      
-
-
-
-
-
-
-
       <p class="pi">To generate an operational certificate:</p>
 
       <ol>
@@ -127,18 +117,18 @@ export function HTMLContent() {
             </li>
           </ol>
         </li>
-        <li>Using removable media, copy the <code>$NODE_HOME/kes.vkey</code> from the computer designated as the block-producing node in your stake pool configuration to <code>$HOME/kes.vkey</code> on the air-gapped, offline computer.</li>
+        <li>Using removable media, copy the <code>$NODE_HOME/kes.vkey</code> from the computer designated as the block-producing node in your stake pool configuration to <code>$NODE_HOME/kes.vkey</code> on the air-gapped, offline computer.</li>
         <li>On the air-gapped, offline computer, using a terminal window type the following command where <code>&lt;currentKesPeriod&gt;</code> is the value that you calculated in step 2:
           <pre>
             cardano-cli conway node issue-op-cert \<br />
-            &nbsp;&nbsp;--kes-verification-key-file $HOME/kes.vkey \<br />
+            &nbsp;&nbsp;--kes-verification-key-file $NODE_HOME/kes.vkey \<br />
             &nbsp;&nbsp;--cold-signing-key-file $HOME/cold-keys/node.skey \<br />
             &nbsp;&nbsp;--operational-certificate-issue-counter $HOME/cold-keys/node.counter \<br />
             &nbsp;&nbsp;--kes-period &lt;currentKesPeriod&gt; \<br />
-            &nbsp;&nbsp;--out-file $HOME/node.cert
+            &nbsp;&nbsp;--out-file $NODE_HOME/node.cert
           </pre>
         </li>
-        <li>Using removable media, copy the <code>$HOME/node.cert</code> file to <code>$NODE_HOME/node.cert</code> on the computer designated as the block-producing node in your stake pool configuration.</li>
+        <li>Using removable media, copy the <code>$NODE_HOME/node.cert</code> file to <code>$NODE_HOME/node.cert</code> on the computer designated as the block-producing node in your stake pool configuration.</li>
       </ol>
 
       <p>For more details, see the topic <a href="/IssuingOpCert">Issuing a New Operational Certificate</a>.</p>
@@ -159,7 +149,7 @@ export function HTMLContent() {
             chmod 400 vrf.skey
           </pre>
         </li>
-        <li>Using removable media, copy the <code>$NODE_HOME/vrf.vkey</code> file to <code>$HOME/vrf.vkey</code> on the air-gapped, offline computer.</li>
+        <li>Using removable media, copy the <code>$NODE_HOME/vrf.vkey</code> file to <code>$NODE_HOME/vrf.vkey</code> on the air-gapped, offline computer.</li>
       </ol>
 
       <p class="pi">To configure a Cardano Node instance to operate as a block producer:</p>
@@ -207,6 +197,21 @@ export function HTMLContent() {
         </li>
         <li>To confirm that the Cardano Node instance is operating as a block producer, verify that the <code>cardano.node.metrics.forging_enabled</code> EKG metric displays the value <code>1</code></li>
       </ol>
+
+      <h1>Summarizing Security Considerations</h1>
+
+      <p>As explained in the procedures above, on the block-producing node in your stake pool configuration store ONLY the following stake pool key and operational certificate files:</p>
+
+      <ul>
+        <li><code>kes.vkey</code></li>
+        <li><code>kes.skey</code></li>
+        <li><code>vrf.vkey</code></li>
+        <li><code>vrf.skey</code></li>
+        <li><code>node.vkey</code></li>
+        <li><code>node.cert</code></li>
+      </ul>
+
+      <p>Copy NO stake pool key or operational certificate files from the air-gapped, offline computer or block-producing node to computers designated as relay nodes in your stake pool configuration.</p>
 
     </div>
   );

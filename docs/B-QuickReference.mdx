@@ -209,8 +209,8 @@ export function HTMLContent() {
     --mainnet \\
     --single-host-pool-relay relaynode1.pool.example.net \\
     --pool-relay-port 6000 \\
-    --metadata-url https://pool.example.net/md.json \\
-    --metadata-hash $(cardano-cli conway stake-pool metadata-hash --pool-metadata-file md.json) \\
+    --metadata-url https://pool.example.net/metadata.json \\
+    --metadata-hash $(cardano-cli conway stake-pool metadata-hash --pool-metadata-file metadata.json) \\
     --out-file pool.cert`}
       </CodeBlock>
 

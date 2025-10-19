@@ -3,20 +3,358 @@ title: "Registering Your Stake Pool"
 sidebar_label: "Registering Your Stake Pool"
 slug: /RegisteringPool
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 35
 description: ""
 ---
 
 import React from 'react';
 
+import CodeBlock from '@theme/CodeBlock';
+import saveParameters from '!!raw-loader!/txt/saveParameters.sh';
+import queryTip from '!!raw-loader!/txt/queryTip.sh';
+import tallyUTXOs from '!!raw-loader!/txt/tallyUTXOs.sh';
+import calculateFee from '!!raw-loader!/txt/calculateFee.sh';
+import signTransaction from '!!raw-loader!/txt/signTransaction.sh';
+import submitTransaction from '!!raw-loader!/txt/submitTransaction.sh';
+
 export function HTMLContent() {
+
+  // Replace placeholders in the imported calculateFee component with values
+  var calculateFeeRegisteringPool = calculateFee.replace("{{witness-count}}", "3");
+
+  // Replace placeholder in the imported signTransaction component with values
+  var signTransactionRegisteringPool = signTransaction.replace("{{signing-key-files}}", "--signing-key-file payment.skey \\\n  --signing-key-file $HOME/cold-keys/node.skey \\\n  --signing-key-file stake.skey \\\n  ");
+
   return (
     <div>
 
       {/* INSERT HTML HERE */}
 
+      <p>Registering your stake pool to join the Cardano network involves preparing a stake pool registration certificate, and then submitting the certificate to the blockchain.</p>
+
+      <p>To create a stake pool registration certificate, you need to plan and prepare the following details:</p>
+
+      <ul>
+        <li>Optional metadata that helps ADA holders seeking to delegate learn about your stake pool</li>
+        <li>Optionally, the URL where you publish the file containing metadata for your stake pool online</li>
+        <li>The domain name or static IP address of the relay node(s) in your stake pool configuration, as well as the port number where the Cardano Node instance on each relay listens</li>
+        <li>The amount of pledge to commit</li>
+        <li>The fixed and variable fees that you, as the stake pool operator, earn in every epoch when the pool successfully produces a block</li>
+      </ul>
+
+      <p>The most recent stake pool registration certificate that you submit to the blockchain applies. For example, to update metadata related to your stake pool, prepare and submit a revised stake pool registration certificate.</p>
       
+      <p>Some changes to your stake pool registration may take up to two epochs to apply.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">The following procedure explains how to register a stake pool on Mainnet. If you are registering a stake pool in a Testnet environment, then replace each instance of the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1>Creating Metadata</h1>
+
+      <p>You store the metadata for your stake pool off chain in a file using JSON format. Typically, metadata includes:</p>
+
+      <ul>
+        <li><b>Name</b>—The official name of your stake pool, up to 50 characters in length</li>
+        <li><b>Description</b>—A brief explanation of the purpose of your stake pool, up to 255 characters in length</li>
+        <li><b>Ticker</b>—A short, unique identifier for your stake pool, 3 to 5 characters in length and using only the characters A to Z and 0 to 9</li>
+        <li><b>Home Page</b>—The URL of the official Web site for your stake pool</li>
+      </ul>
+
+      <p class="pi">To create metadata for your stake pool:</p>
+
+      <ol>
+        <li>Using a text editor on the block-producing node in your stake pool configuration, create a new file named <code>$NODE_HOME/metadata.json</code></li>
+        <li>In the <code>metadata.json</code> file, add the following lines where <code>&lt;PoolName&gt;</code> is the name of your stake pool, <code>&lt;PoolDescription&gt;</code> briefly explains your stake pool, <code>&lt;PoolTicker&gt;</code> is the short identifier for the pool and <code>&lt;PoolWebSite&gt;</code> is the URL for the pool Web site:
+          <CodeBlock language="bash">
+            {`"name": "<PoolName>",
+"description": "<PoolDescription>",
+"ticker": "<PoolTicker>",
+"homepage": "<PoolWebSite>"`}
+          </CodeBlock>
+        </li>
+        <li>Save and close the <code>metadata.json</code> file.</li>
+        <li>Publish the <code>metadata.json</code> file that you created in step 2 on the Internet. For example, host the file using the official Web site for your stake pool. <a href="/GitHubFileHosting">Hosting Files Using GitHub</a> is another option.
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">The length of the URL for the <code>metadata.json</code> file must be less than 64 characters.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To compare the unique hash of the <code>metadata.json</code> file that you published in step 4 with the hash of the local copy of the file, type the following commands using a terminal window where <code>&lt;MetadataURL&gt;</code> is the URL of the file that you published:
+          <CodeBlock language="bash">
+            {`cardano-cli conway stake-pool metadata-hash --pool-metadata-file metadata.json > metadata.hash
+cardano-cli conway stake-pool metadata-hash --pool-metadata-file <(curl -k -s -L <MetadataURL>) > metadataOnline.hash
+diff -s metadata.hash metadataOnline.hash`}
+          </CodeBlock>
+        </li>
+        <li>If the hashes that you compare in step 5 are not identical, then ensure that the <code>metadata.json</code> file you published is identical to the local copy of the file, and then repeat steps 4 to 5 until the hashes are identical.
+        <table class="box">
+          <tbody>
+            <tr>
+              <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+              <td class="boxText"><p class="boxText">If you are sure that the files are identical and the hashes still do not match, then try a different hosting option.</p></td>
+            </tr>
+          </tbody>
+        </table></li>
+      </ol>
+
+      <h1>Querying the Minimum Fixed Pool Fee</h1>
+
+      <p>The Cardano protocol establishes a minimum fee that you, as the stake pool operator, receive in each epoch when the stake pool you operate successfully produces one or more blocks. If needed, you can set the fixed fee that you receive to a higher value.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Setting the fixed fee to a value lower than the minimum causes pool registration to fail.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="pi">To determine the minimum fixed fee:</p>
+      
+      <ol>
+        <li>On the block-producing node in your stake pool configuration, using a terminal window type the following commands to save protocol parameters:
+          <CodeBlock language="bash">
+            {saveParameters}
+          </CodeBlock>
+        </li>
+        <li>To query the <code>params.json</code> file that you saved in step 1, type:
+          <CodeBlock language="bash">
+            {`minPoolCost=$(cat $NODE_HOME/params.json | jq -r .minPoolCost)
+echo minPoolCost: $\{minPoolCost\}`}
+          </CodeBlock>
+        </li>
+      </ol>
+
+      <a id="GeneratingStakePoolRegCert" />
+      <h1>Generating a Stake Pool Registration Certificate</h1>
+
+      <p>The following procedure shows you how to generate a stake pool registration certificate using a domain name to register one relay node in your stake pool configuration. For details on registering multiple relay nodes using domain names, IP addresses or round-robin DNS, see the section <a href="#RegisteringRelayNodes">Options for Registering Relay Nodes</a>.</p>
+
+      <p class="pi">To generate a stake pool registration certificate:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window on the computer designated as the block-producing node in your stake pool configuration, type the following command where <code>&lt;PledgeAmount&gt;</code> is the amount of pledge to commit in Lovelace; <code>&lt;VariableFee&gt;</code> is a rational number between 0 and 1 representing the percent of fees that the stake pool operator earns after the fixed fee is deducted; <code>&lt;RelayDomainName&gt;</code> is the domain name for a relay node in your stake pool configuration without the HTTP(S) prefix; and, <code>&lt;RelayPort&gt;</code> is the port number where the relay node listens:
+          <CodeBlock language="bash">
+            {`cardano-cli conway stake-pool registration-certificate \\
+  --cold-verification-key-file $NODE_HOME/node.vkey \\
+  --vrf-verification-key-file $NODE_HOME/vrf.vkey \\
+  --pool-pledge <PledgeAmount> \\
+  --pool-cost $\{minPoolCost\} \\
+  --pool-margin <VariableFee> \\
+  --pool-reward-account-verification-key-file $NODE_HOME/stake.vkey \\
+  --pool-owner-stake-verification-key-file $NODE_HOME/stake.vkey \\
+  --mainnet \\
+  --single-host-pool-relay <RelayDomainName> \\
+  --pool-relay-port <RelayPort> \\
+  --metadata-url <MetadataURL> \\
+  --metadata-hash $(cat metadataOnline.hash) \\
+  --out-file $NODE_HOME/pool.cert`}
+          </CodeBlock>
+        </li>
+      </ul>
+
+      <p>For example:</p>
+
+      <CodeBlock language="bash">
+        {`cardano-cli conway stake-pool registration-certificate \\
+  --cold-verification-key-file $NODE_HOME/node.vkey \\
+  --vrf-verification-key-file $NODE_HOME/vrf.vkey \\
+  --pool-pledge 100000000 \\
+  --pool-cost 170000000 \\
+  --pool-margin 0.15 \\
+  --pool-reward-account-verification-key-file $NODE_HOME/stake.vkey \\
+  --pool-owner-stake-verification-key-file $NODE_HOME/stake.vkey \\
+  --mainnet \\
+  --single-host-pool-relay relaynode1.pool.example.net \\
+  --pool-relay-port 6000 \\
+  --metadata-url https://pool.example.net/metadata.json \\
+  --metadata-hash afdf5aa90ad33073ed75f0a72bc72b952e774deac00e7f4cb1020bfb7c6e91ef \\
+  --out-file $NODE_HOME/pool.cert`}
+      </CodeBlock>
+
+      {/* <!--
+        - <code><RelayDomainName></code> is the domain name of your relay, for example <code>relaynode1.pool.example.net</code>
+        - <code><MetadataHash></code> is the hash of the JSON file containing your stake pool metadata
+      --> */}
+
+      <a id="RegisteringRelayNodes" />
+      <h1>Options For Registering Relay Nodes</h1>
+
+      <p>The example <code>stake-pool registration-certificate</code> command in the <a href="#GeneratingStakePoolRegCert">Generating a Stake Pool Registration Certificate</a> section registers one relay node using the <code>--single-host-pool-relay</code> option to specify a domain name corresponding to an IPv4 A or IPv6 AAAA DNS record.</p>
+
+      <p>Sometimes, in Cardano CLI commands—such as when registering relay nodes—you may use multiple instances of an option and the order of options matters. The following example registers two relay nodes having the URLs <code>relaynode1.pool.example.net:6000</code> and <code>relaynode2.pool.example.net:6000</code> respectively:</p>
+
+      <CodeBlock language="bash">
+        {`...
+  --single-host-pool-relay relaynode1.pool.example.net \\
+  --pool-relay-port 6000 \\
+  --single-host-pool-relay relaynode2.pool.example.net \\
+  --pool-relay-port 6000 \\
+...`}
+      </CodeBlock>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Registering the domain name for a relay node offers the advantage of allowing you to change the computer hosting the relay node, if needed, by editing the DNS record without submitting an updated stake pool registration certificate to the Cardano network.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Alternately, use the <code>--pool-relay-ipv4</code> or <code>--pool-relay-ipv6</code> options to register a relay node using an IPv4 or IPv6 IP address, respectively. For example, the following options register two relay nodes having the URLs <code>192.0.2.1:6000</code> and <code>192.0.2.2:6000</code>:</p>
+
+      <CodeBlock language="bash">
+        {`...
+  --pool-relay-ipv4 192.0.2.1 \\
+  --pool-relay-port 6000 \\
+  --pool-relay-ipv4 192.0.2.2 \\
+  --pool-relay-port 6000 \\
+...`}
+      </CodeBlock>
+
+      <p>Using the <code>--multi-host-pool-relay</code> option, you can register multiple relay nodes using round-robin DNS corresponding to an <a href="https://support.dnsimple.com/articles/srv-record/" target="_blank">SRV</a> record. For example, the following options register the URL <code>relaynodes.pool.example.net:6000</code></p>
+
+      <CodeBlock language="bash">
+        {`...
+  --multi-host-pool-relay relaynodes.pool.example.net \\
+  --pool-relay-port 6000 \\
+...`}
+      </CodeBlock>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">The Cardano protocol is secure and does NOT require using HTTPS for relay nodes.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>In a stake pool configuration, you must register at least one relay node. If you operate multiple relay nodes, then registering all your relay nodes publicly on the blockchain using a stake pool registration certificate may create a security risk. You can operate one or more unregistered relays by <a href="/PeerSharing">Implementing Peer Sharing</a>.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+            <td class="boxText"><p class="boxText"> Do NOT register your block-producing node on the blockchain.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1>Generating a Stake Delegation Certificate</h1>
+
+      <p>To commit pledge to your stake pool, you need to generate a stake delegation certificate. When you commit pledge, funds are NOT locked or moved to another account. You can transfer funds that you pledge anytime. However, if the total balance in the account(s) containing your pledge is less than the amount that you set in the stake pool registration certificate using the <code>--pool-pledge</code> option, then your stake pool does not earn rewards and is unlikely to produce blocks.</p>
+
+      <p class="pi">To generate a stake delegation certificate:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window on the computer designated as the block-producing node in your stake pool configuration, type:
+          <CodeBlock language="bash">
+            {`cardano-cli conway stake-address stake-delegation-certificate \\
+  --stake-verification-key-file $NODE_HOME/stake.vkey \\
+  --cold-verification-key-file $NODE_HOME/node.vkey \\
+  --out-file $NODE_HOME/deleg.cert`}
+          </CodeBlock>
+        </li>
+      </ul>
+
+      <p>Using the <code>address build</code> command when <a href="/CreatingWallet">Creating a Wallet</a>, you can use the same stake address public verification key with different payment address public verification keys to generate many different payment addresses. The <code>stake-address stake-delegation-certificate</code> command generates a certificate to delegate funds in all accounts associated with the specified stake address public verification key to the stake pool having the specified cold public verification key.</p>
+
+      <h1>Submitting a Stake Pool Registration Certificate</h1>
+
+      <p>The following procedure explains how to submit a stake pool registration certificate to the Cardano blockchain ledger in the Mainnet environment. If you are registering a stake pool in a Testnet environment, then replace each instance of the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use.</p>
+
+      <p class="pi">To submit a stake pool registration certificate:</p>
+
+      <ol>
+        <li>On the computer designated as the block-producing node in your stake pool configuration, when the local copy of the Cardano blockchain ledger is fully synchronized type the following command using a terminal window to query the slot number of the current tip of the ledger:
+          <CodeBlock language="bash">
+            {queryTip}
+          </CodeBlock>
+        </li>
+        <li>To retrieve the amount in Lovelace of the deposit required to register a stake pool, type:
+          <CodeBlock language="bash">
+            {`stakePoolDeposit=$(cat $NODE_HOME/params.json | jq -r '.stakePoolDeposit')
+echo stakePoolDeposit: $\{stakePoolDeposit\}`}
+          </CodeBlock>
+        </li>
+        <li>To retrieve the UTXOs available for your payment address and calculate the balance, type:
+          <CodeBlock language="bash">
+            {tallyUTXOs}
+          </CodeBlock>
+        </li>
+        <li>To build a draft transaction for calculating the transaction fee, type:
+          <CodeBlock language="bash">
+            {`cardano-cli conway transaction build-raw \\
+  $\{tx_in\} \\
+  --tx-out $(cat $NODE_HOME/payment.addr)+$(( $\{total_balance\} - $\{stakePoolDeposit\} ))  \\
+  --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
+  --fee 200000 \\
+  --certificate-file $NODE_HOME/pool.cert \\
+  --certificate-file $NODE_HOME/deleg.cert \\
+  --out-file $NODE_HOME/tx.tmp`}
+          </CodeBlock>
+        </li>
+        <li>To calculate the fee for the transaction, type:
+          <CodeBlock language="bash">
+            {calculateFeeRegisteringPool}
+          </CodeBlock>
+        </li>
+        <li>To calculate change from the transaction, type:
+          <CodeBlock language="bash">
+            {`txOut=$(($\{total_balance\}-$\{fee\}-$\{stakePoolDeposit\}))
+echo Change: $\{txOut\}`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">If change from the transaction is less than 1₳ then funds are insufficient. Transactions having insufficient funds fail when submitted to the network.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To build the transaction, type:
+          <CodeBlock language="bash">
+            {`cardano-cli conway transaction build-raw \\
+  $\{tx_in\} \\
+  --tx-out $(cat $NODE_HOME/payment.addr)+$\{txOut\} \\
+  --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
+  --fee $\{fee\} \\
+  --certificate-file $NODE_HOME/pool.cert \\
+  --certificate-file $NODE_HOME/deleg.cert \\
+  --out-file $NODE_HOME/tx.raw`}
+          </CodeBlock>
+        </li>
+        <li>Copy the <code>tx.raw</code> file that you created in step 7 to the <code>$NODE_HOME</code> folder on your air-gapped, offline computer, and then using a terminal window type the following commands to sign the transaction:
+          <CodeBlock language="bash">
+            {signTransactionRegisteringPool}
+          </CodeBlock>
+        </li>
+        <li>Copy the <code>tx.signed</code> file that you created in step 8 to the <code>$NODE_HOME</code> folder on the block-producing node, and then using a terminal window type the following command to submit the transaction to the network:
+          <CodeBlock language="bash">
+            {submitTransaction}
+          </CodeBlock>
+        </li>
+      </ol>
+
+
+
+
+     
 
     </div>
   );
