@@ -529,8 +529,8 @@ strong, th
 .button.button--secondary.button--outline.collapseSidebarButton_PEFL
 {
   background: url("/static/img/SidebarCollapse.svg") center/contain no-repeat;
-  background-size: 25px;
-  padding: 6x 149px;
+  background-size: 27px;
+  padding: 12px 149px;
 }
 
 /* Hide the default Sidebar Expand icon */
@@ -543,6 +543,6 @@ strong, th
 .expandButton_TmdG
 {
   background: url("/static/img/SidebarExpand.svg") center/contain no-repeat;
-  background-size: 25px;
+  background-size: 27px;
 }
 
