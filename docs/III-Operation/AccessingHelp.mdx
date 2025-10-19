@@ -24,7 +24,7 @@ export function HTMLContent() {
 
 The Cardano command line interface `cardano-cli` provides a collection of tools for key generation, transaction construction, certificate creation and other important tasks.
 
-The interface is organized in a hierarchy of commands and subcommands. Each command and subcommand includes built-in documentation describing command syntax as well as options. If you want more information about `cardano-cli` commands and options, then the built-in documentation may help you.
+The interface is organized in a hierarchy of commands and subcommands. Each command and subcommand includes built-in documentation describing command syntax as well as available options, also referred to as parameters. If you want more information about `cardano-cli` commands and options, then the built-in documentation may help you.
 
 **To access built-in documentation for the Cardano command line interface:**
 
@@ -61,5 +61,16 @@ The command-specific help that displays includes the `key-gen-KES` subcommand us
 cardano-cli conway node key-gen-KES --help
 ```
 
-The built-in documentation is available to help you understand commands that you may execute when setting up and operating your stake pool.
+<table class="box">
+  <tbody>
+    <tr>
+      <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+      <td class="boxText"><p class="boxText">In the built-in documentation, when needed parentheses—<code>(</code> and <code>)</code> characters—group available required parameters. A vertical bar (<code>|</code>) character indicates a logical OR relationship between parameters. The built-in documentation surrounds optional parameters using brackets—<code>[</code> and <code>]</code> characters. In some commands, the order in which the built-in documentation displays parameters matters.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+ 
+
+<!-- The built-in documentation is available to help you understand commands that you may execute when setting up and operating your stake pool. -->
 
