@@ -529,7 +529,7 @@ strong, th
 .button.button--secondary.button--outline.collapseSidebarButton_PEFL
 {
   background: url("/static/img/SidebarCollapse.svg") center/contain no-repeat;
-  background-size: 29px;
+  background-size: 25px;
   padding: 0px 149px;
 }
 
@@ -542,7 +542,7 @@ strong, th
 /* Set a background image for the Sidebar Expand button */
 .expandButton_TmdG
 {
-  background: url("/static/img/SidebarCollapse.svg") center/contain no-repeat;
-  background-size: 29px;
+  background: url("/static/img/SidebarExpand.svg") center/contain no-repeat;
+  background-size: 25px;
 }
 
