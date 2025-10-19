@@ -73,10 +73,12 @@ export function HTMLContent() {
         <li>Using a text editor on the block-producing node in your stake pool configuration, create a new file named <code>$NODE_HOME/metadata.json</code></li>
         <li>In the <code>metadata.json</code> file, add the following lines where <code>&lt;PoolName&gt;</code> is the name of your stake pool, <code>&lt;PoolDescription&gt;</code> briefly explains your stake pool, <code>&lt;PoolTicker&gt;</code> is the short identifier for the pool and <code>&lt;PoolWebSite&gt;</code> is the URL for the pool Web site:
           <CodeBlock language="bash">
-            {`"name": "<PoolName>",
-"description": "<PoolDescription>",
-"ticker": "<PoolTicker>",
-"homepage": "<PoolWebSite>"`}
+            {`\{
+  "name": "<PoolName>",
+  "description": "<PoolDescription>",
+  "ticker": "<PoolTicker>",
+  "homepage": "<PoolWebSite>"
+\}`}
           </CodeBlock>
         </li>
         <li>Save and close the <code>metadata.json</code> file.</li>
