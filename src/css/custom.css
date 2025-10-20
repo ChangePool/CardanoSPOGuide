@@ -322,9 +322,16 @@ ul.tabs li.tabs__item--active
 }
 
 /* Style single-step procedures */
-ul.ss
+[data-theme='light'] ul.ss
 {
-  list-style-image: url("/static/img/SSBullet.png");
+  list-style-image: url("/static/img/SSBulletLight.png");
+  /* In case the image fails to load, set a fallback list-style-type */
+  list-style-type: disc;
+}
+
+[data-theme='dark'] ul.ss
+{
+  list-style-image: url("/static/img/SSBulletDark.png");
   /* In case the image fails to load, set a fallback list-style-type */
   list-style-type: disc;
 }
