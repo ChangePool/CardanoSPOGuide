@@ -1,0 +1,131 @@
+---
+title: "Verifying Stake Pool Registration"
+sidebar_label: "Verifying Stake Pool Registration"
+slug: /VerifyingRegistration
+hide_title: false
+hide_table_of_contents: true
+sidebar_position: 40
+description: ""
+---
+
+import React from 'react';
+
+import CodeBlock from '@theme/CodeBlock';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+      {/* INSERT HTML HERE */}
+
+      <p>The Cardano protocol only elects stake pools registered on the blockchain ledger to produce blocks. To verify that your stake pool is registered:</p>
+
+      <ol>
+        <li>Retrieve the unique ID for your stake pool.</li>
+        <li>Query the stakes delegated to your pool.</li>
+        <li>Search for your stake pool using a blockchain explorer.</li>
+      </ol>
+
+      <h1>Retrieving the Stake Pool ID</h1>
+
+      <p>You can display the unique ID for the stake pool that you operate using a hexadecimal or Bech32 format. The following examples illustrate each format:</p>
+
+      <CodeBlock language="bash">
+        {`# Hexadecimal format example
+de060bd1b1ae27f3d7f11a918b2a6734192c2b8500ed38c8da6cc4b1
+# Bech32 format example
+pool1mcrqh5d34cnl84l3r2gck2n8xsvjc2u9qrkn3jx6dnztzhr6aaa`}
+      </CodeBlock>
+
+      <p>Bech32 format is designed for better error detection and user experience.</p>
+
+      <p class="pi">To compute and display the unique ID for the stake pool that you operate using hexadecimal format:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window on the block-producing node in your stake pool configuration, type:
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+cardano-cli conway stake-pool id \\
+  --cold-verification-key-file node.vkey \\
+  --output-format hex \\
+  --out-file stakepoolid-hex.txt
+cat stakepoolid-hex.txt`}
+          </CodeBlock>
+        </li>
+      </ul>
+
+      <p class="pi">To compute and display the unique ID for the stake pool that you operate using Bech32 format:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window on the block-producing node in your stake pool configuration, type:
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+cardano-cli conway stake-pool id \\
+  --cold-verification-key-file node.vkey \\
+  --output-format bech32 \\
+  --out-file stakepoolid-bech32.txt
+cat stakepoolid-bech32.txt`}
+          </CodeBlock>
+        </li>
+      </ul>
+
+      <h1>Querying Stakes</h1>
+
+      <p>Using the stake pool ID, you can query the Cardano blockchain to display the stakes delegated to a pool.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">In the following procedure, if you are querying stakes for a stake pool operating in a Testnet environment, then replace the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="pi">To display the stakes delegated to the pool that you operate:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window on the block-producing node in your stake pool configuration, type the following command where <code>&lt;StakePoolID&gt;</code> is the stake pool ID using hexadecimal or Bech32 format:
+          <CodeBlock language="bash">
+            {`cardano-cli conway query stake-snapshot --stake-pool-id <StakePoolID> --mainnet`}
+          </CodeBlock>
+        </li>
+      </ul>
+
+      <p>If the stake snapshot query returns results, then the stake pool is registered. For example:</p>
+
+      <CodeBlock language="json">
+        {`\{
+  "pools": \{
+    "de060bd1b1ae27f3d7f11a918b2a6734192c2b8500ed38c8da6cc4b1": \{
+      "stakeGo": 0,
+      "stakeMark": 0,
+      "stakeSet": 0
+    \}
+  \},
+  "total": \{
+    "stakeGo": 1000766854112746,
+    "stakeMark": 987996914983585,
+    "stakeSet": 1001114042650656
+  \}
+\}`}
+      </CodeBlock>
+
+      <p>The JSON output displays the following keys in alphabetical order, with all values in Lovelace:</p>
+
+      <ul>
+        <li><b>stakeGo</b>—Total stakes in the previous epoch</li>
+        <li><b>stakeSet</b>—Total stakes in the current epoch</li>
+        <li><b>stakeMark</b>—Total stakes currently delegated for the next epoch</li>
+      </ul>
+
+      <h1>Searching For a Stake Pool</h1>
+
+      <p>Using the stake pool ID, you can also search for the stake pool that you operate using a <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>. If a blockchain explorer displays details related to the pool that you operate, then the pool is registered on the Cardano network.</p>
+
+    </div>
+  );
+}
+
+<HTMLContent />
+
