@@ -4,7 +4,10 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
+// October 21, 2025 - Import themes for syntax highlighting
 import {themes as prismThemes} from 'prism-react-renderer';
+//const lightCodeTheme = require('prism-react-renderer').themes.github;
+//const darkCodeTheme = require('prism-react-renderer').themes.palenight;
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -252,12 +255,17 @@ const config = {
         copyright: 'Hosted by <a href="https://coincashew.io" target="_blank">Change [CHG] Stake Pool</a> | Presented by CoinCashew | Published Using Docusaurus',
       },
       prism: {
+        // October 21, 2025 - Set themes for syntax highlighting
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+        //darkTheme: prismThemes.palenight,
+        //theme: lightCodeTheme,
+        //darkTheme: darkCodeTheme,
         additionalLanguages: [
           // October 12, 2025 - Enable syntax highlighting for Bash scripts and JSON files
           'bash',
           'json',
+          'shell-session',
         ],
       },
       //

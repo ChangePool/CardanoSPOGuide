@@ -18,17 +18,17 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
-      <p>The Cardano protocol only elects stake pools registered on the blockchain ledger to produce blocks. To verify that your stake pool is registered:</p>
+      <p>The Cardano protocol only elects stake pools registered on the blockchain ledger to produce blocks. To verify that the stake pool you operate is registered, complete the following tasks:</p>
 
       <ol>
-        <li>Retrieve the unique ID for your stake pool.</li>
-        <li>Query the stakes delegated to your pool.</li>
-        <li>Search for your stake pool using a blockchain explorer.</li>
+        <li>Retrieve the stake pool ID.</li>
+        <li>Query the stakes delegated the pool.</li>
+        <li>Search for the stake pool using a blockchain explorer.</li>
       </ol>
 
       <h1>Retrieving the Stake Pool ID</h1>
 
-      <p>You can display the unique ID for the stake pool that you operate using a hexadecimal or Bech32 format. The following examples illustrate each format:</p>
+      <p>You can represent the unique ID for a stake pool using a hexadecimal or Bech32 format. The following examples illustrate each format:</p>
 
       <CodeBlock language="bash">
         {`# Hexadecimal format example
@@ -37,7 +37,7 @@ de060bd1b1ae27f3d7f11a918b2a6734192c2b8500ed38c8da6cc4b1
 pool1mcrqh5d34cnl84l3r2gck2n8xsvjc2u9qrkn3jx6dnztzhr6aaa`}
       </CodeBlock>
 
-      <p>Bech32 format is designed for better error detection and user experience.</p>
+      <p>The Bech32 format is designed for better error detection and user experience.</p>
 
       <p class="pi">To compute and display the unique ID for the stake pool that you operate using hexadecimal format:</p>
       
@@ -87,7 +87,9 @@ cat stakepoolid-bech32.txt`}
       <ul class="ss">
         <li>Using a terminal window on the block-producing node in your stake pool configuration, type the following command where <code>&lt;StakePoolID&gt;</code> is the stake pool ID using hexadecimal or Bech32 format:
           <CodeBlock language="bash">
-            {`cardano-cli conway query stake-snapshot --stake-pool-id <StakePoolID> --mainnet`}
+            {`cardano-cli conway query stake-snapshot \\
+  --stake-pool-id <StakePoolID> \\
+  --mainnet`}
           </CodeBlock>
         </li>
       </ul>
@@ -121,7 +123,7 @@ cat stakepoolid-bech32.txt`}
 
       <h1>Searching For a Stake Pool</h1>
 
-      <p>Using the stake pool ID, you can also search for the stake pool that you operate using a <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>. If a blockchain explorer displays details related to the pool that you operate, then the pool is registered on the Cardano network.</p>
+      <p>Using the stake pool ID, you can also search for the stake pool that you operate using a <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>. If a blockchain explorer displays details related to a stake pool, then the pool is registered on the Cardano network.</p>
 
     </div>
   );

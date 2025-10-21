@@ -31,7 +31,7 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
-      <p>Registering your stake pool to join the Cardano network involves preparing a stake pool registration certificate, and then submitting the certificate to the blockchain.</p>
+      <p>Registering a stake pool to join the Cardano network involves preparing a stake pool registration certificate, and then submitting the certificate to the blockchain.</p>
 
       <p>To create a stake pool registration certificate, you need to plan and prepare the following details:</p>
 
@@ -45,7 +45,7 @@ export function HTMLContent() {
 
       <p>The most recent stake pool registration certificate that you submit to the blockchain applies. For example, to update metadata related to your stake pool, prepare and submit a revised stake pool registration certificate.</p>
       
-      <p>Some changes to your stake pool registration may take up to two epochs to apply.</p>
+      <p>When registering a stake pool or updating a stake pool registration, some details may take up to two epochs to apply.</p>
 
       <table class="box">
         <tbody>
@@ -72,7 +72,7 @@ export function HTMLContent() {
       <ol>
         <li>Using a text editor on the block-producing node in your stake pool configuration, create a new file named <code>$NODE_HOME/metadata.json</code></li>
         <li>In the <code>metadata.json</code> file, add the following lines where <code>&lt;PoolName&gt;</code> is the name of your stake pool, <code>&lt;PoolDescription&gt;</code> briefly explains your stake pool, <code>&lt;PoolTicker&gt;</code> is the short identifier for the pool and <code>&lt;PoolWebSite&gt;</code> is the URL for the pool Web site:
-          <CodeBlock language="bash">
+          <CodeBlock language="json">
             {`\{
   "name": "<PoolName>",
   "description": "<PoolDescription>",
@@ -198,7 +198,7 @@ echo minPoolCost: $\{minPoolCost\}`}
 
       <p>Sometimes, in Cardano CLI commands—such as when registering relay nodes—you may use multiple instances of an option and the order of options matters. The following example registers two relay nodes having the URLs <code>relaynode1.pool.example.net:6000</code> and <code>relaynode2.pool.example.net:6000</code> respectively:</p>
 
-      <CodeBlock language="bash">
+      <CodeBlock language="text">
         {`...
   --single-host-pool-relay relaynode1.pool.example.net \\
   --pool-relay-port 6000 \\
@@ -218,7 +218,7 @@ echo minPoolCost: $\{minPoolCost\}`}
 
       <p>Alternately, use the <code>--pool-relay-ipv4</code> or <code>--pool-relay-ipv6</code> options to register a relay node using an IPv4 or IPv6 IP address, respectively. For example, the following options register two relay nodes having the URLs <code>192.0.2.1:6000</code> and <code>192.0.2.2:6000</code>:</p>
 
-      <CodeBlock language="bash">
+      <CodeBlock language="text">
         {`...
   --pool-relay-ipv4 192.0.2.1 \\
   --pool-relay-port 6000 \\
@@ -229,7 +229,7 @@ echo minPoolCost: $\{minPoolCost\}`}
 
       <p>Using the <code>--multi-host-pool-relay</code> option, you can register multiple relay nodes using round-robin DNS corresponding to an <a href="https://support.dnsimple.com/articles/srv-record/" target="_blank">SRV</a> record. For example, the following options register the URL <code>relaynodes.pool.example.net:6000</code></p>
 
-      <CodeBlock language="bash">
+      <CodeBlock language="text">
         {`...
   --multi-host-pool-relay relaynodes.pool.example.net \\
   --pool-relay-port 6000 \\

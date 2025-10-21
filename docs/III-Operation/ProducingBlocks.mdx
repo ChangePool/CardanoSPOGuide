@@ -27,7 +27,7 @@ export function HTMLContent() {
 
       <h1>Log Entries Related to Block Production</h1>
 
-      <p>When <a href="/StartingNodes#Monitoring-the-Cardano-Node-Log">Monitoring the Cardano Node Log</a> for the block producer in your stake pool configuration, the <code>Forge.Loop.NodeNotLeader</code> trace adds an entry for every slot when a stake pool is NOT elected to prepare a block. For example:</p>
+      <p>When <a href="/StartingNodes#Monitoring-the-Cardano-Node-Log">Monitoring the Cardano Node Log</a> for the block producer in your stake pool configuration, the <code>Forge.Loop.NodeNotLeader</code> trace adds an entry for every slot when the stake pool is NOT elected to prepare a block. For example:</p>
 
       <CodeBlock>
         {`[cardanonode:Forge.Loop.NodeNotLeader](Info,94) Not leading slot 91529678`}
@@ -44,7 +44,7 @@ export function HTMLContent() {
 
       <p>The <code>Forge.Loop.NodeIsLeader</code> log entry indicates that the local Cardano Node instance is preparing a block for the specified slot.</p>
 
-      <p>The <code>Forge.Loop.AdoptedBlock</code> log entry indicates that the Cardano network accepted the block that the stake pool prepared and submitted. Rarely, the network may need to reject a block after accepting the block. To confirm that a block the stake pool you operate prepares is added to the Cardano blockchain ledger successfully, search for the block hash included in the <code>Forge.Loop.AdoptedBlock</code> log entry or the stake pool ID using a Cardano <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>.</p>
+      <p>The <code>Forge.Loop.AdoptedBlock</code> log entry indicates that the Cardano network accepted the block that the stake pool prepared and submitted. Rarely, the network may need to reject a block after accepting the block. To confirm that a block is added to the Cardano blockchain ledger successfully, search for the block hash included in the <code>Forge.Loop.AdoptedBlock</code> log entry or the stake pool ID using a Cardano <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>.</p>
 
       <table class="box">
         <tbody>

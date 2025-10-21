@@ -18,9 +18,18 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
-      <p>As a stake pool operator, you aim to keep the stake pool that you operate online at all times. However, knowing in advance when the stake pool is elected to produce a block allows you to schedule required maintenance, for example, without missing an opportunity to prepare a block.</p>
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+            <td class="boxText"><p class="boxText">If you operate a stake pool in a Testnet environment, then use the <a href="https://docs.cardano.org/cardano-testnets/tools/faucet" target="_blank">Testnets Faucet</a> to receive a delegation to the pool. Receiving a delegation ensures that the pool is elected to produce blocks regularly, facilitating development and testing.</p></td>
+          </tr>
+        </tbody>
+      </table>
 
-      <p>Using Cardano CLI, you can query the slots and Coordinated Universal Times (UTCs) when a stake pool that you operate is elected to produce a block in the current epoch. Within 36 hours of the next epoch starting, you can also query the slots and times when the stake pool is elected to produce blocks in the next epoch.</p>
+      <p>As a stake pool operator, you aim to keep the stake pool that you operate online at all times. However, knowing in advance when the stake pool is elected to produce a block allows you to schedule required maintenance, for example, without missing an opportunity to produce a block.</p>
+
+      <p>Using Cardano CLI, you can query the slots and Coordinated Universal Times (UTCs) when a stake pool that you operate is elected to produce blocks in the current epoch. Within 36 hours of the next epoch starting, you can also query the slots and times when the stake pool is elected to produce blocks in the next epoch.</p>
 
       <p><i>Figure 1</i> illustrates how the Cardano protocol shares with stake pool operators the slot leadership schedule for block production, as well as how stake pools prepare blocks.</p>
 
@@ -111,6 +120,8 @@ export function HTMLContent() {
       <p>TO-DO: Create a script that starts by polling the slot in epoch metric, and then waiting until the time is within 36 hours of the next epoch starting. After waiting, calculate slot leadership for the next epoch. Append the results of the query to a JSON-format file, and then loop.</p>
 
       <p>TO-DO: Also, update the nodeView.sh script to query the JSON-format file, and then display Pending Blocks, Next Block and Countdown as described in the comments below.</p>
+
+
 
       
 
