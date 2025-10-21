@@ -243,14 +243,7 @@ npm install`}
       <h1>Heading 1 (<code>h1</code>)</h1>
       <p>Paragraph Text (<code>p</code>)—Mauris sed erat ac urna sollicitudin consequat et et ipsum. Ut viverra quis elit eget feugiat. Pellentesque pulvinar placerat ligula, ac rhoncus est dignissim consequat. Suspendisse pellentesque, leo ut blandit tristique, odio mi ultricies mi, eu sodales erat mi sed elit. Donec tincidunt in orci ut condimentum. Etiam eu massa in metus auctor interdum. Proin eleifend fringilla tortor, vitae bibendum augue semper id. Donec et varius massa, at commodo sapien. Nulla lectus dolor, varius vel mollis at, condimentum et nibh. In vulputate in ante non placerat. Fusce bibendum dolor sit amet molestie faucibus.</p>
       <p>Fusce eleifend iaculis feugiat. Proin consequat eget orci ac ultrices. Phasellus a sem nec ipsum tristique mattis. Suspendisse id vulputate eros. Mauris bibendum magna id bibendum ornare. Phasellus ultricies posuere est, vitae sagittis tellus. Donec facilisis non purus egestas vestibulum. Sed orci ex, pharetra id sapien sed, mattis scelerisque velit. Nunc ut diam sed nisi dictum tincidunt.</p>
-      <table class="box">
-        <tbody>
-          <tr>
-            <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
-            <td class="boxText"><p class="boxText">Important Box (<code>Important Box</code>)—Curabitur facilisis turpis vel augue malesuada venenatis. Nulla ac iaculis arcu, a ornare mauris. Praesent molestie aliquam lectus, blandit blandit magna.</p></td>
-          </tr>
-        </tbody>
-      </table>
+      
       <p>Morbi vulputate elit sapien, a dignissim tortor vulputate eu. Nam imperdiet sapien vulputate, malesuada enim sit amet, venenatis ipsum. Morbi fringilla nunc sit amet iaculis accumsan. Suspendisse ultricies tempus augue, ut vulputate ipsum. Vivamus imperdiet fringilla lectus at porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et magna in dolor vulputate pulvinar. Nulla molestie rhoncus rutrum.</p>
       <p>Here is a <a href="/AppendixD">hyperlink</a> to an internal page in the Guide.</p>
       
@@ -329,7 +322,7 @@ fi`}
       <p>You can import and display any <a href="/txt/sampleText.txt" target="_blank">text</a> file:</p>
       <CodeBlock>
 
-        {/* The CodeBlock and sampleText components are imported at the beginning of the D-Styles.mdx file. */}
+        {/* The CodeBlock and sampleText components are imported at the beginning of the E-Styles.mdx file. */}
 
         {sampleText}
       </CodeBlock>
@@ -352,7 +345,7 @@ fi`}
         {samplePlaceholderAppendixD}
       </CodeBlock>
 
-      <p>Create new topics in the <code>/docs</code> subfolder using <code>.MDX</code> as the file name extension. To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; <code>&lt;TOCStatus&gt;</code> is a Boolean value determinig whether or not the table of contents appears in the top right corner of a topic; <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar; and, <code>&lt;Description&gt;</code> is a brief summary of the topic that displays in a sidebar category for the topic:</p>
+      <p>Create new topics in the <code>/docs</code> subfolder using MDX as the file name extension. To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; <code>&lt;TOCStatus&gt;</code> is a Boolean value determinig whether or not the table of contents appears in the top right corner of a topic; <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar; and, <code>&lt;Description&gt;</code> is a brief summary of the topic that displays in a sidebar category for the topic:</p>
 
       <pre>
         {NewTopicTemplate}
@@ -361,11 +354,29 @@ fi`}
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">For more details on how to preserve whitespace in code blocks, see the source file for <i>Appendix E</i>, available at the relative path <code>/docs/D&#8209;Styles.mdx</code></p></td>
+            <td class="boxText"><p class="boxText">For more details on how to preserve whitespace in code blocks, see the source file for <i>Appendix E</i>, available at the relative path <code>/docs/E&#8209;Styles.mdx</code></p></td>
           </tr>
         </tbody>
       </table>
       <p>In sit amet mauris laoreet, ultricies diam ut, volutpat neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras facilisis sapien et ante lacinia imperdiet. Nullam condimentum purus non neque porta, malesuada varius nibh rutrum. Nulla maximus at magna eget tincidunt. Donec non porttitor sem. Nam vitae condimentum est. Etiam id faucibus quam, quis aliquet tortor.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+            <td class="boxText"><p class="boxText">Important Box (<code>Important Box</code>)—In MDX files, when importing React components names are case sensitive and the first letter MUST be capital. For example:
+            <CodeBlock language="bash" title="Correct">
+              {`import TestnetNote from '@site/src/components/TestnetNote.js';
+<TestnetNote />`}
+            </CodeBlock>
+            <CodeBlock language="bash" title="Incorrect">
+              {`import testnetNote from '@site/src/components/TestnetNote.js';
+<testnetNote />`}
+            </CodeBlock></p></td>
+          </tr>
+        </tbody>
+      </table>
+
       <p><i>Table 1</i>  (<code>Table</code>) provides some HTML entities that you may need when using JavaScript XML (JSX).</p>
       <table class="center">
         <caption>Table 1 HTML Entities</caption>
