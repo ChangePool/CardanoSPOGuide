@@ -10,6 +10,8 @@ description: ""
 
 import React from 'react';
 
+import TestnetNote from '@site/src/components/TestnetNote.js';
+
 export function HTMLContent() {
   return (
     <div>
@@ -36,6 +38,8 @@ export function HTMLContent() {
         <li><b>Stake Pool Registration Certificate</b>—<code>pool.cert</code></li>
         <li><b>VRF Keys</b>—<code>vrf.vkey</code> and <code>vrf.skey</code></li>
       </ul>
+
+      <TestnetNote />
 
       <p class="pi">To generate a KES key pair:</p>
       

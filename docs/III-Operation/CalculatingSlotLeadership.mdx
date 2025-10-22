@@ -10,6 +10,8 @@ description: ""
 
 import React from 'react';
 
+import TestnetNote from '@site/src/components/TestnetNote.js';
+
 import CodeBlock from '@theme/CodeBlock';
 
 export function HTMLContent() {
@@ -38,14 +40,7 @@ export function HTMLContent() {
         <figcaption>Figure 1 Cardano Block Production Process</figcaption>
       </figure>
 
-      <table class="box">
-        <tbody>
-          <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">In the following procedures, if you are querying the slot leadership schedule for a stake pool operating in a Testnet environment, then replace the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use.</p></td>
-          </tr>
-        </tbody>
-      </table>
+      <TestnetNote />
 
       <p class="pi">To query the slots and times when a stake pool you operate is elected to produce blocks in the current epoch:</p>
       

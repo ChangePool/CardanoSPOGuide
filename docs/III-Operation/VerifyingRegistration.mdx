@@ -12,6 +12,8 @@ import React from 'react';
 
 import CodeBlock from '@theme/CodeBlock';
 
+import TestnetNote from '@site/src/components/TestnetNote.js';
+
 export function HTMLContent() {
   return (
     <div>
@@ -73,14 +75,7 @@ cat stakepoolid-bech32.txt`}
 
       <p>Using the stake pool ID, you can query the Cardano blockchain to display the stakes delegated to a pool.</p>
 
-      <table class="box">
-        <tbody>
-          <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">In the following procedure, if you are querying stakes for a stake pool operating in a Testnet environment, then replace the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use.</p></td>
-          </tr>
-        </tbody>
-      </table>
+      <TestnetNote />
 
       <p class="pi">To display the stakes delegated to the pool that you operate:</p>
       

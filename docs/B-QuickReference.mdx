@@ -12,6 +12,8 @@ import React from 'react';
 
 import CodeBlock from '@theme/CodeBlock';
 
+import TestnetNote from '@site/src/components/TestnetNote.js';
+
 export function HTMLContent() {
   return (
     <div>
@@ -60,14 +62,7 @@ export function HTMLContent() {
         <li><a href="#ViewingTxs">Viewing Transactions</a> explains how to display transaction files using a human-readable format.</li>
       </ul>
 
-      <table class="box">
-        <tbody>
-          <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">Commands in <i>Appendix B</i> provide templates for the Mainnet environment. If you work in a Testnet environment, then replace each instance of the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use.</p></td>
-          </tr>
-        </tbody>
-      </table>
+      <TestnetNote />
 
       <p><i>Appendix B</i> uses the following file name extensions:</p>
 

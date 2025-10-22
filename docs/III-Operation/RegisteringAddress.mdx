@@ -10,6 +10,8 @@ description: ""
 
 import React from 'react';
 
+import TestnetNote from '@site/src/components/TestnetNote.js';
+
 import CodeBlock from '@theme/CodeBlock';
 import saveParameters from '!!raw-loader!/txt/saveParameters.sh';
 import queryTip from '!!raw-loader!/txt/queryTip.sh';
@@ -42,14 +44,7 @@ export function HTMLContent() {
         <figcaption>Figure 1 Creating a Transaction using Cardano CLI</figcaption>
       </figure>
 
-      <table class="box">
-        <tbody>
-          <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">The following procedure explains how to register a stake address on Mainnet. If you are registering a stake address in a Testnet environment, then replace each instance of the <code>--mainnet</code> option with <code>--testnet-magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use.</p></td>
-          </tr>
-        </tbody>
-      </table>
+      <TestnetNote />
 
       <p class="pi">To register a stake address on the blockchain:</p>
 
