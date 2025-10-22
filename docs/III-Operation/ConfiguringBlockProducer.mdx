@@ -12,6 +12,9 @@ import React from 'react';
 
 import TestnetNote from '@site/src/components/TestnetNote.js';
 
+import CodeBlock from '@theme/CodeBlock';
+import queryTip from '!!raw-loader!/txt/queryTip.sh';
+
 export function HTMLContent() {
   return (
     <div>
@@ -45,12 +48,12 @@ export function HTMLContent() {
       
       <ul class="ss">
         <li>On the computer designated as the block-producing node in your stake pool configuration, type the following commands using a terminal window:
-          <pre>
-            cd $NODE_HOME<br />
-            cardano-cli conway node key-gen-KES \<br />
-            &nbsp;&nbsp;--verification-key-file kes.vkey \<br />
-            &nbsp;&nbsp;--signing-key-file kes.skey
-          </pre>
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+cardano-cli conway node key-gen-KES \\
+  --verification-key-file kes.vkey \\
+  --signing-key-file kes.skey`}
+          </CodeBlock>
         </li>
       </ul>
 
@@ -58,14 +61,14 @@ export function HTMLContent() {
 
       <ol>
         <li>On your air-gapped, offline computer type the following commands using a terminal window:
-          <pre>
-            mkdir $HOME/cold-keys<br />
-            cd $HOME/cold-keys<br />
-            cardano-cli conway node key-gen \<br />
-            &nbsp;&nbsp;--cold-verification-key-file $HOME/cold-keys/node.vkey \<br />
-            &nbsp;&nbsp;--cold-signing-key-file $HOME/cold-keys/node.skey \<br />
-            &nbsp;&nbsp;--operational-certificate-issue-counter $HOME/cold-keys/node.counter
-          </pre>
+          <CodeBlock language="bash">
+            {`mkdir $HOME/cold-keys
+cd $HOME/cold-keys
+cardano-cli conway node key-gen \\
+  --cold-verification-key-file $HOME/cold-keys/node.vkey \\
+  --cold-signing-key-file $HOME/cold-keys/node.skey \\
+  --operational-certificate-issue-counter $HOME/cold-keys/node.counter`}
+          </CodeBlock>
           <table class="box">
             <tbody>
               <tr>
@@ -95,42 +98,34 @@ export function HTMLContent() {
         <li>To calculate the current KES period:
           <ol>
             <li>On the computer designated as the block-producing node in your stake pool configuration, type the following commands using a terminal window to retrieve the number of slots per KES period for your environment using the Shelley Genesis file:
-              <pre>
-                slotsPerKESPeriod=$(cat $NODE_HOME/shelley-genesis.json | jq -r '.slotsPerKESPeriod')<br />
-                echo slotsPerKESPeriod: $&#123;slotsPerKESPeriod&#125;<br />
-              </pre></li>
-              <li>To query the slot number of the tip of the local copy of the Cardano blockchain since the start of the ledger, type:
-                <pre>
-                  slotNo=$(cardano-cli conway query tip --mainnet | jq -r '.slot')<br />
-                  echo slotNo: $&#123;slotNo&#125;
-                </pre>
-              <table class="box">
-                <tbody>
-                  <tr>
-                    <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-                    <td class="boxText"><p class="boxText">The <code>cardano-cli conway query tip</code> command uses the <code>CARDANO_NODE_SOCKET_PATH</code> environment variable that you set in the <code>$HOME/.bashrc</code> file when <a href="/GHC">Installing GHC and Cabal</a>. <code>cardano-cli</code> commands throughout the <i>How to Set Up a Cardano Stake Pool</i> guide may use the <code>CARDANO_NODE_SOCKET_PATH</code> environment variable. If you do not set the <code>CARDANO_NODE_SOCKET_PATH</code> environment variable, then you need to set the <code>--socket-path</code> option explicitly in each command requiring the location of the Cardano node socket file.</p></td>
-                  </tr>
-                </tbody>
-              </table>
+              <CodeBlock language="bash">
+                {`slotsPerKESPeriod=$(cat $NODE_HOME/shelley-genesis.json | jq -r '.slotsPerKESPeriod')
+echo slotsPerKESPeriod: $\{slotsPerKESPeriod\}`}
+              </CodeBlock>
+            </li>
+            <li>To query the slot number of the tip of the local copy of the Cardano blockchain since the beginning of the ledger, type:
+              <CodeBlock language="bash">
+            {queryTip}
+          </CodeBlock>
             </li>
             <li>To divide the current slot tip by the number of slots per KES period, type:
-              <pre>
-                currentKesPeriod=$(($&#123;slotNo&#125; / $&#123;slotsPerKESPeriod&#125;))<br />
-                echo currentKesPeriod: $&#123;currentKesPeriod&#125;
-              </pre>
+              <CodeBlock language="bash">
+                {`currentKesPeriod=$(( $\{currentSlot\} / $\{slotsPerKESPeriod\} ))
+echo currentKesPeriod: $\{currentKesPeriod\}`}
+              </CodeBlock>
             </li>
           </ol>
         </li>
         <li>Using removable media, copy the <code>$NODE_HOME/kes.vkey</code> from the computer designated as the block-producing node in your stake pool configuration to <code>$NODE_HOME/kes.vkey</code> on the air-gapped, offline computer.</li>
         <li>On the air-gapped, offline computer, using a terminal window type the following command where <code>&lt;currentKesPeriod&gt;</code> is the value that you calculated in step 2:
-          <pre>
-            cardano-cli conway node issue-op-cert \<br />
-            &nbsp;&nbsp;--kes-verification-key-file $NODE_HOME/kes.vkey \<br />
-            &nbsp;&nbsp;--cold-signing-key-file $HOME/cold-keys/node.skey \<br />
-            &nbsp;&nbsp;--operational-certificate-issue-counter $HOME/cold-keys/node.counter \<br />
-            &nbsp;&nbsp;--kes-period &lt;currentKesPeriod&gt; \<br />
-            &nbsp;&nbsp;--out-file $NODE_HOME/node.cert
-          </pre>
+          <CodeBlock language="bash">
+            {`cardano-cli conway node issue-op-cert \\
+  --kes-verification-key-file $NODE_HOME/kes.vkey \\
+  --cold-signing-key-file $HOME/cold-keys/node.skey \\
+  --operational-certificate-issue-counter $HOME/cold-keys/node.counter \\
+  --kes-period <currentKesPeriod> \\
+  --out-file $NODE_HOME/node.cert`}
+          </CodeBlock>
         </li>
         <li>Using removable media, copy the <code>$NODE_HOME/node.cert</code> file to <code>$NODE_HOME/node.cert</code> on the computer designated as the block-producing node in your stake pool configuration.</li>
       </ol>
@@ -141,17 +136,17 @@ export function HTMLContent() {
 
       <ol>
         <li>On the computer designated as the block-producing node in your stake pool configuration, using a terminal window type:
-          <pre>
-            cd $NODE_HOME<br />
-            cardano-cli conway node key-gen-VRF \<br />
-            &nbsp;&nbsp;--verification-key-file vrf.vkey \<br />
-            &nbsp;&nbsp;--signing-key-file vrf.skey
-          </pre>
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+cardano-cli conway node key-gen-VRF \\
+  --verification-key-file vrf.vkey \\
+  --signing-key-file vrf.skey`}
+          </CodeBlock>
         </li>
         <li>To secure the secret key file, type:
-          <pre>
-            chmod 400 vrf.skey
-          </pre>
+          <CodeBlock language="bash">
+            {`chmod 400 vrf.skey`}
+          </CodeBlock>
         </li>
         <li>Using removable media, copy the <code>$NODE_HOME/vrf.vkey</code> file to <code>$NODE_HOME/vrf.vkey</code> on the air-gapped, offline computer.</li>
       </ol>
@@ -160,44 +155,44 @@ export function HTMLContent() {
 
       <ol>
         <li>On the computer designated as the block-producing node in your stake pool configuration, type the following command to stop the Cardano Node instance:
-          <pre>
-            sudo systemctl stop cardano-node
-          </pre>
+          <CodeBlock language="bash">
+            {`sudo systemctl stop cardano-node`}
+          </CodeBlock>
         </li>
         <li>To retrieve the value of the <code>$NODE_HOME</code> environment variable, type:
-          <pre>
-            echo $NODE_HOME
-          </pre>
+          <CodeBlock language="bash">
+            {`echo $NODE_HOME`}
+          </CodeBlock>
         </li>
         <li>Using a text editor, open the <code>$NODE_HOME/startCardanoNode.sh</code> file.</li>
         <li>In the <code>startCardanoNode.sh</code> file, add or edit the following lines as needed, where <code>&lt;NodeHomeValue&gt;</code> is the value of your <code>$NODE_HOME</code> environment variable that you retrieved in step 2:
-          <pre>
-            # Set a variable to indicate the file path to the KES secret key file<br />
-            KES=&lt;NodeHomeValue&gt;/kes.skey<br />
-            # Set a variable to indicate the file path to the VRF secret key file<br />
-            VRF=&lt;NodeHomeValue&gt;/vrf.skey<br />
-            # Set a variable to indicate the file path to the operational certificate file<br />
-            CERT=&lt;NodeHomeValue&gt;/node.cert<br />
-            #<br />
-            # Run Cardano Node using the options that you set using variables<br />
-            #<br />
-            /usr/local/bin/cardano-node run \<br />
-            &nbsp;&nbsp;--topology $&#123;TOPOLOGY&#125; \<br />
-            &nbsp;&nbsp;--database-path $&#123;DB_PATH&#125; \<br />
-            &nbsp;&nbsp;--socket-path $&#123;SOCKET_PATH&#125; \<br />
-            &nbsp;&nbsp;--host-addr $&#123;HOSTADDR&#125; \<br />
-            &nbsp;&nbsp;--port $&#123;PORT&#125; \<br />
-            &nbsp;&nbsp;--config $&#123;CONFIG&#125; \<br />
-            &nbsp;&nbsp;--shelley-kes-key $&#123;KES&#125; \<br />
-            &nbsp;&nbsp;--shelley-vrf-key $&#123;VRF&#125; \<br />
-            &nbsp;&nbsp;--shelley-operational-certificate $&#123;CERT&#125;
-          </pre>
+          <CodeBlock language="bash">
+            {`# Set a variable to indicate the file path to the KES secret key file
+KES=<NodeHomeValue>/kes.skey
+# Set a variable to indicate the file path to the VRF secret key file
+VRF=<NodeHomeValue>/vrf.skey
+# Set a variable to indicate the file path to the operational certificate file
+CERT=<NodeHomeValue>/node.cert
+#
+# Run Cardano Node using the options that you set using variables
+#
+/usr/local/bin/cardano-node run \\
+  --topology $\{TOPOLOGY\} \\
+  --database-path $\{DB_PATH\} \\
+  --socket-path $\{SOCKET_PATH\} \\
+  --host-addr $\{HOSTADDR\} \\
+  --port $\{PORT\} \\
+  --config $\{CONFIG\} \\
+  --shelley-kes-key $\{KES\} \\
+  --shelley-vrf-key $\{VRF\} \\
+  --shelley-operational-certificate $\{CERT\}`}
+          </CodeBlock>
         </li>
         <li>Save and close the <code>startCardanoNode.sh</code> file.</li>
         <li>To start the block-producing node in your stake pool configuration, type:
-          <pre>
-            sudo systemctl start cardano-node
-          </pre>
+          <CodeBlock language="bash">
+            {`sudo systemctl start cardano-node`}
+          </CodeBlock>
         </li>
         <li>To confirm that the Cardano Node instance is operating as a block producer, verify that the <code>cardano.node.metrics.forging_enabled</code> EKG metric displays the value <code>1</code></li>
       </ol>

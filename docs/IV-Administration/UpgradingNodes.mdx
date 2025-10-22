@@ -10,10 +10,12 @@ description: "How to upgrade a Cardano Node instance to the latest version"
 
 import React from 'react';
 
+import CodeBlock from '@theme/CodeBlock';
+
 <!-- September 4, 2025 - Import the Tabs component -->
 <!-- For more details, visit https://docusaurus.io/docs/markdown-features/tabs --> 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+<!-- import Tabs from '@theme/Tabs'; -->
+<!-- import TabItem from '@theme/TabItem'; -->
 
 export function HTMLContent() {
   return (
@@ -363,37 +365,11 @@ For details on monitoring your node, see the section [Verifying the Upgrade](#ve
 
 ## Verifying the Upgrade
 
-To verify that the upgrade is successful, open gLiveView, journalctl logs or Grafana dashboard.
+To verify that the upgrade is successful, open a dashboard or follow the Cardano Node log.
 
-<!--
-{% tabs %}
-{% tab title="gLiveView" %}
-```bash
-cd ${NODE_HOME}
-./gLiveView.sh
-```
-{% endtab %}
-
-{% tab title="journalctl" %}
-```
-journalctl -fu cardano-node
-```
-{% endtab %}
-{% endtabs %}
--->
-
-<Tabs>
-  <TabItem value="gLiveView" label="gLiveView" default>
-    <pre>
-      cd $&#123;NODE_HOME&#125;<br />./gLiveView.sh
-    </pre>
-  </TabItem>
-  <TabItem value="journalctl" label="journalctl">
-    <pre>
-      journalctl -fu cardano-node
-    </pre>
-  </TabItem>
-</Tabs>
+<CodeBlock language="bash">
+  {`journalctl -fu cardano-node`}
+</CodeBlock>
 
 Congratulations on completing the upgrade! :sparkles:
 
