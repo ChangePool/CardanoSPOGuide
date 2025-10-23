@@ -1,16 +1,38 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
-# The following script polls metrics for the local Cardano Node instance
-# every five seconds, and then displays a dashboard for the user.
+# The nodeView.sh script polls metrics for the local Cardano Node instance every five seconds, and
+# then displays a dashboard for the user.
+#
+# To use the script, set the following variables as needed to support your implementation:
+#
+#   - ekg_endpoint: If you changed the IP address or port where the EKG endpoint listens, then
+#     update the URL accordingly.
+#   - schedule_folder (Optional): For relay nodes, the schedule_folder variable is unused. For the
+#     block-producing node in your stake pool configuration, optionally set the path to the folder
+#     where the calculateLeadership.sh script saves slot leadership query results to inform the
+#     operator when the stake pool is scheduled to produce blocks. For more details, see the
+#     Calculating Slot Leadership topic available online at https://coincashew.io/spo/CalculatingSlotLeadership
 #
 # To exit the script, press CTRL+C
 #
 
+# Set the URL for the EKG endpoint
+ekg_endpoint="http://localhost:12788/"
+
+# For the block-producing node in your stake pool configuration, optionally set the path to the
+# folder where the calculateLeadership.sh script saves slot leadership query results for the stake pool
+schedule_folder="$NODE_HOME/schedule"
+
+# Set locale for comma separation (e.g., US English)
+#export LC_NUMERIC="en_US.UTF-8"
+
 # The cleanup function runs on script exit
 cleanup() {
+
   # Restore the cursor
   tput cnorm
+
 }
 
 # Register the cleanup function to run on script exit (including CTRL+C)
@@ -19,21 +41,114 @@ trap cleanup EXIT
 # Hide the cursor
 tput civis
 
-# Set locale for comma separation (e.g., US English)
-#export LC_NUMERIC="en_US.UTF-8"
+# The convertsecs2hms function converts seconds to hh:mm:ss format
+convertsecs2hms() {
+
+  local total_seconds=$1
+  local hours=$((total_seconds / 3600))
+  local minutes=$(((total_seconds % 3600) / 60))
+  local seconds=$((total_seconds % 60))
+
+  printf "%02d:%02d:%02d\n" "$hours" "$minutes" "$seconds"
+
+}
+
+#
+# For a block-producing node, the analyze_leadership function parses optional slot leadership data for
+# the current and next epochs if available, and then updates variables used to display related statistics
+# in the dashboard.
+#
+# NOTE: The analyze_leadership function seeks input data that the calculateLeadership.sh script outputs.
+#
+analyze_leadership() {
+
+  # Initialize empty arrays for jq
+  local current_epoch_leadership_json="[]"
+  local next_epoch_leadership_json="[]"
+
+  # If slot leadership data for the current epoch is available, then assign the data to a variable
+  if [ -f "${current_epoch_leadership_file}" ]
+  then
+
+    current_epoch_leadership_json=$(jq -c . < ${current_epoch_leadership_file} )
+
+  fi
+
+  # If slot leadership data for the next epoch is available, then assign the data to a variable
+  if [ -f "${next_epoch_leadership_file}" ]
+  then
+
+    next_epoch_leadership_json=$(jq -c . < ${next_epoch_leadership_file})
+
+  fi
+
+  # Concatenate available slot leadership data for the current and next epochs into a single JSON array
+  local leadership_data=$(jq -n --argjson current_epoch "${current_epoch_leadership_json}" --argjson next_epoch "${next_epoch_leadership_json}" '$current_epoch + $next_epoch')
+
+  # Sort available leadership data in ascending order by slot number
+  leadership_data=$(echo "${leadership_data}" | jq 'sort_by(.slotNumber)')
+
+  # To prepare statistics, iterate through the JSON array containing available slot leadership data
+  while read -r object
+  do
+
+    # Assign values in the current JSON object to variables
+    object_slot_num=$(jq -r '.slotNumber' <<< "${object}")
+    object_slot_time=$(jq -r '.slotTime' <<< "${object}")
+
+    # If the current object represents a slot occurring in the future
+    if (( object_slot_num > slot_num ))
+    then
+
+      # Increment the variable counting the number of blocks a stake pool currently is scheduled to produce
+      ((pending_blocks++))
+
+      # If the variable storing the slot number of the next scheduled block is empty
+      if [[ -z "${next_block_slot_num}" ]]
+      then
+
+        # Save values from the current JSON object as the next scheduled block
+        next_block_slot_num=${object_slot_num}
+        next_block_slot_time=${object_slot_time}
+
+      fi
+
+    fi
+
+  done <<< $(jq -c '.[]' <<< "${leadership_data}")
+
+  # If the stake pool is scheduled to produce one or more blocks
+  if (( pending_blocks > 0 ))
+  then
+
+    # Format and convert to local time when the stake pool is scheduled to produce the next block
+    next_block_slot_time=$(date +"%Y-%m-%d %H:%M:%S" -d ${next_block_slot_time})
+
+    # Calculate the time remaining until the next block in seconds
+    next_block_time_left=$(( next_block_slot_num - slot_num ))
+
+    # Convert the time remaining until the next block from seconds to hh:mm:ss format
+    next_block_time_left=$(convertsecs2hms ${next_block_time_left})
+
+    # To create fixed widths, add trailing spaces to values as needed
+    pending_blocks=$(printf "%-2s" "${pending_blocks}")
+
+  fi
+
+}
 
 # Loop until the user presses CTRL+C
 while true
 do
 
   # Retrieve current metric values for the Cardano Node instance using the EKG endpoint
-  # NOTE: If you changed the IP address or port where the EKG endpoint listens, then update the URL accordingly
-  ekg_metrics=$(curl -s -H 'Accept: application/json' http://localhost:12788/)
+  ekg_metrics=$(curl -s -H 'Accept: application/json' "${ekg_endpoint}")
 
   # From the EKG metrics, retrieve metrics that the dashboard displays, setting alternatives for NULL values
   dashboard_metrics=$(jq -r '
     .cardano.node.metrics.epoch.int.val // 0,
     .cardano.node.metrics.slotInEpoch.int.val // 0,
+    .cardano.node.metrics.slotNum.int.val // 0,
     .cardano.node.metrics.blockNum.int.val // 0,
     .cardano.node.metrics.connectionManager.incomingConns.val // 0,
     .cardano.node.metrics.connectionManager.outgoingConns.val // 0,
@@ -52,21 +167,22 @@ do
   dashboard_metrics_arr=($(echo "${dashboard_metrics}"))
 
   # Assign array entries to variables
-  epoch_num=${dashboard_metrics_arr[0]}
+  current_epoch_num=${dashboard_metrics_arr[0]}
   slot_in_epoch=${dashboard_metrics_arr[1]}
-  block_height=${dashboard_metrics_arr[2]}
-  incoming_conns=${dashboard_metrics_arr[3]}
-  outgoing_conns=${dashboard_metrics_arr[4]}
-  block_count=${dashboard_metrics_arr[5]}
-  block_delay_1s=${dashboard_metrics_arr[6]}
-  block_delay_3s=${dashboard_metrics_arr[7]}
-  block_delay_5s=${dashboard_metrics_arr[8]}
-  mem_heap=${dashboard_metrics_arr[9]}
-  mem_live=${dashboard_metrics_arr[10]}
-  block_producer=${dashboard_metrics_arr[11]}
-  blocks_produced=${dashboard_metrics_arr[12]}
-  blocks_adopted=${dashboard_metrics_arr[13]}
-  blocks_invalid=${dashboard_metrics_arr[14]}
+  slot_num=${dashboard_metrics_arr[2]}
+  block_height=${dashboard_metrics_arr[3]}
+  incoming_conns=${dashboard_metrics_arr[4]}
+  outgoing_conns=${dashboard_metrics_arr[5]}
+  block_count=${dashboard_metrics_arr[6]}
+  block_delay_1s=${dashboard_metrics_arr[7]}
+  block_delay_3s=${dashboard_metrics_arr[8]}
+  block_delay_5s=${dashboard_metrics_arr[9]}
+  mem_heap=${dashboard_metrics_arr[10]}
+  mem_live=${dashboard_metrics_arr[11]}
+  block_producer=${dashboard_metrics_arr[12]}
+  blocks_produced=${dashboard_metrics_arr[13]}
+  blocks_adopted=${dashboard_metrics_arr[14]}
+  blocks_invalid=${dashboard_metrics_arr[15]}
 
   # Format and round percentages for display
   block_delay_1s=$(echo "scale=1; ((${block_delay_1s} * 1000) + 0.5) / 10" | bc)
@@ -81,14 +197,21 @@ do
   mem_heap="${mem_heap} GB"
   mem_live="${mem_live} GB"
 
+  # Calculate the number of the next epoch
+  next_epoch_num=$(( current_epoch_num + 1 ))
+
+  # Prior to formatting numbers, assign the expected names of files containing slot leadership data to variables
+  current_epoch_leadership_file="${schedule_folder}/leadership-epoch${current_epoch_num}.json"
+  next_epoch_leadership_file="${schedule_folder}/leadership-epoch${next_epoch_num}.json"
+
   # Format numbers using the thousands separator for the current system locale
-  epoch_num=$(printf "%'d" "${epoch_num}")
+  current_epoch_num=$(printf "%'d" "${current_epoch_num}")
   slot_in_epoch=$(printf "%'d" "${slot_in_epoch}")
   block_height=$(printf "%'d" "${block_height}")
   block_count=$(printf "%'d" "${block_count}")
 
   # To create fixed widths, add trailing spaces to values as needed
-  epoch_num=$(printf "%-5s" "${epoch_num}")
+  current_epoch_num=$(printf "%-5s" "${current_epoch_num}")
   slot_in_epoch=$(printf "%-7s" "${slot_in_epoch}")
   block_height=$(printf "%-10s" "${block_height}")
   incoming_conns=$(printf "%-3s" "${incoming_conns}")
@@ -104,6 +227,15 @@ do
   block_delay_1s=$(printf "%*s%s" $((5 - ${#block_delay_1s})) "" "${block_delay_1s}")
   block_delay_3s=$(printf "%*s%s" $((5 - ${#block_delay_3s})) "" "${block_delay_3s}")
   block_delay_5s=$(printf "%*s%s" $((5 - ${#block_delay_5s})) "" "${block_delay_5s}")
+
+  # Initialize variables used to display slot leadership statistics, if available
+  pending_blocks=0
+  next_block_slot_num=""
+  next_block_slot_time=""
+  next_block_time_left=""
+
+  # Call a function to analyze optional slot leadership data
+  analyze_leadership
 
   # Define colors and styles
   Black="\e[30m"
@@ -132,8 +264,8 @@ do
   echo -e "                   ${Black}${WhiteBackground} nodeView v1.0 ${NoColor}"
   echo
   echo -e "${LightGreen}${Underline}Blockchain Ledger${NoColor}"
-  echo -e "  Epoch Number: ${LightCyan}${epoch_num}${NoColor}         Slot in Epoch: ${LightCyan}${slot_in_epoch}${NoColor}"
-  echo -e "  Block Height: ${LightCyan}${block_height}${NoColor}"
+  echo -e "  Epoch Number: ${LightCyan}${current_epoch_num}${NoColor}         Slot in Epoch: ${LightCyan}${slot_in_epoch}${NoColor}"
+  echo -e "  Block Height: ${LightCyan}${block_height}${NoColor}    Slot: ${LightCyan}${slot_num}${NoColor}"
 
   echo
   echo -e "${LightGreen}${Underline}Network Connections${NoColor}"
@@ -141,16 +273,28 @@ do
 
   echo
   echo -e "${LightGreen}${Underline}Block Propagation${NoColor}"
-  echo -e "  Count    Within: 1 Second   3 Seconds   5 Seconds"
-  echo -e "  ${LightCyan}${block_count}${NoColor}             ${LightCyan}${block_delay_1s}%${NoColor}     ${LightCyan}${block_delay_3s}%${NoColor}      ${LightCyan}${block_delay_5s}%${NoColor}"
+  echo -e "  Count    Within:    1 Second   3 Seconds   5 Seconds"
+  echo -e "  ${LightCyan}${block_count}${NoColor}               ${LightCyan}${block_delay_1s}%${NoColor}     ${LightCyan}${block_delay_3s}%${NoColor}      ${LightCyan}${block_delay_5s}%${NoColor}"
 
-  # If the node is a block producer, then display block production metrics
+  # For a block-producing node, display block production metrics
   if [ ${block_producer} -eq 1 ]
   then
 
     echo
     echo -e "${LightGreen}${Underline}Block Production${NoColor}"
-    echo -e "  Prepared: ${LightCyan}${blocks_produced}${NoColor}      Accepted: ${LightCyan}${blocks_adopted}${NoColor}    Invalid: ${LightCyan}${blocks_invalid}${NoColor}"
+
+    # If slot leadership data is available, then display related statistics
+    if (( pending_blocks > 0 ))
+    then
+
+      echo -e "  Pending               Next           Countdown"
+      echo -e "     ${LightCyan}${pending_blocks}${NoColor}          ${LightCyan}${next_block_slot_time}${NoColor}   ${LightCyan}${next_block_time_left}${NoColor}"
+      echo
+
+    fi
+
+    echo -e "  Prepared            Accepted          Invalid"
+    echo -e "     ${LightCyan}${blocks_produced}${NoColor}                  ${LightCyan}${blocks_adopted}${NoColor}                ${LightCyan}${blocks_invalid}${NoColor}"
 
   fi
 

@@ -60,7 +60,7 @@ export function HTMLContent() {
       <ul>
         <li><b>cardano.node.metrics.epoch.int</b>—The epoch number of the tip of the local copy of the Cardano blockchain ledger. In the Cardano ecosystem, each epoch is five days in duration.</li>
         <li><b>cardano.node.metrics.slotInEpoch.int</b>—The slot number of the tip of the local copy of the Cardano blockchain ledger since the beginning of the tip epoch. A slot occurs every second. Therefore, each epoch is comprised of 432,000 slots.</li>
-        {/* <!-- <li><b>cardano.node.metrics.slotNum.int</b>—The slot number of the tip of the local copy of the Cardano blockchain since the start of the ledger</li> --> */}
+        <li><b>cardano.node.metrics.slotNum.int</b>—The slot number of the tip of the local copy of the Cardano blockchain since the beginning of the blockchain</li>
         <li><b>cardano.node.metrics.blockNum.int</b>—The number of the most recent block produced since the start of the ledger, also referred to as the block height. Generally, the Cardano protocol produces a block approximately every 20 seconds.</li>
         <li><b>cardano.node.metrics.connectionManager.incomingConns</b>—The total number of remote Cardano Node instances—network peers—populating the network using blocks from the local copy of the blockchain ledger</li>
         <li><b>cardano.node.metrics.connectionManager.outgoingConns</b>—The total number of network peers that the local Cardano Node instance is using to populate the local copy of the blockchain ledger </li>
@@ -119,10 +119,39 @@ export function HTMLContent() {
 
       <h1>Creating a Dashboard</h1>
 
-      <p>The following Bash script shows you how to use metrics to create a dashboard for monitoring Cardano Node instances in your stake pool configuration:</p>
-      <CodeBlock language="bash">
-        {nodeView}
-      </CodeBlock>
+      <p>The following Bash script shows you how to use metrics to create a dashboard for monitoring Cardano Node instances in your stake pool configuration.</p>
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">The script includes functionality to display data related to blocks that the stake pool you operate is scheduled to produce, if data are available on the block-producing node. After <a href="/RegisteringPool">Registering Your Stake Pool</a>, the topic <a href="/CalculatingSlotLeadership">Calculating Slot Leadership</a> explains how to query the slot leadership schedule. For now, you can ignore the functionality in the script related to querying slot leadership.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="pi">To create a dashboard:</p>
+
+      <ol>
+        <li>Using a text editor, copy and paste the following code into a new text file named <code>$NODE_HOME/nodeView.sh</code> setting the required variables as described in the comments at the beginning of the script:
+          <CodeBlock language="bash">
+            {nodeView}
+          </CodeBlock>
+        </li>
+        <li>Save and close the <code>nodeView.sh</code> file. To set execute permissions for the file, type:
+          <CodeBlock language="bash">
+            {`chmod +x $NODE_HOME/nodeView.sh`}
+          </CodeBlock>
+        </li>
+        <li>To display the dashboard, type:
+          <CodeBlock language="bash">
+            {`nodeView.sh`}
+          </CodeBlock>
+        </li>
+      </ol>
+
+
+
+      
 
       <h1>Wait...</h1>
 

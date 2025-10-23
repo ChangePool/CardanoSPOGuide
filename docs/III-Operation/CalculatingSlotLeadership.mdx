@@ -14,6 +14,8 @@ import TestnetNote from '@site/src/components/TestnetNote.js';
 
 import CodeBlock from '@theme/CodeBlock';
 
+import calculateLeadership from '!!raw-loader!/txt/calculateLeadership.sh';
+
 export function HTMLContent() {
   return (
     <div>
@@ -29,9 +31,9 @@ export function HTMLContent() {
         </tbody>
       </table>
 
-      <p>As a stake pool operator, you aim to keep the stake pool that you operate online at all times. However, knowing in advance when the stake pool is elected to produce a block allows you to schedule required maintenance, for example, without missing an opportunity to produce a block.</p>
+      <p>As a stake pool operator, you aim to keep the stake pool that you operate online at all times. However, knowing in advance when the stake pool is elected to produce blocks allows you to schedule required maintenance, for example, without missing an opportunity to produce a block.</p>
 
-      <p>Using Cardano CLI, you can query the slots and Coordinated Universal Times (UTCs) when a stake pool that you operate is elected to produce blocks in the current epoch. Within 36 hours of the next epoch starting, you can also query the slots and times when the stake pool is elected to produce blocks in the next epoch.</p>
+      <p>Using Cardano CLI, you can query the slot numbers and Coordinated Universal Times (UTCs) when a stake pool that you operate is elected to produce blocks in the current epoch. In the Pre-production Testnet and Mainnet environments, within 36 hours of the next epoch starting you can also query the slot numbers and times when the stake pool is elected to produce blocks in the next epoch. In the Preview Testnet environment, you can query the slot leadership schedule for the next epoch within 6 hours of the next epoch starting.</p>
 
       <p><i>Figure 1</i> illustrates how the Cardano protocol shares with stake pool operators the slot leadership schedule for block production, as well as how stake pools prepare blocks.</p>
 
@@ -42,7 +44,7 @@ export function HTMLContent() {
 
       <TestnetNote />
 
-      <p class="pi">To query the slots and times when a stake pool you operate is elected to produce blocks in the current epoch:</p>
+      <p class="pi">To query the slot numbers and times when a stake pool you operate is elected to produce blocks in the current epoch:</p>
       
       <ul class="ss">
         <li>Using a terminal window on the block-producing node, type:
@@ -67,10 +69,10 @@ export function HTMLContent() {
         </tbody>
       </table>
 
-      <p class="pi">To query the slots and times when a stake pool you operate is elected to produce blocks in the next epoch:</p>
+      <p class="pi">To query the slot numbers and times when a stake pool you operate is elected to produce blocks in the next epoch:</p>
       
       <ul class="ss">
-        <li>Using a terminal window on the block-producing node, type the following command within 36 hours of the next epoch starting:
+        <li>Using a terminal window on the block-producing node, type the following command when the current epoch is more than 70 percent complete:
           <CodeBlock language="bash">
             {`cardano-cli conway query leadership-schedule --output-json \\
   --cardano-mode \\
@@ -82,6 +84,15 @@ export function HTMLContent() {
           </CodeBlock>
         </li>
       </ul>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+            <td class="boxText"><p class="boxText">Do NOT share the slot leadership schedule for the stake pool that you operate on Mainnet publicly.</p></td>
+          </tr>
+        </tbody>
+      </table>
 
       <p>The following example shows you the JSON output format of a <code>query leadership-schedule</code> command:</p>
 
@@ -112,21 +123,56 @@ export function HTMLContent() {
 
       <h1>Automating Slot Leadership Calculation</h1>
 
-      <p>TO-DO: Create a script that starts by polling the slot in epoch metric, and then waiting until the time is within 36 hours of the next epoch starting. After waiting, calculate slot leadership for the next epoch. Append the results of the query to a JSON-format file, and then loop.</p>
+      <p>The following script uses the <code>slotInEpoch</code> EKG metric to test if the current epoch is more than 70 percent complete. If needed, the script waits until the leadership schedule for the next epoch is available. When the leadership schedule is available, the script queries the slot leadership schedule to retrieve the slot numbers and times when the stake pool you operate is scheduled to produce blocks in the next epoch, and then saves the data in a new text file using JSON format.</p>
 
-      <p>TO-DO: Also, update the nodeView.sh script to query the JSON-format file, and then display Pending Blocks, Next Block and Countdown as described in the comments below.</p>
+      <p>Running the script as a <code>systemd</code> service that starts when the computer boots ensures that up-to-date slot leadership data is always available for you, the stake pool operator.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">You must query the slot leadership schedule using the block-producing node in your stake pool configuration.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="pi">To create a Bash script that queries the slot leadership schedule:</p>
+
+      <ol>
+        <li>Using a terminal window on the computer operating as the block producer in your stake pool configuration, type the following commands to create a folder for saving the results of slot leadership queries:
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+mkdir ./schedule`}
+          </CodeBlock>
+        </li>
+        <li>To retrieve the value of the <code>$NODE_HOME</code> environment variable, type:
+          <CodeBlock language="bash">
+            {`echo $NODE_HOME`}
+          </CodeBlock>
+        </li>
+        <li>Using a text editor, copy and paste the following code into a new text file named <code>$NODE_HOME/calculateLeadership.sh</code> setting the required variables as described in the comments at the beginning of the script:
+          <CodeBlock language="bash">
+            {calculateLeadership}
+          </CodeBlock>
+        </li>
+        <li>Save and close the <code>calculateLeadership.sh</code> file. To set execute permissions for the file, type:
+          <CodeBlock language="bash">
+            {`chmod +x $NODE_HOME/calculateLeadership.sh`}
+          </CodeBlock>
+        </li>
+      </ol>
+
+      <p class="pi">To create a service that automates querying the slot leadership schedule:</p>
+
+      <ol>
+        <li></li>
+      </ol>
+
+
 
 
 
       
-
-
-
-      {/* <!-- To monitor slot leadership, create a bash script running as a service that polls the cardano.node.metrics.slotInEpoch.int metric every six hours, or until the slot in epoch is greater than 310,000 Use the VE2.sh script as reference. When slotInEpoch > 310,000 run a slot leader check using cardano-cli and then append the results to a JSON file.
-       
-      Update the nodeView dashboard to read the JSON file, and then display Pending Blocks (as an integer), Next Block (as a date and time) and Countdown (in terms of time remaining until the next block is prepared) statistics as the first row in the Block Production area. Provide the revisions to the nodeView.sh script relatively, as lines to add. Write the functionality to read the JSON file and prepare the statistics as a function, then call the function, and then display the statistics.
-      
-      Develop, test and use the script on a day-to-day basis using a Testnet environment. --> */}
 
 
 
