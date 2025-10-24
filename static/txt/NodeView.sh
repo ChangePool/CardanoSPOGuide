@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
 #
-# The nodeView.sh script polls metrics for the local Cardano Node instance every five seconds, and
-# then displays a dashboard for the user.
+# The nodeView.sh script polls Cardano Node metrics every five seconds, and then displays a dashboard
+# for the user.
 #
 # To use the script, set the following variables as needed to support your implementation:
 #
-#   - ekg_endpoint: If you changed the IP address or port where the EKG endpoint listens, then
+#   - ekg_endpoint: If you change the IP address or port where the EKG endpoint listens, then
 #     update the URL accordingly.
-#   - schedule_folder (Optional): For relay nodes, the schedule_folder variable is unused. For the
-#     block-producing node in your stake pool configuration, optionally set the path to the folder
-#     where the calculateLeadership.sh script saves slot leadership query results to inform the
-#     operator when the stake pool is scheduled to produce blocks. For more details, see the
-#     Calculating Slot Leadership topic available online at https://coincashew.io/spo/CalculatingSlotLeadership
+#   - schedule_folder (Optional): When monitoring relay nodes, the schedule_folder variable is unused.
+#     When monitoring the block-producing node in your stake pool configuration, optionally set the
+#     path to the folder where the calculateLeadership.sh script saves slot leadership query results
+#     informing the operator when the stake pool is scheduled to produce blocks. For more details, see
+#     Calculating Slot Leadership available online at https://coincashew.io/spo/CalculatingSlotLeadership
 #
 # To exit the script, press CTRL+C
 #
@@ -20,7 +20,7 @@
 # Set the URL for the EKG endpoint
 ekg_endpoint="http://localhost:12788/"
 
-# For the block-producing node in your stake pool configuration, optionally set the path to the
+# When monitoring the block-producing node in your stake pool configuration, optionally set the path to the
 # folder where the calculateLeadership.sh script saves slot leadership query results for the stake pool
 schedule_folder="$NODE_HOME/schedule"
 
@@ -54,9 +54,9 @@ convertsecs2hms() {
 }
 
 #
-# For a block-producing node, the analyze_leadership function parses optional slot leadership data for
-# the current and next epochs if available, and then updates variables used to display related statistics
-# in the dashboard.
+# When monitoring a block-producing node, the analyze_leadership function parses optional slot leadership
+# data for the current and next epochs if available, and then updates variables used to display related
+# statistics in the dashboard.
 #
 # NOTE: The analyze_leadership function seeks input data that the calculateLeadership.sh script outputs.
 #
@@ -66,7 +66,7 @@ analyze_leadership() {
   local current_epoch_leadership_json="[]"
   local next_epoch_leadership_json="[]"
 
-  # If slot leadership data for the current epoch is available, then assign the data to a variable
+  # If slot leadership data for the current epoch are available, then assign the data to a variable
   if [ -f "${current_epoch_leadership_file}" ]
   then
 
@@ -74,7 +74,7 @@ analyze_leadership() {
 
   fi
 
-  # If slot leadership data for the next epoch is available, then assign the data to a variable
+  # If slot leadership data for the next epoch are available, then assign the data to a variable
   if [ -f "${next_epoch_leadership_file}" ]
   then
 
@@ -82,7 +82,7 @@ analyze_leadership() {
 
   fi
 
-  # Concatenate available slot leadership data for the current and next epochs into a single JSON array
+  # Concatenate available slot leadership data into a single JSON array
   local leadership_data=$(jq -n --argjson current_epoch "${current_epoch_leadership_json}" --argjson next_epoch "${next_epoch_leadership_json}" '$current_epoch + $next_epoch')
 
   # Sort available leadership data in ascending order by slot number
@@ -276,7 +276,7 @@ do
   echo -e "  Count    Within:    1 Second   3 Seconds   5 Seconds"
   echo -e "  ${LightCyan}${block_count}${NoColor}               ${LightCyan}${block_delay_1s}%${NoColor}     ${LightCyan}${block_delay_3s}%${NoColor}      ${LightCyan}${block_delay_5s}%${NoColor}"
 
-  # For a block-producing node, display block production metrics
+  # When monitoring a block-producing node, display block production metrics
   if [ ${block_producer} -eq 1 ]
   then
 

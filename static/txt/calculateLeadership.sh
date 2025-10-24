@@ -15,10 +15,10 @@
 #   - environment_option: Set the variable to match the environment that you use.
 #   - schedule_available: Set the slot in epoch when the leadership schedule is available
 #     in the environment that you use.
-#   - ekg_endpoint: If you changed the IP address or port where the EKG endpoint listens, then
+#   - ekg_endpoint: If you change the IP address or port where the EKG endpoint listens, then
 #     update the URL accordingly.
 #   - schedule_folder: Set the absolute path to the folder where the calculateLeadership.sh
-#     script saves slot leadership query results to inform the operator when the stake pool
+#     script saves slot leadership query results informing the operator when the stake pool
 #     is scheduled to produce blocks, where <NodeHomeValue> is the value of the $NODE_HOME
 #     environment variable on the local computer.
 #
@@ -45,7 +45,7 @@ schedule_available="310000"
 # Set the URL for the EKG endpoint
 ekg_endpoint="http://localhost:12788/"
 
-# Assign the path for saving results of slot leadership queries to a variable
+# Assign the path to the folder for saving results of slot leadership queries to a variable
 schedule_folder="<NodeHomeValue>/schedule"
 
 # If schedule_folder does not exist, then create the directory
@@ -78,17 +78,19 @@ do
   # Calculate the number of the next epoch
   next_epoch_num=$(( current_epoch_num + 1 ))
 
-  # Assign the unique file name for saving the stake pool slot leadership schedule in the next epoch to a variable
+  # Assign the unique file name for saving the stake pool slot leadership schedule in the next epoch
+  # to a variable
   schedule_filename="leadership-epoch${next_epoch_num}.json"
 
-  # Set a default value for the variable used to calculate how long to wait prior to querying the leadership schedule, if needed
+  # Set a default value for the variable used to calculate how long to wait prior to querying the
+  # leadership schedule, if needed
   waiting_time="${schedule_available}"
 
   # If the file containing the slot leadership schedule for the stake pool in the next epoch does not exist
   if [ ! -f "${schedule_folder}/${schedule_filename}" ]
   then
 
-    # If the slot leaderships schedule for the next epoch is available
+    # If the slot leadership schedule for the next epoch is available
     if (( slot_in_epoch > schedule_available ))
     then
 
