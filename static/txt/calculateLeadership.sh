@@ -48,8 +48,12 @@ schedule_available="310000"
 # Set the URL for the EKG endpoint
 ekg_endpoint="http://localhost:12788/"
 
-# Assign the path to the folder for saving results of slot leadership queries to a variable
+# The calculateLeadership.sh script may run as a systemd service. Therefore, assign the value
+# of $NODE_HOME to a variable for use throughout the script because environment variables may
+# not be available.
 node_home_folder="<NodeHomeValue>"
+
+# Assign the path to the folder for saving results of slot leadership queries to a variable
 schedule_folder="${node_home_folder}/schedule"
 
 # If schedule_folder does not exist, then create the directory
