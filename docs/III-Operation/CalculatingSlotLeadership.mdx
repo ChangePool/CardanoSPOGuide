@@ -123,7 +123,9 @@ export function HTMLContent() {
 
       <h1>Automating Slot Leadership Calculation</h1>
 
-      <p>The following script uses the <code>slotInEpoch</code> EKG metric to test if the current epoch is more than 70 percent complete. If needed, the script waits until the leadership schedule for the next epoch is available. When the leadership schedule is available, the script queries the slot leadership schedule to retrieve the slot numbers and times when the stake pool you operate is scheduled to produce blocks in the next epoch, and then saves the data in a new text file using JSON format.</p>
+      <p>The following script offers an example showing how you can automate the process of calculating slot leadership for the stake pool that you operate.</p>
+
+      <p>The script uses the <code>slotInEpoch</code> EKG metric to test if the current epoch is more than 70 percent complete. If needed, the script waits until the leadership schedule for the next epoch is available. When the leadership schedule is available, the script queries the slot leadership schedule to retrieve the slot numbers and times when the stake pool you operate is scheduled to produce blocks in the next epoch, and then saves the data in a new text file using JSON format.</p>
 
       <p>Running the script as a <code>systemd</code> service that starts when the computer boots ensures that up-to-date slot leadership data is always available for you, the stake pool operator.</p>
 

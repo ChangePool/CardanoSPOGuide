@@ -17,10 +17,13 @@
 #     in the environment that you use.
 #   - ekg_endpoint: If you change the IP address or port where the EKG endpoint listens, then
 #     update the URL accordingly.
+#   - node_home_folder: Set <NodeHomeValue> to the value of the $NODE_HOME environment variable
+#     on the local computer.
 #   - schedule_folder: Set the absolute path to the folder where the calculateLeadership.sh
 #     script saves slot leadership query results informing the operator when the stake pool
-#     is scheduled to produce blocks, where <NodeHomeValue> is the value of the $NODE_HOME
-#     environment variable on the local computer.
+#     is scheduled to produce blocks. To display statistics related to slot leadership, the
+#     nodeView.sh script that you created in the Monitoring Metrics topic available online at
+#     https://coincashew.io/spo/MonitoringMetrics must access the same folder.
 #
 
 #
@@ -46,7 +49,8 @@ schedule_available="310000"
 ekg_endpoint="http://localhost:12788/"
 
 # Assign the path to the folder for saving results of slot leadership queries to a variable
-schedule_folder="<NodeHomeValue>/schedule"
+node_home_folder="<NodeHomeValue>"
+schedule_folder="${node_home_folder}/schedule"
 
 # If schedule_folder does not exist, then create the directory
 if [ ! -d "${schedule_folder}" ]
@@ -84,7 +88,7 @@ do
 
   # Set a default value for the variable used to calculate how long to wait prior to querying the
   # leadership schedule, if needed
-  waiting_time="${schedule_available}"
+  wait_time="${schedule_available}"
 
   # If the file containing the slot leadership schedule for the stake pool in the next epoch does not exist
   if [ ! -f "${schedule_folder}/${schedule_filename}" ]
@@ -101,25 +105,25 @@ do
       /usr/local/bin/cardano-cli conway query leadership-schedule --output-json \
         --cardano-mode \
         ${environment_option} \
-        --genesis /home/pcnode/Downloads/cardano-cfg/2/shelley-genesis.json \
-        --stake-pool-id $(cat /home/pcnode/Downloads/cardano-meta/12AMpoolid.hex.txt) \
-        --vrf-signing-key-file /home/pcnode/Downloads/cardano-keys/12AMvrf.skey \
+        --genesis ${node_home_folder}/shelley-genesis.json \
+        --stake-pool-id $(cat ${node_home_folder}/stakepoolid-bech32.txt) \
+        --vrf-signing-key-file ${node_home_folder}/vrf.skey \
         --next \
         --out-file ${schedule_folder}/${schedule_filename}
 
     else
 
       # Update how many seconds to wait before the next slot leadership schedule is available
-      waiting_time=$(( schedule_available - slot_in_epoch ))
+      wait_time=$(( schedule_available - slot_in_epoch ))
 
     fi
 
   fi
 
   # Inform the user
-  echo "Waiting ${waiting_time} seconds until the next slot leadership schedule is available..."
+  echo "Waiting ${wait_time} seconds until the next slot leadership schedule is available..."
 
   # Wait until the next slot leadership schedule is available
-  sleep ${waiting_time}
+  sleep ${wait_time}
 
 done
