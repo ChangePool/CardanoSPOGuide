@@ -164,11 +164,73 @@ mkdir ./schedule`}
         </li>
       </ol>
 
-      <p class="pi">To create a service that automates querying the slot leadership schedule:</p>
+      <p class="pi">To create a service that queries the slot leadership schedule automatically:</p>
 
       <ol>
-        <li></li>
+        <li>On the computer operating as the block producer in your stake pool configuration, using a text editor create a file named <code>$NODE_HOME/slot-leadership.service</code> and then add the following contents where <code>&lt;UserValue&gt;</code> is the value of your <code>$USER</code> environment variable and <code>&lt;NodeHomeValue&gt;</code> is the value of the <code>$NODE_HOME</code> environment variable:
+          <CodeBlock language="bash">
+            {`# The Slot Leadership Calculation service (part of systemd)
+# file: /etc/systemd/system/slot-leadership.service
+
+[Unit]
+Description       = Slot Leadership Calculation Service
+Wants             = cardano-node.service
+After             = cardano-node.service
+
+[Service]
+User              = <UserValue>
+Type              = simple
+WorkingDirectory  = <NodeHomeValue>
+ExecStart         = /bin/bash -c '<NodeHomeValue>/calculateLeadership.sh'
+KillSignal        = SIGINT
+RestartKillSignal = SIGINT
+TimeoutStopSec    = 90
+Restart           = always
+RestartSec        = 5
+SyslogIdentifier  = slot-leadership
+
+[Install]
+WantedBy          = multi-user.target`}
+          </CodeBlock>
+        </li>
+        <li>Save and close the <code>slot-leadership.service</code> file.</li>
+        <li>To move the <code>slot-leadership.service</code> file to the folder <code>/etc/systemd/system</code> and set file permissions, type:
+          <CodeBlock language="bash">
+            {`sudo mv $NODE_HOME/slot-leadership.service /etc/systemd/system/slot-leadership.service
+sudo chmod 644 /etc/systemd/system/slot-leadership.service`}
+          </CodeBlock>
+        </li>
+        <li>To verify that the <code>calculateLeadership.sh</code> script runs as a service and to start the service when the computer boots, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl daemon-reload
+sudo systemctl start slot-leadership.service
+sudo systemctl status slot-leadership.service
+sudo systemctl enable slot-leadership.service`}
+          </CodeBlock>
+        </li>
       </ol>
+
+      <p>To review or analyze the history of slots and times when the stake pool that you operate was scheduled to produce blocks, see the <code>$NODE_HOME/schedule</code> folder. The folder contains files named <code>leadership-epoch&lt;EpochNumber&gt;.json</code> where <code>&lt;EpochNumber&gt;</code> is the epoch when slots and times listed in the file using JSON format occurred.</p>
+
+      <p class="pi">To display statistics related to upcoming blocks that the stake pool you operate is scheduled to produce:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window, type:
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+nodeView.sh`}
+          </CodeBlock>
+        </li>
+      </ul>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">For more details on using and customizing the <code>nodeView.sh</code> script, see the topic <a href="/MonitoringMetrics">Monitoring Metrics</a>.</p></td>
+          </tr>
+        </tbody>
+      </table>
 
       <h1>Additional Resources</h1>
 
