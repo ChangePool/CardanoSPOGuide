@@ -52,7 +52,7 @@ git checkout $(curl -s https://api.github.com/repos/IntersectMBO/cardano-node/re
     <tbody>
         <tr>
             <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
-            <td class="boxText"><p class="boxText">Typing a dollar sign (`$`) before a command in parentheses refers to the output of the command in parentheses. The pipe character (`|`) redirects output from one command to input of another command. For example, using a Web browser you can navigate to the above URL https://api.github.com/repos/IntersectMBO/cardano-node/releases/latest to display the data that the `curl` command retrieves, and then confirm the value of the `tag_name` attribute that the `jq` command selects.</p></td>
+            <td class="boxText"><p class="boxText">Typing a dollar sign (`$`) before a command in parentheses refers to the output of the command in parentheses. The pipe character (`|`) redirects output from one command to input of another command. Using a Web browser, navigate to the above <a href="https://api.github.com/repos/IntersectMBO/cardano-node/releases/latest" target="_blank">URL</a> to display the data that the `curl` command retrieves, and then confirm the value of the `tag_name` attribute that the `jq` command selects.</p></td>
         </tr>
     </tbody>
 </table>
@@ -70,9 +70,14 @@ cabal build cardano-cli
 ```
 <!-- Source: https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md -->
 
-:::info
-Depending on the processing power of your computer, the build process requires about 20 minutes to complete.
-:::
+<table class="box">
+  <tbody>
+    <tr>
+      <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+      <td class="boxText"><p class="boxText">Depending on the processing power of your computer, the build process requires about 20 minutes to complete.</p></td>
+    </tr>
+  </tbody>
+</table>
 
 7\. To copy the `cardano-node` and `cardano-cli` binaries that you produced in step 6 into the `/usr/local/bin` directory, type:
 ```bash
