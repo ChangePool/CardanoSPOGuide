@@ -3,18 +3,49 @@ title: "Checking Stake Pool Rewards"
 sidebar_label: "Checking Stake Pool Rewards"
 slug: /CheckingRewards
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 5
 description: ""
 ---
 
 import React from 'react';
 
+import TestnetNote from '@site/src/components/TestnetNote.js';
+
+import CodeBlock from '@theme/CodeBlock';
+
 export function HTMLContent() {
   return (
     <div>
 
       {/* INSERT HTML HERE */}
+
+      <p>At the end of the next epoch, the Cardano protocol pays stake pools and delegators rewards for blocks produced in the current epoch.</p>
+
+      <TestnetNote />
+
+      <p class="pi">To display the current stake pool and representative delegations, as well as the reward balance for a stake address:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window on the block-producing node in your stake pool configuration, type:
+          <CodeBlock language="bash">
+            {`cardano-cli conway query stake-address-info \\
+ --address $(cat $NODE_HOME/stake.addr) \\
+ --mainnet`}
+          </CodeBlock>
+          <center><strong>OR</strong></center>
+          Search for the stake address using a <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>.
+        </li>
+      </ul>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">For details on representative delegations, see the topic <a href="/RepDelegation">Delegating to a Representative</a>.</p></td>
+          </tr>
+        </tbody>
+      </table>
 
       
 
@@ -23,3 +54,4 @@ export function HTMLContent() {
 }
 
 <HTMLContent />
+

@@ -92,7 +92,7 @@ cardano-cli conway address key-gen \\
           </CodeBlock>
         </li>
         <li>Carefully back up the files containing the payment address and stake address as well as the corresponding public verification and secret keys using a secure and comprehensive backup strategy.</li>
-        <li>Using removable media, copy the <code>stake.vkey</code> and <code>payment.addr</code> files to the <code>$NODE_HOME</code> folder on your block-producing node.</li>
+        <li>Using removable media, copy the <code>stake.vkey</code>, <code>stake.addr</code> and <code>payment.addr</code> files to the <code>$NODE_HOME</code> folder on your block-producing node.</li>
       </ol>
 
       <h1>Using a Seed Phrase</h1>
@@ -160,7 +160,7 @@ cardano-wallet recovery-phrase generate --size 24 > seed-phrase.dat`}
         </li>
         <li>Close the terminal window that you used to create your wallet, and then open a new terminal window if needed.</li>
         <li>Carefully back up the <code>$NODE_HOME/seed-phrase.dat</code> file, as well as all files in the <code>$NODE_HOME/wallet-keys/</code> folder, using a secure and comprehensive backup strategy.</li>
-        <li>Using removable media, copy the <code>$NODE_HOME/wallet-keys/stake.vkey</code> and <code>$NODE_HOME/wallet-keys/payment.addr</code> files to the <code>$NODE_HOME</code> folder on the computer designated as the block-producing node in your stake pool configuration.</li>
+        <li>Using removable media, from the <code>$NODE_HOME/wallet-keys/</code> folder copy the <code>stake.vkey</code>, <code>stake.addr</code> and <code>payment.addr</code> files to the <code>$NODE_HOME</code> folder on the computer designated as the block-producing node in your stake pool configuration.</li>
       </ol>
 
       <h1>Funding Your Payment Address</h1>
