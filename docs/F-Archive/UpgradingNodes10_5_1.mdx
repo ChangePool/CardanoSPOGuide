@@ -108,8 +108,8 @@ chmod 755 gLiveView.sh
 
 ```bash
 sed -i env \
-    -e "s/\#CONFIG=\"\$&#123;CNODE_HOME&#125;\/files\/config.json\"/CONFIG=\"\$&#123;NODE_HOME&#125;\/<ConfigFileName>\"/g" \
-    -e "s/\#SOCKET=\"\$&#123;CNODE_HOME&#125;\/sockets\/node.socket\"/SOCKET=\"\$&#123;NODE_HOME&#125;\/db\/socket\"/g"
+    -e "s/\#CONFIG=\"\${CNODE_HOME}\/files\/config.json\"/CONFIG=\"\${NODE_HOME}\/<ConfigFileName>\"/g" \
+    -e "s/\#SOCKET=\"\${CNODE_HOME}\/sockets\/node.socket\"/SOCKET=\"\${NODE_HOME}\/db\/socket\"/g"
 ```
 
 :::info
