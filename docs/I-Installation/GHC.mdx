@@ -3,118 +3,133 @@ title: "Installing GHC and Cabal"
 sidebar_label: "Installing GHC and Cabal"
 slug: /GHC
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 20
 description: ""
 ---
 
 import React from 'react';
 
+import CodeBlock from '@theme/CodeBlock';
+
 export function HTMLContent() {
-    return (
-        <div>
+  return (
+    <div>
+      
+      <p>To compile Cardano Node using source code, you must install the Glasgow Haskell Compiler (GHC) and Cabal for building applications and libraries.</p>
 
-            
+      <p>For each Cardano Node release, Input-Output recommends compiling binaries using specific versions of GHC and Cabal. For example, refer to the <a href="https://github.com/IntersectMBO/cardano-node/releases" target="_blank">Releases</a> page in the Cardano Node GitHub repository to determine the GHC and Cabal versions required for the current Cardano Node release. <i>Table 1</i> lists GHC and Cabal version requirements for the current Cardano Node release.</p>
 
-        </div>
-    );
-}
+      <table class="center">
+        <caption>Table 1 Current Cardano Node Versions</caption>
+        <tbody>
+          <tr>
+            <th width="20%"><p>Release Date</p></th>
+            <th width="20%"><p>Cardano Node Version</p></th>
+            <th width="20%"><p>Cardano CLI Version</p></th>
+            <th width="20%"><p>GHC Version</p></th>
+            <th width="20%"><p>Cabal Version</p></th>
+          </tr>
+          <tr>
+            <td class="center"><p>July 2025</p></td>
+            <td class="center"><p>10.5.1</p></td>
+            <td class="center"><p>10.11.0.0</p></td>
+            <td class="center"><p>9.6.7</p></td>
+            <td class="center"><p>3.12.1.0</p></td>
+          </tr>
+        </tbody>
+      </table>
 
-<!-- <HTMLContent /> -->
+      <p class="pi">To install GHC and Cabal:</p>
 
-To compile Cardano Node using source code, you must install the Glasgow Haskell Compiler (GHC) and Cabal for building applications and libraries.
-
-For each Cardano Node release, Input-Output recommends compiling binaries using specific versions of GHC and Cabal. For example, refer to the [Releases](https://github.com/IntersectMBO/cardano-node/releases) page in the Cardano Node GitHub repository to determine the GHC and Cabal versions required for the current Cardano Node release. _Table 1_ lists GHC and Cabal version requirements for the current Cardano Node release.
-
-_Table 1 Current Cardano Node Versions_
-
-|     Release Date     | Cardano Node Version | Cardano CLI Version | GHC Version | Cabal Version |
-|  :----------------:  | :------------------: | :-----------------: | :---------: | :-----------: |
-|       July 2025      |        10.5.1        |      10.11.0.0      |    9.6.7    |    3.12.1.0   |
-
-**To install GHC and Cabal:**
-
-1\. Using a terminal window on the computer hosting your block-producing node, to install the latest versions of all previously installed packages assuming the answer `yes` to all prompts, type:
-
-```bash
-sudo apt-get update -y
-sudo apt-get upgrade -y
-```
-
-2\. To install packages and tools required for downloading and compiling Cardano Node source code, type:
-
-```bash
-sudo apt-get install autoconf automake build-essential curl g++ git jq libffi-dev libgmp-dev libncurses-dev libssl-dev libsystemd-dev libtool make pkg-config tmux wget zlib1g-dev liblmdb-dev -y
-```
-
-:::info
-To list all packages installed on your computer, type `apt list --installed`
-:::
-
-3\. To use the GHCup installer to install GHC and Cabal, type:
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-```
-
-4\. During installation, when prompted:\
-i. Press ENTER to proceed.\
-ii. To prepend the required PATH variable to `$HOME/.bashrc`, type `P`\
-iii. When prompted to install haskell-language-server (HLS), type `N`\
-iv. When prompted to install stack, type `N`\
-v. Press ENTER to proceed.
-
-:::info
-The `$HOME` environment variable or `~` tilde prefix refers to the home directory associated with your login name. The `.bashrc` file is a Bash script that runs each time you open a new terminal window. In the `.bashrc` file, you can add any command that you may type at the command prompt. Use `.bashrc` to set up the shell as needed for your environment.
-:::
-
-5\. When GHCup finishes installing GHC and Cabal, type the following commands to reload your shell profile, and then confirm that GHCup installed correctly:
-
-```bash
-source $HOME/.bashrc
-ghcup --version
-```
-
-:::info
-If GHCup is installed correctly, then the `ghcup --version` command returns `The GHCup Haskell installer, version <GHCupVersionNumber>` where `<GHCupVersionNumber>` is the version number of GHCup installed on your computer.
-:::
-
-6\. To set the Glasgow Haskell Compiler to the version required for compiling the current Cardano Node release, type the following commands where `<GHCVersionNumber>` is the GHC version that you need to install and use:
-
-```bash
-ghcup install ghc <GHCVersionNumber>
+      <ol>
+        <li>Using a terminal window on the computer designated to host your block-producing node, to install the latest versions of all previously installed packages assuming the answer <code>yes</code> to all prompts, type:
+          <CodeBlock language="bash">
+            {`sudo apt-get update -y
+sudo apt-get upgrade -y`}
+          </CodeBlock>
+        </li>
+        <li>To install packages and tools required for downloading and compiling Cardano Node source code, type:
+          <CodeBlock language="bash">
+            {`sudo apt-get install autoconf automake build-essential curl g++ git jq libffi-dev libgmp-dev libncurses-dev libssl-dev libsystemd-dev libtool make pkg-config tmux wget zlib1g-dev liblmdb-dev -y`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">To list all packages installed on your computer, type <code>apt list --installed</code></p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To use the GHCup installer to install GHC and Cabal, type:
+          <CodeBlock language="bash">
+            {`curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh`}
+          </CodeBlock>
+        </li>
+        <li>During the installation, when prompted:
+          <ol>
+            <li>Press ENTER to proceed.</li>
+            <li>To prepend the required PATH variable to <code>$HOME/.bashrc</code>, type <b>P</b>
+            <table class="box">
+              <tbody>
+                <tr>
+                  <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                  <td class="boxText"><p class="boxText">The <code>$HOME</code> environment variable or <code>~</code> tilde prefix refers to the home directory associated with your user name. The <code>.bashrc</code> file is a Bash script that runs each time you open a new terminal window. In the <code>.bashrc</code> file, you can add any command that you may type at the command prompt. Use <code>.bashrc</code> to set up the shell as needed for your environment.</p></td>
+                </tr>
+              </tbody>
+            </table></li>
+            <li>When prompted to install haskell-language-server (HLS), type <b>N</b></li>
+            <li>When prompted to install stack, type <b>N</b></li>
+            <li>Press ENTER to proceed.</li>
+          </ol>
+        </li>
+        <li>When GHCup finishes installing GHC and Cabal, type the following commands to reload your shell profile, and then confirm that GHCup installed correctly:
+          <CodeBlock language="bash">
+            {`source $HOME/.bashrc
+ghcup --version`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">If GHCup is installed correctly, then the <code>ghcup --version</code> command displays <code>The GHCup Haskell installer, version &lt;GHCupVersionNumber&gt;</code> where <code>&lt;GHCupVersionNumber&gt;</code> is the version number of GHCup installed on your computer.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To set the Glasgow Haskell Compiler to the version required for compiling the current Cardano Node release, type the following commands where <code>&lt;GHCVersionNumber&gt;</code> is the GHC version that you need to install and use:
+          <CodeBlock language="bash">
+            {`ghcup install ghc <GHCVersionNumber>
 ghcup set ghc <GHCVersionNumber>
-ghc --version
-```
-
-7\. To set Cabal to the version required for compiling the current Cardano Node release, type the following commands where `<CabalVersionNumber>` is the Cabal version that you need to install and use:
-
-```bash
-ghcup install cabal <CabalVersionNumber>
+ghc --version`}
+          </CodeBlock>
+        </li>
+        <li>To set Cabal to the version required for compiling the current Cardano Node release, type the following commands where <code>&lt;CabalVersionNumber&gt;</code> is the Cabal version that you need to install and use:
+          <CodeBlock language="bash">
+            {`ghcup install cabal <CabalVersionNumber>
 ghcup set cabal <CabalVersionNumber>
-cabal --version
-```
-
-8\. To create a working directory to store source code and builds related to Cardano Node, type:
-
-```bash
-mkdir $HOME/git
-cd $HOME/git
-```
-
-9\. Cardano Node requires a release of the [Sodium](https://github.com/IntersectMBO/libsodium) cryptographic library that IOHK maintains. To download, compile and install the Sodium release that Cardano Node requires, type:
-
-```bash
-git clone https://github.com/IntersectMBO/libsodium
+cabal --version`}
+          </CodeBlock>
+        </li>
+        <li>To create a working directory to store source code and builds related to Cardano Node, type:
+          <CodeBlock language="bash">
+            {`mkdir $HOME/git
+cd $HOME/git`}
+          </CodeBlock>
+        </li>
+        <li>Cardano Node requires a release of the <a href="https://github.com/IntersectMBO/libsodium" target="_blank">Sodium</a> cryptographic library that IOHK maintains. To download, compile and install the Sodium release that Cardano Node requires, type:
+          <CodeBlock language="bash">
+            {`git clone https://github.com/IntersectMBO/libsodium
 cd libsodium
 git checkout dbb48cc
 ./autogen.sh
 ./configure
 make
-sudo make install
-```
+sudo make install`}
+          </CodeBlock>
 
-:::info
+          {/* <!-- :::info
 If you are using the **Debian** GNU/Linux distribution, then you may need to type the following command to create a symbolic link:
 
 ```bash
@@ -125,19 +140,24 @@ If you are using the **CentOS** Linux distribution on Amazon Web Services, then 
 
 ```bash
 sudo ldconfig
-```
+``` --> */}
 
-If you are using Ubuntu on a **Raspberry Pi 4**, then type the following command to resolve a `cannot find -lnuma` error message when compiling `libsodium`:
-
-```bash
-sudo apt-get install libnuma-dev
-```
-:::
-
-10\. To download, compile and install `libsecp256k1`, type:
-
-```bash
-cd $HOME/git
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">To resolve a <code>cannot find -lnuma</code> error message when compiling Sodium, type:
+                  <CodeBlock language="bash">
+                    {`sudo apt-get install libnuma-dev`}
+                  </CodeBlock>
+                </p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To download, compile and install <code>libsecp256k1</code>, type:
+          <CodeBlock language="bash">
+            {`cd $HOME/git
 git clone --depth 1 --branch v0.3.2 https://github.com/bitcoin-core/secp256k1
 cd secp256k1
 ./autogen.sh
@@ -145,13 +165,12 @@ cd secp256k1
 make
 make check
 sudo make install
-sudo ldconfig
-```
-
-11\. To download and install the `blst` library, type:
-
-```bash
-cd $HOME/git
+sudo ldconfig`}
+          </CodeBlock>
+        </li>
+        <li>To download and install the <code>blst</code> library, type:
+          <CodeBlock language="bash">
+            {`cd $HOME/git
 git clone https://github.com/supranational/blst
 cd blst
 git checkout v0.3.11
@@ -172,14 +191,12 @@ EOF
 sudo cp libblst.pc /usr/local/lib/pkgconfig/
 sudo cp bindings/blst_aux.h bindings/blst.h bindings/blst.hpp /usr/local/include/
 sudo cp libblst.a /usr/local/lib
-sudo chmod u=rw,go=r /usr/local/{lib/{libblst.a,pkgconfig/libblst.pc},include/{blst.{h,hpp},blst_aux.h}}
-```
-<!-- Source: https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md-->
-
-12\. Using a text editor, open the `$HOME/.bashrc` file, and then add the following lines at the end of the file:
-
-```bash
-# Set environment variables so that the compiler finds libsodium, libsecp256k1 and blst libraries on your computer
+sudo chmod u=rw,go=r /usr/local/{lib/{libblst.a,pkgconfig/libblst.pc},include/{blst.{h,hpp},blst_aux.h}}`}
+          </CodeBlock>
+        </li>
+        <li>Using a text editor, open the <code>$HOME/.bashrc</code> file, and then add the following lines at the end of the file:
+          <CodeBlock language="bash">
+            {`# Set environment variables so that the compiler finds libsodium, libsecp256k1 and blst libraries on your computer
 export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
 # Set an environment variable indicating the file path to configuration files and scripts
@@ -188,25 +205,36 @@ export NODE_HOME="$HOME/cardano-node"
 # Set an environment variable indicating the Cardano network cluster where your node runs
 export NODE_CONFIG="mainnet"
 # Set an environment variable indicating where the Cardano node socket file is located
-export CARDANO_NODE_SOCKET_PATH="$NODE_HOME/db/socket"
-```
+export CARDANO_NODE_SOCKET_PATH="$NODE_HOME/db/socket"`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">If you plan to use Cardano Node in a Testnet environment instead of Mainnet, then replace the line <code>export NODE_CONFIG="mainnet"</code> in your <code>$HOME/.bashrc</code> file with <code>export NODE_CONFIG="testnet"</code> Also, when working through the <i>How to Set Up a Cardano Stake Pool</i> guide, replace every instance of the command option <code>&#8209;&#8209;mainnet</code> with <code>&#8209;&#8209;testnet&#8209;magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use. For details on available Testnets, see <a href="https://book.world.dev.cardano.org/environments.html" target="_blank">Environments</a>.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>Save and close the <code>$HOME/.bashrc</code> file.</li>
+        <li>To create the folder set for the <code>NODE_HOME</code> environment variable in your <code>$HOME/.bashrc</code> file, type:
+          <CodeBlock language="bash">
+            {`mkdir $HOME/cardano-node`}
+          </CodeBlock>
+        </li>
+        <li>To reload your shell profile, type:
+          <CodeBlock language="bash">
+            {`source $HOME/.bashrc`}
+          </CodeBlock>
+        </li>
+        <li>On each computer hosting a relay or block-producing node in your stake pool configuration, repeat steps 1 to 15</li>
+      </ol>
+    
+    </div>
+  
+  );
 
-:::info
-If you plan to use Cardano Node in a Testnet environment instead of Mainnet, then replace the line `export NODE_CONFIG="mainnet"` in your `$HOME/.bashrc` file with `export NODE_CONFIG="testnet"` Also, when working through the _How to Set Up a Cardano Stake Pool_ guide, replace every instance of the command option `--mainnet` with `--testnet-magic <MagicNumber>` where `<MagicNumber>` is the network magic number for the Testnet that you use. For details on available Testnets, see [Environments](https://book.world.dev.cardano.org/environments.html).
-:::
+}
 
-13\. Save and close the `$HOME/.bashrc` file.
+<HTMLContent />
 
-14\. To create the folder set for the `NODE_HOME` environment variable in your `$HOME/.bashrc` file, type:
-
-```bash
-mkdir $HOME/cardano-node
-```
-
-15\. To reload your shell profile, type:
-
-```bash
-source $HOME/.bashrc
-```
-
-16\. On each computer hosting a relay or block-producing node for your stake pool, repeat steps 1 to 15
