@@ -127,6 +127,7 @@
 		"description": "Template for new topics using HTML in the CoinCashew Guide Web site created using Docusaurus"
 	},
 
+	/*
 	"CoinCashew Guide Multiline String": {
 		"prefix": "Code Block Constant",
 		"body": [
@@ -147,31 +148,41 @@
 		],
 		"description": "Snippet for a code block. See also the Code Block Constant snippet."
 	},
+	*/
 
-	"CoinCashew Guide Import Text File":{
-		"prefix": "Text File Import",
+	"CoinCashew Guide Import Raw Text File": {
+		"prefix": "Raw Text File Import",
 		"body": [
 			"import CodeBlock from '@theme/CodeBlock';",
 			"import $1 from '!!raw-loader!/txt/$2';"
 		],
-		"description": "Snippet for importing a text file"
+		"description": "Snippet for importing a raw text file, including a code block"
 	},
 
-		"CoinCashew Guide Imported Text":{
-		"prefix": "Text File",
+		"CoinCashew Guide Code Block": {
+		"prefix": "Code Block",
 		"body": [
-			"<CodeBlock>",
-			"\t{$1}",
+			"<CodeBlock language=\"bash\">",
+			"\t{`$2`}",
 			"</CodeBlock>"
 		],
-		"description": "Snippet for inserting text imported using a file. See also the Text File Import snippet."
+		"description": "Snippet for inserting a code block, including an imported text file. See also the Text File Import snippet."
+	},
+
+	"CoinCashew Guide Placeholder String Manipulation": {
+		"prefix": "Placeholder String Manipulation",
+		"body": [
+			"var $1 = $2.replace(\"{{$3}}\", \"$4\");"
+		],
+		"description": "Snippet for replacing placeholders in strings with values"
+
 	},
 
 	"CoinCashew Guide Figure": {
 		"prefix": "Figure",
 		"body": [
 			"<figure>",
-			"\t<img src=\"img/$1<ImageFileName>\" />",
+			"\t<img src=\"img/$1\" />",
 			"\t<figcaption>Figure $2</figcaption>",
 			"</figure>"
 		],
@@ -185,12 +196,12 @@
 			"\t<caption>Table 1 $1</caption>",
 			"\t<tbody>",
 			"\t\t<tr>",
-			"\t\t\t<th width=\"50%\"><p>$2Column 1 Heading</p></th>",
-			"\t\t\t<th width=\"50%\"><p>$3Column 2 Heading</p></th>",
+			"\t\t\t<th width=\"50%\"><p>$2</p></th>",
+			"\t\t\t<th width=\"50%\"><p>$3</p></th>",
 			"\t\t</tr>",
 			"\t\t<tr>",
-			"\t\t\t<td class=\"center\"><p>$4Row 1 Column 1 Text</p></td>",
-			"\t\t\t<td class=\"center\"><p>$5Row 1 Column 2 Text</p></td>",
+			"\t\t\t<td class=\"center\"><p>$4</p></td>",
+			"\t\t\t<td class=\"center\"><p>$5</p></td>",
 			"\t\t</tr>",
 			"\t</tbody>",
 			"</table>"
@@ -330,6 +341,22 @@
 			"</ul>"
 		],
 		"description": "Snippet for inserting a single-step procedure"
+	},
+
+	"Austral Sign": {
+		"prefix": "ADA Symbol",
+		"body": [
+			"₳$1"
+		],
+		"description": "Snippet for inserting ₳"
+	},
+
+	"JSX Comment": {
+		"prefix": "Comment",
+		"body": [
+			"{/* <!-- $1 --> */}"
+		],
+		"description": "Snippet for inserting a comment in JSX"
 	}
 
 }
