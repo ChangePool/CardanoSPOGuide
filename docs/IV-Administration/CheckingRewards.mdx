@@ -4,7 +4,7 @@ sidebar_label: "Checking Stake Pool Rewards"
 slug: /CheckingRewards
 hide_title: false
 hide_table_of_contents: true
-sidebar_position: 5
+sidebar_position: 20
 description: ""
 ---
 
@@ -24,7 +24,7 @@ export function HTMLContent() {
 
       <TestnetNote />
 
-      <p class="pi">To display the current stake pool and representative delegations, as well as the reward balance for a stake address:</p>
+      <p class="pi">To display the current stake pool and vote delegations, as well as the reward balance for a stake address:</p>
       
       <ul class="ss">
         <li>Using a terminal window on the block-producing node in your stake pool configuration, type:
@@ -38,16 +38,28 @@ export function HTMLContent() {
         </li>
       </ul>
 
+      <p>The <code>query stake-address-info</code> command returns a JSON object. For example:</p>
+
+      <CodeBlock language="json">
+        {`[
+  {
+    "address": "stake_test1uz2euqqvaf0v75yhwayefqx0wu0g7jyd0grjzhvkgcmv3ag5avecv",
+    "delegationDeposit": 2000000,
+    "rewardAccountBalance": 39019220657,
+    "stakeDelegation": "pool1ja5uhsx8cmda7x6sqyzrggj07qtncx22lxef398u3ayusfex629",
+    "voteDelegation": null
+  }
+]`}
+      </CodeBlock>
+
       <table class="box">
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">For details on representative delegations, see the topic <a href="/RepDelegation">Delegating to a Representative</a>.</p></td>
+            <td class="boxText"><p class="boxText">For details on vote delegations, see the topic <a href="/VoteDelegation">Delegating to a Representative</a>.</p></td>
           </tr>
         </tbody>
       </table>
-
-      
 
     </div>
   );

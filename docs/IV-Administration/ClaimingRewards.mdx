@@ -4,7 +4,7 @@ sidebar_label: "Claiming Stake Pool Rewards"
 slug: /ClaimingRewards
 hide_title: false
 hide_table_of_contents: false
-sidebar_position: 10
+sidebar_position: 25
 description: ""
 ---
 
@@ -16,8 +16,200 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
+      {/* <!-- The query stake-address-info command calls delegations to representatives vote delegations. For more details, see the topic Checking Stake Pool Rewards. --> */}
+
+      <p>Staking rewards and any new ADA in a wallet are automatically included in the staking balance for the account. You do not need to claim staking rewards. However, you may claim rewards that you earn for operating or delegating to a stake pool at any time.</p>
+
+      <p class="pi">To claim rewards that the stake pool you operate earns:</p>
+
+      <ol>
+        <li></li>
+      </ol>
+
+      
+
+
+
     </div>
   );
 }
 
 <HTMLContent />
+
+Let's walk through an example to claim your stake pools rewards.
+
+:::info
+Rewards are accumulated in the `stake.addr` address.
+:::
+
+First, you need to ensure that your `stake.addr` is [Delegating to a Representative](/VoteDelegation).
+
+Second, find the **tip** of the blockchain to set the **invalid-hereafter** parameter properly.
+
+On the block producer, type:
+
+```bash
+currentSlot=$(cardano-cli conway query tip --mainnet | jq -r '.slot')
+echo Current Slot: $currentSlot
+```
+
+Set the amount to send in lovelaces. :sparkles: Remember **1 ADA** = **1,000,000 lovelaces.**
+
+On the block producer, type:
+
+```bash
+rewardBalance=$(cardano-cli conway query stake-address-info \
+    --mainnet \
+    --address $(cat stake.addr) | jq -r ".[0].rewardAccountBalance")
+echo rewardBalance: $rewardBalance
+```
+
+Set the destination address which is where you're moving your reward to. This address must have a positive balance to pay for transaction fees.
+
+On the block producer, type:
+
+```bash
+destinationAddress=$(cat $NODE_HOME/payment.addr)
+echo destinationAddress: $destinationAddress
+```
+
+Retrieve the UTXOs available for your payment address, calculate the balance and build the withdrawal string.
+
+On the block producer, type:
+
+```bash
+# Retrieve the list of UTXOs available for your payment address
+utxo_json=$(cardano-cli conway query utxo --output-json --address $(cat $NODE_HOME/payment.addr) --mainnet)
+
+# Initialize variables
+tx_in=""
+total_balance=0
+txcnt=0
+
+# Loop through the list of UTXOs
+while read -r utxo; do
+    # Retrieve the values for the current UTXO
+    values=$(jq -r --arg k "${utxo}" '.[$k]' <<< "${utxo_json}")
+    # Retrieve datum associated with the UTXO
+    datum=$(jq -r '.datum' <<< "${values}")
+    # Retrieve the reference script associated with the UTXO
+    script=$(jq -r '.referenceScript' <<< "${values}")
+	# If limits on spending the UTXO may exist, then skip the UTXO
+    if [[ ${datum} == 'null' && ${script} == 'null' ]]
+    then
+        hash=${utxo%%#*}
+        idx=${utxo#*#}
+        utxo_balance=$(jq -r '.value.lovelace' <<< "${values}")
+        total_balance=$((${total_balance}+${utxo_balance}))
+        echo "TxHash: ${hash}#${idx}"
+        echo "ADA: ${utxo_balance}"
+        tx_in="${tx_in} --tx-in ${hash}#${idx}"
+		txcnt=$((txcnt + 1))
+    fi
+done <<< "$(jq -r 'keys[]' <<< "${utxo_json}")"
+
+echo
+echo "Total available ADA balance: ${total_balance}"
+echo "Number of UTXOs: ${txcnt}"
+echo "Final --tx-in string:${tx_in}"
+
+withdrawalString="$(cat stake.addr)+${rewardBalance}"
+```
+
+Run the build-raw transaction command.
+
+On the block producer, type:
+
+```bash
+cardano-cli conway transaction build-raw \
+    ${tx_in} \
+    --tx-out $(cat $NODE_HOME/payment.addr)+$(( ${total_balance} + ${rewardBalance} )) \
+    --invalid-hereafter $(( ${currentSlot} + 10000 )) \
+    --fee 200000 \
+    --withdrawal ${withdrawalString} \
+    --out-file tx.tmp
+```
+
+Calculate the current minimum fee:
+
+On the block-producing node, type:
+
+```bash
+fee=$(cardano-cli conway transaction calculate-min-fee \
+    --tx-body-file tx.tmp \
+    --tx-in-count ${txcnt} \
+    --tx-out-count 1 \
+    --mainnet \
+    --witness-count 2 \
+    --byron-witness-count 0 \
+    --protocol-params-file params.json | jq -r '.fee')
+echo fee: $fee
+```
+
+Calculate your change output.
+
+On the block-producing node, type:
+
+```bash
+txOut=$((${total_balance}-${fee}+${rewardBalance}))
+echo Change Output: ${txOut}
+```
+
+Build your transaction.
+
+On the block-producing node, type:
+
+```bash
+cardano-cli conway transaction build-raw \
+    ${tx_in} \
+    --tx-out $(cat $NODE_HOME/payment.addr)+${txOut} \
+    --invalid-hereafter $(( ${currentSlot} + 10000 )) \
+    --fee ${fee} \
+    --withdrawal ${withdrawalString} \
+    --out-file tx.raw
+```
+
+Copy **tx.raw** to your **cold environment.**
+
+Sign the transaction with both the payment and stake secret keys.
+
+On the air-gapped, offline computer, type:
+
+```bash
+cardano-cli conway transaction sign \
+    --tx-body-file tx.raw \
+    --signing-key-file payment.skey \
+    --signing-key-file stake.skey \
+    --mainnet \
+    --out-file tx.signed
+```
+
+Copy **tx.signed** to your **hot environment.**
+
+Send the signed transaction.
+
+On the block producer, type:
+
+```bash
+cardano-cli conway transaction submit \
+    --tx-file tx.signed \
+    --mainnet
+```
+
+Check if the funds arrived.
+
+On the block producer, type:
+
+```bash
+cardano-cli conway query utxo \
+    --address ${destinationAddress} \
+    --mainnet
+```
+
+You should see output similar to this showing your updated Lovelace balance with rewards.
+
+```
+                           TxHash                                 TxIx        Lovelace
+----------------------------------------------------------------------------------------
+100322a39d02c2ead....  
+```
