@@ -13,6 +13,7 @@ import React from 'react';
 import TestnetNote from '@site/src/components/TestnetNote.js';
 
 import CodeBlock from '@theme/CodeBlock';
+import queryStakeAddressInfo from '!!raw-loader!/txt/queryStakeAddressInfo.sh';
 
 export function HTMLContent() {
   return (
@@ -29,9 +30,7 @@ export function HTMLContent() {
       <ul class="ss">
         <li>Using a terminal window on the block-producing node in your stake pool configuration, type:
           <CodeBlock language="bash">
-            {`cardano-cli conway query stake-address-info \\
- --address $(cat $NODE_HOME/stake.addr) \\
- --mainnet`}
+            {queryStakeAddressInfo}
           </CodeBlock>
           <center><strong>OR</strong></center>
           Search for the stake address using a <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>.

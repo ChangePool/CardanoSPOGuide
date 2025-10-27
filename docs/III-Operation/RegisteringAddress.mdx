@@ -89,7 +89,7 @@ echo stakeAddressDeposit: $\{stakeAddressDeposit\}`}
         <li>To build a draft transaction for calculating the transaction fee, type:
           <CodeBlock language="bash">
             {`cardano-cli conway transaction build-raw \\
-$\{tx_in\} \\
+  $\{tx_in\} \\
   --tx-out $(cat $NODE_HOME/payment.addr)+$(( $\{total_balance\} - 200000 - $\{stakeAddressDeposit\} )) \\
   --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
   --fee 200000 \\
@@ -135,7 +135,7 @@ echo Change: $\{txOut\}`}
         <li>To build the transaction, type:
           <CodeBlock language="bash">
             {`cardano-cli conway transaction build-raw \\
-$\{tx_in\} \\
+  $\{tx_in\} \\
   --tx-out $(cat $NODE_HOME/payment.addr)+$\{txOut\} \\
   --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
   --fee $\{fee\} \\
