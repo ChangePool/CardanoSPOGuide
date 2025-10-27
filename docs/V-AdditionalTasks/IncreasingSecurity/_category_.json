@@ -1,0 +1,12 @@
+{
+  "label": "Increasing Security",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Increasing Security",
+    "slug": "/IncreasingSecurity",
+    "description": "The Increasing Security section includes topics related to implementing third-party software to further improve the security of a stake pool that you operate:"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "label": "Creating Transactions",
+  "position": 15,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Creating Transactions",
+    "slug": "/CreatingTransactions",
+    "description": "The Creating Transactions section includes topics explaining how to prepare and submit various types of transaction using Cardano CLI:"
+  }
+}
+
+

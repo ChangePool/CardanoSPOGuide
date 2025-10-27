@@ -1,0 +1,12 @@
+{
+  "label": "PART V - ADDITIONAL TASKS",
+  "position": 65,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Part V - Additional Tasks",
+    "slug": "/V",
+    "description": "Part V includes the following sections explaining additional procedures to improve and simplify managing your stake pool:"
+  }
+}

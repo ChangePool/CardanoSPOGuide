@@ -7,6 +7,6 @@
     "type": "generated-index",
     "title": "Part I - Installation",
     "slug": "/I",
-    "description": "Part I includes the following topics describing how to secure the Linux computers hosting your Cardano stake pool, as well as how to install Cardano Node software and dependent software packages:"
+    "description": "Part I includes the following topics describing how to secure the Linux computers hosting the Cardano stake pool that you operate, as well as how to install Cardano Node software and dependent software packages:"
   }
 }

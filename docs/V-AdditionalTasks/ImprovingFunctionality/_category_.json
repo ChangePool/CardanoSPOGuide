@@ -1,0 +1,14 @@
+{
+  "label": "Improving Functionality",
+  "position": 10,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Improving Functionality",
+    "slug": "/ImprovingFunctionality",
+    "description": "The Improving Functionality section includes topics explaining how to configure Cardano Node instances in a stake pool configuration:"
+  }
+}
+
+

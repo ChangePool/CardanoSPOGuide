@@ -1,0 +1,12 @@
+{
+  "label": "Starting Over",
+  "position": 20,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Starting Over",
+    "slug": "/StartingOver",
+    "description": "The Starting Over section includes topics related to refreshing a Cardano Node instance that stops working:"
+  }
+}
