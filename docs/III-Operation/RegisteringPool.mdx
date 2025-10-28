@@ -1,6 +1,6 @@
 ---
-title: "Registering Your Stake Pool"
-sidebar_label: "Registering Your Stake Pool"
+title: "Registering a Stake Pool"
+sidebar_label: "Registering a Stake Pool"
 slug: /RegisteringPool
 hide_title: false
 hide_table_of_contents: true
@@ -38,8 +38,8 @@ export function HTMLContent() {
       <p>To create a stake pool registration certificate, you need to plan and prepare the following details:</p>
 
       <ul>
-        <li>Optional metadata that helps ADA holders seeking to delegate learn about your stake pool</li>
-        <li>Optionally, the URL where you publish the file containing metadata for your stake pool online</li>
+        <li>Optional metadata that helps the Cardano community learn about your stake pool</li>
+        <li>Optionally, the URLs where you publish the files containing metadata for your stake pool online</li>
         <li>The domain name or static IP address of the relay node(s) in your stake pool configuration, as well as the port number where the Cardano Node instance on each relay listens</li>
         <li>The amount of pledge to commit</li>
         <li>The fixed and variable fees that you, as the stake pool operator, earn in every epoch when the pool successfully produces a block</li>
@@ -53,31 +53,87 @@ export function HTMLContent() {
 
       <h1>Creating Metadata</h1>
 
-      <p>You store the metadata for your stake pool off chain in a file using JSON format. Typically, metadata includes:</p>
+      <p>If you choose to create metadata for a stake pool that you operate, then you publish the metadata on the Internet—off the Cardano blockchain—in files using JSON format, as well as PNG image format. Typically, metadata includes:</p>
 
       <ul>
-        <li><b>Name</b>—The official name of your stake pool, up to 50 characters in length</li>
-        <li><b>Description</b>—A brief explanation of the purpose of your stake pool, up to 255 characters in length</li>
-        <li><b>Ticker</b>—A short, unique identifier for your stake pool, 3 to 5 characters in length and using only the characters A to Z and 0 to 9</li>
-        <li><b>Home Page</b>—The URL of the official Web site for your stake pool</li>
+        <li><b>Name</b>—The official name of the stake pool that you operate, up to 50 characters in length</li>
+        <li><b>Description</b>—A brief explanation of the purpose of the stake pool, up to 255 characters in length</li>
+        <li><b>Ticker</b>—A short, unique identifier for the stake pool, 3 to 5 characters in length and using only the characters A to Z and 0 to 9</li>
+        <li><b>Home Page</b>—The URL of the official Web site for the stake pool</li>
+        <li><b>Logo</b>—Two image files using PNG format containing a logo for the stake pool, having dimensions of 64 x 64 and 250 x 250 pixels respectively</li>
+        <li><b>Additional Details</b>—Further background on the stake pool and operator, as well as social media contact information</li>
       </ul>
 
-      <p class="pi">To create metadata for your stake pool:</p>
+      <p class="pi">To create metadata for a stake pool:</p>
 
       <ol>
-        <li>Using a text editor on the block-producing node in your stake pool configuration, create a new file named <code>$NODE_HOME/metadata.json</code></li>
-        <li>In the <code>metadata.json</code> file, add the following lines where <code>&lt;PoolName&gt;</code> is the name of your stake pool, <code>&lt;PoolDescription&gt;</code> briefly explains your stake pool, <code>&lt;PoolTicker&gt;</code> is the short identifier for the pool and <code>&lt;PoolWebSite&gt;</code> is the URL for the pool Web site:
+        <li>Create a logo for the stake pool, and then save the logo using PNG format in two files having the dimensions 64 x 64 pixels and 250 x 250 pixels respectively.</li>
+        <li>Using a text editor on the block-producing node in your stake pool configuration, create a new file named <code>$NODE_HOME/metadata-extended.json</code></li>
+        <li>In the <code>metadata-extended.json</code> file, add the following lines where <code>&lt;SmallIconURL&gt;</code> is the URL where you plan to publish the logo image having dimensions 64 x 64 pixels on the Internet; <code>&lt;LargeIconURL&gt;</code> is the URL where you plan to publish the logo image having dimensions 250 x 250 pixels on the Internet; <code>&lt;City&gt;</code> is the name of the city or town where the stake pool operates; and, <code>&lt;Country&gt;</code> is the name of the country where the stake pool operates:
+          <CodeBlock language="bash">
+            {`{
+  "info": {
+    "url_png_icon_64x64": "<SmallIconURL>",
+    "url_png_logo": "<LargeIconURL>",
+    "location": "<City>, <Country",
+    "social": {
+      "instagram_handle": "",
+      "reddit_handle": "",
+      "twitter_handle": "",
+      "telegram_handle": "",
+      "facebook_handle": "",
+      "youtube_handle": "",
+      "twitch_handle": "",
+      "discord_handle": "",
+      "github_handle": ""
+    },
+    "company": {
+      "name": "",
+      "addr": "",
+      "city": "",
+      "country": "",
+      "company_id": "",
+      "vat_id": ""
+    },
+    "about": {
+      "me": "",
+      "server": "",
+      "company": ""
+    },
+    "rss": ""
+  },
+  "telegram-admin-handle": [
+    ""
+  ],
+  "my-pool-ids": {
+    "0": "<HexPoolID>"
+  }
+}`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">All metadata values are optional. <code>&lt;HexPoolID&gt;</code> is a unique stake pool ID available after registering a pool. The topic <a href="/VerifyingRegistration">Verifying Stake Pool Registration</a> shows you how to retrieve a stake pool ID. For now, leave the value empty. Complete available values in the <code>metadata-extended.json</code> file as needed. In the future, third parties may implement functionality supporting new keys to include in the <code>metadata-extended.json</code> file.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>Save and close the <code>metadata-extended.json</code> file.</li>
+        <li>Create a new text file named <code>$NODE_HOME/metadata.json</code></li>
+        <li>In the <code>metadata.json</code> file, add the following lines where <code>&lt;PoolName&gt;</code> is the name of the stake pool; <code>&lt;PoolDescription&gt;</code> briefly explains the stake pool; <code>&lt;PoolTicker&gt;</code> is the short identifier for the pool; <code>&lt;PoolWebSite&gt;</code> is the URL for the pool Web site; and, <code>&lt;ExtendedMetadataURL&gt;</code> is the URL where you plan to publish the <code>metadata-extended.json</code> file that you created in steps 2 to 4 on the Internet:
           <CodeBlock language="json">
             {`\{
   "name": "<PoolName>",
   "description": "<PoolDescription>",
   "ticker": "<PoolTicker>",
-  "homepage": "<PoolWebSite>"
+  "homepage": "<PoolWebSite>",
+  "extended": "<ExtendedMetadataURL>"
 \}`}
           </CodeBlock>
         </li>
         <li>Save and close the <code>metadata.json</code> file.</li>
-        <li>Publish the <code>metadata.json</code> file that you created in step 2 on the Internet. For example, host the file using the official Web site for your stake pool. <a href="/GitHubFileHosting">Hosting Files Using GitHub</a> is another option.
+        <li>Publish the <code>metadata.json</code> and <code>metadata-extended.json</code> files, as well as the two PNG image files containing the stake pool logo, on the Internet at the URLs that you specified in the metadata. For example, host the files using the official Web site for your stake pool. <a href="/GitHubFileHosting">Hosting Files Using GitHub</a> is another option.
           <table class="box">
             <tbody>
               <tr>
@@ -87,14 +143,15 @@ export function HTMLContent() {
             </tbody>
           </table>
         </li>
-        <li>To compare the unique hash of the <code>metadata.json</code> file that you published in step 4 with the hash of the local copy of the file, type the following commands using a terminal window where <code>&lt;MetadataURL&gt;</code> is the URL of the file that you published:
+        <li>To compare the unique hash of the <code>metadata.json</code> file that you published in step 8 with the hash of the local copy of the file, type the following commands using a terminal window where <code>&lt;MetadataURL&gt;</code> is the URL of the file that you published on the Internet:
           <CodeBlock language="bash">
-            {`cardano-cli conway stake-pool metadata-hash --pool-metadata-file metadata.json > metadata.hash
+            {`cd $NODE_HOME
+cardano-cli conway stake-pool metadata-hash --pool-metadata-file metadata.json > metadata.hash
 cardano-cli conway stake-pool metadata-hash --pool-metadata-file <(curl -k -s -L <MetadataURL>) > metadataOnline.hash
 diff -s metadata.hash metadataOnline.hash`}
           </CodeBlock>
         </li>
-        <li>If the hashes that you compare in step 5 are not identical, then ensure that the <code>metadata.json</code> file you published is identical to the local copy of the file, and then repeat steps 4 to 5 until the hashes are identical.
+        <li>If the hashes that you compare in step 9 are not identical, then ensure that the <code>metadata.json</code> file you published is identical to the local copy of the file, and then repeat steps 8 to 9 until the hashes are identical.
         <table class="box">
           <tbody>
             <tr>
@@ -142,7 +199,7 @@ echo minPoolCost: $\{minPoolCost\}`}
       <p class="pi">To generate a stake pool registration certificate:</p>
       
       <ul class="ss">
-        <li>Using a terminal window on the computer designated as the block-producing node in your stake pool configuration, type the following command where <code>&lt;PledgeAmount&gt;</code> is the amount of pledge to commit in Lovelace; <code>&lt;VariableFee&gt;</code> is a rational number between 0 and 1 representing the percent of fees that the stake pool operator earns after the fixed fee is deducted; <code>&lt;RelayDomainName&gt;</code> is the domain name for a relay node in your stake pool configuration without the HTTP(S) prefix; and, <code>&lt;RelayPort&gt;</code> is the port number where the relay node listens:
+        <li>Using a terminal window on the computer designated as the block-producing node in your stake pool configuration, type the following command where <code>&lt;PledgeAmount&gt;</code> is the amount of pledge to commit in Lovelace; <code>&lt;VariableFee&gt;</code> is a rational number between 0 and 1 representing the percent of fees that the stake pool operator earns after the fixed fee is deducted; <code>&lt;RelayDomainName&gt;</code> is the domain name for a relay node in your stake pool configuration without the HTTP(S) prefix; <code>&lt;RelayPort&gt;</code> is the port number where the relay node listens; and, <code>&lt;MetadataURL&gt;</code> is the URL on the Internet where you published the <code>metadata.json</code> file:
           <CodeBlock language="bash">
             {`cardano-cli conway stake-pool registration-certificate \\
   --cold-verification-key-file $NODE_HOME/node.vkey \\
