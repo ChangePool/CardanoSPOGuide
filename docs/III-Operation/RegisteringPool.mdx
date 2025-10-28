@@ -49,8 +49,6 @@ export function HTMLContent() {
       
       <p>When registering a stake pool or updating a stake pool registration, some details may take up to two epochs to apply.</p>
 
-      <TestnetNote />
-
       <h1>Creating Metadata</h1>
 
       <p>If you choose to create metadata for a stake pool that you operate, then you publish the metadata on the Internet—off the Cardano blockchain—in files using JSON format, as well as PNG image format. Typically, metadata includes:</p>
@@ -110,6 +108,10 @@ export function HTMLContent() {
   }
 }`}
           </CodeBlock>
+          {/* <!-- For more details on extended metadata, see:
+            - https://forum.cardano.org/t/feedback-on-my-extended-metadata-json/57874
+            - https://raw.githubusercontent.com/jacky4566/CardanoYYC/refs/heads/main/extpoolmetadata.json
+            - https://forum.cardano.org/t/extended-pools-metadata-in-json/45616  --> */}
           <table class="box">
             <tbody>
               <tr>
@@ -166,14 +168,10 @@ diff -s metadata.hash metadataOnline.hash`}
 
       <p>The Cardano protocol establishes a minimum fee that you, as the stake pool operator, receive in each epoch when the stake pool you operate successfully produces one or more blocks. If needed, you can set the fixed fee that you receive to a higher value.</p>
 
-      <table class="box">
-        <tbody>
-          <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">Setting the fixed fee to a value lower than the minimum causes pool registration to fail.</p></td>
-          </tr>
-        </tbody>
-      </table>
+      <p>Setting the fixed fee to a value lower than the minimum causes pool registration to fail.</p>
+
+
+      <TestnetNote />
 
       <p class="pi">To determine the minimum fixed fee:</p>
       
@@ -199,7 +197,7 @@ echo minPoolCost: $\{minPoolCost\}`}
       <p class="pi">To generate a stake pool registration certificate:</p>
       
       <ul class="ss">
-        <li>Using a terminal window on the computer designated as the block-producing node in your stake pool configuration, type the following command where <code>&lt;PledgeAmount&gt;</code> is the amount of pledge to commit in Lovelace; <code>&lt;VariableFee&gt;</code> is a rational number between 0 and 1 representing the percent of fees that the stake pool operator earns after the fixed fee is deducted; <code>&lt;RelayDomainName&gt;</code> is the domain name for a relay node in your stake pool configuration without the HTTP(S) prefix; <code>&lt;RelayPort&gt;</code> is the port number where the relay node listens; and, <code>&lt;MetadataURL&gt;</code> is the URL on the Internet where you published the <code>metadata.json</code> file:
+        <li>Using a terminal window on the computer designated as the block-producing node in your stake pool configuration, type the following command where <code>&lt;PledgeAmount&gt;</code> is the amount of pledge to commit in Lovelace; <code>&lt;VariableFee&gt;</code> is a rational number between 0 and 1 representing the percent of fees that the stake pool operator earns after the fixed fee is deducted; <code>&lt;RelayDomainName&gt;</code> is the domain name for a relay node in your stake pool configuration without the HTTP(S) prefix; <code>&lt;RelayPort&gt;</code> is the port number where the relay node listens; and, <code>&lt;MetadataURL&gt;</code> is the URL where you published the <code>metadata.json</code> file on the Internet:
           <CodeBlock language="bash">
             {`cardano-cli conway stake-pool registration-certificate \\
   --cold-verification-key-file $NODE_HOME/node.vkey \\
