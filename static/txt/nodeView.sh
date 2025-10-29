@@ -207,6 +207,7 @@ do
   # Format numbers using the thousands separator for the current system locale
   current_epoch_num=$(printf "%'d" "${current_epoch_num}")
   slot_in_epoch=$(printf "%'d" "${slot_in_epoch}")
+  slot_num_formatted=$(printf "%'d" "${slot_num}")
   block_height=$(printf "%'d" "${block_height}")
   block_count=$(printf "%'d" "${block_count}")
 
@@ -265,7 +266,7 @@ do
   echo
   echo -e "${LightGreen}${Underline}Blockchain Ledger${NoColor}"
   echo -e "  Epoch Number: ${LightCyan}${current_epoch_num}${NoColor}         Slot in Epoch: ${LightCyan}${slot_in_epoch}${NoColor}"
-  echo -e "  Block Height: ${LightCyan}${block_height}${NoColor}    Slot: ${LightCyan}${slot_num}${NoColor}"
+  echo -e "  Block Height: ${LightCyan}${block_height}${NoColor}    Slot: ${LightCyan}${slot_num_formatted}${NoColor}"
 
   echo
   echo -e "${LightGreen}${Underline}Network Connections${NoColor}"
