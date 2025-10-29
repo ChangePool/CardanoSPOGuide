@@ -107,6 +107,7 @@ do
 
       # Query the leadership schedule for the next epoch, saving the results in a file
       /usr/local/bin/cardano-cli conway query leadership-schedule --output-json \
+        --socket-path ${node_home_folder}/db/socket \
         --cardano-mode \
         ${environment_option} \
         --genesis ${node_home_folder}/shelley-genesis.json \
