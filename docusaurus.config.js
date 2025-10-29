@@ -188,6 +188,11 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
+          {
+            href: 'https://discord.gg/dEpAVWgFNB',
+            label: 'Discord',
+            position: 'right',
+          },
         ],
       },
       // August 17, 2025 - Set the sidebar to be hideable
@@ -209,18 +214,18 @@ const config = {
           //    },
           //  ],
           //},
-          {
-            title: 'Community',
-            items: [
+          //{
+            //title: 'Community',
+            //items: [
               // August 17, 2025 - Remove the Stack Overflow link from the footer
               //{
               //  label: 'Stack Overflow',
               //  href: 'https://stackoverflow.com/questions/tagged/docusaurus',
               //},
-              {
-                label: 'Discord',
-                href: 'https://discord.gg/dEpAVWgFNB',
-              },
+              //{
+                //label: 'Discord',
+                //href: 'https://discord.gg/dEpAVWgFNB',
+              //},
               // August 17, 2025 - Remove the Twitter link from the footer
               //{
               //  label: 'X',
@@ -231,28 +236,29 @@ const config = {
               //  label: 'Reddit',
               //  href: 'https://www.reddit.com/r/coincashew/',
               //},
-            ],
-          },
-          {
+            //],
+          //},
+          //{
             //title: 'More',
-            title: 'Contribute',
-            items: [
+            //title: 'Contribute',
+            //items: [
               // August 17, 2025 - Remove the Blog link from the footer
               //{
               //  label: 'Blog',
               //  to: '/blog',
               //},
-              {
-                label: 'GitHub',
-                href: 'https://github.com/ChangePool/CardanoSPOGuide',
-              },
-            ],
-          },
+              //{
+                //label: 'GitHub',
+                //href: 'https://github.com/ChangePool/CardanoSPOGuide',
+              //},
+            //],
+          //},
         ],
         // August 17, 2025 - License the Guide in the public domain
         //copyright: `Copyright © ${new Date().getFullYear()} | Presented by CoinCashew | Built Using Docusaurus.`,
         // copyright: 'Creative Commons Attribution 4.0 International | Presented by CoinCashew | Created Using Docusaurus',
-        copyright: 'Hosted by <a href="https://coincashew.io" target="_blank">Change [CHG] Stake Pool</a> | Presented by CoinCashew | Published Using Docusaurus',
+        // copyright: 'Hosted by <a href="https://coincashew.io" target="_blank">Change [CHG] Stake Pool</a> | Presented by CoinCashew | Published Using Docusaurus',
+        copyright: 'Hosted by <a href="https://coincashew.io" target="_blank">Change [CHG] Stake Pool</a><br />Presented by CoinCashew',
       },
       prism: {
         // October 21, 2025 - Set themes for syntax highlighting
