@@ -1,6 +1,6 @@
 ---
-title: "Configuring Secure Shell"
-sidebar_label: "Configuring Secure Shell"
+title: "Configuring and Using Secure Shell"
+sidebar_label: "Configuring and Using Secure Shell"
 slug: /Hardening/SSH
 hide_title: false
 hide_table_of_contents: false
@@ -24,7 +24,7 @@ export function HTMLContent() {
 
 Secure Shell (SSH) is a cryptographic network protocol supporting robust authentication mechanisms to enable secure remote access to computers over an unsecured network. Using SSH, you can securely execute commands on a remote computer as if you are logged in locally to facilitate administration, software deployment and maintenance. Using SSH keys, you can automate tasks. You can also create secure tunnels forwarding network traffic using an encrypted SSH connection to access services on the remote computer using a private network instead of the Internet. SSH provides a secure and versatile foundation for managing and interacting with remote computers, protecting data confidentiality and integrity while enabling efficient remote operations.
 
-**To configure SSH:**
+**To install SSH:**
 
 1\. On the computer that you want to access remotely, follow the [How to Install SSH Server on Ubuntu](https://www.simplified.guide/ubuntu/install-ssh-server) tutorial.
 
@@ -107,6 +107,45 @@ sudo systemctl restart sshd
 11\. To verify that you can connect to the SSH Server using public key authentication, type the following command on the computer connecting to the SSH Server as a client where `<SSHServer>` is the IP address or domain name where the SSH Server listens and `<PortNumber>` is the port number that you set in step 7:
 ```bash
 ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber>
+```
+
+## Using Rsync
+
+Rsync is a command-line utility for synchronizing and transferring files between computers, leveraging the SSH transport mechanism for security.
+
+Transferring files securely helps you operate a Cardano stake pool, for example when creating transactions or backing up data.
+
+**To transfer files from your local computer to a remote computer:**
+
+1\. Using a terminal window on the local computer, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server on the remote computer listens and `<PortNumber>` is the port number where the remote SSH Server listens:
+```bash
+ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber>
+```
+
+2\. To copy files from a local source to a remote destination, type the following command where `<PortNumber>` is the port where the SSH Server on the remote computer listens; `<LocalPath>` is the path to the file(s) on the local computer to copy; `<SSHServer>` is the IP address or domain name where the remote SSH Server listens; and, `<RemotePath>` is the destination file path on the remote computer:
+```bash
+rsync -avzhe "ssh -p <PortNumber>" <LocalPath> cardano@<SSHServer>:<RemotePath>
+```
+
+<table class="box">
+  <tbody>
+    <tr>
+      <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="/img/BoxChallenge.png" alt="Challenge" /></p></td>
+      <td class="boxText"><p class="boxText">Using the <a href="https://download.samba.org/pub/rsync/rsync.1" target="_blank">man page</a>, investigate to understand the options specified using `-avzhe` in the Rsync command above.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+**To transfer files from a remote computer to your local computer:**
+
+1\. Using a terminal window on the local computer, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server on the remote computer listens and `<PortNumber>` is the port number where the remote SSH Server listens:
+```bash
+ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber>
+```
+
+2\. To copy files from a remote source to a local destination, type the following command where `<PortNumber>` is the port where the SSH Server on the remote computer listens; `<SSHServer>` is the IP address or domain name where the remote SSH Server listens; `<RemotePath>` is the path to the file(s) on the remote computer to copy; and, `<LocalPath>` is the destination file path on the local computer:
+```bash
+rsync -avzhe "ssh -p <PortNumber>" cardano@<SSHServer>:<RemotePath> <LocalPath>
 ```
 
 ## Using Port Forwarding
