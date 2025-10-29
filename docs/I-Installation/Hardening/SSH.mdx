@@ -115,16 +115,11 @@ Rsync is a command-line utility for synchronizing and transferring files between
 
 Transferring files securely helps you operate a Cardano stake pool, for example when creating transactions or backing up data.
 
-**To transfer files from your local computer to a remote computer:**
+**To transfer files from a remote computer to your local computer:**
 
-1\. Using a terminal window on the local computer, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server on the remote computer listens and `<PortNumber>` is the port number where the remote SSH Server listens:
+- Using a terminal window on the local computer, type the following command where `<PortNumber>` is the port where the SSH Server on the remote computer listens; `<SSHServer>` is the IP address or domain name where the remote SSH Server listens; `<RemotePath>` is the path to the file(s) on the remote computer to copy; and, `<LocalPath>` is the destination file path on the local computer:
 ```bash
-ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber>
-```
-
-2\. To copy files from a local source to a remote destination, type the following command where `<PortNumber>` is the port where the SSH Server on the remote computer listens; `<LocalPath>` is the path to the file(s) on the local computer to copy; `<SSHServer>` is the IP address or domain name where the remote SSH Server listens; and, `<RemotePath>` is the destination file path on the remote computer:
-```bash
-rsync -avzhe "ssh -p <PortNumber>" <LocalPath> cardano@<SSHServer>:<RemotePath>
+rsync -avzhe "ssh -p <PortNumber>" cardano@<SSHServer>:<RemotePath> <LocalPath>
 ```
 
 <table class="box">
@@ -136,16 +131,11 @@ rsync -avzhe "ssh -p <PortNumber>" <LocalPath> cardano@<SSHServer>:<RemotePath>
   </tbody>
 </table>
 
-**To transfer files from a remote computer to your local computer:**
+**To transfer files from your local computer to a remote computer:**
 
-1\. Using a terminal window on the local computer, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server on the remote computer listens and `<PortNumber>` is the port number where the remote SSH Server listens:
+- Using a terminal window on the local computer, type the following command where `<PortNumber>` is the port where the SSH Server on the remote computer listens; `<LocalPath>` is the path to the file(s) on the local computer to copy; `<SSHServer>` is the IP address or domain name where the remote SSH Server listens; and, `<RemotePath>` is the destination file path on the remote computer:
 ```bash
-ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber>
-```
-
-2\. To copy files from a remote source to a local destination, type the following command where `<PortNumber>` is the port where the SSH Server on the remote computer listens; `<SSHServer>` is the IP address or domain name where the remote SSH Server listens; `<RemotePath>` is the path to the file(s) on the remote computer to copy; and, `<LocalPath>` is the destination file path on the local computer:
-```bash
-rsync -avzhe "ssh -p <PortNumber>" cardano@<SSHServer>:<RemotePath> <LocalPath>
+rsync -avzhe "ssh -p <PortNumber>" <LocalPath> cardano@<SSHServer>:<RemotePath>
 ```
 
 ## Using Port Forwarding
