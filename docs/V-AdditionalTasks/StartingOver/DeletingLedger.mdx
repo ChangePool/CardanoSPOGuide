@@ -3,12 +3,14 @@ title: "Deleting the Blockchain Ledger"
 sidebar_label: "Deleting the Blockchain Ledger"
 slug: /DeletingLedger
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 5
 description: ""
 ---
 
 import React from 'react';
+
+import CodeBlock from '@theme/CodeBlock';
 
 export function HTMLContent() {
   return (
@@ -16,10 +18,24 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
+      <p>On a computer running Cardano Node, if the local copy of the blockchain ledger becomes corrupt, then the node may not start. To resolve the issue, delete the local copy of the ledger so that the node may resynchronize with the network from the beginning.</p>
+
+      <p class="pi">To delete the local copy of the Cardano blockchain ledger:</p>
       
+      <ul class="ss">
+        <li>Using a terminal window on the computer where Cardano Node does not start, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl stop cardano-node
+cd $NODE_HOME
+rm -rf db
+sudo systemctl start cardano-node`}
+          </CodeBlock>
+        </li>
+      </ul>
 
     </div>
   );
 }
 
 <HTMLContent />
+
