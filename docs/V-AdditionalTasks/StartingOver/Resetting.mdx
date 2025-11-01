@@ -31,6 +31,7 @@ sudo systemctl stop cardano-node
 rm -rf $HOME/git/cardano-node/ $HOME/git/libsodium/ $HOME/git/secp256k1 $HOME/git/blst
 # Remove the systemd service file that manages Cardano Node
 sudo rm /etc/systemd/system/cardano-node.service
+# Reload systemd configuration
 sudo systemctl daemon-reload`}
           </CodeBlock>
         </li>
