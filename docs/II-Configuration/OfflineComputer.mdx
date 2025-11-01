@@ -121,12 +121,19 @@ source $HOME/.bashrc
 sudo mkdir /usr/local/lib/pkgconfig
 ```
 
-5\. Using removable media, copy the following four files from a block-producing or relay node where you installed `libsecp256k1` to the same location on your air-gapped, offline computer:
+5\. Using removable media, copy the following files from a block-producing or relay node where you installed `libsecp256k1` to the same location on your air-gapped, offline computer:
 ```bash
 /usr/local/lib/libsecp256k1.a
 /usr/local/lib/libsecp256k1.la
 /usr/local/lib/libsecp256k1.so.2.0.2
 /usr/local/lib/pkgconfig/libsecp256k1.pc
+/usr/local/include/secp256k1_ecdh.h
+/usr/local/include/secp256k1_ellswift.h
+/usr/local/include/secp256k1_extrakeys.h
+/usr/local/include/secp256k1.h
+/usr/local/include/secp256k1_musig.h
+/usr/local/include/secp256k1_preallocated.h
+/usr/local/include/secp256k1_schnorrsig.h
 ```
 
 6\. To set file permissions and ownership for the `libsecp256k1` library files on the air-gapped, offline computer, type the following commands using a terminal window:
@@ -138,10 +145,14 @@ sudo chmod 755 libsecp256k1.la
 sudo chmod 755 libsecp256k1.so.2.0.2
 sudo chown root:root ./pkgconfig/libsecp256k1.pc
 sudo chmod 644 ./pkgconfig/libsecp256k1.pc
+cd /usr/local/include
+sudo chown root:root secp256k1*
+sudo chmod 644 secp256k1*
 ```
 
 7\. To create symbolic links, type:
 ```bash
+cd /usr/local/lib
 sudo ln -s libsecp256k1.so.2.0.2 libsecp256k1.so
 sudo ln -s libsecp256k1.so.2.0.2 libsecp256k1.so.2
 ```

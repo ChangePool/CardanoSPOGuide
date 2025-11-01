@@ -3,12 +3,14 @@ title: "Resetting a Cardano Node Installation"
 sidebar_label: "Resetting a Cardano Node Installation"
 slug: /Resetting
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 10
 description: ""
 ---
 
 import React from 'react';
+
+import CodeBlock from '@theme/CodeBlock';
 
 export function HTMLContent() {
   return (
@@ -16,8 +18,58 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
+      <p>If you are unable to troubleshoot an instance of Cardano Node sucessfully, then removing source, binary, service and shared library files, as well as backing up configuration and key files, allows you to work through the <i>How to Set Up a Cardano Stake Pool</i> guide again from the beginning.</p>
+
+      <p class="pi">To reset an instance of Cardano Node:</p>
+
+      <ol>
+        <li>If you are resetting the block-producing node or a relay node in your stake pool configuration, then type the following commands using a terminal window on the computer that you want to reset:
+          <CodeBlock language="bash">
+            {`# Ensure that the Cardano Node systemd service is not running
+sudo systemctl stop cardano-node
+# Remove source files related to Cardano Node
+rm -rf $HOME/git/cardano-node/ $HOME/git/libsodium/ $HOME/git/secp256k1 $HOME/git/blst
+# Remove the systemd service file that manages Cardano Node
+sudo rm /etc/systemd/system/cardano-node.service
+sudo systemctl daemon-reload`}
+          </CodeBlock>
+        </li>
+        <li>Using a terminal window on the computer that you want to reset, type:
+          <CodeBlock language="bash">
+            {`# Remove binaries related to Cardano Node
+sudo rm /usr/local/bin/cardano-node /usr/local/bin/cardano-cli
+# Remove the Sodium library
+sudo rm /usr/local/lib/libsodium* /usr/local/lib/pkgconfig/libsodium.pc /usr/local/include/sodium.h
+sudo rm -r /usr/local/include/sodium
+# Remove the libsecp256k1 library
+sudo rm /usr/local/lib/libsecp256k1* /usr/local/lib/pkgconfig/libsecp256k1.pc /usr/local/include/secp256k1*
+# Remove the blst library
+sudo rm /usr/local/lib/libblst.a /usr/local/lib/pkgconfig/libblst.pc /usr/local/include/blst*
+# Update available symbolic links for currently shared libraries
+sudo ldconfig
+# Move files and scripts related to Cardano Node to a new folder
+mv $NODE_HOME $(basename $NODE_HOME)_backup_$(date -I)`}
+          </CodeBlock>
+        </li>
+        <li>If you are resetting the block-producing node in your stake pool configuration, then type the following command using a terminal window on the air-gapped, offline computer:
+          <CodeBlock language="bash">
+            {`# Move keys for the stake pool to a new folder
+mv $HOME/cold-keys $HOME/cold-keys_backup_$(date -I)`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+                <td class="boxText"><p class="boxText">Do NOT delete the keys for a Cardano stake pool.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+      </ol>
+
     </div>
   );
 }
 
 <HTMLContent />
+
