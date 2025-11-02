@@ -350,7 +350,7 @@ echo stakePoolDeposit: $\{stakePoolDeposit\}`}
           <CodeBlock language="bash">
             {`cardano-cli conway transaction build-raw \\
   $\{tx_in\} \\
-  --tx-out $(cat $NODE_HOME/payment.addr)+$(( $\{total_balance\} - $\{stakePoolDeposit\} ))  \\
+  --tx-out $(cat $NODE_HOME/payment.addr)+$(( $\{total_balance\} - 200000 - $\{stakePoolDeposit\} )) \\
   --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
   --fee 200000 \\
   --certificate-file $NODE_HOME/pool.cert \\
@@ -365,7 +365,7 @@ echo stakePoolDeposit: $\{stakePoolDeposit\}`}
         </li>
         <li>To calculate change from the transaction, type:
           <CodeBlock language="bash">
-            {`txOut=$(($\{total_balance\}-$\{fee\}-$\{stakePoolDeposit\}))
+            {`txOut=$(( $\{total_balance\} - $\{fee\} - $\{stakePoolDeposit\} ))
 echo Change: $\{txOut\}`}
           </CodeBlock>
           <table class="box">
