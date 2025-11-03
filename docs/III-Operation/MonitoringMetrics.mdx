@@ -117,17 +117,19 @@ export function HTMLContent() {
         </tbody>
       </table>
 
+      <a id="Dashboard" />
       <h1>Creating a Dashboard</h1>
 
       <p>The following Bash script shows you how to use metrics to create a dashboard for monitoring Cardano Node instances in your stake pool configuration.</p>
-      <table class="box">
-        <tbody>
-          <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">The script includes optional functionality to display data related to blocks that the stake pool you operate is scheduled to produce. After <a href="/RegisteringPool">Registering a Stake Pool</a>, the topic <a href="/CalculatingSlotLeadership">Calculating Slot Leadership</a> explains how to query the slot leadership schedule. For now, you can ignore the functionality in the script related to querying slot leadership.</p></td>
-          </tr>
-        </tbody>
-      </table>
+
+      <p>The script also includes the following optional functionality to display data that become relevant after <a href="/RegisteringPool">Registering a Stake Pool</a>:</p>
+      
+      <ul>
+        <li><b>Slot Leadership</b>—The topic <a href="/CalculatingSlotLeadership">Calculating Slot Leadership</a> explains how to determine when the stake pool that you operate is scheduled to produce blocks.</li>
+        <li><b>Operational Certificates</b>—The topics <a href="/ConfiguringBlockProducer">Configuring the Block Producer</a> and <a href="/IssuingOpCert">Issuing a New Operational Certificate</a> explain how to ensure that the stake pool you operate continues to have the authority to run.</li>
+      </ul>
+
+      <p>For now, you can ignore the optional functionality in the script.</p>
 
       <p class="pi">To create a dashboard:</p>
 

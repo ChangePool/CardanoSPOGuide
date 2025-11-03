@@ -8,6 +8,11 @@
 #
 #   - ekg_endpoint: If you change the IP address or port where the EKG endpoint listens, then
 #     update the URL accordingly.
+#   - environment_option: Set the variable to match the environment that you use.
+#   - op_cert_path (Optional): Set the path to the current operational certificate for the stake pool.
+#     For more details, see the Configuring the Block Producer and Issuing a New Operational Certificate
+#     topics available online at https://coincashew.io/spo/ConfiguringBlockProducer and
+#     https://coincashew.io/spo/IssuingOpCert respectively.
 #   - schedule_folder (Optional): When monitoring relay nodes, the schedule_folder variable is unused.
 #     When monitoring the block-producing node in your stake pool configuration, optionally set the
 #     path to the folder where the calculateLeadership.sh script saves slot leadership query results
@@ -19,6 +24,14 @@
 
 # Set the URL for the EKG endpoint
 ekg_endpoint="http://localhost:12788/"
+
+# Uncomment a line to match the environment that you use
+environment_option="--mainnet" # Mainnet environment
+#environment_option="--testnet-magic 1" # Pre-production environment
+#environment_option="--testnet-magic 2" # Preview environment
+
+# Set the path to the current operational certificate for the stake pool
+op_cert_path="$NODE_HOME/node.cert"
 
 # When monitoring the block-producing node in your stake pool configuration, optionally set the path to the
 # folder where the calculateLeadership.sh script saves slot leadership query results for the stake pool
@@ -54,6 +67,43 @@ convertsecs2hms() {
 }
 
 #
+# The query_kes_info function parses optional data about the current KES period and operational certificate.
+#
+query_kes_period_info () {
+
+  local kes_info=""
+  local current_kes_period=""
+  local end_kes_period=""
+
+  # If an operational certificate is available
+  if [ -f "${op_cert_path}" ]
+  then
+
+    # Retrieve details about the current KES period and operational certificate
+    kes_info=$(cardano-cli conway query kes-period-info ${environment_option} --op-cert-file ${op_cert_path})
+    
+    # To preserve JSON formatting, drop the first two lines that the query kes-period-info command returns
+    kes_info=$(tail -n +3 <<< "${kes_info}")
+    
+    # Retrieve values that the query kes-period-info command returns
+    current_kes_period=$(jq -r '.qKesCurrentKesPeriod' <<< "${kes_info}")
+    end_kes_period=$(jq -r '.qKesEndKesInterval' <<< "${kes_info}")
+    expiry_date=$(jq -r '.qKesKesKeyExpiry' <<< "${kes_info}")
+
+    # Calculate the number of KES periods remaining
+    kes_periods_remaining=$(( end_kes_period - current_kes_period  ))
+
+    # To create fixed widths, add trailing spaces to values as needed
+    kes_periods_remaining=$(printf "%-2s" "${kes_periods_remaining}")
+
+    # Format the date when the operational certificate expires
+    expiry_date=$(date +"%Y-%m-%d" -d ${expiry_date})
+
+  fi
+
+}
+
+#
 # When monitoring a block-producing node, the analyze_leadership function parses optional slot leadership
 # data for the current and next epochs if available, and then updates variables used to display related
 # statistics in the dashboard.
@@ -82,7 +132,7 @@ analyze_leadership() {
 
   fi
 
-  # Concatenate available slot leadership data into a single JSON array
+  # Concatenate available slot leadership data for the current and next epochs into a single JSON array
   local leadership_data=$(jq -n --argjson current_epoch "${current_epoch_leadership_json}" --argjson next_epoch "${next_epoch_leadership_json}" '$current_epoch + $next_epoch')
 
   # Sort available leadership data in ascending order by slot number
@@ -229,6 +279,13 @@ do
   block_delay_3s=$(printf "%*s%s" $((5 - ${#block_delay_3s})) "" "${block_delay_3s}")
   block_delay_5s=$(printf "%*s%s" $((5 - ${#block_delay_5s})) "" "${block_delay_5s}")
 
+  # Initialize variables used to display operational certificate statistics, if available
+  kes_periods_remaining=""
+  expiry_date=""
+
+  # Call a function to query KES period information based on the operational certificate
+  query_kes_period_info
+
   # Initialize variables used to display slot leadership statistics, if available
   pending_blocks=0
   next_block_slot_num=""
@@ -277,14 +334,24 @@ do
   echo -e "  Count    Within:    1 Second   3 Seconds   5 Seconds"
   echo -e "  ${LightCyan}${block_count}${NoColor}               ${LightCyan}${block_delay_1s}%${NoColor}     ${LightCyan}${block_delay_3s}%${NoColor}      ${LightCyan}${block_delay_5s}%${NoColor}"
 
-  # When monitoring a block-producing node, display block production metrics
+  # When monitoring a block-producing node, display related metrics
   if [ ${block_producer} -eq 1 ]
   then
+
+    # If operational certificate data are available, then display related statistics
+    if [[ -n "${expiry_date}" ]]
+    then
+
+      echo
+      echo -e "${LightGreen}${Underline}Operational Certificate${NoColor}"
+      echo -e "  KES Periods Remaining: ${LightCyan}${kes_periods_remaining}${NoColor}   Expiry Date: ${LightCyan}${expiry_date}${NoColor}"
+
+    fi
 
     echo
     echo -e "${LightGreen}${Underline}Block Production${NoColor}"
 
-    # If slot leadership data is available, then display related statistics
+    # If slot leadership data are available for the stake pool, then display related statistics
     if (( pending_blocks > 0 ))
     then
 
