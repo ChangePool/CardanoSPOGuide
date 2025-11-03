@@ -3,12 +3,16 @@ title: "Issuing a New Operational Certificate"
 sidebar_label: "Issuing a New Operational Certificate"
 slug: /IssuingOpCert
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 10
 description: ""
 ---
 
 import React from 'react';
+
+import TestnetNote from '@site/src/components/TestnetNote.js';
+
+import CodeBlock from '@theme/CodeBlock';
 
 export function HTMLContent() {
   return (
@@ -16,8 +20,232 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
+      <p>A stake pool requires a valid operational certificate to verify that the pool has the authority to run.</p>
+
+      <p>A current Key-evolving Signature (KES) key pair is required to establish an operational certificate for a stake pool. A KES period indicates the time span when an operational certificate is valid. An operational certificate expires 90 days after the KES period defined in the operational certificate. Therefore, you must generate a new KES key pair and operational certificate every 90 days, or sooner, for the stake pool that you operate to be able to produce blocks.</p>
+
+      <p>The private KES key is required to start the block-producing node in your stake pool configuration. The public KES key is not sensitive.</p>
+
+      <p>Issuing an operational certificate also uses a counter that increments by exactly one (1) for each unique operational certificate that a stake pool uses to produce blocks. In a valid operational certificate, the counter value that you use to issue the operational certificate must be consistent with the current counter value for the stake pool registered on the Cardano blockchain by the protocol.</p>
+
+      <TestnetNote />
+
+      <h1>Determining the Counter Value</h1>
+
+      <p class="pi">To retrieve the current counter value registered by the blockchain protocol for the stake pool that you operate:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window on the block-producing node in your stake pool configuration, type:
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+cardano-cli conway query kes-period-info \\
+  --mainnet \\
+  --op-cert-file node.cert`}
+          </CodeBlock>
+        </li>
+      </ul>
+
+      <p>The <code>query kes-period-info</code> command returns output similar to:</p>
+
+      <CodeBlock language="json">
+        {`✓ Operational certificate's KES period is within the correct KES period interval
+✓ The operational certificate counter agrees with the node protocol state counter
+{
+  "qKesCurrentKesPeriod": 737,
+  "qKesEndKesInterval": 742,
+  "qKesKesKeyExpiry": "2025-11-11T00:00:00Z",
+  "qKesMaxKESEvolutions": 62,
+  "qKesNodeStateOperationalCertificateNumber": 3,
+  "qKesOnDiskOperationalCertificateNumber": 3,
+  "qKesRemainingSlotsInKesPeriod": 640357,
+  "qKesSlotsPerKesPeriod": 129600,
+  "qKesStartKesInterval": 680
+}`}
+      </CodeBlock>
+
+      <p>The value of the <code>qKesNodeStateOperationalCertificateNumber</code> key indicates the current counter value registered by the blockchain protocol for the stake pool that you operate. The value of the <code>qKesOnDiskOperationalCertificateNumber</code> key indicates the counter value of the current operational certificate that the stake pool uses.</p>
+
+      <p>For a new operational certificate, the counter value must be exactly one (1) greater than the current value of the <code>qKesNodeStateOperationalCertificateNumber</code> key.</p>
+
+      <p>If <code>qKesOnDiskOperationalCertificateNumber</code> is more than one (1) greater than the value of <code>qKesNodeStateOperationalCertificateNumber</code> then the operational certificate is invalid. A stake pool cannot produce blocks using an invalid operational certificate.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+            <td class="boxText"><p class="boxText">To return results of the <code>query kes-period-info</code> command using JSON format, add the <code>--out-file</code> option to the command, and then query the contents of the output file. For more details, see <a href="/AccessingHelp">Accessing Built-in Help</a>.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1>Producing a Block For the First Time</h1>
+
+      <p>When the stake pool that you operate has produced zero (0) blocks, then no value for <code>qKesNodeStateOperationalCertificateNumber</code> is registered by the blockchain protocol. Therefore, retrieving the current counter value for your stake pool returns the value <code>null</code> for the <code>qKesNodeStateOperationalCertificateNumber</code> key.</p>
+
+      <p>After a stake pool produces a block for the first time, then retrieving the current counter value returns the value zero (0) for the <code>qKesNodeStateOperationalCertificateNumber</code> key.</p>
+
+      <p>Therefore, when the stake pool that you operate has produced zero (0) blocks, you MUST set the value zero (0) for the <code>qKesOnDiskOperationalCertificateNumber</code> key so that the stake pool may produce a block successfully when elected to produce a block for the first time.</p>
+
+      <h1>Setting the Counter Value</h1>
+
+      <p>When you issue a new operational certificate, a <code>node.counter</code> file sets the counter value for the new certificate.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">If you follow the <i>How to Set Up a Cardano Stake Pool</i> guide, then you created a <code>node.counter</code> file when <a href="/ConfiguringBlockProducer">Configuring the Block Producer</a>.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>When you run the <code>query kes-period-info</code> command, if the value of the <code>qKesOnDiskOperationalCertificateNumber</code> key equals the value of the <code>qKesNodeStateOperationalCertificateNumber</code> key, then the stake pool that you operate produced at least one block using the current operational certificate and you do NOT need to set the counter value manually.</p>
+
+      <p>If the value of the <code>qKesOnDiskOperationalCertificateNumber</code> key is greater than the value of the <code>qKesNodeStateOperationalCertificateNumber</code> key, then prior to issuing a new operational certificate you need to set the counter value using the following procedure.</p>
+
+
+      <p class="pi">To set the counter value for issuing a new operational certificate:</p>
+
+      <ol>
+        <li>To create a new <code>node.counter</code> file having the required counter value, if the current value of the <code>qKesNodeStateOperationalCertificateNumber</code> key is <code>null</code> then type the following command using a terminal window on the air-gapped, offline computer:
+          <CodeBlock language="bash">
+            {`cd $HOME/cold-keys
+cardano-cli conway node new-counter \\
+  --cold-verification-key-file $HOME/cold-keys/node.vkey \\
+  --counter-value 0 \\
+  --operational-certificate-issue-counter-file node.counter`}
+          </CodeBlock>
+          <center><strong>OR</strong></center>
+          If the current value of the <code>qKesNodeStateOperationalCertificateNumber</code> key is NOT <code>null</code>, then type the following command using a terminal window on the air-gapped, offline computer where <code>&lt;NodeCertificateNumber&gt;</code> is the current value of the <code>qKesNodeStateOperationalCertificateNumber</code> key:
+          <CodeBlock language="bash">
+            {`cd $HOME/cold-keys
+cardano-cli conway node new-counter \\
+  --cold-verification-key-file $HOME/cold-keys/node.vkey \\
+  --counter-value $(( <NodeCertificateNumber> + 1 )) \\
+  --operational-certificate-issue-counter-file node.counter`}
+          </CodeBlock>
+        </li>
+        <li>To display the contents of the <code>node.counter</code> file that you created in step 1, type:
+          <CodeBlock language="bash">
+            {`cat $HOME/cold-keys/node.counter`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">When you generate a new <code>node.counter</code> file, the value of the <code>description</code> key is empty until you issue a new operational certificate.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+      </ol>
+
+      <h1>Issuing a New Operational Certificate</h1>
+
+      <p class="pi">To issue a new operational certificate:</p>
+
+      <ol>
+        <li>Using a terminal window on the block-producing node in your stake pool configuration, type the following commands to generate a new KES key pair:
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+cardano-cli conway node key-gen-KES \\
+  --verification-key-file kes.vkey \\
+  --signing-key-file kes.skey`}
+          </CodeBlock>
+        </li>
+        <li>Using removable media, copy the <code>$NODE_HOME/kes.vkey</code> file from the block-producing node to <code>$NODE_HOME/kes.vkey</code> on the air-gapped, offline computer.</li>
+        <li>To back up the current operational certificate, type the following command using a terminal window on the block-producing node:
+          <CodeBlock language="bash">
+            {`mv $NODE_HOME/node.cert $NODE_HOME/node.cert.bak`}
+          </CodeBlock>
+        </li>
+        <li>To issue a new operational certificate, you must set a starting KES period. Set the current KES period as the starting KES period for the new operational certificate. To calculate the current KES period, type the following commands using a terminal window on the block-producing node in your stake pool configuration when the local copy of the Cardano blockchain ledger is fully synchronized:
+          <CodeBlock language="bash">
+            {`# Retrieve the number of slots per KES period using the key named slotsPerKESPeriod in the Shelley Genesis JSON configuration file that the stake pool uses
+slotsPerKESPeriod=$(cat $NODE_HOME/shelley-genesis.json | jq -r '.slotsPerKESPeriod')
+# Query the current slot height of the blockchain, and then retrieve the value of the slot key in the results
+currentSlot=$(cardano-cli conway query tip --mainnet | jq -r '.slot')
+# To calculate the current KES period, divide the current slot height by the number of slots per KES period
+currentKesPeriod=$(( $\{currentSlot\} / $\{slotsPerKESPeriod\} ))
+StartingKESPeriod=$\{currentKesPeriod\}
+echo StartingKESPEriod: $\{StartingKESPeriod\}`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">Remember that in the Cardano ecosystem, a slot occurs every second. For a more detailed procedure to calculate the current KES period, see the topic <a href="/ConfiguringBlockProducer">Configuring the Block Producer</a>.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To issue a new operational certificate, type the following command using a terminal window on the air-gapped, offline computer where <code>&lt;StartingKESPeriod&gt;</code> is the value that you calculated in step 4:
+          <CodeBlock language="bash">
+            {`cardano-cli conway node issue-op-cert \\
+  --kes-verification-key-file $NODE_HOME/kes.vkey \\
+  --cold-signing-key-file $HOME/cold-keys/node.skey \\
+  --operational-certificate-issue-counter $HOME/cold-keys/node.counter \\
+  --kes-period <StartingKESPeriod> \\
+  --out-file $NODE_HOME/node.cert`}
+          </CodeBlock>
+          {/* <!-- chmod u+rwx $HOME/cold-keys chmod a-rwx $HOME/cold-keys --> */}
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">After issuing a new operational certificate, the value of the <code>node.counter</code> file automatically increments by one (1)</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>Using removable media, copy the <code>$NODE_HOME/node.cert</code> file that you created in step 5 to <code>$NODE_HOME/node.cert</code> on the block-producing node in your stake pool configuration.</li>
+        <li>To restart the Cardano Node instance running on the block-producing node, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl restart cardano-node`}
+          </CodeBlock>
+        </li>
+        <li>To verify the operational certificate that you issued in step 5, wait until the block-producing node starts, and then type the following command using a terminal window:
+          <CodeBlock language="bash">
+            {`cardano-cli conway query kes-period-info \\
+  --mainnet \\
+  --op-cert-file $NODE_HOME/node.cert`}
+          </CodeBlock>
+        </li>
+        {/* <!-- 8\. In a secure location, create backup copies of the KES key files that you generated in step 1; the current `node.counter` file for your stake pool; and, the `node.cert` file that you generated in step 4 --> */}
+      </ol>
+
+      <p>In the results of the <code>query kes-period-info</code> command, prior to a stake pool producing a block using a new operational certificate, in a valid operational certificate the value of the <code>qKesOnDiskOperationalCertificateNumber</code> key is greater than the value of the <code>qKesNodeStateOperationalCertificateNumber</code> key by exactly one (1) For example:</p>
+
+      <CodeBlock language="json">
+        {`✓ Operational certificate's KES period is within the correct KES period interval
+✓ The operational certificate counter ahead of the node protocol state counter by 1
+{
+  "qKesCurrentKesPeriod": 737,
+  "qKesEndKesInterval": 799,
+  "qKesKesKeyExpiry": "2026-02-04T12:00:00Z",
+  "qKesMaxKESEvolutions": 62,
+  "qKesNodeStateOperationalCertificateNumber": 3,
+  "qKesOnDiskOperationalCertificateNumber": 4,
+  "qKesRemainingSlotsInKesPeriod": 8015644,
+  "qKesSlotsPerKesPeriod": 129600,
+  "qKesStartKesInterval": 737
+}`}
+      </CodeBlock>
+
+      <p>The first time that a stake pool produces a block using a new operational certificate, the value of the <code>qKesNodeStateOperationalCertificateNumber</code> increments by one (1) to equal the value of the <code>qKesOnDiskOperationalCertificateNumber</code> key.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+            <td class="boxText"><p class="boxText">Write a Bash script to automate tasks related to issuing a new operational certificate on the block-producing node in your stake pool configuration. Write another Bash script to automate related tasks on the air-gapped, offline computer. For an example, see <a href="/AppendixD">Appendix D: Community Projects</a>.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
     </div>
   );
 }
 
 <HTMLContent />
+

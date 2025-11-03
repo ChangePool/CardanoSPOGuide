@@ -116,7 +116,7 @@ echo currentKesPeriod: $\{currentKesPeriod\}`}
             </li>
           </ol>
         </li>
-        <li>Using removable media, copy the <code>$NODE_HOME/kes.vkey</code> from the computer designated as the block-producing node in your stake pool configuration to <code>$NODE_HOME/kes.vkey</code> on the air-gapped, offline computer.</li>
+        <li>Using removable media, copy the <code>$NODE_HOME/kes.vkey</code> file from the computer designated as the block-producing node in your stake pool configuration to <code>$NODE_HOME/kes.vkey</code> on the air-gapped, offline computer.</li>
         <li>On the air-gapped, offline computer, using a terminal window type the following command where <code>&lt;currentKesPeriod&gt;</code> is the value that you calculated in step 2:
           <CodeBlock language="bash">
             {`cardano-cli conway node issue-op-cert \\
