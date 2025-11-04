@@ -3,7 +3,7 @@ title: "Fixing the Mnemonic Staking Balance Bug"
 sidebar_label: "Fixing the Mnemonic Staking Balance Bug"
 slug: /FixingStakingBug
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 10
 description: ""
 ---
@@ -20,4 +20,96 @@ export function HTMLContent() {
   );
 }
 
-<HTMLContent />
+<!-- <HTMLContent /> -->
+
+If you created a wallet for the stake pool that you operate using a seed phrase in Daedalus 2.0 before July 30, 2020 then the bug may affect you.
+
+To determine if the bug may affect you, type:
+```bash
+wc -m $NODE_HOME/payment.addr
+```
+
+If the `wc` command returns `59 payment.addr` then you may be affected. If the command returns `104 payment.addr` then you are NOT affected.
+
+## What Is the Problem?
+
+* The balance towards pool stake is not being counted because the script's default, **`payment.addr`**, is also known as the enterprise address.
+* By design, enterprise address balances are not counted as stake.
+* The public address found in **`base.addr`** should have been funded. In other words, `base.addr` should have been the real `payment.addr`.
+
+## :robot: Are You Affected?
+
+To list all ADA holders delegating to the stake pool that you operate, run the following query:
+
+```bash
+cd $NODE_HOME
+pool_id=$(cat stakepoolid.txt)
+timeout -k 5 60 cardano-cli shelley query ledger-state ${NETWORK_IDENTIFIER} --out-file ledger-state.json
+echo "Ledger state dumped, parsing data..."
+non_myopic_delegators=$(jq -r -c ".esNonMyopic.snapNM._delegations | .[] | select(.[1] == \"${pool_id}\") | .[0][\"key hash\"]" ledger-state.json)
+snapshot_delegators=$(jq -r -c ".esSnapshots._pstakeSet._delegations | .[] | select(.[1] == \"${pool_id}\") | .[0][\"key hash\"]" ledger-state.json)
+lstate=$(jq -r -c ".esLState" ledger-state.json)
+lstate_dstate=$(jq -r -c "._delegationState._dstate" <<< "${lstate}")
+ledger_pool_state=$(jq -r -c '._delegationState._pstate._pParams."'"${pool_id}"'" // empty' <<< "${lstate}")
+lstate_rewards=$(jq -r -c "._rewards" <<< "${lstate_dstate}")
+lstate_utxo=$(jq -r -c "._utxoState._utxo" <<< "${lstate}")
+lstate_delegators=$(jq -r -c "._delegations | .[] | select(.[1] == \"${pool_id}\") | .[0][\"key hash\"]" <<< "${lstate_dstate}")
+delegators=$(echo "${non_myopic_delegators}" "${snapshot_delegators}" "${lstate_delegators}" | tr ' ' '\n' | sort -u)
+echo "$(wc -w <<< "${delegators}") delegators found, gathering data for each:"
+pledge="$(jq -c -r '.pledge // 0' <<< "${ledger_pool_state}" | tr '\n' ' ')"
+owners="$(jq -c -r '.owners[] // empty' <<< "${ledger_pool_state}" | tr '\n' ' ')"
+owner_nbr=$(jq -r '(.owners | length) // 0' <<< "${ledger_pool_state}")
+delegators_array=()
+delegator_nbr=0
+total_stake=0
+total_pledged=0
+for key in ${delegators}; do
+    stake=$(jq -r -c ".[] | select(.address | contains(\"${key}\")) | .amount" <<< "${lstate_utxo}" | awk 'BEGIN{total = 0} {total = total + $1} END{printf "%.0f", total}')
+    rewards=$(jq -r -c ".[] | select(.[0][\"key hash\"] == \"${key}\") | .[1]" <<< "${lstate_rewards}")
+    total_stake=$((total_stake + stake + reward))
+    echo "Delegator $((++delegator_nbr)) processed"
+    if echo "${owners}" | grep -q "${key}"; then
+      key="${key} (owner)"
+      total_pledged=$((total_pledged + stake + reward))
+    fi
+  delegators_array+=( "hex_key" "${key}" "stake" "${stake}" "rewards" "${rewards})" )
+done
+echo total_stake $total_stake
+echo total_pledged $total_pledged
+echo delegator_nbr $delegator_nbr
+
+printf '{"%s":"%s","%s":"%s","%s":"%s"},\n' "${delegators_array[@]}" | sed '$s/,$//'
+```
+
+In the output, find the object including the `hex_key` value representing the stake pool owner. If the value for the corresponding `stake` key is zero (0), then the issue affects you.
+
+**Example output:**
+```json
+{"hex_key":"70f2... (owner)","stake":"0","rewards":"0)"},
+```
+
+## :jigsaw: Fixing the Problem
+
+**To fix the issue:**
+
+1\. To display your `base.addr` public address, type:
+```bash
+cat $NODE_HOME/extractedPoolKeys/base.addr
+```
+
+2\. Open Daedalus wallet, which is where your mnemonic was originally created.
+
+3\. To test, send a small amount of ADA to the `base.addr` public address.
+
+4\. Re-run the above query to check delegator balances. The stake balance associated with the hexadecimal key representing the owner should have increased.
+
+5\. If the test is successful, then send the remaining balance to the `base.addr` public address.
+
+6\. Re-run the above query to verify that stake is now correctly counted.
+
+7\. To replace the old `payment.addr` with `base.addr` type:
+```bash
+cd $NODE_HOME
+cp extractedPoolKeys/base.addr payment.addr
+```
+
