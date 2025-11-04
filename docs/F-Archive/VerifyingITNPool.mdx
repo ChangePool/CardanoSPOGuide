@@ -1,10 +1,10 @@
 ---
-title: "Verifying an ITN Stake Pool"
-sidebar_label: "Verifying an ITN Stake Pool"
+title: "Verifying an Incentivized Testnet Stake Pool"
+sidebar_label: "Verifying an Incentivized Testnet Stake Pool"
 slug: /VerifyingITNPool
 hide_title: false
 hide_table_of_contents: false
-sidebar_position: 5
+sidebar_position: 15
 description: ""
 ---
 
@@ -20,4 +20,28 @@ export function HTMLContent() {
   );
 }
 
-<HTMLContent />
+<!-- <HTMLContent /> -->
+
+In order to defend against spoofing and hijacking of reputable stake pools, as a stake pool operator you can verify the ticker of the stake pool that you operate by proving ownership of an Incentivized Testnet (ITN) stake pool.
+
+:::info
+The ITN phase of the Cardano Shelley era ran from late November 2019 to late June 2020. If you participated, then you can verify a ticker.
+:::
+
+On the air-gapped, offline computer, ensure that the [jcli](https://github.com/input-output-hk/jormungandr/releases/tag/v0.8.14) binaries are present in the `$NODE_HOME` folder.
+
+**To sign the stake pool id, type the following command using a terminal window:**
+```bash
+./jcli key sign --secret-key itn_owner.skey stakepoolid.txt --output stakepoolid.sig
+```
+
+Visit [Cardano PoolTool](https://pooltool.io) and enter your owner public key and pool id witness data in the metadata section.
+
+To find your pool id witness, type the following command using a terminal window on the air-gapped, offline computer:
+```bash
+cat stakepoolid.sig
+```
+
+Find your owner public key in the file you generated on ITN. This data might be stored in a file having the file name extension `.pub`
+
+Finally, [Update the Stake Pool Registration Certificate](/UpdatingPoolRegCert) using the PoolTool-generated `metadata-url` and `metadata-hash` Notice that the metadata has an `extended` key-value pair.
