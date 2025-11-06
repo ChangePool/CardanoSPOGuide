@@ -75,31 +75,25 @@ query_kes_period_info () {
   local current_kes_period=""
   local end_kes_period=""
 
-  # If an operational certificate is available
-  if [ -f "${op_cert_path}" ]
-  then
-
-    # Retrieve details about the current KES period and operational certificate
-    kes_info=$(cardano-cli conway query kes-period-info ${environment_option} --op-cert-file ${op_cert_path})
+  # Retrieve details about the current KES period and operational certificate
+  kes_info=$(cardano-cli conway query kes-period-info ${environment_option} --op-cert-file ${op_cert_path})
     
-    # To preserve JSON formatting, drop the first two lines that the query kes-period-info command returns
-    kes_info=$(tail -n +3 <<< "${kes_info}")
+  # To preserve JSON formatting, drop the first two lines that the query kes-period-info command returns
+  kes_info=$(tail -n +3 <<< "${kes_info}")
     
-    # Retrieve values that the query kes-period-info command returns
-    current_kes_period=$(jq -r '.qKesCurrentKesPeriod' <<< "${kes_info}")
-    end_kes_period=$(jq -r '.qKesEndKesInterval' <<< "${kes_info}")
-    expiry_date=$(jq -r '.qKesKesKeyExpiry' <<< "${kes_info}")
+  # Retrieve values that the query kes-period-info command returns
+  current_kes_period=$(jq -r '.qKesCurrentKesPeriod' <<< "${kes_info}")
+  end_kes_period=$(jq -r '.qKesEndKesInterval' <<< "${kes_info}")
+  expiry_date=$(jq -r '.qKesKesKeyExpiry' <<< "${kes_info}")
 
-    # Calculate the number of KES periods remaining
-    kes_periods_remaining=$(( end_kes_period - current_kes_period  ))
+  # Calculate the number of KES periods remaining
+  kes_periods_remaining=$(( end_kes_period - current_kes_period  ))
 
-    # To create fixed widths, add trailing spaces to values as needed
-    kes_periods_remaining=$(printf "%-2s" "${kes_periods_remaining}")
+  # To create fixed widths, add trailing spaces to values as needed
+  kes_periods_remaining=$(printf "%-2s" "${kes_periods_remaining}")
 
-    # Format the date when the operational certificate expires
-    expiry_date=$(date +"%Y-%m-%d" -d ${expiry_date})
-
-  fi
+  # Format the date when the operational certificate expires
+  expiry_date=$(date +"%Y-%m-%d" -d ${expiry_date})
 
 }
 
@@ -283,8 +277,14 @@ do
   kes_periods_remaining=""
   expiry_date=""
 
-  # Call a function to query KES period information based on the operational certificate
-  query_kes_period_info
+  # If an operational certificate is available
+  if [ -f "${op_cert_path}" ]
+  then
+
+    # Call a function to query KES period information based on the operational certificate
+    query_kes_period_info
+
+  fi
 
   # Initialize variables used to display slot leadership statistics, if available
   pending_blocks=0
