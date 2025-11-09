@@ -79,22 +79,25 @@ export function HTMLContent() {
         <li><b>cardano.node.metrics.blockfetchclient.blockdelay.cdfFive</b>—The percentage of blocks that the Cardano Node instance currently propagates within five seconds of production</li>
         <li><b>cardano.node.metrics.RTS.gcHeapBytes.int</b>—In bytes, the amount of memory currently allocated to the Cardano Node instance</li>
         <li><b>cardano.node.metrics.RTS.gcLiveBytes.int</b>—In bytes, the amount of data in memory currently potentially usable by the Cardano Node instance</li>
-        <li><b>cardano.node.metrics.forging_enabled</b>—An integer Boolean value (<code>0</code> or <code>1</code>) indicating whether the Cardano Node instance is operating as a block producer or relay</li>
-        <li><b>cardano.node.metrics.Forge.node-is-leader.int</b>—The number of blocks that the Cardano Node instance prepared</li>
-        <li><b>cardano.node.metrics.Forge.adopted.int</b>—The number of blocks prepared by the Cardano Node instance that the network accepted</li>
-        <li><b>cardano.node.metrics.Forge.didnt-adopt.int</b>—The number of blocks that the Cardano Node instance failed to prepare due to an error occurring within the software application</li>
+        <li><b>cardano.node.metrics.forging_enabled</b>—An integer Boolean value indicating whether the Cardano Node instance is operating as a relay (<code>0</code>) or block producer (<code>1</code>)</li>
+        <li><b>cardano.node.metrics.Forge.node-is-leader.int</b>—Applicable only when a Cardano Node instance operates as a block producer, the number of blocks prepared</li>
+        <li><b>cardano.node.metrics.Forge.adopted.int</b>—Applicable only when a Cardano Node instance operates as a block producer, the number of blocks prepared that the network accepted</li>
+        <li><b>cardano.node.metrics.Forge.didnt-adopt.int</b>—Applicable only when operating as a block producer, the number of blocks that a Cardano Node instance failed to prepare due to an error occurring within the software application</li>
+        <li><b>cardano.node.metrics.slotsMissedNum.int</b>—Applicable only when operating as a block producer, the number of slots when the Cardano Node instance missed checking whether to prepare a block
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">A Cardano Node instance operating as a block producer may miss checking whether to prepare a block when the computer is busy or does not meet <a href="/Requirements">System Requirements</a>.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
       </ul>
 
-      <p>To convert the name of an EKG metric to the corresponding Prometheus metric, replace period (<code>.</code>) characters with underscore (<code>_</code>) characters.</p>
+      <p>If a trace is not triggered, then metrics do NOT include the corresponding metric. When a Cardano Node instance restarts, metrics reset.</p>
 
-      <table class="box">
-        <tbody>
-          <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">If a trace is not triggered, then metrics do NOT include the corresponding metric. When the Cardano Node instance restarts, metrics reset.</p></td>
-          </tr>
-        </tbody>
-      </table>
+      <p>To convert the name of an EKG metric to the corresponding Prometheus metric, replace period (<code>.</code>) characters with underscore (<code>_</code>) characters.</p>
 
       <h1>Querying Metrics Using a Terminal Window</h1>
 

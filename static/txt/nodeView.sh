@@ -205,7 +205,8 @@ do
     .cardano.node.metrics.forging_enabled.val // 0,
     .cardano.node.metrics.Forge["node-is-leader"].int.val // 0,
     .cardano.node.metrics.Forge.adopted.int.val // 0,
-    .cardano.node.metrics.Forge["didnt-adopt"].int.val // 0' <<< "${ekg_metrics}")
+    .cardano.node.metrics.Forge["didnt-adopt"].int.val // 0,
+    .cardano.node.metrics.slotsMissedNum.int.val // 0' <<< "${ekg_metrics}")
 
   # Assign the list of metrics that the dashboard displays to an array
   dashboard_metrics_arr=($(echo "${dashboard_metrics}"))
@@ -227,6 +228,7 @@ do
   blocks_produced=${dashboard_metrics_arr[13]}
   blocks_adopted=${dashboard_metrics_arr[14]}
   blocks_invalid=${dashboard_metrics_arr[15]}
+  slots_missed=${dashboard_metrics_arr[16]}
 
   # Format and round percentages for display
   block_delay_1s=$(echo "scale=1; ((${block_delay_1s} * 1000) + 0.5) / 10" | bc)
@@ -267,6 +269,7 @@ do
   blocks_produced=$(printf "%-2s" "${blocks_produced}")
   blocks_adopted=$(printf "%-2s" "${blocks_adopted}")
   blocks_invalid=$(printf "%-2s" "${blocks_invalid}")
+  slots_missed=$(printf "%-2s" "${slots_missed}")
 
   # To create fixed widths, add leading spaces to values as needed
   block_delay_1s=$(printf "%*s%s" $((5 - ${#block_delay_1s})) "" "${block_delay_1s}")
@@ -355,14 +358,14 @@ do
     if (( pending_blocks > 0 ))
     then
 
-      echo -e "  Pending               Next           Countdown"
-      echo -e "     ${LightCyan}${pending_blocks}${NoColor}          ${LightCyan}${next_block_slot_time}${NoColor}   ${LightCyan}${next_block_time_left}${NoColor}"
+      echo -e "  Pending               Next               Count Down"
+      echo -e "     ${LightCyan}${pending_blocks}${NoColor}          ${LightCyan}${next_block_slot_time}${NoColor}        ${LightCyan}${next_block_time_left}${NoColor}"
       echo
 
     fi
 
-    echo -e "  Prepared            Accepted          Invalid"
-    echo -e "     ${LightCyan}${blocks_produced}${NoColor}                  ${LightCyan}${blocks_adopted}${NoColor}                ${LightCyan}${blocks_invalid}${NoColor}"
+    echo -e "  Prepared      Accepted      Invalid     Missed Slots"
+    echo -e "     ${LightCyan}${blocks_produced}${NoColor}            ${LightCyan}${blocks_adopted}${NoColor}            ${LightCyan}${blocks_invalid}${NoColor}            ${LightCyan}${slots_missed}${NoColor}"
 
   fi
 
