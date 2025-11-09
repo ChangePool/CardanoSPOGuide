@@ -3,12 +3,14 @@ title: "Configuring GHC Runtime System Options"
 sidebar_label: "Configuring GHC Runtime System Options"
 slug: /ConfiguringGHCRuntime
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 30
 description: ""
 ---
 
 import React from 'react';
+
+import CodeBlock from '@theme/CodeBlock';
 
 export function HTMLContent() {
   return (
@@ -16,8 +18,81 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
+      <p>Depending on hardware specifications, in some implementations of Cardano Node configuring runtime system (RTS) options available for the Glasgow Haskell Compiler (GHC) may improve performance and/or stability.</p>
+
+      <p>The RTS offers many options for controlling behaviour. For example, depending on system specifications and Cardano Node version, a block-producing node sometimes may miss checking every second whether to prepare a block. Cardano Node reports missed checks using the <code>cardano.node.metrics.slotsMissedNum.int</code> EKG metric. Using custom RTS options, you may seek to reduce the number of checks that the block-producing node in your stake pool configuration misses, for example due to time spent in garbage collection (GC).</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">For suggestions on reducing the number of missed checks to prepare a block, see the topic <a href="/ImprovingNodePerformance">Improving Cardano Node Performance</a>.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="pi">To display the default RTS options for Cardano Node:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window, type:
+          <CodeBlock language="bash">
+            {`cardano-node +RTS --info`}
+          </CodeBlock>
+        </li>
+      </ul>
+
+      <p>In the results, the value of the <code>Flag -with-rtsopts</code> key displays the default RTS options. For example:</p>
+
+      <CodeBlock language="bash">
+        {`-T -I0 -A16m -N2 --disable-delayed-os-memory-return`}
+      </CodeBlock>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+            <td class="boxText"><p class="boxText">Using the <a href="https://downloads.haskell.org/ghc/9.6.7/docs/users_guide/" target="_blank">GHC User's Guide</a>, investigate the default RTS options, as well as additional available RTS options. Specifically, refer to the sections <a href="https://downloads.haskell.org/ghc/9.6.7/docs/users_guide/using-concurrent.html#rts-options-for-smp-parallelism" target="_blank">RTS Options for SMP Parallelism</a> and <a href="https://downloads.haskell.org/ghc/9.6.7/docs/users_guide/runtime_control.html" target="_blank">Runtime System Options</a>.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>For example, to produce runtime system statistics for each garbage collection in addition to using default RTS options, include the following RTS option in the <code>cardano-node run</code> command where <code>&lt;FileName&gt;</code> is the name of the file in the current folder where you want to output statistics and <code>&lt;Options&gt;</code> is the list of options to use when running Cardano Node:</p>
+
+      <CodeBlock language="bash">
+        {`/usr/local/bin/cardano-node +RTS -S<FileName> -RTS run <Options>`}
+      </CodeBlock>
+
+      <p>Different stake pool operators report improved performance and/or system stability using different RTS options. If you are not satisfied with the performance or stability of an instance of Cardano Node, then subjectively you may notice improvement when adding custom RTS options. For example:</p>
+
+      <CodeBlock language="bash">
+        {`+RTS -N -qg -qb -RTS`}
+      </CodeBlock>
+
+      <CodeBlock language="bash">
+        {`+RTS -I0.3 -Iw600 -F1.5 -H2500M -RTS`}
+      </CodeBlock>
+
+      <CodeBlock language="bash">
+        {`+RTS -M12g -N -RTS`}
+      </CodeBlock>
+
+      <p>Using similar syntax, you can configure custom RTS options for Cardano CLI.</p>
+
+      <p class="pi">To display the default RTS options for Cardano CLI:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window, type:
+          <CodeBlock language="bash">
+            {`cardano-cli +RTS --info`}
+          </CodeBlock>
+        </li>
+      </ul>
+
+      <p>If you identify different RTS options that noticably seem to improve the performance or stability of a Cardano Node instance, then please consider <a href="/Contributing">Contributing</a> the RTS options to the <i>How to Set Up a Cardano Stake Pool</i> guide so that other stake pools may potentially also benefit.</p>
+
     </div>
   );
 }
 
 <HTMLContent />
+
