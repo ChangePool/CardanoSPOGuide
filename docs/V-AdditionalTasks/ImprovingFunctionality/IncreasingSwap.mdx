@@ -3,12 +3,14 @@ title: "Increasing Swap File Size"
 sidebar_label: "Increasing Swap File Size"
 slug: /IncreasingSwap
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 10
 description: ""
 ---
 
 import React from 'react';
+
+import CodeBlock from '@theme/CodeBlock';
 
 export function HTMLContent() {
   return (
@@ -16,8 +18,92 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
+      <p>The following common scenarios encountered by stake pool operators may require increasing swap file size:</p>
+
+      <ul>
+        <li>Running low on RAM for cardano-node processes</li>
+        <li>Checking slot leader schedule is crashing due to not enough RAM</li>
+      </ul>
+      
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">For a stake pool that you operate in the Mainnet environment, calculating the slot leader schedule for the current epoch may require a minimum of 16 GB combined memory and/or swap space in addition to the memory that Cardano Node may already use.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1>Enabling zRAM</h1>
+
+      <p>zRAM is a Linux kernel module that creates compressed swap devices on memory, allowing much faster access to data than a traditional swap using SSD or HDD devices.</p>
+
+      <p class="pi">To check whether zRAM is enabled:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window, type:
+          <CodeBlock language="bash">
+            {`cat /proc/swaps`}
+          </CodeBlock>
+        </li>
+      </ul>
+
+      <p>If the output lists a filename containing the text <code>zram</code> then zRAM is enabled.</p>
+
+      <p class="pi">To install zRAM:</p>
+
+      <ol>
+        <li>Using a terminal window, type:
+          <CodeBlock language="bash">
+            {`sudo apt install zram-config`}
+          </CodeBlock>
+        </li>
+        <li>By default, zRAM creates a swap device half the size of your real RAM. If needed, to customize zRAM configuration options type:
+          <CodeBlock language="bash">
+            {`sudo nano /usr/bin/init-zram-swapping`}
+          </CodeBlock>
+        </li>
+        <li>Press <code>CTRL+S</code> and then press <code>ENTER</code> to save changes that you made in step 2, and then press <code>CTRL+X</code> to exit the nano editor.</li>
+        <li>Reboot the computer.</li>
+      </ol>
+
+      <h1>Increasing Disk Swap File Size</h1>
+
+      <p>The following example creates a 12 GB swap file.</p>
+
+      <CodeBlock language="bash">
+        {`# Stop the Cardano Node instance
+sudo systemctl stop cardano-node
+
+sudo swapoff /swapfile
+
+# Verify swapfile is off
+swapon --show
+
+# Create a 12 GB swapfile
+# Edit swapfile size as needed
+sudo fallocate -l 12G /swapfile
+
+# Verify swapfile exists
+ls -lh /swapfile
+
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+# Verify swapfile increased in size
+swapon --show
+
+# Restart the Cardano Node instance
+sudo systemctl start cardano-node`}
+      </CodeBlock>
+
+      <h1>Adjusting the Swappiness Parameter</h1>
+
+      <p>The <code>swappiness</code> parameter defines how aggressively the Linux kernel swaps memory pages. Higher values increase the swapping of memory pages. Lower values decrease the amount of swap. Decreasing the amount of swap increases the aggressiveness of the Linux kernel in freeing up memory using other techniques when memory usage is high, including randomly killing processes. For details on adjusting the <code>swappiness</code> parameter appropriately for your system, see <a href="https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-20-04#step-6-tuning-your-swap-settings" target="_blank">Tuning Your Swap Settings</a> for example.</p>
+
     </div>
   );
 }
 
 <HTMLContent />
+
