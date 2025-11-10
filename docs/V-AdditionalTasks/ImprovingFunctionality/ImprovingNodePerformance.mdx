@@ -3,7 +3,7 @@ title: "Improving Cardano Node Performance"
 sidebar_label: "Improving Cardano Node Performance"
 slug: /ImprovingNodePerformance
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 25
 description: ""
 ---
@@ -16,8 +16,41 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
+      <p>By design, a Cardano Node instance operating as a block producer must test whether to prepare a block every slot—that is, every second. When the computer hosting the block producer is busy, then the block producer sometimes may miss testing whether to prepare a block. If the block producer misses testing whether to prepare a block in a slot when the stake pool is elected to produce a block, then the stake pool may miss the opportunity to produce the block.</p>
+
+      <p>In general, investigate potential configuration changes to reduce missed tests to prepare a block if the <code>cardano.node.metrics.slotsMissedNum.int</code> EKG metric reports that the block-producing node in your stake pool configuration misses more than approximately 75 slots per day.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Configuration changes that you implement on a block-producing node to reduce the number of missed slots may also improve performance when implemented on a relay node.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>To reduce the number of missed slots on a block-producing node or improve the general performance of a relay node, consider implementing the following configuration changes:</p>
+
+      <ul>
+        <li>Increase the speed of the disk drive that the computer hosting the Cardano Node instance uses.</li>
+        <li>To force the Cardano Node instance to use all processor cores available on the computer, configure runtime system options to include the <code>-N</code> option. For details, see the topic <a href="/ConfiguringGHCRuntime">Configuring GHC Runtime System Options</a>.</li>
+        <li>By default, Cardano Node takes a snapshot of the local copy of the blockchain ledger on disk every 72 minutes. Increasing the amount of time between snapshots may improve the performance of Cardano Node. To customize the amount of time between snapshots, add a key named <code>SnapshotInterval</code> in the <code>config-bp.json</code> or <code>config.json</code> file that the Cardano Node instance uses, and then set the value to a duration in seconds. For example, to take a snapshot every 24 hours, set the value to <code>86400</code>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">Increasing the amount of time between snapshots may slightly increase the time required to start Cardano Node.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li> {/* <!-- Source: https://cardano.stackexchange.com/questions/4532/missed-slot-leader-checks --> */}
+        {/* <!-- <li>In the <code>config-bp.json</code> or <code>config.json</code> configuration file that the Cardano Node instance uses, consider setting the <code>TraceMempool</code> key to the value <code>false</code> to disable mempool tracing. When you disable mempool tracing, the Cardano Node instance continues processing transactions as usual. However, the <code>cardano.node.metrics.txsInMempool.int</code> and <code>cardano.node.metrics.mempoolBytes.int</code> EKG metrics are unavailable. Therefore, you may find troubleshooting issues related to block propagation, topology, firewall or transaction processing more challenging when mempool tracing is disabled. Always enabling mempool tracing on a block-producing node may be considered <a href="https://github.com/input-output-hk/cardano-node/issues/2350" target="_blank">best practice</a>.</li>  --> */}
+        {/* <!-- October 26, 2025 - NOTE: When using Cardano Tracer, the TraceMempool key is deprecated. Perhaps test using Cardano Tracer options to disable mempool tracing. Remember that Cardano Tracer allows you to customize tracing of all metrics, not only the tracing of mempool metrics. --> */}
+      </ul>
+
     </div>
   );
 }
 
 <HTMLContent />
+
