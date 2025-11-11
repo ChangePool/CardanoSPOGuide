@@ -10,6 +10,9 @@ description: ""
 
 import React from 'react';
 
+import CodeBlock from '@theme/CodeBlock';
+import useLedgerAfterSlotValue from '!!raw-loader!/txt/useLedgerAfterSlotValue.txt';
+
 export function HTMLContent() {
   return (
     <div>
@@ -57,46 +60,46 @@ cp topology.json topology.json.bak
 
 5\. Using a text editor, open the `topology.json` file, and then add a record for the block-producing node in the `localRoots` section as follows, where `<BlockProducingNodeIPAddress>` is the IP address of the block-producing node in your stake pool configuration, and `<BlockProducingNodeName>` is an optional descriptive label for your block-producing node. Also, set the value `true` for the `trustable` key:
 
-```bash
-{
-  "bootstrapPeers": [
-    {
-      "address": "backbone.cardano.iog.io",
-      "port": 3001
-    },
-    {
-      "address": "backbone.mainnet.emurgornd.com",
-      "port": 3001
-    },
-    {
-      "address": "backbone.mainnet.cardanofoundation.org",
-      "port": 3001
-    }
-  ],
-  "localRoots": [
-    {
-      "accessPoints": [
-        {
-          "address": "<BlockProducingNodeIPAddress>",
-          "port": 6000,
-          "name": "<BlockProducingNodeName>"
-        }
-      ],
-      "advertise": false,
-      "comment": "Do NOT advertise the block-producing node",
-      "trustable": true,
-      "valency": 1
-    }
-  ],
-  "publicRoots": [
-    {
-      "accessPoints": [],
-      "advertise": false
-    }
-  ],
-  "useLedgerAfterSlot": 157852837
-}
-```
+<CodeBlock language="json">
+  {`\{
+    "bootstrapPeers": [
+      \{
+        "address": "backbone.cardano.iog.io",
+        "port": 3001
+      \},
+      \{
+        "address": "backbone.mainnet.emurgornd.com",
+        "port": 3001
+      \},
+      \{
+        "address": "backbone.mainnet.cardanofoundation.org",
+        "port": 3001
+      \}
+    ],
+    "localRoots": [
+      \{
+        "accessPoints": [
+          \{
+            "address": "<BlockProducingNodeIPAddress>",
+            "port": 6000,
+            "name": "<BlockProducingNodeName>"
+          \}
+        ],
+        "advertise": false,
+        "comment": "Do NOT advertise the block-producing node",
+        "trustable": true,
+        "valency": 1
+      \}
+    ],
+    "publicRoots": [
+      \{
+        "accessPoints": [],
+        "advertise": false
+      \}
+    ],
+    "useLedgerAfterSlot": `}{useLedgerAfterSlotValue}{`
+  }`}
+</CodeBlock>
 
 :::info
 To follow best practices, set `<BlockProducingNodeIPAddress>` to the local area network (LAN) Internet protocol (IP) address of the computer hosting the block-producing node when possible. If necessary—for example, if you set up your block-producing node on a different network than the relay node—then use the wide area network (WAN) IP address.
@@ -141,7 +144,7 @@ cp topology.json topology.json.bak
 ```
 
 5\. Using a text editor, open the `topology.json` file, and then replace the contents of the file with one or more records, as needed, to reference only the relay node(s) in your stake pool configuration. For example, the following lines configure a single relay node where `<RelayNodeIPAddress>` is the IP address of the relay node and `<RelayNodeName>` is an optional descriptive label for the relay node. Set the value `true` for the `trustable` key. Also, set the value of `bootstrapPeers` to `null` and the value of `useLedgerAfterSlot` to `-1`:
-```bash
+```json
 {
   "bootstrapPeers": null,
   "localRoots": [
