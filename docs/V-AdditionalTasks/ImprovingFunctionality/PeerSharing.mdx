@@ -3,12 +3,15 @@ title: "Enabling Peer Sharing"
 sidebar_label: "Enabling Peer Sharing"
 slug: /PeerSharing
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 15
 description: ""
 ---
 
 import React from 'react';
+
+import CodeBlock from '@theme/CodeBlock';
+import useLedgerAfterSlotValue from '!!raw-loader!/txt/useLedgerAfterSlotValue.txt';
 
 export function HTMLContent() {
   return (
@@ -16,10 +19,103 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
-      
+      <p>To improve network security, the peer sharing feature available in the Cardano Node software allows you to connect one or more relay nodes to the Cardano network without registering the relay(s) on the blockchain. One or more relay nodes that you register on the blockchain advertise your unregistered relay(s) to other nodes in the network.</p>
+
+      <p class="pi">To enable peer sharing:</p>
+
+      <ol>
+        <li>On a relay node that you registered on the blockchain using a registration certificate, open the <code>config.json</code> file using a text editor, and then edit the following values:
+        <CodeBlock language="json">
+          {`"PeerSharing": true,
+"TargetNumberOfKnownPeers": 150,
+"TargetNumberOfRootPeers": 60,`}
+        </CodeBlock>
+        <table class="box">
+          <tbody>
+            <tr>
+              <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+              <td class="boxText"><p class="boxText">Setting the value of <code>TargetNumberOfRootPeers</code> less than the value of <code>TargetNumberOfKnownPeers</code> allows peer sharing to provide additional peers. For more details on registering a relay node on the blockchain, see the topic <a href="/RegisteringPool">Registering a Stake Pool</a>.</p></td>
+            </tr>
+          </tbody>
+        </table>
+        </li>
+        <li>Save and close the <code>config.json</code> file.</li>
+        <li>On the relay node where you edited the <code>config.json</code> file in step 1, open the <code>topology.json</code> file using a text editor. Add another <code>accessPoints</code> subsection to the <code>localRoots</code> section as follows where <code>&lt;UnregisteredRelayNodeIPAddress&gt;</code> is the wide area network (WAN) IP address of the unregistered relay node in your stake pool configuration, and <code>&lt;UnregisteredRelayNodeName&gt;</code> is an optional descriptive label for the unregistered relay. Also, set the <code>advertise</code> key to <code>true</code> in the new <code>accessPoints</code> subsection:
+          <CodeBlock language="json">
+          {`\{
+  "bootstrapPeers": [
+    \{
+      "address": "backbone.cardano.iog.io",
+      "port": 3001
+    \},
+    \{
+      "address": "backbone.mainnet.emurgornd.com",
+      "port": 3001
+    \},
+    \{
+      "address": "backbone.mainnet.cardanofoundation.org",
+      "port": 3001
+    \}
+  ],
+  "localRoots": [
+    \{
+      "accessPoints": [
+        \{
+          "address": "<BlockProducingNodeIPAddress>",
+          "port": 6000,
+          "name": "<BlockProducingNodeName>"
+        \}
+      ],
+      "advertise": false,
+      "comment": "Do NOT advertise the block-producing node",
+      "trustable": true,
+      "valency": 1
+    \},
+    \{
+      "accessPoints": [
+        \{
+          "address": "<UnregisteredRelayNodeIPAddress>",
+          "port": 6000,
+          "name": "<UnregisteredRelayNodeName>"
+        \}
+      ],
+      "advertise": true,
+      "valency": 1,
+      "trustable": true,
+      "comment": "Share connection details for one or more unregistered relay nodes"
+    \}
+  ],
+  "publicRoots": [
+    \{
+      "accessPoints": [],
+      "advertise": false
+    \}
+  ],
+  "useLedgerAfterSlot": `}{useLedgerAfterSlotValue}{`
+\}`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">For more details on editing the <code>topology.json</code> file, see the topic <a href="/ConfiguringTopology">Configuring Topology</a>.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>Save and close the <code>topology.json</code> file.</li>
+        <li>On the registered relay, to restart the Cardano Node instance type:
+          <CodeBlock language="bash">
+            {`sudo systemctl restart cardano-node.service`}
+          </CodeBlock>
+        </li>
+      </ol>
+
+      <p>After the registered relay node restarts, verify that other relay nodes in the Cardano network slowly begin connecting to the unregistered relay(s) in your stake pool configuration.</p>
 
     </div>
   );
 }
 
 <HTMLContent />
+
