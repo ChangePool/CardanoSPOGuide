@@ -18,8 +18,34 @@ export function HTMLContent() {
 
       {/* <!-- Explain how to host text (JSON) files as well as PNG images on GitHub. For more details, see the topic Registering a Stake Pool related to hosting metadata files. --> */}
 
+      <p><a href="https://github.com/" target="_blank">GitHub</a> provides a free option for hosting text and/or image files online.</p>
+
+      <p class="pi">To upload files to GitHub:</p>
+
+      <ol>
+        <li>Using a Web browser, visit the <a href="https://github.com/" target="_blank">GitHub</a> Web site.</li>
+        <li>If you do not have a GitHub account, then click the <b>Sign Up</b> button in the top right corner, and then follow the instructions on screen.</li>
+        <li>To log in to your account, click the <b>Sign In</b> button, and then follow the prompts.</li>
+        <li>If you do not want to host files using an existing repository, then <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository" target="_blank">create a new repository</a>.</li>
+        <li>In the GitHub repository where you want to host files, <a href="https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository" target="_blank">add the files</a> that you want to host.
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">For example, using GitHub you may host the <code>metadata.json</code> and <code>metadata-extended.json</code> files, as well as the two PNG images containing the logo for the stake pool that you operate. For more details, see the topic <a href="/RegisteringPool">Registering a Stake Pool</a>.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To retrieve the URL for a text file that you added in step 5, click to display the file in the GitHub repository, then click the <b>Raw</b> button, and then copy the URL that the address bar in the Web browser displays.
+        <center><strong>OR</strong></center>
+        To retrieve the URL for an image file that you added in step 5, click to display the file in the GitHub repository, then right-click the image, and then click <b>Copy Image Address</b></li>
+        <li>If needed, to shorten a URL that you retrieve in step 6 use a free URL shortener such as <a href="https://www.shorturl.at/" target="_blank">ShortURL</a> or <a href="https://tinyurl.com/" target="_blank">TinyURL</a>, for example.</li>
+      </ol>
+
     </div>
   );
 }
 
 <HTMLContent />
+
