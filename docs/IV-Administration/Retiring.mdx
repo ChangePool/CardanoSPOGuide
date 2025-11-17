@@ -3,21 +3,204 @@ title: "Retiring a Stake Pool"
 sidebar_label: "Retiring a Stake Pool"
 slug: /Retiring
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 35
 description: ""
 ---
 
 import React from 'react';
 
+import TestnetNote from '@site/src/components/TestnetNote.js';
+
+import CodeBlock from '@theme/CodeBlock';
+import saveParameters from '!!raw-loader!/txt/saveParameters.sh';
+import queryTip from '!!raw-loader!/txt/queryTip.sh';
+import tallyUTXOs from '!!raw-loader!/txt/tallyUTXOs.sh';
+import calculateFee from '!!raw-loader!/txt/calculateFee.sh';
+import signTransaction from '!!raw-loader!/txt/signTransaction.sh';
+import submitTransaction from '!!raw-loader!/txt/submitTransaction.sh';
+
 export function HTMLContent() {
+
+  // Replace placeholders in the imported calculateFee component with values
+  var calculateFeeRetiring = calculateFee.replace("{{witness-count}}", "2");
+
+  // Replace placeholder in the imported signTransaction component with values
+  var signTransactionRetiring = signTransaction.replace("{{signing-key-files}}", "--signing-key-file payment.skey \\\n  --signing-key-file $HOME/cold-keys/node.skey \\\n  ");
+
+
   return (
     <div>
 
       {/* INSERT HTML HERE */}
+
+      <p>If you ever decide that you no longer want to operate a Cardano stake pool, then you can retire the pool.</p>
+
+      <p>Retiring a pool involves submitting a stake pool deregistration certificate to the Cardano blockchain ledger. While submitting the transaction to retire a stake pool requires that Cardano Node instances in the stake pool configuration are fully synchronized with the network, valid KES keys are NOT required.</p>
+      
+      <p>At the earliest, a stake pool deregistration certificate may take effect at the end of the next epoch. The stake address registered as the reward account for the stake pool receives the pool deposit refund. Therefore, you must wait until receiving the pool deposit refund prior to deregistering the stake address. If you deregister the stake address prior to receiving the pool deposit refund, then the pool deposit is nonreturnable. The <a href="https://cardanotreasury.fi/" target="_blank">Cardano Treasury</a> receives nonreturnable stake pool deposits.</p>
+      {/* <!-- https://forum.cardano.org/t/kes-key-expired/98936 --> */}
+
+      <TestnetNote />
+
+      <p>If you plan to retire a stake pool operating in the Mainnet environment having multiple pool owners, then communicate your intention to retire the pool to all pool owners in advance. To avoid risking losing fees for producing blocks, ensure that pool owners do NOT remove funds from accounts used to commit pledge until after the stake pool retires. To provide an opportunity for moving stakes to other pools, also give advance notice of the intention to retire the stake pool to delegators.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+            <td class="boxText"><p class="boxText">Retiring a stake pool is permanent.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="pi">To retire a stake pool that you operate:</p>
+
+      <ol>
+        <li>On the block-producing node in your stake pool configuration, using a terminal window type the following commands to save protocol parameters:
+          <CodeBlock language="bash">
+            {saveParameters}
+          </CodeBlock>
+        </li>
+        <li>When the local copy of the Cardano blockchain ledger is fully synchronized with the network, type the following commands to query the slot number of the current tip of the ledger:
+          <CodeBlock language="bash">
+            {queryTip}
+          </CodeBlock>
+        </li>
+        <li>To determine the current epoch number, type the following commands where <code>&lt;EKGEndpoint&gt;</code> is the URL where the EKG endpoint for the local Cardano Node instance listens:
+          <CodeBlock language="bash">
+            {`currentEpoch=$(cardano-cli conway query tip --mainnet | jq -r '.epoch')
+echo "Current Epoch: $\{currentEpoch\}"`}
+          </CodeBlock>
+          <center><strong>OR</strong></center>
+          <CodeBlock language="bash">
+            {`currentEpoch=$(curl -s -H 'Accept: application/json' <EKGEndpoint> | jq -r '.cardano.node.metrics.epoch.int.val')
+echo "Current Epoch: $\{currentEpoch\}"`}
+          </CodeBlock>
+          {/* <!-- http://localhost:12788/ --> */}
+           <center><strong>OR</strong></center>
+           <CodeBlock language="bash">
+            {`startTimeGenesis=$(cat $NODE_HOME/shelley-genesis.json | jq -r '.systemStart')
+startTimeSec=$(date --date=$\{startTimeGenesis\} +%s)
+currentTimeSec=$(date -u +%s)
+epochLength=$(cat $NODE_HOME/shelley-genesis.json | jq -r '.epochLength')
+currentEpoch=$(( ($\{currentTimeSec\} - $\{startTimeSec\}) / $\{epochLength\} ))
+echo "Current Epoch: $\{currentEpoch\}"`}
+           </CodeBlock>
+        </li>
+        <li>To determine the range of epochs when a stake pool currently can retire, type:
+          <CodeBlock language="bash">
+            {`poolRetireMaxEpoch=$(cat $NODE_HOME/params.json | jq -r '.poolRetireMaxEpoch')
+echo "The maximum number of epochs from now when a stake pool can retire is $\{poolRetireMaxEpoch\}"
+
+minRetirementEpoch=$(( $\{currentEpoch\} + 1 ))
+maxRetirementEpoch=$(( $\{currentEpoch\} + $\{poolRetireMaxEpoch\} ))
+
+echo "Currently, the earliest a stake pool can retire is at the end of epoch $\{minRetirementEpoch\}"
+echo "and the latest a stake pool can retire is at the end of epoch $\{maxRetirementEpoch\}"`}
+          </CodeBlock>
+        </li>
+        <li>To generate a stake pool deregistration certificate, type the following command where <code>&lt;EpochToRetire&gt;</code> is a value between <code>$&#123;minRetirementEpoch&#125;</code> and <code>$&#123;maxRetirementEpoch&#125;</code>:
+          <CodeBlock language="bash">
+            {`cardano-cli conway stake-pool deregistration-certificate \\
+  --cold-verification-key-file $NODE_HOME/node.vkey \\
+  --epoch <EpochToRetire> \\
+  --out-file $NODE_HOME/pool.dereg`}
+          </CodeBlock>
+        </li>
+        <li>To retrieve the UTXOs available for your payment address and calculate the balance, type:
+          <CodeBlock language="bash">
+            {tallyUTXOs}
+          </CodeBlock>
+        </li>
+        <li>To build a draft transaction for calculating the transaction fee, type:
+          <CodeBlock language="bash">
+            {`cardano-cli conway transaction build-raw \\
+  $\{tx_in\} \\
+  --tx-out $(cat $NODE_HOME/payment.addr)+$(( $\{total_balance\} - 200000 )) \\
+  --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
+  --fee 200000 \\
+  --certificate-file $NODE_HOME/pool.dereg \\
+  --out-file $NODE_HOME/tx.tmp`}
+          </CodeBlock>
+        </li>
+        <li>To calculate the fee for the transaction, type:
+          <CodeBlock language="bash">
+            {calculateFeeRetiring}
+          </CodeBlock>
+        </li>
+        <li>To calculate change from the transaction, type:
+          <CodeBlock language="bash">
+            {`txOut=$(( $\{total_balance\} - $\{fee\} ))
+echo "Change: $\{txOut\}"`}
+          </CodeBlock>
+        </li>
+        <li>To build the transaction, type:
+          <CodeBlock language="bash">
+            {`cardano-cli conway transaction build-raw \\
+  $\{tx_in\} \\
+  --tx-out $(cat $NODE_HOME/payment.addr)+$\{txOut\} \\
+  --invalid-hereafter $(( $\{currentSlot\} + 10000 )) \\
+  --fee $\{fee\} \\
+  --certificate-file $NODE_HOME/pool.dereg \\
+  --out-file $NODE_HOME/tx.raw`}
+          </CodeBlock>
+        </li>
+        <li>Copy the <code>tx.raw</code> file that you created in step 10 to the <code>$NODE_HOME</code> folder on your air-gapped, offline computer, and then using a terminal window type the following commands to sign the transaction:
+          <CodeBlock language="bash">
+            {signTransactionRetiring}
+          </CodeBlock>
+        </li>
+        <li>Copy the <code>tx.signed</code> file that you created in step 11 to the <code>$NODE_HOME</code> folder on the block-producing node, and then using a terminal window type the following command to submit the transaction to the network:
+          <CodeBlock language="bash">
+            {submitTransaction}
+          </CodeBlock>
+        </li>
+      </ol>
+
+      {/* <!-- If you have a change of heart, you can create and submit a new registration certificate before the end of epoch 40, which will then overrule the deregistration certificate. --> */}
+
+      <p class="pi">To verify that the stake pool retired successfully:</p>
+
+      <ol>
+        <li>Wait until the epoch to retire that you specified using the stake pool deregistration certificate ends.</li>
+        <li>Using a terminal window on the computer that you designated as the block-producing node in the configuration for the retired stake pool, when the local copy of the Cardano blockchain ledger is fully synchronized with the network type the following commands. If the stake pool retired successfully, then the <code>jq</code> command returns an empty result set:
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+cardano-cli conway query ledger-state --mainnet > ledger-state.json
+sudo systemctl stop cardano-node.service
+jq -r '.stateBefore.esLState.delegationState.pstate.stakePoolParams."'"$(cat stakepoolid-hex.txt)"'" // empty' ledger-state.json
+sudo systemctl start cardano-node.service`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">Querying the ledger state may take a few minutes to complete.</p></td>
+              </tr>
+            </tbody>
+          </table>
+          <center><strong>OR</strong></center>
+          Using a <a href="https://explorer.cardano.org" target="_blank">blockchain explorer</a>, verify that the pool retired.
+
+        </li>
+        <li>To verify that the stake address registered as the reward account for the retired stake pool received the pool deposit refund, follow the procedure for <a href="/CheckingRewards">Checking Stake Pool Rewards</a>.</li>
+        <li>Follow the procedure for <a href="/ClaimingRewards">Claiming Stake Pool Rewards</a>.</li>
+        <li>As needed, follow the procedure for <a href="/SendingFunds">Sending Funds</a> to another wallet.</li>
+      </ol>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+            <td class="boxText"><p class="boxText">To receive the deposit for <a href="/RegisteringAddress">Registering a Stake Address</a>, after receiving the stake pool deposit refund, deregister the stake address registered as the reward account for the retired stake pool.</p></td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
   );
 }
 
 <HTMLContent />
+
