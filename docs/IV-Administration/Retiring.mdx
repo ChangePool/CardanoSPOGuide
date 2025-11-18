@@ -38,22 +38,23 @@ export function HTMLContent() {
 
       <p>Retiring a pool involves submitting a stake pool deregistration certificate to the Cardano blockchain ledger. While submitting the transaction to retire a stake pool requires that Cardano Node instances in the stake pool configuration are fully synchronized with the network, valid KES keys are NOT required.</p>
       
-      <p>At the earliest, a stake pool deregistration certificate may take effect at the end of the next epoch. The stake address registered as the reward account for the stake pool receives the pool deposit refund. Therefore, you must wait until receiving the pool deposit refund prior to deregistering the stake address. If you deregister the stake address prior to receiving the pool deposit refund, then the pool deposit is nonreturnable. The <a href="https://cardanotreasury.fi/" target="_blank">Cardano Treasury</a> receives nonreturnable stake pool deposits.</p>
+      <p>At the earliest, a stake pool deregistration certificate may take effect at the beginning of the next epoch. The stake address registered as the reward account for the stake pool receives the pool deposit refund. Therefore, you must wait until receiving the pool deposit refund prior to deregistering the stake address. If you deregister the stake address prior to receiving the pool deposit refund, then the pool deposit is nonreturnable. The <a href="https://cardanotreasury.fi/" target="_blank">Cardano Treasury</a> receives nonreturnable stake pool deposits.</p>
       {/* <!-- https://forum.cardano.org/t/kes-key-expired/98936 --> */}
       {/* <!-- https://cardano-course.gitbook.io/cardano-course/handbook/create-a-stake-pool/retiring-a-stake-pool --> */}
+      {/* <!-- https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/stake-pool-operations/12_retire_stakepool.md --> */}
 
       <TestnetNote />
 
       <p>If you plan to retire a stake pool operating in the Mainnet environment having multiple pool owners, then communicate your intention to retire the pool to all pool owners in advance. To avoid risking losing fees for producing blocks, ensure that pool owners do NOT remove funds from accounts used to commit pledge until after the stake pool retires. To provide an opportunity for moving stakes to other pools, also give advance notice of the intention to retire the stake pool to delegators.</p>
 
-      <table class="box">
+      {/* <!-- <table class="box">
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
             <td class="boxText"><p class="boxText">Retiring a stake pool is permanent.</p></td>
           </tr>
         </tbody>
-      </table>
+      </table> --> */}
 
       <p class="pi">To retire a stake pool that you operate:</p>
 
@@ -97,8 +98,8 @@ echo "The maximum number of epochs from now when a stake pool can retire is $\{p
 minRetirementEpoch=$(( $\{currentEpoch\} + 1 ))
 maxRetirementEpoch=$(( $\{currentEpoch\} + $\{poolRetireMaxEpoch\} ))
 
-echo "Currently, the earliest a stake pool can retire is at the end of epoch $\{minRetirementEpoch\}"
-echo "and the latest a stake pool can retire is at the end of epoch $\{maxRetirementEpoch\}"`}
+echo "Currently, the earliest a stake pool can retire is at the beginning of epoch $\{minRetirementEpoch\}"
+echo "and the latest a stake pool can retire is at the beginning of epoch $\{maxRetirementEpoch\}"`}
           </CodeBlock>
         </li>
         <li>To generate a stake pool deregistration certificate, type the following command where <code>&lt;EpochToRetire&gt;</code> is a value between <code>$&#123;minRetirementEpoch&#125;</code> and <code>$&#123;maxRetirementEpoch&#125;</code>:
@@ -159,12 +160,12 @@ echo "Change: $\{txOut\}"`}
         </li>
       </ol>
 
-      {/* <!-- If you have a change of heart, you can create and submit a new registration certificate before the end of epoch 40, which will then overrule the deregistration certificate. --> */}
+      <p>After submitting the stake pool stake pool deregistration certificate to the network, if you decide that you no longer want to deregister the stake pool, following the procedure for <a href="/RegisteringPool">Registering a Stake Pool</a> prior to the beginning of the <code>&lt;EpochToRetire&gt;</code> that you specified overrides the deregistration certificate.</p>
 
       <p class="pi">To verify that the stake pool retired successfully:</p>
 
       <ol>
-        <li>Wait until the epoch to retire that you specified using the stake pool deregistration certificate ends.</li>
+        <li>Wait until the <code>&lt;EpochToRetire&gt;</code> that you specified using the stake pool deregistration certificate begins.</li>
         <li>Using a terminal window on the computer that you designated as the block-producing node in the configuration for the retired stake pool, when the local copy of the Cardano blockchain ledger is fully synchronized with the network type the following commands. If the stake pool retired successfully, then the <code>jq</code> command returns an empty result set:
           <CodeBlock language="bash">
             {`cd $NODE_HOME
