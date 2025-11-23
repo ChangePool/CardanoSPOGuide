@@ -51,7 +51,7 @@ _Table 1 Current Cardano Node Version Requirements_
 
 |     Release Date     | Cardano Node Version | Cardano CLI Version | GHC Version | Cabal Version |
 |  :----------------:  | :------------------: | :-----------------: | :---------: | :-----------: |
-|       July 2025      |        10.5.1        |      10.11.0.0      |    9.6.7    |    3.12.1.0   |
+|     November 2025    |        10.5.3        |      10.11.0.0      |    9.6.7    |    3.12.1.0   |
 
 **To set GHCup, GHC and Cabal versions using a graphical user interface, type the following command using a terminal window:**
 ```
@@ -219,8 +219,8 @@ The time required to compile the `cardano-node` and `cardano-cli` packages may b
 3\. When the compiler finishes, to verify the version numbers of the new `cardano-node` and `cardano-cli` binaries type:
 
 ```bash
-$(./scripts/bin-path.sh cardano-node) version
-$(./scripts/bin-path.sh cardano-cli) version
+$(./scripts/bin-path.sh cardano-node) --version
+$(./scripts/bin-path.sh cardano-cli) --version
 ```
 
 **To install the binaries that you compiled:**

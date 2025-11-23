@@ -31,8 +31,8 @@ export function HTMLContent() {
             <th width="20%"><p>Cabal Version</p></th>
           </tr>
           <tr>
-            <td class="center"><p>July 2025</p></td>
-            <td class="center"><p>10.5.1</p></td>
+            <td class="center"><p>November 2025</p></td>
+            <td class="center"><p>10.5.3</p></td>
             <td class="center"><p>10.11.0.0</p></td>
             <td class="center"><p>9.6.7</p></td>
             <td class="center"><p>3.12.1.0</p></td>
@@ -190,7 +190,7 @@ Libs: -L\${libdir} -lblst
 EOF
 sudo cp libblst.pc /usr/local/lib/pkgconfig/
 sudo cp bindings/blst_aux.h bindings/blst.h bindings/blst.hpp /usr/local/include/
-sudo cp libblst.a /usr/local/lib
+sudo cp libblst.a /usr/local/lib/
 sudo chmod u=rw,go=r /usr/local/{lib/{libblst.a,pkgconfig/libblst.pc},include/{blst.{h,hpp},blst_aux.h}}`}
           </CodeBlock>
         </li>
