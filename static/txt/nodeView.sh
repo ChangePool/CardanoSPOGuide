@@ -72,28 +72,44 @@ convertsecs2hms() {
 query_kes_period_info () {
 
   local kes_info=""
+  local op_cert_error=""
   local current_kes_period=""
   local end_kes_period=""
 
   # Retrieve details about the current KES period and operational certificate
-  kes_info=$(cardano-cli conway query kes-period-info ${environment_option} --op-cert-file ${op_cert_path})
+  kes_info=$(cardano-cli conway query kes-period-info ${environment_option} --op-cert-file ${op_cert_path} 2>&1)
+
+  # Detect errors in the current KES period and operational certificate details
+  op_cert_error=$(grep -e '✗' -e '<socket: 11>' <<< "${kes_info}")
+
+  # If the details about the current KES period and operational certificate are error free
+  if [[ -z "${op_cert_error}" ]]
+  then
+  
+    # To preserve JSON formatting, drop the first two lines that the query kes-period-info command returns
+    kes_info=$(tail -n +3 <<< "${kes_info}")
     
-  # To preserve JSON formatting, drop the first two lines that the query kes-period-info command returns
-  kes_info=$(tail -n +3 <<< "${kes_info}")
-    
-  # Retrieve values that the query kes-period-info command returns
-  current_kes_period=$(jq -r '.qKesCurrentKesPeriod' <<< "${kes_info}")
-  end_kes_period=$(jq -r '.qKesEndKesInterval' <<< "${kes_info}")
-  expiry_date=$(jq -r '.qKesKesKeyExpiry' <<< "${kes_info}")
+    # Retrieve values that the query kes-period-info command returns
+    current_kes_period=$(jq -r '.qKesCurrentKesPeriod' <<< "${kes_info}")
+    end_kes_period=$(jq -r '.qKesEndKesInterval' <<< "${kes_info}")
+    expiry_date=$(jq -r '.qKesKesKeyExpiry' <<< "${kes_info}")
 
-  # Calculate the number of KES periods remaining
-  kes_periods_remaining=$(( end_kes_period - current_kes_period  ))
+    # Calculate the number of KES periods remaining
+    kes_periods_remaining=$(( end_kes_period - current_kes_period  ))
 
-  # To create fixed widths, add trailing spaces to values as needed
-  kes_periods_remaining=$(printf "%-2s" "${kes_periods_remaining}")
+    # To create fixed widths, add trailing spaces to values as needed
+    kes_periods_remaining=$(printf "%-2s" "${kes_periods_remaining}")
 
-  # Format the date when the operational certificate expires
-  expiry_date=$(date +"%Y-%m-%d" -d ${expiry_date})
+    # Format the date when the operational certificate expires
+    expiry_date=$(date +"%Y-%m-%d" -d ${expiry_date})
+
+   else
+
+    # Inform the user that details about the current KES period and operational certificate contain errors
+    kes_periods_remaining="Error"
+    expiry_date="Error"
+
+  fi
 
 }
 
