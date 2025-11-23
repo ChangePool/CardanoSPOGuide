@@ -103,7 +103,7 @@ query_kes_period_info () {
     # Format the date when the operational certificate expires
     expiry_date=$(date +"%Y-%m-%d" -d ${expiry_date})
 
-   else
+  else
 
     # Inform the user that details about the current KES period and operational certificate contain errors
     kes_periods_remaining="Error"
