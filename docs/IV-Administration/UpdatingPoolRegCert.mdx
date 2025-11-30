@@ -3,7 +3,7 @@ title: "Updating the Stake Pool Registration Certificate"
 sidebar_label: "Updating the Stake Pool Registration Certificate"
 slug: /UpdatingPoolRegCert
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 15
 description: ""
 ---
@@ -25,8 +25,17 @@ export function HTMLContent() {
       <ol>
         <li>Prepare and publish updated metadata.</li>
         <li>Generate an updated stake pool registration certificate.</li>
-        <li>Generate an updated stake delegation certificate.</li>
-        <li>Submit the updated stake pool registration certificate to the blockchain.</li>
+        <li>If needed, generate an updated stake delegation certificate.</li>
+        <li>Submit the updated stake pool registration certificate—and stake delegation certificate, if applicable—to the blockchain.
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">You pay the deposit required to register a stake pool only when registering a stake pool—NOT when updating the stake pool registration certificate. If you do not include a stake delegation certificate in a transaction updating the stake pool registration certificate, then the transaction still requires the <code>payment.skey</code>, <code>node.skey</code> and <code>stake.skey</code> signing key files.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
       </ol>
 
       <p>For more details, see the topic <a href="/RegisteringPool">Registering a Stake Pool</a>.</p>
