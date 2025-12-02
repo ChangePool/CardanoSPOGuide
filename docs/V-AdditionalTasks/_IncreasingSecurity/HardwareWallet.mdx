@@ -1,0 +1,92 @@
+---
+title: "Securing a Stake Pool Using a Hardware Wallet"
+sidebar_label: "Securing a Stake Pool Using a Hardware Wallet"
+slug: /HardwareWallet
+hide_title: false
+hide_table_of_contents: false
+sidebar_position: 45
+description: ""
+---
+
+import React from 'react';
+
+import CodeBlock from '@theme/CodeBlock';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+      {/* INSERT HTML HERE */}
+
+      {/* <!-- Test whether the hardware wallet signing file named hw-stake.hwsfile that cardano-hw-cli generates may sign a transaction to send funds from the corresponding payment address. If so, then the procedure to add a hardware wallet owner to a stake pool is NOT secure. If the procedure is not secure, then add the Securing a Stake Pool Using a Hardware Wallet topic to Appendix F Archive, adding an IMPORTANT note at the top explaining the additional risks associated with using cardano-hw-cli 
+        
+      The path 1852H/1815H/0H/2/0 derives the public and signing staking keys--NOT the payment keys. Claiming rewards requires the signing staking keys of all stake pool owners, I believe. I could test that using the 12AM pool operating in the Preview testnet environment.
+      
+      In that case, the security of the procedure depends on NOT using cardano-hw-cli to derive the payment keys, which may easily be achieved using Cardano HW CLI by setting the path option to 1852H/1815H/0H/0/0 or 1852H/1815H/0H/1/0 For more details on the derivation path, see the section Using a Seed Phrase in the topic Creating a Wallet Does cardano-hw-cli derive payment keys? Test that.
+      
+      IMPORTANT: Do NOT test deriving signing files for a Cardano hardware wallet using a seed phrase in use on Mainnet. If you use Cardano HW CLI to derive the signing file for a payment address, then you can use the signing file to sign and submit transactions to the Cardano blockchain for hardware wallet accounts without using the physical hardware wallet. The same signing file may be used to witness transactions in the Mainnet or Testnet environments.
+      
+      hwsfile must stand for hardware wallet signing file. --> */}
+
+      <p>Securing a stake pool using a hardware wallet involves:</p>
+
+      <ol>
+        <li>Installing <a href="https://github.com/vacuumlabs/cardano-hw-cli" target="_blank">Cardano HW CLI</a> on the air-gapped, offline computer used to store and safeguard keys for the stake pool</li>
+        <li>Deriving key files for the hardware wallet stake address
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+                <td class="boxText"><p class="boxText">To minimize security risks, do NOT use Cardano HW CLI to derive key files for the hardware wallet payment address</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>Registering the hardware wallet address as:
+          <ul>
+            <li>The rewards account holding the pledge for the stake pool</li>
+            <li>An owner of the stake pool, in addition to the existing owner(s)</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p>When <a href="/UpdatingPoolRegCert">Updating the Stake Pool Registration Certificate</a>, all stake pool owners must witness the transaction using the respective stake address signing file.</p>
+
+      <<p class="pi">To secure a Cardano stake pool using a hardware wallet:</p>
+
+      <ol>
+        <li>Using a terminal window on the air-gapped, offline computer, type:
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+mkdir ./hw-wallet-keys
+cd ./hw-wallet-keys`}
+          </CodeBlock>
+        </li>
+        <li>Using a USB cable, connect the hardware wallet to the air-gapped, offline computer.</li>
+        <li>To generate the public verification key and private signing file for the hardware wallet stake address, type:
+          <CodeBlock language="bash">
+            {`cardano-hw-cli address key-gen \\
+  --path 1852H/1815H/0H/2/0 \\
+  --verification-key-file hw-stake.vkey \\
+  --hw-signing-file hw-stake.hwsfile`}
+          </CodeBlock>
+        </li>
+      </ol>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">To run <code>cardano-hw-cli</code> commands successfully using a Ledger hardware wallet, you may need to use the <code>sudo</code> prefix. In the derivation path <code>1852H/1815H/0H/2/0</code> the number <code>2</code> indicates the staking key path. For more details on the derivation path for keys used in Cardano transactions, see the topic <a href="/CreatingWallet">Creating a Wallet</a>. The <code>hw-stake.vkey</code> file is not sensitive and may be shared publicly. While the <code>hw-stake.hwsfile</code> does NOT contain a raw private key, the file is sensitive and may be used to sign transactions when <a href="/ClaimingRewards">Claiming Stake Pool Rewards</a> or <a href="/PoolDelegation">Delegating to a Stake Pool</a>.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      
+
+    </div>
+  );
+}
+
+<HTMLContent />
+
