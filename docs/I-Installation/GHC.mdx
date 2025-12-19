@@ -40,6 +40,22 @@ export function HTMLContent() {
         </tbody>
       </table>
 
+      <p>Installing GHC and Cabal involves editing the <code>$HOME/.bashrc</code> file. The <code>$HOME</code> environment variable or <code>~</code> tilde prefix refers to the home directory associated with your user name. The <code>.bashrc</code> file is a Bash script that runs each time you open a new terminal window. In the <code>.bashrc</code> file, you can add any command that you may type at the command prompt. Use <code>.bashrc</code> to set up the shell as needed for your environment.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Prefixing a file or folder name using a period (<code>.</code>) character creates a hidden file or folder. Hidden files and folders do not display by default using the file manager or typical command-line listings. To list contents of the current directory including hidden files and folders, using a terminal window type:
+              <CodeBlock language="bash">
+                {`ls -a`}
+              </CodeBlock>
+            For more details, refer to the man page for the <a href="https://man7.org/linux/man-pages/man1/ls.1.html" target="_blank">ls</a> command.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
       <p class="pi">To install GHC and Cabal:</p>
 
       <ol>
@@ -70,15 +86,7 @@ sudo apt-get upgrade -y`}
         <li>During the installation, when prompted:
           <ol>
             <li>Press ENTER to proceed.</li>
-            <li>To prepend the required PATH variable to <code>$HOME/.bashrc</code>, type <b>P</b>
-            <table class="box">
-              <tbody>
-                <tr>
-                  <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-                  <td class="boxText"><p class="boxText">The <code>$HOME</code> environment variable or <code>~</code> tilde prefix refers to the home directory associated with your user name. The <code>.bashrc</code> file is a Bash script that runs each time you open a new terminal window. In the <code>.bashrc</code> file, you can add any command that you may type at the command prompt. Use <code>.bashrc</code> to set up the shell as needed for your environment.</p></td>
-                </tr>
-              </tbody>
-            </table></li>
+            <li>To prepend the required PATH variable to <code>$HOME/.bashrc</code>, type <b>P</b></li>
             <li>When prompted to install haskell-language-server (HLS), type <b>N</b></li>
             <li>When prompted to install stack, type <b>N</b></li>
             <li>Press ENTER to proceed.</li>
