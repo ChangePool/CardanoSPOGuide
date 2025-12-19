@@ -3,7 +3,7 @@ title: "Creating a Graphical Dashboard"
 sidebar_label: "Creating a Graphical Dashboard"
 slug: /Dashboard
 hide_title: false
-hide_table_of_contents: false
+hide_table_of_contents: true
 sidebar_position: 20
 description: ""
 ---
@@ -15,6 +15,32 @@ export function HTMLContent() {
     <div>
 
       {/* INSERT HTML HERE */}
+
+      <p>You can create a graphical dashboard to monitor a Cardano stake pool that you operate using the following open source software solutions:</p>
+
+      <ul>
+        <li><a href="https://prometheus.io/" target="_blank">Prometheus</a> collects time-series data—metrics—from applications and infrastructure using a pull model, facilitating continuous system monitoring as well as alerting. Storing and querying data is achieved using <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/" target="_blank">PromQL</a> (Prometheus Query Language).</li>
+        <li><a href="https://github.com/prometheus/node_exporter" target="_blank">Prometheus Node Exporter</a> enables exporting system hardware and operating system metrics for a host computer using Prometheus. Additionally, Node Exporter allows you to export any custom statistics that you may generate.</li>
+        <li><a href="https://grafana.com/" target="_blank">Grafana</a> is an observability platform that facilitates visualizing data Prometheus collects.</li>
+      </ul>
+
+      <p><i>Figure 1</i> provides a network diagram illustrating how Prometheus and Grafana components may connect and interact in a configuration involving multiple computers, such as when monitoring a Cardano stake pool. The diagram includes default port numbers.</p>
+
+      <figure>
+        <img src="img/PrometheusNetworkDiagram.png" />
+        <figcaption>Figure 1 Prometheus and Grafana Network Diagram</figcaption>
+      </figure>
+
+      <p>To allow Prometheus and Grafana components to communicate, you must open required ports to specific computers using respective firewalls. To connect to the Prometheus and Grafana servers securely as an end user, consider <a href="/Hardening/SSH#Using-Port-Forwarding">Using Port Forwarding</a>.</p>
+
+      <p class="pi">To create a graphical dashboard for monitoring a Cardano stake pool:</p>
+
+      <ol>
+        <li></li>
+      </ol>
+
+
+
 
     </div>
   );
