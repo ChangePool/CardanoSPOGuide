@@ -22,7 +22,7 @@ export function HTMLContent() {
         
       The path 1852H/1815H/0H/2/0 derives the public and signing staking keys--NOT the payment keys. Claiming rewards requires the signing staking keys of all stake pool owners, I believe. I could test that using the 12AM pool operating in the Preview testnet environment.
       
-      In that case, the security of the procedure depends on NOT using cardano-hw-cli to derive the payment keys, which may easily be achieved using Cardano HW CLI by setting the path option to 1852H/1815H/0H/0/0 or 1852H/1815H/0H/1/0 For more details on the derivation path, see the section Using a Seed Phrase in the topic Creating a Wallet Does cardano-hw-cli derive payment keys? Test that.
+      In that case, the security of the procedure depends on NOT using cardano-hw-cli to derive the payment keys, which may easily be achieved using Cardano HW CLI by setting the path option to 1852H/1815H/0H/0/0 or 1852H/1815H/0H/1/0 For more details on the derivation path, see the section Using a Seed Phrase in the topic Creating a Wallet. Does cardano-hw-cli derive payment keys? Test that.
       
       IMPORTANT: Do NOT test deriving signing files for a Cardano hardware wallet using a seed phrase in use on Mainnet. If you use Cardano HW CLI to derive the signing file for a payment address, then you can use the signing file to sign and submit transactions to the Cardano blockchain for hardware wallet accounts without using the physical hardware wallet. The same signing file may be used to witness transactions in the Mainnet or Testnet environments.
       
