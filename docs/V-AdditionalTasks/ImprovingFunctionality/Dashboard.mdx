@@ -10,6 +10,8 @@ description: ""
 
 import React from 'react';
 
+import CodeBlock from '@theme/CodeBlock';
+
 export function HTMLContent() {
   return (
     <div>
@@ -19,7 +21,7 @@ export function HTMLContent() {
       <p>You can create a graphical dashboard to monitor a Cardano stake pool that you operate using the following open source software solutions:</p>
 
       <ul>
-        <li><a href="https://prometheus.io/" target="_blank">Prometheus</a> collects time-series data—metrics—from applications and infrastructure using a pull model, facilitating continuous system monitoring as well as alerting. Storing and querying data is achieved using <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/" target="_blank">PromQL</a> (Prometheus Query Language).</li>
+        <li><a href="https://prometheus.io/" target="_blank">Prometheus</a> collects time-series data—metrics—from applications and infrastructure using a pull model, facilitating continuous system monitoring as well as alerting.</li>
         <li><a href="https://github.com/prometheus/node_exporter" target="_blank">Prometheus Node Exporter</a> enables exporting system hardware and operating system metrics for a host computer using Prometheus. Additionally, Node Exporter allows you to export any custom statistics that you may generate.</li>
         <li><a href="https://grafana.com/" target="_blank">Grafana</a> is an observability platform that facilitates visualizing data Prometheus collects.</li>
       </ul>
@@ -31,13 +33,153 @@ export function HTMLContent() {
         <figcaption>Figure 1 Prometheus and Grafana Network Diagram</figcaption>
       </figure>
 
-      <p>To allow Prometheus and Grafana components to communicate, you must open required ports to specific computers using respective firewalls. To connect to the Prometheus and Grafana servers securely as an end user, consider <a href="/Hardening/SSH#Using-Port-Forwarding">Using Port Forwarding</a>.</p>
+      <p>To allow Prometheus and Grafana components to communicate, you must open required ports to specific computers using respective firewalls.</p>
+
+      <p>To monitor a Cardano stake pool configuration, you may install the Prometheus server and Grafana on the same relay node along with Prometheus Node Exporter, for example. Configure Prometheus to scrape each instance of Prometheus Node Exporter, as well as each Cardano Node Prometheus endpoint.</p>
+
+      <p>To connect to the Prometheus and Grafana servers securely as an end user, consider <a href="/Hardening/SSH#Using-Port-Forwarding">Using Port Forwarding</a>.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">For details on using the Cardano Node Prometheus endpoint, see <a href="/MonitoringMetrics">Monitoring Metrics</a>. The following procedure assumes that Cardano Node Prometheus endpoints in your stake pool configuration listen on the default port 12798. If you change the port number, then update the procedure accordingly.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="pi">To install and configure Prometheus to monitor a Cardano stake pool:</p>
+
+      <ol>
+        <li>On the computer that you designate to host the Prometheus server, type the following commands using a terminal window:
+          <CodeBlock language="bash">
+            {`sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-get install prometheus
+sudo systemctl start prometheus.service
+sudo systemctl enable prometheus.service`}
+          </CodeBlock>
+        </li>
+        <li>To install Prometheus Node Exporter, type:
+          <CodeBlock language="bash">
+            {`sudo apt-get install prometheus-node-exporter
+sudo systemctl start prometheus-node-exporter.service
+sudo systemctl enable prometheus-node-exporter.service`}
+          </CodeBlock>
+        </li>
+        <li>Repeat step 2 on each computer in your stake pool configuration.</li>
+        <li>To configure Prometheus scrape targets:
+          <ol>
+            <li>On the computer where you installed Prometheus in step 1, using a terminal window type:
+              <CodeBlock language="bash">
+                {`cd /etc/prometheus
+sudo cp ./prometheus.yml ./prometheus.bak
+sudo nano ./prometheus.yml`}
+              </CodeBlock>
+            </li>
+            <li>In the <code>prometheus.yml</code> file, add an entry in the <code>scrape_configs</code> section for each Cardano Node instance and Prometheus Node Exporter instance in your stake pool configuration, using the following example where <code>&lt;BlockProducingNodeIPAddress&gt;</code> is the IP address of the block-producing node in your stake pool configuration:
+              <CodeBlock language="bash">
+                {`global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label job=<job_name> to any timeseries scraped from this config.
+  - job_name: 'stakepool'
+
+    static_configs:
+
+      - targets: ['localhost:12798']
+        labels:
+          alias: 'relaynode1'
+          type:  'cardano-node'
+	
+      - targets: ['localhost:9100']
+        labels:
+          alias: 'relaynode1'
+          type:  'prometheus-node-exporter'
+
+      - targets: ['<BlockProducingNodeIPAddress>:12798']
+        labels:
+          alias: 'block-producer-node'
+          type:  'cardano-node'
+		  
+      - targets: ['<BlockProducingNodeIPAddress>:9100']
+        labels:
+          alias: 'block-producer-node'
+          type:  'prometheus-node-exporter'`}
+              </CodeBlock>
+              <table class="box">
+                <tbody>
+                  <tr>
+                    <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                    <td class="boxText"><p class="boxText">For more details on configuring Prometheus, see <a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/" target="_blank">Configuration</a>.</p></td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>Save and close the <code>prometheus.yml</code> file.</li>
+          </ol>
+        </li>
+        <li>To restart Prometheus, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl restart prometheus.service`}
+          </CodeBlock>
+        </li>
+        <li>To verify that Prometheus is scraping the desired targets:
+          <ol>
+            <li>Using a Web browser on the computer where you installed Prometheus in step 1, navigate to <b>http://localhost:9090</b></li>
+            <li>In the Prometheus Web user interface that displays, click the drop-down arrow next to the <b>Status</b> item in the top navigation bar, and then click <b>Targets</b></li>
+            <li>Confirm that each target you configured in step 4 lists as an <b>Endpoint</b>, and that the value in the <b>State</b> field for each target is <b>UP</b></li>
+          </ol>
+        </li>
+        <li>In Prometheus, storing and querying data is achieved using PromQL (Prometheus Query Language). To execute a basic PromQL query, in the Prometheus Web user interface click <b>Graph</b>, then click the drop-down arrow next to the <b>Insert Metric at Cursor</b> field, then in the list of metrics click the metric that you want to query, and then click the <b>Execute</b> button.</li>
+      </ol>
+
+      <p>In query results, time-series data for metrics display on the <b>Graph</b> tab. Current values for metrics display on the <b>Console</b> tab.</p>
+      
+      <p>If a PromQL query does not filter targets and data satisfying the query are available from multiple targets, then query results include the data from each target.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">In PromQL, filter queries using curly braces (<code>&#123;</code> and <code>&#125;</code>). For more details, see <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/" target="_blank">Querying Basics</a>.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="pi">To export custom statistics using Prometheus Node Exporter:</p>
+
+      <ol>
+        <li></li>
+      </ol>
+
+
+
+
+
+
+
 
       <p class="pi">To create a graphical dashboard for monitoring a Cardano stake pool:</p>
 
       <ol>
         <li></li>
       </ol>
+
+
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+            <td class="boxText"><p class="boxText">To create or troubleshoot a graphical dashboard using Grafana, test queries using the Prometheus Web user interface.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
 
 
 
