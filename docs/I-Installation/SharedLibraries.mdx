@@ -1,0 +1,190 @@
+---
+title: "Installing Shared Libraries"
+sidebar_label: "Installing Shared Libraries"
+slug: /SharedLibraries
+hide_title: false
+hide_table_of_contents: false
+sidebar_position: 25
+description: ""
+---
+
+import React from 'react';
+
+import CodeBlock from '@theme/CodeBlock';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+      {/* INSERT HTML HERE */}
+
+      <p>Cardano Node requires the following shared libraries:</p>
+
+      <ul>
+        <li><a href="https://github.com/IntersectMBO/libsodium" target="_blank">Sodium</a> is a cryptographic library for which IOHK maintains a release.</li>
+        <li><a href="https://github.com/bitcoin-core/secp256k1" target="_blank">libsecp256k1</a> is a library for digital signatures and other cryptographic primitives on the secp256k1 elliptic curve.</li>
+        <li><a href="https://github.com/supranational/blst" target="_blank">blst</a> is a BLS12-381 signature library.</li>
+      </ul>
+
+      <p class="pi">To install the <code>libsodium</code> release that IOHK maintains:</p>
+
+      <ol>
+        <li>To create a working directory to store source code and builds related to Cardano Node, type the following commands using a terminal window:
+          <CodeBlock language="bash">
+            {`mkdir $HOME/git
+cd $HOME/git`}
+          </CodeBlock>
+        </li>
+        <li>To download, compile and install Sodium, type:
+          <CodeBlock language="bash">
+            {`git clone https://github.com/IntersectMBO/libsodium
+cd libsodium
+git checkout dbb48cc
+./autogen.sh
+./configure
+make
+sudo make install`}
+          </CodeBlock>
+
+          {/* <!-- :::info
+If you are using the **Debian** GNU/Linux distribution, then you may need to type the following command to create a symbolic link:
+
+```bash
+sudo ln -s /usr/local/lib/libsodium.so.23.3.0 /usr/lib/libsodium.so.23
+```
+
+If you are using the **CentOS** Linux distribution on Amazon Web Services, then you may need to update available symbolic links for currently shared libraries:
+
+```bash
+sudo ldconfig
+``` --> */}
+
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">To resolve a <code>cannot find -lnuma</code> error message when compiling Sodium, type:
+                  <CodeBlock language="bash">
+                    {`sudo apt-get install libnuma-dev`}
+                  </CodeBlock>
+                </p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>On each computer hosting a relay or block-producing node in your stake pool configuration, repeat steps 1 to 2</li>
+      </ol>
+
+      <p class="pi">To download, compile and install the <code>libsecp256k1</code> library:</p>
+
+      <ol>
+        <li>Using a terminal window, type:
+          <CodeBlock language="bash">
+            {`cd $HOME/git
+git clone --depth 1 --branch v0.3.2 https://github.com/bitcoin-core/secp256k1
+cd secp256k1
+./autogen.sh
+./configure --enable-module-schnorrsig --enable-experimental
+make
+make check
+sudo make install
+sudo ldconfig`}
+          </CodeBlock>
+        </li>
+        <li>On each computer hosting a relay or block-producing node in your stake pool configuration, repeat step 1</li>
+        
+      </ol>
+
+      <p class="pi">To download, compile and install the <code>blst</code> library:</p>
+
+      <ol>
+        <li>Using a terminal window, type:
+          <CodeBlock language="bash">
+            {`cd $HOME/git
+git clone https://github.com/supranational/blst
+cd blst
+git checkout v0.3.14
+./build.sh
+cat > libblst.pc << EOF
+prefix=/usr/local
+exec_prefix=\${prefix}
+libdir=\${exec_prefix}/lib
+includedir=\${prefix}/include
+
+Name: libblst
+Description: Multilingual BLS12-381 signature library
+URL: https://github.com/supranational/blst
+Version: 0.3.14
+Cflags: -I\${includedir}
+Libs: -L\${libdir} -lblst
+EOF
+sudo cp libblst.pc /usr/local/lib/pkgconfig/
+sudo cp bindings/blst_aux.h bindings/blst.h bindings/blst.hpp /usr/local/include/
+sudo cp libblst.a /usr/local/lib/
+sudo chmod u=rw,go=r /usr/local/{lib/{libblst.a,pkgconfig/libblst.pc},include/{blst.{h,hpp},blst_aux.h}}`}
+          </CodeBlock>
+        </li>
+        <li>On each computer hosting a relay or block-producing node in your stake pool configuration, repeat step 1</li>
+      </ol>
+
+      <p>Installing shared libraries involves editing the <code>$HOME/.bashrc</code> file. The <code>$HOME</code> environment variable or <code>~</code> tilde prefix refers to the home directory associated with your user name. The <code>.bashrc</code> file is a Bash script that runs each time you open a new terminal window. In the <code>.bashrc</code> file, you can add any command that you may type at the command prompt. Use <code>.bashrc</code> to set up the shell as needed for your environment.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Prefixing a file or folder name using a period (<code>.</code>) character creates a hidden file or folder. Hidden files and folders do not display by default using the file manager or typical command-line listings. To list contents of the current directory including hidden files and folders, using a terminal window type:
+              <CodeBlock language="bash">
+                {`ls -a`}
+              </CodeBlock>
+            For more details, refer to the man page for the <a href="https://man7.org/linux/man-pages/man1/ls.1.html" target="_blank">ls</a> command.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="pi">To edit the <code>$HOME/.bashrc</code> file:</p>
+
+      <ol>
+        <li>Using a text editor, open the <code>$HOME/.bashrc</code> file, and then add the following lines at the end of the file:
+          <CodeBlock language="bash">
+            {`# Set environment variables so that the compiler finds libsodium, libsecp256k1 and blst libraries on your computer
+export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
+# Set an environment variable indicating the file path to configuration files and scripts
+# related to operating Cardano Node
+export NODE_HOME="$HOME/cardano-node"
+# Set an environment variable indicating the Cardano network environment where the node runs
+export NODE_CONFIG="mainnet"
+# Set an environment variable indicating where the Cardano node socket file is located
+export CARDANO_NODE_SOCKET_PATH="$NODE_HOME/db/socket"`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">If you plan to use Cardano Node in a Testnet environment instead of Mainnet, then replace the line <code>export NODE_CONFIG="mainnet"</code> in your <code>$HOME/.bashrc</code> file with <code>export NODE_CONFIG="testnet"</code> Also, when working through the <i>How to Set Up a Cardano Stake Pool</i> guide, replace every instance of the command option <code>&#8209;&#8209;mainnet</code> with <code>&#8209;&#8209;testnet&#8209;magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use. For details on available Testnets, see <a href="https://book.world.dev.cardano.org/environments.html" target="_blank">Environments</a>.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>Save and close the <code>$HOME/.bashrc</code> file.</li>
+        <li>To create the folder set for the <code>NODE_HOME</code> environment variable in your <code>$HOME/.bashrc</code> file, type:
+          <CodeBlock language="bash">
+            {`mkdir $HOME/cardano-node`}
+          </CodeBlock>
+        </li>
+        <li>To reload your shell profile, type:
+          <CodeBlock language="bash">
+            {`source $HOME/.bashrc`}
+          </CodeBlock>
+        </li>
+        <li>On each computer hosting a relay or block-producing node in your stake pool configuration, repeat steps 1 to 4</li>
+      </ol>
+
+    </div>
+  );
+}
+
+<HTMLContent />
+
