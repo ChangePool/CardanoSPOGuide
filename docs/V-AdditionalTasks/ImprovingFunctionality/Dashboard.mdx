@@ -178,7 +178,7 @@ scrape_configs:
           <ol>
             <li>Using a Web browser on the computer where you installed Prometheus in step 1, navigate to <b>http://localhost:9090</b></li>
             <li>In the Prometheus Web user interface that displays, click the drop-down arrow next to the <b>Status</b> item in the top navigation bar, and then click <b>Targets</b></li>
-            <li>Confirm that each target you configured in step 8 lists as an <b>Endpoint</b>, and that the value in the <b>State</b> field for each target is <b>UP</b></li>
+            <li>Confirm that each target you configured in step 9 lists as an <b>Endpoint</b>, and that the value in the <b>State</b> field for each target is <b>UP</b></li>
           </ol>
         </li>
         <li>In Prometheus, storing and querying data is achieved using PromQL (Prometheus Query Language). To execute a basic PromQL query, in the Prometheus Web user interface click <b>Graph</b>, then click the drop-down arrow next to the <b>Insert Metric at Cursor</b> field, then in the list of metrics click the metric that you want to query, and then click the <b>Execute</b> button.</li>
@@ -236,6 +236,8 @@ sudo systemctl restart prometheus-node-exporter.service`}
       <ol>
         <li></li>
       </ol>
+
+      {/* <!-- After adding a new custom statistic to a textfile collector PROM file, refresh the browser tab displaying the Prometheus Web user interface to see the new statistic in query results. --> */}
 
 
 
