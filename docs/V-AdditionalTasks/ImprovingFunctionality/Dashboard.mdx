@@ -57,7 +57,8 @@ export function HTMLContent() {
 sudo apt-get upgrade -y
 sudo apt-get install prometheus
 sudo systemctl start prometheus.service
-sudo systemctl enable prometheus.service`}
+sudo systemctl enable prometheus.service
+sudo systemctl status prometheus.service`}
           </CodeBlock>
         </li>
         <li>Using a text editor, open the <code>config*.json</code> file for the Cardano Node instance, and then edit the following key to set the IP address where the local Cardano Node Prometheus endpoint listens:
@@ -82,14 +83,21 @@ sudo systemctl enable prometheus.service`}
             {`sudo systemctl restart cardano-node.service`}
           </CodeBlock>
         </li>
+        <li>To verify that Prometheus endpoint metrics for the local Cardano Node instance are available, using a Web browser navigate to <b>http://localhost:12798/metrics</b>
+          <center><strong>OR</strong></center>
+        Using a terminal window, type:
+        <CodeBlock language="bash">
+          {`curl -s http://localhost:12798/metrics`}
+        </CodeBlock></li>
         <li>To install Prometheus Node Exporter, type:
           <CodeBlock language="bash">
             {`sudo apt-get install prometheus-node-exporter
 sudo systemctl start prometheus-node-exporter.service
-sudo systemctl enable prometheus-node-exporter.service`}
+sudo systemctl enable prometheus-node-exporter.service
+sudo systemctl status prometheus-node-exporter.service`}
           </CodeBlock>
         </li>
-        <li>On the computer where you installed Prometheus Node Exporter in step 5, in the firewall open ports 12798 and 9100 to incoming traffic. If you use UFW, then follow the commands to open a port in <a href="/Hardening/Firewall#Configuring-Uncomplicated-Firewall">Configuring Uncomplicated Firewall</a> updating the port numbers as needed.
+        <li>On the computer where you installed Prometheus Node Exporter in step 6, in the firewall open ports 12798 and 9100 to incoming traffic. If you use UFW, then follow the commands to open a port in <a href="/Hardening/Firewall#Configuring-Uncomplicated-Firewall">Configuring Uncomplicated Firewall</a> updating the port numbers as needed.
           <table class="box">
             <tbody>
               <tr>
@@ -99,7 +107,7 @@ sudo systemctl enable prometheus-node-exporter.service`}
             </tbody>
           </table>
         </li>
-        <li>Repeat steps 2 to 6 on each computer in your stake pool configuration.</li>
+        <li>Repeat steps 2 to 7 on each computer in your stake pool configuration.</li>
         <li>To configure Prometheus scrape targets:
           <ol>
             <li>On the computer where you installed Prometheus in step 1, using a terminal window type:
@@ -109,10 +117,12 @@ sudo cp ./prometheus.yml ./prometheus.bak
 sudo nano ./prometheus.yml`}
               </CodeBlock>
             </li>
-            <li>In the <code>prometheus.yml</code> file, add an entry in the <code>scrape_configs</code> section for each Cardano Node instance and Prometheus Node Exporter instance in your stake pool configuration, using the following example where <code>&lt;BlockProducingNodeIPAddress&gt;</code> is the IP address of the block-producing node in your stake pool configuration:
+            <li>In the <code>prometheus.yml</code> file, add an entry in the <code>scrape_configs</code> section for each Cardano Node instance and Prometheus Node Exporter instance in your stake pool configuration, using the following example as a template here <code>&lt;BlockProducingNodeIPAddress&gt;</code> is the IP address of the block-producing node in your stake pool configuration:
               <CodeBlock language="bash">
                 {`global:
   scrape_interval:     15s # By default, scrape targets every 15 seconds.
+
+  ...
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
@@ -152,18 +162,18 @@ scrape_configs:
               </table>
             </li>
             <li>Save and close the <code>prometheus.yml</code> file.</li>
+            <li>To restart Prometheus, type:
+              <CodeBlock language="bash">
+                {`sudo systemctl restart prometheus.service`}
+              </CodeBlock>
+            </li>
           </ol>
-        </li>
-        <li>To restart Prometheus, type:
-          <CodeBlock language="bash">
-            {`sudo systemctl restart prometheus.service`}
-          </CodeBlock>
         </li>
         <li>To verify that Prometheus is scraping the desired targets:
           <ol>
             <li>Using a Web browser on the computer where you installed Prometheus in step 1, navigate to <b>http://localhost:9090</b></li>
             <li>In the Prometheus Web user interface that displays, click the drop-down arrow next to the <b>Status</b> item in the top navigation bar, and then click <b>Targets</b></li>
-            <li>Confirm that each target you configured in step 4 lists as an <b>Endpoint</b>, and that the value in the <b>State</b> field for each target is <b>UP</b></li>
+            <li>Confirm that each target you configured in step 8 lists as an <b>Endpoint</b>, and that the value in the <b>State</b> field for each target is <b>UP</b></li>
           </ol>
         </li>
         <li>In Prometheus, storing and querying data is achieved using PromQL (Prometheus Query Language). To execute a basic PromQL query, in the Prometheus Web user interface click <b>Graph</b>, then click the drop-down arrow next to the <b>Insert Metric at Cursor</b> field, then in the list of metrics click the metric that you want to query, and then click the <b>Execute</b> button.</li>
