@@ -279,6 +279,10 @@ SSH Server uses a modular, drop-in functionality for configuration that many Lin
 
 The `/etc/ssh/sshd-config.d` directory contains configuration files processed in alphabetical order by file name via the `Include /etc/ssh/sshd_config.d/*.conf` statement found as the first line in the file `/etc/ssh/sshd-config` Many applications apply the last definition of a configuration option. However, SSH Server applies the first definition of a configuration option. Therefore, if a configuration file found in the `sshd-config.d` folder sets an option also set in the `sshd-config` file, then the option set in the `sshd-config` file may not apply.
 
+:::note
+In Ubuntu, the asterisk (`*`) is a wildcard character that acts as a placeholder representing zero or more characters in filenames or paths.
+:::
+
 **To verify SSH Server settings:**
 
 1\. Using a terminal window on the computer hosting SSH Server, to display the options that the SSH Server currently applies, type:

@@ -60,6 +60,28 @@ sudo systemctl start prometheus.service
 sudo systemctl enable prometheus.service`}
           </CodeBlock>
         </li>
+        <li>Using a text editor, open the <code>config*.json</code> file for the Cardano Node instance, and then edit the following key to set the IP address where the local Cardano Node Prometheus endpoint listens:
+          <CodeBlock language="bash">
+          {`"hasPrometheus": [
+  "0.0.0.0",
+  12798
+]`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">When a server binds to <code>0.0.0.0</code>, the server listens on every IP address assigned to the computer.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>Save and close the <code>config*.json</code> file.</li>
+        <li>To restart the local Cardano Node instance, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl restart cardano-node.service`}
+          </CodeBlock>
+        </li>
         <li>To install Prometheus Node Exporter, type:
           <CodeBlock language="bash">
             {`sudo apt-get install prometheus-node-exporter
@@ -67,7 +89,17 @@ sudo systemctl start prometheus-node-exporter.service
 sudo systemctl enable prometheus-node-exporter.service`}
           </CodeBlock>
         </li>
-        <li>Repeat step 2 on each computer in your stake pool configuration.</li>
+        <li>On the computer where you installed Prometheus Node Exporter in step 5, in the firewall open ports 12798 and 9100 to incoming traffic. If you use UFW, then follow the commands to open a port in <a href="/Hardening/Firewall#Configuring-Uncomplicated-Firewall">Configuring Uncomplicated Firewall</a> updating the port numbers as needed.
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+                <td class="boxText"><p class="boxText">On the computer hosting the Prometheus server, opening ports 12798 and 9100 is NOT needed.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>Repeat steps 2 to 6 on each computer in your stake pool configuration.</li>
         <li>To configure Prometheus scrape targets:
           <ol>
             <li>On the computer where you installed Prometheus in step 1, using a terminal window type:
@@ -139,7 +171,7 @@ scrape_configs:
 
       <p>In query results, time-series data for metrics display on the <b>Graph</b> tab. Current values for metrics display on the <b>Console</b> tab.</p>
       
-      <p>If a PromQL query does not filter targets and data satisfying the query are available from multiple targets, then query results include the data from all applicable targets.</p>
+      <p>If a PromQL query does not filter targets and data satisfying the query are available for multiple targets, then query results include the data from all applicable targets.</p>
 
       <table class="box">
         <tbody>
