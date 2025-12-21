@@ -22,7 +22,7 @@ export function HTMLContent() {
 
       <ul>
         <li><a href="https://prometheus.io/" target="_blank">Prometheus</a> collects time-series data—metrics—from applications and infrastructure using a pull model, facilitating continuous system monitoring as well as alerting.</li>
-        <li><a href="https://github.com/prometheus/node_exporter" target="_blank">Prometheus Node Exporter</a> enables exporting system hardware and operating system metrics for a host computer using Prometheus. Additionally, Node Exporter allows you to export any custom statistics that you may generate.</li>
+        <li><a href="https://github.com/prometheus/node_exporter" target="_blank">Prometheus Node Exporter</a> enables exporting system hardware and operating system metrics for a host computer using Prometheus. Additionally, enabling a textfile collector allows you to export any custom statistics that you may generate.</li>
         <li><a href="https://grafana.com/" target="_blank">Grafana</a> is an observability platform that facilitates visualizing data Prometheus collects.</li>
       </ul>
 
@@ -35,9 +35,12 @@ export function HTMLContent() {
 
       <p>To allow Prometheus and Grafana components to communicate, you must open required ports to specific computers using respective firewalls.</p>
 
-      <p>To monitor a Cardano stake pool configuration, you may install the Prometheus server and Grafana on the same relay node along with Prometheus Node Exporter, for example. Configure Prometheus to scrape each instance of Prometheus Node Exporter, as well as each Cardano Node Prometheus endpoint.</p>
+      <p>To monitor a Cardano stake pool configuration, you may install the Prometheus and Grafana servers on the same relay node along with Prometheus Node Exporter, for example. Configure Prometheus to scrape each instance of Prometheus Node Exporter, as well as each Cardano Node Prometheus endpoint. For more details, see <i>Figure 2</i>.</p>
 
-      <p>To connect to the Prometheus and Grafana servers securely as an end user, consider <a href="/Hardening/SSH#Using-Port-Forwarding">Using Port Forwarding</a>.</p>
+      <figure>
+        <img src="img/GUIDashboardNetworkDiagram.png" />
+        <figcaption>Figure 2 Cardano Stake Pool Graphical Dashboard Network Diagram</figcaption>
+      </figure>
 
       <table class="box">
         <tbody>
@@ -47,6 +50,8 @@ export function HTMLContent() {
           </tr>
         </tbody>
       </table>
+
+      <p>To connect to the Prometheus and Grafana servers securely as an end user, consider <a href="/Hardening/SSH#Using-Port-Forwarding">Using Port Forwarding</a>.</p>
 
       <p class="pi">To install and configure Prometheus to monitor a Cardano stake pool:</p>
 
@@ -192,7 +197,41 @@ scrape_configs:
         </tbody>
       </table>
 
-      <p class="pi">To export custom statistics using Prometheus Node Exporter:</p>
+      <p class="pi">To configure Prometheus Node Exporter to use a textfile collector:</p>
+
+      <ol>
+        <li>To create a folder for the textfile collector to parse, using a terminal window on a computer having Prometheus Node Exporter installed, type:
+          <CodeBlock language="bash">
+            {`sudo mkdir /var/lib/prometheus/node-exporter/textfile-collector`}
+          </CodeBlock>
+        </li>
+        <li>To configure Prometheus Node Exporter to parse the folder that you created in step 1, type:
+          <CodeBlock language="bash">
+            {`cd /lib/systemd/system
+sudo cp prometheus-node-exporter.service prometheus-node-exporter.service.bak
+sudo nano prometheus-node-exporter.service`}
+          </CodeBlock>
+        </li>
+        <li>In the <code>prometheus-node-exporter.service</code> file, edit the following line:
+        <CodeBlock language="bash">
+          {`ExecStart=/usr/bin/prometheus-node-exporter --collector.textfile --collector.textfile.directory=/var/lib/prometheus/node-exporter/textfile-collector $ARGS`}
+        </CodeBlock></li>
+        <li>Save and close the <code>prometheus-node-exporter.service</code> file.</li>
+        <li>To restart Prometheus Node Exporter, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl daemon-reload
+sudo systemctl restart prometheus-node-exporter.service`}
+          </CodeBlock>
+        </li>
+        <li>To verify that Prometheus Node Exporter parses the folder that you created for the textfile collector, type the following command, and then ensure that no error messages associated with the textfile collector appear in the log file:
+          <CodeBlock language="bash">
+            {`journalctl -fu prometheus-node-exporter.service`}
+          </CodeBlock>
+        </li>
+        <li>Repeat steps 1 to 6 on all computers in your stake pool configuration having Prometheus Node Exporter installed.</li>
+      </ol>
+
+      <p class="pi">To export custom statistics using the textfile collector:</p>
 
       <ol>
         <li></li>
