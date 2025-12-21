@@ -22,7 +22,7 @@ export function HTMLContent() {
 
       <ul>
         <li><a href="https://prometheus.io/" target="_blank">Prometheus</a> collects time-series data—metrics—from applications and infrastructure using a pull model, facilitating continuous system monitoring as well as alerting.</li>
-        <li><a href="https://github.com/prometheus/node_exporter" target="_blank">Prometheus Node Exporter</a> enables exporting system hardware and operating system metrics for a host computer using Prometheus. Additionally, enabling a textfile collector allows you to export any custom statistics that you may generate.</li>
+        <li><a href="https://github.com/prometheus/node_exporter" target="_blank">Prometheus Node Exporter</a> enables exporting system hardware and operating system metrics for a host computer using Prometheus. Additionally, enabling a textfile collector allows you to export any custom metrics that you may generate.</li>
         <li><a href="https://grafana.com/" target="_blank">Grafana</a> is an observability platform that facilitates visualizing data Prometheus collects.</li>
       </ul>
 
@@ -231,13 +231,13 @@ sudo systemctl restart prometheus-node-exporter.service`}
         <li>Repeat steps 1 to 6 on all computers in your stake pool configuration having Prometheus Node Exporter installed.</li>
       </ol>
 
-      <p class="pi">To export custom statistics using the textfile collector:</p>
+      <p class="pi">To export custom metrics using the textfile collector:</p>
 
       <ol>
         <li></li>
       </ol>
 
-      {/* <!-- After adding a new custom statistic to a textfile collector PROM file, refresh the browser tab displaying the Prometheus Web user interface to see the new statistic in query results. --> */}
+      {/* <!-- As sudo, create a text file in the /var/lib/prometheus/node-exporter/textfile-collector folder using the format <Name> <Value> and having a PROM file name extension. After adding a new custom metric to a textfile collector PROM file, refresh the browser tab displaying the Prometheus Web user interface to see the new metric in query results. --> */}
 
 
 
