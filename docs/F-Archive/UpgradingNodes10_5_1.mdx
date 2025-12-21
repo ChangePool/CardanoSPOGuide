@@ -251,6 +251,7 @@ If you follow the Coin Cashew instructions for [Automating Cardano Node Startup]
 ```bash
 cd <ConfigurationFileFolder>
 mv config.json config.bak
+mv config-bp.json config-bp.bak
 mv byron-genesis.json byron-genesis.bak
 mv shelley-genesis.json shelley-genesis.bak
 mv alonzo-genesis.json alonzo-genesis.bak
@@ -264,7 +265,7 @@ If you follow the Coin Cashew instructions for [Downloading Configuration Files]
 
 3\. Using a Web browser, navigate to the Cardano Node [GitHub repository](https://github.com/IntersectMBO/cardano-node), then browse to the latest release, then click to expand the Downloads dropdown list in the Technical Specification section of the release notes, and then click the Configuration Files link.
 
-4\. On the Cardano Configurations page, click the following links to download configuration files for the `mainnet` environment to the folder where you created backups of your current configuration files in step 2: `config`, `byronGenesis`, `shelleyGenesis`, `alonzoGenesis`, `conwayGenesis` and `topology`
+4\. On the Cardano Configurations page, click the following links to download configuration files for the `mainnet` environment to the folder where you created backups of your current configuration files in step 2: `config*`, `byronGenesis`, `shelleyGenesis`, `alonzoGenesis`, `conwayGenesis` and `topology`
 
 :::warning
 As of version 8.9.0, you need to download a new config file, `conway-genesis.json`
@@ -274,7 +275,7 @@ cd <ConfigurationFileFolder>
 wget https://book.world.dev.cardano.org/environments/mainnet/conway-genesis.json
 ```
 
-Then, verify `config.json` contains the following two lines:
+Then, verify `config*.json` contains the following two lines:
 
 ```
 "ConwayGenesisFile": "conway-genesis.json", 
@@ -289,7 +290,7 @@ If you want to download new configuration files using the command line, then nav
 5\. Using [`diff`](https://www.man7.org/linux/man-pages/man1/diff.1.html) or a similar file comparison utility, identify and copy customizations as needed from the backup configuration files that you created in step 2 to each new configuration file that you downloaded in step 4.
 
 :::warning
-The `config.json` file contains hashes for the `byron-genesis.json`, `shelley-genesis.json`, `alonzo-genesis.json` and `conway-genesis.json` files using the `ByronGenesisHash`, `ShelleyGenesisHash`, `AlonzoGenesisHash` and `ConwayGenesisHash` keys, respectively. Therefore, do NOT manually edit the `*genesis.json` files.
+The `config*.json` file contains hashes for the `byron-genesis.json`, `shelley-genesis.json`, `alonzo-genesis.json` and `conway-genesis.json` files using the `ByronGenesisHash`, `ShelleyGenesisHash`, `AlonzoGenesisHash` and `ConwayGenesisHash` keys, respectively. Therefore, do NOT manually edit the `*genesis.json` files.
 :::
 
 ## Installing New Cardano Binaries <a href="#buildingcn" id="buildingcn"></a>

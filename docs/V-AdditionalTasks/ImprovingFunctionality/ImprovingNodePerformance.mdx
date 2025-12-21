@@ -34,7 +34,7 @@ export function HTMLContent() {
       <ul>
         <li>Increase the speed of the disk drive that the computer hosting the Cardano Node instance uses.</li>
         <li>To force the Cardano Node instance to use all processor cores available on the computer, configure runtime system options to include the <code>-N</code> option. For details, see the topic <a href="/ConfiguringGHCRuntime">Configuring GHC Runtime System Options</a>.</li>
-        <li>By default, Cardano Node takes a snapshot of the local copy of the blockchain ledger on disk every 72 minutes. Increasing the amount of time between snapshots may improve the performance of Cardano Node. To customize the amount of time between snapshots, add a key named <code>SnapshotInterval</code> in the <code>config-bp.json</code> or <code>config.json</code> file that the Cardano Node instance uses, and then set the value to a duration in seconds. For example, to take a snapshot every 24 hours, set the value to <code>86400</code>
+        <li>By default, Cardano Node takes a snapshot of the local copy of the blockchain ledger on disk every 72 minutes. Increasing the amount of time between snapshots may improve the performance of Cardano Node. To customize the amount of time between snapshots, add a key named <code>SnapshotInterval</code> in the <code>config*.json</code> file that the Cardano Node instance uses, and then set the value to a duration in seconds. For example, to take a snapshot every 24 hours, set the value to <code>86400</code>
           <table class="box">
             <tbody>
               <tr>
