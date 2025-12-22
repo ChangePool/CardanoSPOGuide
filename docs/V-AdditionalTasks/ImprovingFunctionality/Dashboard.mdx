@@ -53,6 +53,8 @@ export function HTMLContent() {
 
       <p>To connect to the Prometheus and Grafana servers securely as an end user, consider <a href="/Hardening/SSH#Using-Port-Forwarding">Using Port Forwarding</a>.</p>
 
+      <h1>Installing and Configuring Prometheus</h1>
+
       <p class="pi">To install and configure Prometheus to monitor a Cardano stake pool:</p>
 
       <ol>
@@ -197,7 +199,9 @@ scrape_configs:
         </tbody>
       </table>
 
-      <p class="pi">To configure Prometheus Node Exporter to use a textfile collector:</p>
+      <h1>Enabling a Textfile Collector</h1>
+
+      <p class="pi">To enable a Prometheus Node Exporter textfile collector:</p>
 
       <ol>
         <li>To create a folder for the textfile collector to parse, using a terminal window on a computer having Prometheus Node Exporter installed, type:
@@ -231,13 +235,67 @@ sudo systemctl restart prometheus-node-exporter.service`}
         <li>Repeat steps 1 to 6 on all computers in your stake pool configuration having Prometheus Node Exporter installed.</li>
       </ol>
 
-      <p class="pi">To export custom metrics using the textfile collector:</p>
+      <h1>Using a Textfile Collector</h1>
+
+      <p>The following procedure provides an example showing you how to use a Prometheus Node Exporter textfile collector to export—expose—any custom metrics that you may choose to generate.</p>
+
+      <p>Prometheus Node Exporter parses all files in the directory specified as the textfile collector directory having a PROM file name extension. In PROM files, expose data using text-based <a href="https://prometheus.io/docs/instrumenting/exposition_formats/" target="_blank">Exposition Formats</a>.</p>
+
+      <p class="pi">To export custom metrics using a textfile collector:</p>
 
       <ol>
-        <li></li>
+        <li>On a computer hosting Cardano Node as well as Prometheus Node Exporter, to retrieve the value of the <code>$NODE_HOME</code> environment variable, using a terminal window type:
+          <CodeBlock language="bash">
+            {`echo $NODE_HOME`}
+          </CodeBlock>
+        </li>
+        <li>Using a text editor, create a file named <code>$NODE_HOME/exportMetrics.sh</code> and then add the following lines, where <code>&lt;NodeHomeValue&gt;</code> is the value of the <code>$NODE_HOME</code> environment variable that you retrieved in step 1, to create a Bash script that exports the size of the directory on the local computer containing Cardano blockchain ledger data:
+          <CodeBlock language="bash">
+            {`#!/bin/bash
+
+# Assign the directory that the Prometheus Node Exporter textfile collector parses to a variable
+textfileCollectorPath="/var/lib/prometheus/node-exporter/textfile-collector"
+
+# Assign the size of the local directory containing Cardano blockchain ledger data to a variable
+dbSize=$(du -s <NodeHomeValue>/db | cut -d $'\\t' -f 1)
+
+# Using the format <MetricName> <Value> export to a temporary file the size of the local directory containing Cardano blockchain ledger data
+echo "cardano_db_size $\{dbSize\}" > $\{textfileCollectorPath\}/exportMetrics.tmp
+
+# To avoid partial scrapes, write metrics to files atomically using a temporary file, and then rename the file
+mv $\{textfileCollectorPath\}/exportMetrics.tmp $\{textfileCollectorPath\}/exportMetrics.prom`}
+          </CodeBlock>
+        </li>
+        <li>To set execute permissions for the <code>exportMetrics.sh</code> script, type:
+        <CodeBlock language="bash">
+          {`chmod +x $NODE_HOME/exportMetrics.sh`}
+        </CodeBlock></li>
+        <li>To run the <code>exportMetrics.sh</code> script, type:
+          <CodeBlock language="bash">
+            {`sudo $NODE_HOME/exportMetrics.sh`}
+          </CodeBlock>
+        </li>
+        <li>To verify that custom metrics you may generate export successfully, using a Web browser press <b>CTRL+F5</b> to perform a hard refresh on the Prometheus Web user interface, and then query the custom metrics.</li>
       </ol>
 
-      {/* <!-- As sudo, create a text file in the /var/lib/prometheus/node-exporter/textfile-collector folder using the format <Name> <Value> and having a PROM file name extension. After adding a new custom metric to a textfile collector PROM file, refresh the browser tab displaying the Prometheus Web user interface to see the new metric in query results. --> */}
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+            <td class="boxText"><p class="boxText">To create a cron job that schedules running a script exporting custom metrics using a textfile collector regularly, type the following command to create a cron job that runs using root privileges:
+              <CodeBlock language="bash">
+                {`sudo crontab -e`}
+              </CodeBlock></p>
+            </td>            
+          </tr>
+        </tbody>
+      </table>
+
+      <h1>Installing and Configuring Grafana</h1>
+
+
+
+      
 
 
 
