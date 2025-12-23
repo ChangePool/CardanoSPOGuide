@@ -249,7 +249,7 @@ sudo systemctl restart prometheus-node-exporter.service`}
             {`echo $NODE_HOME`}
           </CodeBlock>
         </li>
-        <li>Using a text editor, create a file named <code>$NODE_HOME/exportMetrics.sh</code> and then add the following lines, where <code>&lt;NodeHomeValue&gt;</code> is the value of the <code>$NODE_HOME</code> environment variable that you retrieved in step 1, to create a Bash script that exports the size of the directory on the local computer containing Cardano blockchain ledger data:
+        <li>Using a text editor, create a file named <code>$NODE_HOME/exportMetrics.sh</code> and then add the following lines, where <code>&lt;NodeHomeValue&gt;</code> is the value of the <code>$NODE_HOME</code> environment variable that you retrieved in step 1, to create a Bash script that exports the size of the directory on the local computer containing Cardano blockchain ledger data assigned to a metric named <code>cardano_db_size</code>:
           <CodeBlock language="bash">
             {`#!/bin/bash
 
@@ -275,7 +275,7 @@ mv $\{textfileCollectorPath\}/exportMetrics.tmp $\{textfileCollectorPath\}/expor
             {`sudo $NODE_HOME/exportMetrics.sh`}
           </CodeBlock>
         </li>
-        <li>To verify that custom metrics you may generate export successfully, using a Web browser press <b>CTRL+F5</b> to perform a hard refresh of the Prometheus Web user interface, and then query the custom metrics.</li>
+        <li>To verify that the custom metric named <code>cardano_db_size</code> exports successfully, using a Web browser press <b>CTRL+F5</b> to perform a hard refresh of the Prometheus Web user interface, and then query the metric.</li>
       </ol>
 
       <table class="box">
@@ -292,6 +292,21 @@ mv $\{textfileCollectorPath\}/exportMetrics.tmp $\{textfileCollectorPath\}/expor
       </table>
 
       <h1>Installing and Configuring Grafana</h1>
+
+      <p class="pi">To install and configure Grafana:</p>
+
+      <ol>
+        <li></li>
+      </ol>
+
+
+
+
+
+
+      <h1>Creating a Dashboard Using Grafana</h1>
+
+
 
 
 
