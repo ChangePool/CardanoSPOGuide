@@ -275,14 +275,14 @@ mv $\{textfileCollectorPath\}/exportMetrics.tmp $\{textfileCollectorPath\}/expor
             {`sudo $NODE_HOME/exportMetrics.sh`}
           </CodeBlock>
         </li>
-        <li>To verify that custom metrics you may generate export successfully, using a Web browser press <b>CTRL+F5</b> to perform a hard refresh on the Prometheus Web user interface, and then query the custom metrics.</li>
+        <li>To verify that custom metrics you may generate export successfully, using a Web browser press <b>CTRL+F5</b> to perform a hard refresh of the Prometheus Web user interface, and then query the custom metrics.</li>
       </ol>
 
       <table class="box">
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
-            <td class="boxText"><p class="boxText">To create a cron job that schedules running a script exporting custom metrics using a textfile collector regularly, type the following command to create a cron job that runs using root privileges:
+            <td class="boxText"><p class="boxText">Create a cron job that regularly schedules running a script that exports custom metrics using a textfile collector. The cron job requires root privileges. To create a cron job that runs using root privileges, type:
               <CodeBlock language="bash">
                 {`sudo crontab -e`}
               </CodeBlock></p>
