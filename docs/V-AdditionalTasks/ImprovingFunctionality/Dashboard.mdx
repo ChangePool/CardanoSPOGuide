@@ -124,7 +124,7 @@ sudo cp ./prometheus.yml ./prometheus.bak
 sudo nano ./prometheus.yml`}
               </CodeBlock>
             </li>
-            <li>In the <code>prometheus.yml</code> file, add an entry in the <code>scrape_configs</code> section for each Cardano Node instance and Prometheus Node Exporter instance in your stake pool configuration, using the following example as a template here <code>&lt;BlockProducingNodeIPAddress&gt;</code> is the IP address of the block-producing node in your stake pool configuration:
+            <li>In the <code>prometheus.yml</code> file, add an entry in the <code>scrape_configs</code> section for each Cardano Node instance and Prometheus Node Exporter instance in your stake pool configuration, using the following example as a template where <code>&lt;BlockProducingNodeIPAddress&gt;</code> is the IP address of the block-producing node in your stake pool configuration:
               <CodeBlock language="bash">
                 {`global:
   scrape_interval:     15s # By default, scrape targets every 15 seconds.
@@ -141,22 +141,22 @@ scrape_configs:
 
       - targets: ['localhost:12798']
         labels:
-          alias: 'relaynode1'
+          alias: 'Relay 1'
           type:  'cardano-node'
 	
       - targets: ['localhost:9100']
         labels:
-          alias: 'relaynode1'
+          alias: 'Relay 1'
           type:  'prometheus-node-exporter'
 
       - targets: ['<BlockProducingNodeIPAddress>:12798']
         labels:
-          alias: 'block-producer-node'
+          alias: 'Block Producer'
           type:  'cardano-node'
 		  
       - targets: ['<BlockProducingNodeIPAddress>:9100']
         labels:
-          alias: 'block-producer-node'
+          alias: 'Block Producer'
           type:  'prometheus-node-exporter'`}
               </CodeBlock>
               <table class="box">
@@ -343,30 +343,52 @@ sudo systemctl status grafana-server.service`}
         <li>Scroll down to the bottom of the Web page, and then click the <b>Save & Test</b> button.</li>
       </ol>
 
-      <p>If the test is successful, then Grafana displays the message <b>Successfully queried the Prometheus API</b>.</p>
+      <p>If the test is successful, then Grafana displays the message <b>Successfully Queried the Prometheus API</b>.</p>
 
       <h1>Creating a Dashboard Using Grafana</h1>
 
-      <p class="pi">To create a graphical dashboard for monitoring a Cardano stake pool using Grafana:</p>
+      <p class="pi">To create a graphical dashboard for monitoring a Cardano stake pool:</p>
 
       <ol>
-        <li></li>
+        <li>On the computer hosting the Grafana server, download the example <a href="txt/GrafanaDashboard.json">Grafana Dashboard</a> file.</li>
+        <li>On the Grafana Home page, click <b>Dashboards</b> in the left pane, then click the dropdown arrow next to the <b>New</b> button in the top right corner of the right pane, and then click <b>Import</b></li>
+        <li>Drag and drop the file named <b>GrafanaDashboard.json</b> that you downloaded in step 1 in the <b>Upload Dashboard JSON File</b> area on the <b>Import Dashboard</b> page.</li>
+        <li>Click the <b>Change UID</b> button, and then clear the contents of the <b>Unique Identifier (UID)</b> field, and then click the <b>Import (Overwrite)</b> button.</li>
       </ol>
 
+      <p><i>Figure 3</i> shows the example Grafana dashboard that you downloaded in the previous procedure.</p>
 
+      <figure>
+        <img src="img/GrafanaDashboard.jpg" />
+        <figcaption>Figure 3 Example Grafana Dashboard</figcaption>
+      </figure>
 
-      <table class="box">
-        <tbody>
-          <tr>
-            <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
-            <td class="boxText"><p class="boxText">To create or troubleshoot a graphical dashboard using Grafana, test PromQL queries using the Prometheus Web user interface.</p></td>
-          </tr>
-        </tbody>
-      </table>
+      <p>You can edit the appearance and PromQL queries retrieving data for panels that a Grafana dashboard displays.</p>
 
+      <p class="pi">To edit a Grafana dashboard panel:</p>
 
+      <ol>
+        <li>When viewing a dashboard, click and drag the sizing handle in the bottom right corner of a panel to resize the panel.</li>
+        <li>To edit a panel, click the three-dot menu in the top right corner of the panel, and then click <b>Edit</b></li>
+        <li>On the Queries tab, edit PromQL queries as needed.
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+                <td class="boxText"><p class="boxText">To troubleshoot data that a Grafana dashboard panel displays, test PromQL queries using the Prometheus Web user interface.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>In the Visualization pane, edit the appearance of the panel as needed.</li>
+        <li>To save revisions to a dashboard, click the <b>Save Dashboard</b> button in the top right corner of the Web page, then type a description of your edits in the <b>Message</b> field, and then click the <b>Save</b> button.</li>
+      </ol>
 
+      <h1>Additional Resources</h1>
 
+      <p>For more details on creating Grafana dashboards, see the topic <a href="https://grafana.com/docs/grafana/latest/visualizations/" target="_blank">Visualize Data</a>.</p>
+
+      <p>To explore some additional third-party Grafana dashboards available in the Cardano community, see <a href="/AppendixD">Appendix D: Community Projects</a>.</p>
 
     </div>
   );
