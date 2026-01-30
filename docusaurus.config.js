@@ -184,13 +184,18 @@ const config = {
           // August 17, 2025 - Remove the Blog link from the navbar
           //{to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://discord.gg/dEpAVWgFNB',
-            label: 'Discord',
+            href: 'mailto:doc@coincashew.io?subject=CoinCashew Guide',
+            label: 'E-mail',
             position: 'right',
           },
           {
             href: 'https://github.com/ChangePool/CardanoSPOGuide',
             label: 'GitHub',
+            position: 'right',
+          },
+          {
+            href: 'https://discord.gg/dEpAVWgFNB',
+            label: 'Discord',
             position: 'right',
           },
         ],
