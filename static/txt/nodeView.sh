@@ -67,22 +67,22 @@ convertsecs2hms() {
 }
 
 #
-# The query_kes_info function parses optional data about the current KES period and operational certificate.
+# The query_op_cert function parses optional data about the current operational certificate.
 #
-query_kes_period_info () {
+query_op_cert () {
 
   local kes_info=""
   local op_cert_error=""
   local current_kes_period=""
   local end_kes_period=""
 
-  # Retrieve details about the current KES period and operational certificate
+  # Retrieve details about the current operational certificate
   kes_info=$(cardano-cli conway query kes-period-info ${environment_option} --op-cert-file ${op_cert_path} 2>&1)
 
-  # Detect errors in the current KES period and operational certificate details
+  # Detect errors in the current operational certificate details
   op_cert_error=$(grep -e '✗' -e '<socket: 11>' <<< "${kes_info}")
 
-  # If the details about the current KES period and operational certificate are error free
+  # If the details about the current operational certificate are error free
   if [[ -z "${op_cert_error}" ]]
   then
   
@@ -93,12 +93,15 @@ query_kes_period_info () {
     current_kes_period=$(jq -r '.qKesCurrentKesPeriod' <<< "${kes_info}")
     end_kes_period=$(jq -r '.qKesEndKesInterval' <<< "${kes_info}")
     expiry_date=$(jq -r '.qKesKesKeyExpiry' <<< "${kes_info}")
+    cert_counter=$(jq -r '.qKesOnDiskOperationalCertificateNumber' <<< "${kes_info}")
+    registered_counter=$(jq -r '.qKesNodeStateOperationalCertificateNumber' <<< "${kes_info}")
 
     # Calculate the number of KES periods remaining
     kes_periods_remaining=$(( end_kes_period - current_kes_period  ))
 
     # To create fixed widths, add trailing spaces to values as needed
     kes_periods_remaining=$(printf "%-2s" "${kes_periods_remaining}")
+    cert_counter=$(printf "%-3s" "${cert_counter}")
 
     # Format the date when the operational certificate expires
     expiry_date=$(date +"%Y-%m-%d" -d ${expiry_date})
@@ -108,6 +111,8 @@ query_kes_period_info () {
     # Inform the user that details about the current KES period and operational certificate contain errors
     kes_periods_remaining="Error"
     expiry_date="Error"
+    cert_counter="Error"
+    registered_counter="Error"
 
   fi
 
@@ -295,13 +300,15 @@ do
   # Initialize variables used to display operational certificate statistics, if available
   kes_periods_remaining=""
   expiry_date=""
+  cert_counter=""
+  registered_counter=""
 
   # If an operational certificate is available
   if [ -f "${op_cert_path}" ]
   then
 
-    # Call a function to query KES period information based on the operational certificate
-    query_kes_period_info
+    # Call a function to query information based on the operational certificate
+    query_op_cert
 
   fi
 
@@ -350,7 +357,7 @@ do
 
   echo
   echo -e "${LightGreen}${Underline}Block Propagation${NoColor}"
-  echo -e "  Count    Within:    1 Second   3 Seconds   5 Seconds"
+  echo -e "  Count    Within:   1 Second   3 Seconds   5 Seconds"
   echo -e "  ${LightCyan}${block_count}${NoColor}               ${LightCyan}${block_delay_1s}%${NoColor}     ${LightCyan}${block_delay_3s}%${NoColor}      ${LightCyan}${block_delay_5s}%${NoColor}"
 
   # When monitoring a block-producing node, display related metrics
@@ -364,6 +371,7 @@ do
       echo
       echo -e "${LightGreen}${Underline}Operational Certificate${NoColor}"
       echo -e "  KES Periods Remaining: ${LightCyan}${kes_periods_remaining}${NoColor}   Expiry Date: ${LightCyan}${expiry_date}${NoColor}"
+      echo -e "  Counter Value: ${LightCyan}${cert_counter}${NoColor}          Registered Counter Value: ${LightCyan}${registered_counter}${NoColor}"
 
     fi
 
