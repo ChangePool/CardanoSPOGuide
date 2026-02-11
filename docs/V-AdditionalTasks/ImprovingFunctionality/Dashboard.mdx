@@ -31,7 +31,7 @@ export function HTMLContent() {
       <p><i>Figure 1</i> provides a network diagram illustrating how Prometheus and Grafana components may connect and interact in a configuration involving multiple computers, such as when monitoring a Cardano stake pool. The diagram includes default port numbers.</p>
 
       <figure>
-        <img src="img/PrometheusNetworkDiagram.png" />
+        <img src={useBaseUrl('img/PrometheusNetworkDiagram.png')} />
         <figcaption>Figure 1 Prometheus and Grafana Network Diagram</figcaption>
       </figure>
 
@@ -40,7 +40,7 @@ export function HTMLContent() {
       <p>To monitor a Cardano stake pool configuration, you may install the Prometheus and Grafana servers on the same relay node along with Prometheus Node Exporter, for example. Configure Prometheus to scrape each instance of Prometheus Node Exporter, as well as each Cardano Node Prometheus endpoint. For more details, see <i>Figure 2</i>.</p>
 
       <figure>
-        <img src="img/GUIDashboardNetworkDiagram.png" />
+        <img src={useBaseUrl('img/GUIDashboardNetworkDiagram.png')} />
         <figcaption>Figure 2 Cardano Stake Pool Graphical Dashboard Network Diagram</figcaption>
       </figure>
 
@@ -361,7 +361,7 @@ sudo systemctl status grafana-server.service`}
       <p><i>Figure 3</i> shows the example Grafana dashboard that you downloaded in the previous procedure.</p>
 
       <figure>
-        <img src="img/GrafanaDashboard.jpg" />
+        <img src={useBaseUrl('img/GrafanaDashboard.jpg')} />
         <figcaption>Figure 3 Example Grafana Dashboard</figcaption>
       </figure>
 
