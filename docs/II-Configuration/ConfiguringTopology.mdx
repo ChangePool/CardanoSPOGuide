@@ -114,7 +114,7 @@ To follow best practices, set `<BlockProducingNodeIPAddress>` to the local area 
 <table class="box">
   <tbody>
     <tr>
-      <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+      <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
       <td class="boxText"><p class="boxText">When synchronizing the local copy of the Cardano blockchain ledger with the network, the `useLedgerAfterSlot` option determines when the Cardano Node instance switches from using fixed peers to discovering peers registered on the blockchain. As the Cardano ledger grows, the recommended value of `useLedgerAfterSlot` changes. Every few months, update the value of the `useLedgerAfterSlot` option in the configuration files based on the value recommended in the respective configuration file available on the <a href="https://book.play.dev.cardano.org/environments.html" target="_blank">Environments</a> page.</p></td>
     </tr>
   </tbody>

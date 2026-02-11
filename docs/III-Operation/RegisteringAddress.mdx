@@ -160,7 +160,7 @@ echo Change: $\{txOut\}`}
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
             <td class="boxText"><p class="boxText">To display a draft, unsigned or signed transaction in a human-readable format, type the following command where <code>&lt;TransactionFileName&gt;</code> is the path to the transaction file that you want to inspect:
               <CodeBlock language="bash">
                 {`cardano-cli debug transaction view --tx-file <TransactionFileName>`}

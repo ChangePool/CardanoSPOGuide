@@ -283,7 +283,7 @@ mv $\{textfileCollectorPath\}/exportMetrics.tmp $\{textfileCollectorPath\}/expor
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
             <td class="boxText"><p class="boxText">Create a cron job that regularly schedules running a script that exports custom metrics using a textfile collector. The cron job requires root privileges. To create a cron job that runs using root privileges, type:
               <CodeBlock language="bash">
                 {`sudo crontab -e`}
