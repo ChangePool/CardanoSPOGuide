@@ -10,6 +10,8 @@ description: ""
 
 import React from 'react';
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 import TestnetNote from '@site/src/components/TestnetNote.js';
 
 import CodeBlock from '@theme/CodeBlock';
@@ -72,8 +74,8 @@ cardano-cli conway query kes-period-info \\
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
-            <td class="boxText"><p class="boxText">To return results of the <code>query kes-period-info</code> command using JSON format, add the <code>--out-file</code> option to the command, and then query the contents of the output file. For more details, see <a href="/AccessingHelp">Accessing Built-in Help</a>.</p></td>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
+            <td class="boxText"><p class="boxText">To return results of the <code>query kes-period-info</code> command using JSON format, add the <code>--out-file</code> option to the command, and then query the contents of the output file. For more details, see <a href={useBaseUrl('/AccessingHelp')}>Accessing Built-in Help</a>.</p></td>
           </tr>
         </tbody>
       </table>
@@ -93,8 +95,8 @@ cardano-cli conway query kes-period-info \\
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">If you follow the <i>How to Set Up a Cardano Stake Pool</i> guide, then you created a <code>node.counter</code> file when <a href="/ConfiguringBlockProducer">Configuring the Block Producer</a>.</p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">If you follow the <i>How to Set Up a Cardano Stake Pool</i> guide, then you created a <code>node.counter</code> file when <a href={useBaseUrl('/ConfiguringBlockProducer')}>Configuring the Block Producer</a>.</p></td>
           </tr>
         </tbody>
       </table>
@@ -132,7 +134,7 @@ cardano-cli conway node new-counter \\
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">When you generate a new <code>node.counter</code> file, the value of the <code>description</code> key is empty until you issue a new operational certificate.</p></td>
               </tr>
             </tbody>
@@ -173,8 +175,8 @@ echo StartingKESPEriod: $\{StartingKESPeriod\}`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
-                <td class="boxText"><p class="boxText">Remember that in the Cardano ecosystem, a slot occurs every second. For a more detailed procedure to calculate the current KES period, see the topic <a href="/ConfiguringBlockProducer">Configuring the Block Producer</a>.</p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">Remember that in the Cardano ecosystem, a slot occurs every second. For a more detailed procedure to calculate the current KES period, see the topic <a href={useBaseUrl('/ConfiguringBlockProducer')}>Configuring the Block Producer</a>.</p></td>
               </tr>
             </tbody>
           </table>
@@ -192,7 +194,7 @@ echo StartingKESPEriod: $\{StartingKESPeriod\}`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">After issuing a new operational certificate, the value of the <code>node.counter</code> file automatically increments by one (1)</p></td>
               </tr>
             </tbody>
@@ -237,8 +239,8 @@ echo StartingKESPEriod: $\{StartingKESPeriod\}`}
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src="img/BoxChallenge.png" alt="Challenge" /></p></td>
-            <td class="boxText"><p class="boxText">Write a Bash script to automate tasks related to issuing a new operational certificate on the block-producing node in your stake pool configuration. Write another Bash script to automate related tasks on the air-gapped, offline computer. Alternately, implement third-party scripts available in <a href="/AppendixD">Appendix D: Community Projects</a>.</p></td>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
+            <td class="boxText"><p class="boxText">Write a Bash script to automate tasks related to issuing a new operational certificate on the block-producing node in your stake pool configuration. Write another Bash script to automate related tasks on the air-gapped, offline computer. Alternately, implement third-party scripts available in <a href={useBaseUrl('/AppendixD')}>Appendix D: Community Projects</a>.</p></td>
           </tr>
         </tbody>
       </table>
