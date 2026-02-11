@@ -72,7 +72,7 @@ export function HTMLContent() {
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Important<br /><img src={useBaseUrl('img/BoxImportant.png')} alt="Important" /></p></td>
                 <td class="boxText"><p class="boxText">A healthy node propagates more than 95 percent of blocks within three seconds of production. To troubleshoot issues related to block progagation, examine network speed and your stake pool <a href="/ConfiguringTopology">topology</a>.</p></td>
               </tr>
             </tbody>
@@ -163,7 +163,7 @@ export function HTMLContent() {
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Important<br /><img src="img/BoxImportant.png" alt="Important" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Important<br /><img src={useBaseUrl('img/BoxImportant.png')} alt="Important" /></p></td>
             <td class="boxText"><p class="boxText">If the local instance of Cardano Node is not running, then the following error message may display when you run a command:<pre>cardano-cli: Network.Socket.connect: : does not exist (No such file or directory)</pre>If the local copy of the ledger is not fully synchronized, then commands may fail.</p></td>
           </tr>
         </tbody>
