@@ -114,6 +114,7 @@
 			"description: \"$7\"",
 			"---\n",
 			"import React from 'react';\n",
+      "import useBaseUrl from '@docusaurus/useBaseUrl';\n",
 			"export function HTMLContent() {",
 			"\treturn (",
 			"\t\t<div>\n",
@@ -182,7 +183,7 @@
 		"prefix": "Figure",
 		"body": [
 			"<figure>",
-			"\t<img src=\"img/$1\" />",
+			"\t<img src={useBaseUrl('img/$1')} />",
 			"\t<figcaption>Figure $2</figcaption>",
 			"</figure>"
 		],
@@ -217,12 +218,20 @@
 		"description": "Snippet for inserting a bookmark"
 	},
 
-	"CoinCashew Guide Hyperlink": {
-		"prefix": "Hyperlink",
+	"CoinCashew Guide External Hyperlink": {
+		"prefix": "Hyperlink External",
 		"body": [
 			"<a href=\"$1\" target=\"_blank\">$2</a>"
 		],
-		"description": "Snippet for inserting a hyperlink"
+		"description": "Snippet for inserting an external hyperlink"
+	},
+
+  "CoinCashew Guide Internal Hyperlink": {
+		"prefix": "Hyperlink Internal",
+		"body": [
+			"<a href={useBaseUrl('$1')}>$2</a>"
+		],
+		"description": "Snippet for inserting an internal hyperlink"
 	},
 
 	"CoinCashew Guide Note Box": {
@@ -231,7 +240,7 @@
 			"<table class=\"box\">",
 			"\t<tbody>",
 			"\t\t<tr>",
-			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Note<br /><img src=\"img/BoxNote.png\" alt=\"Note\" /></p></td>",
+			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt=\"Note\" /></p></td>",
 			"\t\t\t<td class=\"boxText\"><p class=\"boxText\">$1</p></td>",
 			"\t\t</tr>",
 			"\t</tbody>",
@@ -246,7 +255,7 @@
 			"<table class=\"box\">",
 			"\t<tbody>",
 			"\t\t<tr>",
-			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Important<br /><img src=\"img/BoxImportant.png\" alt=\"Important\" /></p></td>",
+			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Important<br /><img src={useBaseUrl('img/BoxImportant.png')} alt=\"Important\" /></p></td>",
 			"\t\t\t<td class=\"boxText\"><p class=\"boxText\">$1</p></td>",
 			"\t\t</tr>",
 			"\t</tbody>",
@@ -261,7 +270,7 @@
 			"<table class=\"box\">",
 			"\t<tbody>",
 			"\t\t<tr>",
-			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Credit<br /><img src=\"img/BoxCredit.png\" alt=\"Credit\" /></p></td>",
+			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Credit<br /><img src={useBaseUrl('img/BoxCredit.png')} alt=\"Credit\" /></p></td>",
 			"\t\t\t<td class=\"boxText\"><p class=\"boxText\">$1</p></td>",
 			"\t\t</tr>",
 			"\t</tbody>",
@@ -276,7 +285,7 @@
 			"<table class=\"box\">",
 			"\t<tbody>",
 			"\t\t<tr>",
-			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Challenge<br /><img src=\"img/BoxChallenge.png\" alt=\"Challenge\" /></p></td>",
+			"\t\t\t<td class=\"boxLabel\"><p class=\"boxLabel\">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt=\"Challenge\" /></p></td>",
 			"\t\t\t<td class=\"boxText\"><p class=\"boxText\">$1</p></td>",
 			"\t\t</tr>",
 			"\t</tbody>",
