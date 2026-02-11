@@ -73,7 +73,7 @@ export function HTMLContent() {
             <tbody>
               <tr>
                 <td class="boxLabel"><p class="boxLabel">Important<br /><img src={useBaseUrl('img/BoxImportant.png')} alt="Important" /></p></td>
-                <td class="boxText"><p class="boxText">A healthy node propagates more than 95 percent of blocks within three seconds of production. To troubleshoot issues related to block progagation, examine network speed and your stake pool <a href="/ConfiguringTopology">topology</a>.</p></td>
+                <td class="boxText"><p class="boxText">A healthy node propagates more than 95 percent of blocks within three seconds of production. To troubleshoot issues related to block progagation, examine network speed and your stake pool <a href={useBaseUrl('/ConfiguringTopology')}>topology</a>.</p></td>
               </tr>
             </tbody>
           </table>
@@ -90,7 +90,7 @@ export function HTMLContent() {
             <tbody>
               <tr>
                 <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
-                <td class="boxText"><p class="boxText">A Cardano Node instance operating as a block producer may miss checking whether to prepare a block when the computer is busy or does not meet <a href="/Requirements">System Requirements</a>.</p></td>
+                <td class="boxText"><p class="boxText">A Cardano Node instance operating as a block producer may miss checking whether to prepare a block when the computer is busy or does not meet <a href={useBaseUrl('/Requirements')}>System Requirements</a>.</p></td>
               </tr>
             </tbody>
           </table>
@@ -127,11 +127,11 @@ export function HTMLContent() {
 
       <p>The following Bash script shows you how to use metrics to create a dashboard for monitoring Cardano Node instances in your stake pool configuration.</p>
 
-      <p>The script also includes the following optional functionality to display data that become relevant after <a href="/RegisteringPool">Registering a Stake Pool</a>:</p>
+      <p>The script also includes the following optional functionality to display data that become relevant after <a href={useBaseUrl('/RegisteringPool')}>Registering a Stake Pool</a>:</p>
       
       <ul>
-        <li><b>Slot Leadership</b>—The topic <a href="/CalculatingSlotLeadership">Calculating Slot Leadership</a> explains how to determine when the stake pool that you operate is scheduled to produce blocks.</li>
-        <li><b>Operational Certificates</b>—The topics <a href="/ConfiguringBlockProducer">Configuring the Block Producer</a> and <a href="/IssuingOpCert">Issuing a New Operational Certificate</a> explain how to ensure that the stake pool you operate continues to have the authority to run.</li>
+        <li><b>Slot Leadership</b>—The topic <a href={useBaseUrl('/CalculatingSlotLeadership')}>Calculating Slot Leadership</a> explains how to determine when the stake pool that you operate is scheduled to produce blocks.</li>
+        <li><b>Operational Certificates</b>—The topics <a href={useBaseUrl('/ConfiguringBlockProducer')}>Configuring the Block Producer</a> and <a href={useBaseUrl('/IssuingOpCert')}>Issuing a New Operational Certificate</a> explain how to ensure that the stake pool you operate continues to have the authority to run.</li>
       </ul>
 
       <p>For now, you can ignore the optional functionality in the script.</p>
@@ -186,9 +186,9 @@ export function HTMLContent() {
 
       <h1>Additional Resources</h1>
 
-      <p>While waiting for Cardano Node to synchronize, you may be interested in <a href="/Dashboard">Creating a Graphical Dashboard</a>.</p>
+      <p>While waiting for Cardano Node to synchronize, you may be interested in <a href={useBaseUrl('/Dashboard')}>Creating a Graphical Dashboard</a>.</p>
 
-      <p>To explore some additional third-party dashboards available in the Cardano community, see <a href="/AppendixD">Appendix D: Community Projects</a>.</p>
+      <p>To explore some additional third-party dashboards available in the Cardano community, see <a href={useBaseUrl('/AppendixD')}>Appendix D: Community Projects</a>.</p>
 
     </div>
   );

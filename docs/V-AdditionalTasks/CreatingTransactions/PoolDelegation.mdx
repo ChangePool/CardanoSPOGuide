@@ -35,7 +35,7 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
-      <p><a href="/RegisteringPool">Registering a Stake Pool</a> involves submitting a stake delegation certificate to the Cardano blockchain ledger. However, using Cardano CLI you can also delegate a wallet address to an existing stake pool without registering a stake pool.</p>
+      <p><a href={useBaseUrl('/RegisteringPool')}>Registering a Stake Pool</a> involves submitting a stake delegation certificate to the Cardano blockchain ledger. However, using Cardano CLI you can also delegate a wallet address to an existing stake pool without registering a stake pool.</p>
 
       <p>Delegating a wallet address to a stake pool involves:</p>
 
@@ -52,7 +52,7 @@ export function HTMLContent() {
       <p class="pi">To delegate a wallet address to an existing stake pool:</p>
 
       <ol>
-        <li>If you need to create a new wallet address for delegating to an existing stake pool, then follow the procedures for <a href="/CreatingWallet">Creating a Wallet</a>, and then <a href="/CreatingWallet#FundingAddress">Funding Your Payment Address</a>.
+        <li>If you need to create a new wallet address for delegating to an existing stake pool, then follow the procedures for <a href={useBaseUrl('/CreatingWallet')}>Creating a Wallet</a>, and then <a href={useBaseUrl('/CreatingWallet#FundingAddress')}>Funding Your Payment Address</a>.
           <table class="box">
             <tbody>
               <tr>
@@ -62,7 +62,7 @@ export function HTMLContent() {
             </tbody>
           </table>
         </li>
-        <li>If you are delegating the wallet address to a stake pool for the first time, then follow the procedure for <a href="/RegisteringAddress">Registering a Stake Address</a>.</li>
+        <li>If you are delegating the wallet address to a stake pool for the first time, then follow the procedure for <a href={useBaseUrl('/RegisteringAddress')}>Registering a Stake Address</a>.</li>
         <li>To generate a stake delegation certificate, using a terminal window on the block-producing node in your stake pool configuration, type the following command where <code>&lt;StakePoolID&gt;</code> is the unique ID for the stake pool where you want to delegate using hexadecimal or Bech32 format:
           <CodeBlock language="bash">
             {`cardano-cli conway stake-address stake-delegation-certificate \\

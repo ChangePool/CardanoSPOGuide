@@ -162,7 +162,7 @@ echo "Change: $\{txOut\}"`}
         </li>
       </ol>
 
-      <p>After submitting the stake pool stake pool deregistration certificate to the network, if you decide that you no longer want to deregister the stake pool, following the procedure for <a href="/RegisteringPool">Registering a Stake Pool</a> prior to the beginning of the <code>&lt;EpochToRetire&gt;</code> that you specified overrides the deregistration certificate.</p>
+      <p>After submitting the stake pool stake pool deregistration certificate to the network, if you decide that you no longer want to deregister the stake pool, following the procedure for <a href={useBaseUrl('/RegisteringPool')}>Registering a Stake Pool</a> prior to the beginning of the <code>&lt;EpochToRetire&gt;</code> that you specified overrides the deregistration certificate.</p>
 
       <p class="pi">To verify that the stake pool retired successfully:</p>
 
@@ -188,17 +188,17 @@ sudo systemctl start cardano-node.service`}
           Using a <a href="https://explorer.cardano.org" target="_blank">blockchain explorer</a>, verify that the pool retired.
 
         </li>
-        <li>To verify that the stake address registered as the reward account for the retired stake pool received the pool deposit refund, follow the procedure for <a href="/CheckingRewards">Checking Stake Pool Rewards</a>.</li>
-        <li>If the reward account does not delegate votes, then complete the procedure for <a href="/VoteDelegation">Delegating to a Representative</a>.</li>
-        <li>Follow the procedure for <a href="/ClaimingRewards">Claiming Stake Pool Rewards</a>.</li>
-        <li>As needed, follow the procedure for <a href="/SendingFunds">Sending Funds</a> to another wallet.</li>
+        <li>To verify that the stake address registered as the reward account for the retired stake pool received the pool deposit refund, follow the procedure for <a href={useBaseUrl('/CheckingRewards')}>Checking Stake Pool Rewards</a>.</li>
+        <li>If the reward account does not delegate votes, then complete the procedure for <a href={useBaseUrl('/VoteDelegation')}>Delegating to a Representative</a>.</li>
+        <li>Follow the procedure for <a href={useBaseUrl('/ClaimingRewards')}>Claiming Stake Pool Rewards</a>.</li>
+        <li>As needed, follow the procedure for <a href={useBaseUrl('/SendingFunds')}>Sending Funds</a> to another wallet.</li>
       </ol>
 
       <table class="box">
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
-            <td class="boxText"><p class="boxText">To receive the deposit for <a href="/RegisteringAddress">Registering a Stake Address</a>, after receiving the stake pool deposit refund, deregister the stake address registered as the reward account for the retired stake pool.</p></td>
+            <td class="boxText"><p class="boxText">To receive the deposit for <a href={useBaseUrl('/RegisteringAddress')}>Registering a Stake Address</a>, after receiving the stake pool deposit refund, deregister the stake address registered as the reward account for the retired stake pool.</p></td>
           </tr>
         </tbody>
       </table>

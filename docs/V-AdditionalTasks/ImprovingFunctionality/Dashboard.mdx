@@ -48,12 +48,12 @@ export function HTMLContent() {
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">For details on using the Cardano Node Prometheus endpoint, see <a href="/MonitoringMetrics">Monitoring Metrics</a>. The following procedure assumes that Cardano Node Prometheus endpoints in your stake pool configuration listen on the default port 12798. If you change the port number, then update the procedure accordingly.</p></td>
+            <td class="boxText"><p class="boxText">For details on using the Cardano Node Prometheus endpoint, see <a href={useBaseUrl('/MonitoringMetrics')}>Monitoring Metrics</a>. The following procedure assumes that Cardano Node Prometheus endpoints in your stake pool configuration listen on the default port 12798. If you change the port number, then update the procedure accordingly.</p></td>
           </tr>
         </tbody>
       </table>
 
-      <p>To connect to the Prometheus and Grafana servers securely as an end user, consider <a href="/Hardening/SSH#Using-Port-Forwarding">Using Port Forwarding</a>.</p>
+      <p>To connect to the Prometheus and Grafana servers securely as an end user, consider <a href={useBaseUrl('/Hardening/SSH#Using-Port-Forwarding')}>Using Port Forwarding</a>.</p>
 
       <h1>Installing and Configuring Prometheus</h1>
 
@@ -106,7 +106,7 @@ sudo systemctl enable prometheus-node-exporter.service
 sudo systemctl status prometheus-node-exporter.service`}
           </CodeBlock>
         </li>
-        <li>On the computer where you installed Prometheus Node Exporter in step 6, in the firewall open ports 12798 and 9100 to incoming traffic. If you use UFW, then follow the commands to open a port in <a href="/Hardening/Firewall#Configuring-Uncomplicated-Firewall">Configuring Uncomplicated Firewall</a> updating the port numbers as needed.
+        <li>On the computer where you installed Prometheus Node Exporter in step 6, in the firewall open ports 12798 and 9100 to incoming traffic. If you use UFW, then follow the commands to open a port in <a href={useBaseUrl('/Hardening/Firewall#Configuring-Uncomplicated-Firewall')}>Configuring Uncomplicated Firewall</a> updating the port numbers as needed.
           <table class="box">
             <tbody>
               <tr>
@@ -326,7 +326,7 @@ sudo systemctl status grafana-server.service`}
           <tbody>
             <tr>
               <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
-              <td class="boxText"><p class="boxText">If you are <a href="/Hardening/SSH#Using-Port-Forwarding">Using Port Forwarding</a>, then adjust the URL accordingly.</p></td>
+              <td class="boxText"><p class="boxText">If you are <a href={useBaseUrl('/Hardening/SSH#Using-Port-Forwarding')}>Using Port Forwarding</a>, then adjust the URL accordingly.</p></td>
             </tr>
           </tbody>
         </table></li>
@@ -352,7 +352,7 @@ sudo systemctl status grafana-server.service`}
       <p class="pi">To create a graphical dashboard for monitoring a Cardano stake pool:</p>
 
       <ol>
-        <li>On the computer hosting the Grafana server, download the example <a href="txt/GrafanaDashboard.json">Grafana Dashboard</a> file.</li>
+        <li>On the computer hosting the Grafana server, download the example <a href={useBaseUrl('txt/GrafanaDashboard.json')}>Grafana Dashboard</a> file.</li>
         <li>On the Grafana Home page, click <b>Dashboards</b> in the left pane, then click the dropdown arrow next to the <b>New</b> button in the top right corner of the right pane, and then click <b>Import</b></li>
         <li>Drag and drop the file named <b>GrafanaDashboard.json</b> that you downloaded in step 1 in the <b>Upload Dashboard JSON File</b> area on the <b>Import Dashboard</b> page.</li>
         <li>Click the <b>Change UID</b> button, and then clear the contents of the <b>Unique Identifier (UID)</b> field, and then click the <b>Import (Overwrite)</b> button.</li>
@@ -390,7 +390,7 @@ sudo systemctl status grafana-server.service`}
 
       <p>For more details on creating Grafana dashboards, see the topic <a href="https://grafana.com/docs/grafana/latest/visualizations/" target="_blank">Visualize Data</a>.</p>
 
-      <p>To explore some additional third-party Grafana dashboards available in the Cardano community, see <a href="/AppendixD">Appendix D: Community Projects</a>.</p>
+      <p>To explore some additional third-party Grafana dashboards available in the Cardano community, see <a href={useBaseUrl('/AppendixD')}>Appendix D: Community Projects</a>.</p>
 
     </div>
   );

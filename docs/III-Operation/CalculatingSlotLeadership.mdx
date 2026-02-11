@@ -66,7 +66,7 @@ export function HTMLContent() {
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">Depending on available computing resources, the <code>query leadership-schedule</code> command may run for a few minutes prior to displaying results. In the Mainnet environment, the query may require more than 32 GB RAM to complete successfully. If the query fails, increase RAM or <a href="/IncreasingSwap">swap file size</a> on the computer where you run the query.</p></td>
+            <td class="boxText"><p class="boxText">Depending on available computing resources, the <code>query leadership-schedule</code> command may run for a few minutes prior to displaying results. In the Mainnet environment, the query may require more than 32 GB RAM to complete successfully. If the query fails, increase RAM or <a href={useBaseUrl('/IncreasingSwap')}>swap file size</a> on the computer where you run the query.</p></td>
           </tr>
         </tbody>
       </table>
@@ -229,14 +229,14 @@ nodeView.sh`}
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">For more details on using and customizing the <code>nodeView.sh</code> script, see the topic <a href="/MonitoringMetrics">Monitoring Metrics</a>.</p></td>
+            <td class="boxText"><p class="boxText">For more details on using and customizing the <code>nodeView.sh</code> script, see the topic <a href={useBaseUrl('/MonitoringMetrics')}>Monitoring Metrics</a>.</p></td>
           </tr>
         </tbody>
       </table>
 
       <h1>Additional Resources</h1>
 
-      <p>For some additional third-party scripts and other software available in the Cardano community providing examples of how to calculate slot leadership for a stake pool that you operate, see <a href="/AppendixD">Appendix D: Community Projects</a>.</p>
+      <p>For some additional third-party scripts and other software available in the Cardano community providing examples of how to calculate slot leadership for a stake pool that you operate, see <a href={useBaseUrl('/AppendixD')}>Appendix D: Community Projects</a>.</p>
 
 
 

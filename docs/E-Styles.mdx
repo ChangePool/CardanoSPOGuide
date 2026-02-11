@@ -259,7 +259,7 @@ npm install`}
       <p>Fusce eleifend iaculis feugiat. Proin consequat eget orci ac ultrices. Phasellus a sem nec ipsum tristique mattis. Suspendisse id vulputate eros. Mauris bibendum magna id bibendum ornare. Phasellus ultricies posuere est, vitae sagittis tellus. Donec facilisis non purus egestas vestibulum. Sed orci ex, pharetra id sapien sed, mattis scelerisque velit. Nunc ut diam sed nisi dictum tincidunt.</p>
       
       <p>Morbi vulputate elit sapien, a dignissim tortor vulputate eu. Nam imperdiet sapien vulputate, malesuada enim sit amet, venenatis ipsum. Morbi fringilla nunc sit amet iaculis accumsan. Suspendisse ultricies tempus augue, ut vulputate ipsum. Vivamus imperdiet fringilla lectus at porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et magna in dolor vulputate pulvinar. Nulla molestie rhoncus rutrum.</p>
-      <p>Here is a <a href="/AppendixD">hyperlink</a> to an internal page in the Guide.</p>
+      <p>Here is a <a href={useBaseUrl('/AppendixD')}>hyperlink</a> to an internal page in the Guide.</p>
       
       
       <table class="box">
@@ -271,7 +271,7 @@ npm install`}
         </tbody>
       </table>
 
-      <p>Here is a link to a <a href="#html-style-guide">bookmark</a> on the same page in the Guide. When defining bookmarks, use an anchor tag setting an <code>id</code> attribute such as <code>&lt;a id="html-style-guide" /&gt;</code> to ensure that clicking the link does not scroll under the fixed header at the top of the page.</p>
+      <p>Here is a link to a <a href={useBaseUrl('#html-style-guide')}>bookmark</a> on the same page in the Guide. When defining bookmarks, use an anchor tag setting an <code>id</code> attribute such as <code>&lt;a id="html-style-guide" /&gt;</code> to ensure that clicking the link does not scroll under the fixed header at the top of the page.</p>
       <p><b>Bold</b>, <i>italic</i> and <b><i>bold italic</i></b> font weights and styles are available.</p>
 
       <h2>Heading 2 (<code>h2</code>)</h2>
@@ -333,7 +333,7 @@ fi`}
         {SampleCode}
       </pre>
 
-      <p>You can import and display any <a href="/txt/sampleText.txt" target="_blank">text</a> file:</p>
+      <p>You can import and display any <a href={useBaseUrl('txt/sampleText.txt')} target="_blank">text</a> file:</p>
       <CodeBlock>
 
         {/* The CodeBlock and sampleText components are imported at the beginning of the E-Styles.mdx file. */}

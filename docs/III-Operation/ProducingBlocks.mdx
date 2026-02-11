@@ -29,7 +29,7 @@ export function HTMLContent() {
 
       <h1>Log Entries Related to Block Production</h1>
 
-      <p>When <a href="/StartingNodes#Monitoring-the-Cardano-Node-Log">Monitoring the Cardano Node Log</a> for the block producer in your stake pool configuration, the <code>Forge.Loop.NodeNotLeader</code> trace adds an entry for every slot when the stake pool is NOT elected to prepare a block. For example:</p>
+      <p>When <a href={useBaseUrl('/StartingNodes#Monitoring-the-Cardano-Node-Log')}>Monitoring the Cardano Node Log</a> for the block producer in your stake pool configuration, the <code>Forge.Loop.NodeNotLeader</code> trace adds an entry for every slot when the stake pool is NOT elected to prepare a block. For example:</p>
 
       <CodeBlock>
         {`[cardanonode:Forge.Loop.NodeNotLeader](Info,94) Not leading slot 91529678`}
@@ -59,7 +59,7 @@ export function HTMLContent() {
 
       <h1>Making Continuous Improvements</h1>
 
-      <p>When the stake pool that you operate in the Mainnet environment successfully produces blocks, consider working towards implementing <a href="/Requirements#Recommended">Recommended Mainnet Specifications</a>.</p>
+      <p>When the stake pool that you operate in the Mainnet environment successfully produces blocks, consider working towards implementing <a href={useBaseUrl('/Requirements#Recommended')}>Recommended Mainnet Specifications</a>.</p>
 
     </div>
   );

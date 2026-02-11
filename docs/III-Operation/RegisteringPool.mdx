@@ -118,7 +118,7 @@ export function HTMLContent() {
             <tbody>
               <tr>
                 <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
-                <td class="boxText"><p class="boxText">All metadata values are optional. <code>&lt;HexPoolID&gt;</code> is a unique stake pool ID available after registering a pool. The topic <a href="/VerifyingRegistration">Verifying Stake Pool Registration</a> shows you how to retrieve a stake pool ID. For now, leave the value empty. Complete available values in the <code>metadata-extended.json</code> file as needed. In the future, third parties may implement functionality supporting new keys to include in the <code>metadata-extended.json</code> file.</p></td>
+                <td class="boxText"><p class="boxText">All metadata values are optional. <code>&lt;HexPoolID&gt;</code> is a unique stake pool ID available after registering a pool. The topic <a href={useBaseUrl('/VerifyingRegistration')}>Verifying Stake Pool Registration</a> shows you how to retrieve a stake pool ID. For now, leave the value empty. Complete available values in the <code>metadata-extended.json</code> file as needed. In the future, third parties may implement functionality supporting new keys to include in the <code>metadata-extended.json</code> file.</p></td>
               </tr>
             </tbody>
           </table>
@@ -137,7 +137,7 @@ export function HTMLContent() {
           </CodeBlock>
         </li>
         <li>Save and close the <code>metadata.json</code> file.</li>
-        <li>Publish the <code>metadata.json</code> and <code>metadata-extended.json</code> files, as well as the two PNG image files containing the stake pool logo, on the Internet at the URLs that you specified in the metadata. For example, host the files using the official Web site for your stake pool. <a href="/GitHubFileHosting">Hosting Files Using GitHub</a> is another option.
+        <li>Publish the <code>metadata.json</code> and <code>metadata-extended.json</code> files, as well as the two PNG image files containing the stake pool logo, on the Internet at the URLs that you specified in the metadata. For example, host the files using the official Web site for your stake pool. <a href={useBaseUrl('/GitHubFileHosting')}>Hosting Files Using GitHub</a> is another option.
           <table class="box">
             <tbody>
               <tr>
@@ -194,7 +194,7 @@ echo minPoolCost: $\{minPoolCost\}`}
       <a id="GeneratingStakePoolRegCert" />
       <h1>Generating a Stake Pool Registration Certificate</h1>
 
-      <p>The following procedure shows you how to generate a stake pool registration certificate using a domain name to register one relay node in your stake pool configuration. For details on registering multiple relay nodes using domain names, IP addresses or round-robin DNS, see the section <a href="#RegisteringRelayNodes">Options for Registering Relay Nodes</a>.</p>
+      <p>The following procedure shows you how to generate a stake pool registration certificate using a domain name to register one relay node in your stake pool configuration. For details on registering multiple relay nodes using domain names, IP addresses or round-robin DNS, see the section <a href={useBaseUrl('#RegisteringRelayNodes')}>Options for Registering Relay Nodes</a>.</p>
 
       <p class="pi">To generate a stake pool registration certificate:</p>
       
@@ -246,7 +246,7 @@ echo minPoolCost: $\{minPoolCost\}`}
       <a id="RegisteringRelayNodes" />
       <h1>Options For Registering Relay Nodes</h1>
 
-      <p>The example <code>stake-pool registration-certificate</code> command in the <a href="#GeneratingStakePoolRegCert">Generating a Stake Pool Registration Certificate</a> section registers one relay node using the <code>--single-host-pool-relay</code> option to specify a domain name corresponding to an IPv4 A or IPv6 AAAA DNS record.</p>
+      <p>The example <code>stake-pool registration-certificate</code> command in the <a href={useBaseUrl('#GeneratingStakePoolRegCert')}>Generating a Stake Pool Registration Certificate</a> section registers one relay node using the <code>--single-host-pool-relay</code> option to specify a domain name corresponding to an IPv4 A or IPv6 AAAA DNS record.</p>
 
       <p>Sometimes, in Cardano CLI commands—such as when registering relay nodes—you may use multiple instances of an option and the order of options matters. The following example registers two relay nodes having the URLs <code>relaynode1.pool.example.net:6000</code> and <code>relaynode2.pool.example.net:6000</code> respectively:</p>
 
@@ -297,7 +297,7 @@ echo minPoolCost: $\{minPoolCost\}`}
         </tbody>
       </table>
 
-      <p>In a stake pool configuration, you must register at least one relay node. If you operate multiple relay nodes, then registering all your relay nodes publicly on the blockchain using a stake pool registration certificate may create a security risk. You can operate one or more unregistered relays by <a href="/PeerSharing">Enabling Peer Sharing</a>.</p>
+      <p>In a stake pool configuration, you must register at least one relay node. If you operate multiple relay nodes, then registering all your relay nodes publicly on the blockchain using a stake pool registration certificate may create a security risk. You can operate one or more unregistered relays by <a href={useBaseUrl('/PeerSharing')}>Enabling Peer Sharing</a>.</p>
 
       <table class="box">
         <tbody>
@@ -325,7 +325,7 @@ echo minPoolCost: $\{minPoolCost\}`}
         </li>
       </ul>
 
-      <p>Using the <code>address build</code> command when <a href="/CreatingWallet">Creating a Wallet</a>, you can use the same stake address public verification key with different payment address public verification keys to generate many different payment addresses. The <code>stake-address stake-delegation-certificate</code> command generates a certificate to delegate funds in all accounts associated with the specified stake address public verification key to the stake pool having the specified cold public verification key.</p>
+      <p>Using the <code>address build</code> command when <a href={useBaseUrl('/CreatingWallet')}>Creating a Wallet</a>, you can use the same stake address public verification key with different payment address public verification keys to generate many different payment addresses. The <code>stake-address stake-delegation-certificate</code> command generates a certificate to delegate funds in all accounts associated with the specified stake address public verification key to the stake pool having the specified cold public verification key.</p>
 
       <h1>Submitting a Stake Pool Registration Certificate</h1>
 

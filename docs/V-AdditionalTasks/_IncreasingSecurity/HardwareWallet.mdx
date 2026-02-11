@@ -52,7 +52,7 @@ export function HTMLContent() {
         </li>
       </ol>
 
-      <p>When <a href="/UpdatingPoolRegCert">Updating the Stake Pool Registration Certificate</a>, all stake pool owners must witness the transaction using the respective stake address signing file.</p>
+      <p>When <a href={useBaseUrl('/UpdatingPoolRegCert')}>Updating the Stake Pool Registration Certificate</a>, all stake pool owners must witness the transaction using the respective stake address signing file.</p>
 
       <<p class="pi">To secure a Cardano stake pool using a hardware wallet:</p>
 
@@ -79,7 +79,7 @@ cd ./hw-wallet-keys`}
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">To run <code>cardano-hw-cli</code> commands successfully using a Ledger hardware wallet, you may need to use the <code>sudo</code> prefix. In the derivation path <code>1852H/1815H/0H/2/0</code> the number <code>2</code> indicates the staking key path. For more details on the derivation path for keys used in Cardano transactions, see the topic <a href="/CreatingWallet">Creating a Wallet</a>. The <code>hw-stake.vkey</code> file is not sensitive and may be shared publicly. While the <code>hw-stake.hwsfile</code> does NOT contain a raw private key, the file is sensitive and may be used to sign transactions when <a href="/ClaimingRewards">Claiming Stake Pool Rewards</a> or <a href="/PoolDelegation">Delegating to a Stake Pool</a>.</p></td>
+            <td class="boxText"><p class="boxText">To run <code>cardano-hw-cli</code> commands successfully using a Ledger hardware wallet, you may need to use the <code>sudo</code> prefix. In the derivation path <code>1852H/1815H/0H/2/0</code> the number <code>2</code> indicates the staking key path. For more details on the derivation path for keys used in Cardano transactions, see the topic <a href={useBaseUrl('/CreatingWallet')}>Creating a Wallet</a>. The <code>hw-stake.vkey</code> file is not sensitive and may be shared publicly. While the <code>hw-stake.hwsfile</code> does NOT contain a raw private key, the file is sensitive and may be used to sign transactions when <a href={useBaseUrl('/ClaimingRewards')}>Claiming Stake Pool Rewards</a> or <a href={useBaseUrl('/PoolDelegation')}>Delegating to a Stake Pool</a>.</p></td>
           </tr>
         </tbody>
       </table>
