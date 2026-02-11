@@ -234,6 +234,14 @@
 		"description": "Snippet for inserting an internal hyperlink"
 	},
 
+  "CoinCashew Guide HTML useBaseUrl": {
+    "prefix": ["useBaseUrl"],
+    "body": [
+      "{useBaseUrl('$1')}"
+    ],
+    "description": "Snippet for inserting a useBaseUrl component"
+  },
+
 	"CoinCashew Guide Note Box": {
 		"prefix": "Note Box",
 		"body": [
