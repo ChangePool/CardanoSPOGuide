@@ -339,7 +339,7 @@ cd ..
 rm -rf ~/tmp2
 ```
 
-7\. [Complete](#completing-the-upgrade-) the upgrade.
+7\. [Complete](#Completing-the-Upgrade-) the upgrade.
 
 ### Compiling the Binaries
 
@@ -356,7 +356,7 @@ git clone https://github.com/IntersectMBO/cardano-node.git ./<NewFolderName>
 
 Cloning the GitHub repository to a new folder allows you to roll back the upgrade, if needed, by re-installing on your computer the `cardano-node` and `cardano-cli` binaries from a folder where you compiled a previous version of Cardano Node packages.
 
-2\. To build Cardano Node binaries using the source code that you downloaded in step 1, type the following commands where `<NewFolderName>` is the name of the folder you created in step 1 and `<GHCVersionNumber>` is the GHC version that you set in the section [Setting GHC and Cabal Versions](#setting-ghc-and-cabal-versions-):
+2\. To build Cardano Node binaries using the source code that you downloaded in step 1, type the following commands where `<NewFolderName>` is the name of the folder you created in step 1 and `<GHCVersionNumber>` is the GHC version that you set in the section [Setting GHC and Cabal Versions](#Setting-GHC-and-Cabal-Versions-):
 
 ```bash
 # Ensure that development headers for the libsodium cryptographic library are NOT installed on the local computer
@@ -435,7 +435,7 @@ To monitor your node, type the command `journalctl -fu cardano-node`in a termina
 
 4\. Copy the new `cardano-cli` binary to the air-gapped, offline computer that you use to sign transactions for your stake pool.
 
-5\. On your air-gapped, offline computer, ensure that [libsecp256k1](/OfflineComputer#installing-libsecp256k1) and [blst](/OfflineComputer#installing-the-blst-library) are installed and up to date.
+5\. On your air-gapped, offline computer, ensure that [libsecp256k1](/OfflineComputer#Installing-libsecp256k1) and [blst](/OfflineComputer#Installing-the-blst-Library) are installed and up to date.
 
 ## Verifying the Upgrade
 
