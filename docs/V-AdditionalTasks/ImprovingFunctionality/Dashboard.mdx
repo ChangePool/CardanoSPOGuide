@@ -47,7 +47,7 @@ export function HTMLContent() {
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
             <td class="boxText"><p class="boxText">For details on using the Cardano Node Prometheus endpoint, see <a href="/MonitoringMetrics">Monitoring Metrics</a>. The following procedure assumes that Cardano Node Prometheus endpoints in your stake pool configuration listen on the default port 12798. If you change the port number, then update the procedure accordingly.</p></td>
           </tr>
         </tbody>
@@ -80,7 +80,7 @@ sudo systemctl status prometheus.service`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">When a server binds to <code>0.0.0.0</code>, the server listens on every IP address assigned to the computer.</p></td>
               </tr>
             </tbody>
@@ -164,7 +164,7 @@ scrape_configs:
               <table class="box">
                 <tbody>
                   <tr>
-                    <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                    <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                     <td class="boxText"><p class="boxText">For more details on configuring Prometheus, see <a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/" target="_blank">Configuration</a>.</p></td>
                   </tr>
                 </tbody>
@@ -195,7 +195,7 @@ scrape_configs:
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
             <td class="boxText"><p class="boxText">In PromQL, filter queries using curly braces (<code>&#123;</code> and <code>&#125;</code>). For more details, see <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/" target="_blank">Querying Basics</a>.</p></td>
           </tr>
         </tbody>
@@ -325,7 +325,7 @@ sudo systemctl status grafana-server.service`}
         <table class="box">
           <tbody>
             <tr>
-              <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+              <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
               <td class="boxText"><p class="boxText">If you are <a href="/Hardening/SSH#Using-Port-Forwarding">Using Port Forwarding</a>, then adjust the URL accordingly.</p></td>
             </tr>
           </tbody>

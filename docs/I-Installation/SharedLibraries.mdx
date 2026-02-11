@@ -64,7 +64,7 @@ sudo ldconfig
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">To resolve a <code>cannot find -lnuma</code> error message when compiling Sodium, type:
                   <CodeBlock language="bash">
                     {`sudo apt-get install libnuma-dev`}
@@ -134,7 +134,7 @@ sudo chmod u=rw,go=r /usr/local/{lib/{libblst.a,pkgconfig/libblst.pc},include/{b
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
             <td class="boxText"><p class="boxText">Prefixing a file or folder name using a period (<code>.</code>) character creates a hidden file or folder. Hidden files and folders do not display by default using the file manager or typical command-line listings. To list contents of the current directory including hidden files and folders, using a terminal window type:
               <CodeBlock language="bash">
                 {`ls -a`}
@@ -164,7 +164,7 @@ export CARDANO_NODE_SOCKET_PATH="$NODE_HOME/db/socket"`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">If you plan to use Cardano Node in a Testnet environment instead of Mainnet, then replace the line <code>export NODE_CONFIG="mainnet"</code> in your <code>$HOME/.bashrc</code> file with <code>export NODE_CONFIG="testnet"</code> Also, when working through the <i>How to Set Up a Cardano Stake Pool</i> guide, replace every instance of the command option <code>&#8209;&#8209;mainnet</code> with <code>&#8209;&#8209;testnet&#8209;magic &lt;MagicNumber&gt;</code> where <code>&lt;MagicNumber&gt;</code> is the network magic number for the Testnet that you use. For details on available Testnets, see <a href="https://book.world.dev.cardano.org/environments.html" target="_blank">Environments</a>.</p></td>
               </tr>
             </tbody>

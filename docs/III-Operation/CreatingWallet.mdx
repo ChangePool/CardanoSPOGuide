@@ -36,7 +36,7 @@ export function HTMLContent() {
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
             <td class="boxText"><p class="boxText">Pledge is the stake that you delegate to the pool that you operate, serving as a security measure and indicating your commitment to the Cardano ecosystem.</p></td>
           </tr>
         </tbody>
@@ -63,7 +63,7 @@ cardano-cli conway address key-gen \\
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">You copied the Cardano CLI binary when <a href="/OfflineComputer">Configuring an Air-gapped, Offline Computer</a>.</p></td>
               </tr>
             </tbody>
@@ -209,7 +209,7 @@ cardano-wallet recovery-phrase generate --size 24 > seed-phrase.dat`}
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
             <td class="boxText"><p class="boxText">Named after the English mathematician and writer Ada Lovelace, the currency symbol for ADA is ₳ and the sub-unit is the Lovelace. ₳1 is comprised of 1,000,000 Lovelace.</p></td>
           </tr>
         </tbody>

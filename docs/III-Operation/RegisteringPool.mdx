@@ -117,7 +117,7 @@ export function HTMLContent() {
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">All metadata values are optional. <code>&lt;HexPoolID&gt;</code> is a unique stake pool ID available after registering a pool. The topic <a href="/VerifyingRegistration">Verifying Stake Pool Registration</a> shows you how to retrieve a stake pool ID. For now, leave the value empty. Complete available values in the <code>metadata-extended.json</code> file as needed. In the future, third parties may implement functionality supporting new keys to include in the <code>metadata-extended.json</code> file.</p></td>
               </tr>
             </tbody>
@@ -141,7 +141,7 @@ export function HTMLContent() {
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">The length of the URL for the <code>metadata.json</code> file must be less than 64 characters. To shorten a URL, use a free URL shortener such as <a href="https://www.shorturl.at/" target="_blank">ShortURL</a> or <a href="https://tinyurl.com/" target="_blank">TinyURL</a>, for example.</p></td>
               </tr>
             </tbody>
@@ -159,7 +159,7 @@ diff -s metadata.hash metadataOnline.hash`}
         <table class="box">
           <tbody>
             <tr>
-              <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+              <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
               <td class="boxText"><p class="boxText">If you are sure that the files are identical and the hashes still do not match, then try a different hosting option.</p></td>
             </tr>
           </tbody>
@@ -262,7 +262,7 @@ echo minPoolCost: $\{minPoolCost\}`}
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
             <td class="boxText"><p class="boxText">Registering the domain name for a relay node offers the advantage of allowing you to change the computer hosting the relay node, if needed, by editing the DNS record without submitting an updated stake pool registration certificate to the Cardano network.</p></td>
           </tr>
         </tbody>
@@ -291,7 +291,7 @@ echo minPoolCost: $\{minPoolCost\}`}
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
             <td class="boxText"><p class="boxText">The Cardano protocol is secure and does NOT require using HTTPS for relay nodes.</p></td>
           </tr>
         </tbody>
@@ -373,7 +373,7 @@ echo Change: $\{txOut\}`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">If change from the transaction is less than 1₳ then funds are insufficient. Transactions having insufficient funds fail when submitted to the network.</p></td>
               </tr>
             </tbody>

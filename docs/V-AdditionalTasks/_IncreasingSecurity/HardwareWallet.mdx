@@ -78,7 +78,7 @@ cd ./hw-wallet-keys`}
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
             <td class="boxText"><p class="boxText">To run <code>cardano-hw-cli</code> commands successfully using a Ledger hardware wallet, you may need to use the <code>sudo</code> prefix. In the derivation path <code>1852H/1815H/0H/2/0</code> the number <code>2</code> indicates the staking key path. For more details on the derivation path for keys used in Cardano transactions, see the topic <a href="/CreatingWallet">Creating a Wallet</a>. The <code>hw-stake.vkey</code> file is not sensitive and may be shared publicly. While the <code>hw-stake.hwsfile</code> does NOT contain a raw private key, the file is sensitive and may be used to sign transactions when <a href="/ClaimingRewards">Claiming Stake Pool Rewards</a> or <a href="/PoolDelegation">Delegating to a Stake Pool</a>.</p></td>
           </tr>
         </tbody>

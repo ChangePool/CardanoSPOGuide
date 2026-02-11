@@ -77,7 +77,7 @@ echo stakeAddressDeposit: $\{stakeAddressDeposit\}`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">The <code>cardano-cli conway query tip</code> command uses the <code>CARDANO_NODE_SOCKET_PATH</code> environment variable that you set in the <code>$HOME/.bashrc</code> file when <a href="/SharedLibraries">Installing Shared Libraries</a>. <code>cardano-cli</code> commands throughout the <i>How to Set Up a Cardano Stake Pool</i> guide may use the <code>CARDANO_NODE_SOCKET_PATH</code> environment variable. If you do not set the <code>CARDANO_NODE_SOCKET_PATH</code> environment variable or the environment variable is unavailable, then you need to set the <code>--socket-path</code> option explicitly in commands requiring the location of the Cardano Node socket file.</p></td>
               </tr>
             </tbody>
@@ -101,7 +101,7 @@ echo stakeAddressDeposit: $\{stakeAddressDeposit\}`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">The <code>--invalid-hereafter</code> option sets the slot when the transaction expires. The above transaction expires 10,000 seconds—about 2 hours and 45 minutes—after the current slot.</p></td>
               </tr>
             </tbody>
@@ -114,7 +114,7 @@ echo stakeAddressDeposit: $\{stakeAddressDeposit\}`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">The <code>--witness-count</code> option indicates the number of keys signing the transaction. You must sign a transaction submitting a stake address registration certificate to the blockchain using the secret—private—key for the payment address spending the input, as well as the secret key for the stake address to register.</p></td>
               </tr>
             </tbody>
@@ -128,7 +128,7 @@ echo Change: $\{txOut\}`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">If change from the transaction is less than 1₳ then funds are insufficient. Transactions having insufficient funds fail when submitted to the network.</p></td>
               </tr>
             </tbody>

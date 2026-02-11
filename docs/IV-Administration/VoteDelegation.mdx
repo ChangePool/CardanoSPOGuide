@@ -38,7 +38,7 @@ export function HTMLContent() {
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
             <td class="boxText"><p class="boxText">For more information on Cardano governance, visit <a href="https://www.1694.io/en" target="_blank">1694.IO</a> or <a href="https://gov.tools/" target="_blank">GOV TOOL</a></p></td>
           </tr>
         </tbody>
@@ -117,7 +117,7 @@ export function HTMLContent() {
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">Regarding the value of the <code>--witness-count</code> option in the transaction, when submitting a vote delegation certificate to the blockchain you must sign the transaction using the secret—private—key for the payment address spending the input, as well as the secret key for the stake address delegating voting power.</p></td>
               </tr>
             </tbody>

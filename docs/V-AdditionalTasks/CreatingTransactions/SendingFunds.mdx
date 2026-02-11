@@ -68,7 +68,7 @@ echo Amount to Send: $\{amountToSend\}`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">The smallest amount you can send successfully is ₳1, which is equivalent to 1 million Lovelace.</p></td>
               </tr>
             </tbody>
@@ -109,7 +109,7 @@ echo Change: $\{txOut\}`}
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">If change from the transaction is less than ₳1 then funds are insufficient. Transactions having insufficient funds fail when submitted to the network.</p></td>
               </tr>
             </tbody>

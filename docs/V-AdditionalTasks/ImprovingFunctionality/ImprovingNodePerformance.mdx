@@ -25,7 +25,7 @@ export function HTMLContent() {
       <table class="box">
         <tbody>
           <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
             <td class="boxText"><p class="boxText">Configuration changes that you implement on a block-producing node to reduce the number of missed slots may also improve performance when implemented on a relay node.</p></td>
           </tr>
         </tbody>
@@ -40,7 +40,7 @@ export function HTMLContent() {
           <table class="box">
             <tbody>
               <tr>
-                <td class="boxLabel"><p class="boxLabel">Note<br /><img src="img/BoxNote.png" alt="Note" /></p></td>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">Increasing the amount of time between snapshots may slightly increase the time required to start Cardano Node.</p></td>
               </tr>
             </tbody>
