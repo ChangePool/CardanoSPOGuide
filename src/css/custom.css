@@ -378,9 +378,9 @@ ul.tabs li.tabs__item--active
 }
 
 /* In the DocSearch results page, increase the space between the heading and breadcrumbs for each search result */
-ul.breadcrumbs
+nav[aria-label="breadcrumbs"]
 {
-  margin-top: -1pt;
+  margin-top: 6pt;
 }
 
 /* In the DocSearch results page, set the color for the text informing the user how many documents the search returned */
