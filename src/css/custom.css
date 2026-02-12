@@ -11,7 +11,9 @@
 /* You can override the default Infima variables here. */
 /* September 24, 2025 - For more details, see https://gist.github.com/abhigyantrips/b828ca46b2460c6699c73e0162f6be80 */
 :root {
-  --ifm-color-primary: #2e8555;
+  /* February 11, 2026 - In the DocSearch modal dialog, set the color for hit heading text, highlighted text and highlighted hit background to match the h1 style */
+  /* --ifm-color-primary: #2e8555; */
+  --ifm-color-primary: #0033ad;
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
   --ifm-color-primary-darkest: #205d3b;
@@ -30,7 +32,9 @@
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
+  /* February 11, 2026 - In the DocSearch modal dialog, set the color for hit heading text, highlighted text and highlighted hit background to match the h1 style */
+  /* --ifm-color-primary: #25c2a0; */
+  --ifm-color-primary: #629ddc;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
   --ifm-color-primary-darkest: #1a8870;
@@ -47,19 +51,18 @@ a
 }
 
 /* Set the color for hyperlinks in the content of the Guide, excluding hyperlinks in the sidebar, header and footer */
-a:not(.menu__link, .navbar__link, .footer__link-item)
+a:not(.menu__link, .navbar__link, .footer__link-item, .footer__copyright)
 {
   /* color: light-dark(#0033ad,#0033dd); */
   color: light-dark(#0033ad,#629ddc);
 }
 
 /* Style hyperlinks in the header */
-/*
 a.navbar__link
 {
+  /* Set the same color that items in the left navigation use */
   color: var(--ifm-menu-color);
 }
-*/
 
 a.navbar__link:hover
 {
@@ -81,12 +84,35 @@ a.navbar__link:hover
   /* --docsearch-searchbox-shadow: inset 0 0 0 2px var(--docsearch-primary-color); */
   --docsearch-searchbox-shadow: inset 0 0 0 2px rgba(191, 144, 4, 0.7);
   /* Hit */
-  --docsearch-hit-color: var(--ifm-font-color-base);
+  /* NOTE: Set the hover background color for hits using the --ifm-color-primary variable */
+  /* February 11, 2026 - Set the text color for hits */
+  /* --docsearch-hit-color: var(--ifm-font-color-base); */
+  --docsearch-hit-color: var(--ifm-menu-color);
   --docsearch-hit-active-color: var(--ifm-color-white);
   --docsearch-hit-background: var(--ifm-color-white);
   /* Footer */
   --docsearch-footer-background: var(--ifm-color-white);
 }
+
+/* February 11, 2026 - Set the color for the Light Mode / Dark Mode button in the header */
+#__docusaurus > nav > div.navbar__inner > div.theme-layout-navbar-right.navbar__items.navbar__items--right > div.toggle_vylO.colorModeToggle_DEke
+{
+  color: var(--ifm-menu-color);
+}
+
+/* February 11, 2026 - Set the color of the magnifying glass in the Search field in the header */
+#__docusaurus > nav > div.navbar__inner > div.theme-layout-navbar-right.navbar__items.navbar__items--right > div.navbarSearchContainer_Bca1 > button > span.DocSearch-Button-Container > svg
+{
+  color: var(--ifm-menu-color);
+}
+
+/* February 11, 2026 - Set the color for hovering over the magnifying glass in the Search field in the header */
+/*
+#__docusaurus > nav > div.navbar__inner > div.theme-layout-navbar-right.navbar__items.navbar__items--right > div.navbarSearchContainer_Bca1 > button > span.DocSearch-Button-Container > svg:hover
+{
+  color: #ff0000;
+}
+*/
 
 /* September 2, 2025 - Set the color of the magnifying glass in the Typesense modal dialog */
 .DocSearch-Search-Icon
@@ -99,6 +125,20 @@ a.navbar__link:hover
 {
   font-family: 'Ubuntu', sans-serif;
   font-weight: 400; /* Regular */
+}
+
+/* February 11, 2026 - Set the color for hovering over the Search placeholder text */
+/*
+.DocSearch-Button-Placeholder:hover
+{
+  color: var(--ifm-menu-color);
+}
+*/
+
+/* February 11, 2026 - Set the color for hovering over the Search placeholder text */
+#__docusaurus > nav > div.navbar__inner > div.theme-layout-navbar-right.navbar__items.navbar__items--right > div.navbarSearchContainer_Bca1 > button:hover
+{
+  color: var(--ifm-menu-color);
 }
 
 [data-theme='dark'] .DocSearch {
@@ -132,7 +172,8 @@ a.footer__link-item:hover
 }
 
 /* Style hyperlinks in the copyright text */
-.footer__copyright a
+#__docusaurus > footer > div > div > div > a
+/* .footer__copyright a */
 {
   color: light-dark(#BF9004,#BF9004);
 }
@@ -334,6 +375,18 @@ ul.tabs li.tabs__item--active
   list-style-image: url("/static/img/SSBulletDark.png");
   /* In case the image fails to load, set a fallback list-style-type */
   list-style-type: disc;
+}
+
+/* In the DocSearch results page, increase the space between the heading and breadcrumbs for each search result */
+ul.breadcrumbs
+{
+  margin-top: -1pt;
+}
+
+/* In the DocSearch results page, set the color for the text informing the user how many documents the search returned */
+#__docusaurus_skipToContent_fallback > div > div > div.col.col--8.searchResultsColumn_EPg1
+{
+  color: var(--ifm-menu-color);
 }
 
 p
