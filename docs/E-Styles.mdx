@@ -53,7 +53,7 @@ export function HTMLContent() {
   );
 }
 
-<!-- <HTMLContent /> -->
+<HTMLContent />
 
 <!-- INSERT MARKDOWN CONTENT HERE -->`;
 
@@ -259,19 +259,7 @@ npm install`}
       <p>Fusce eleifend iaculis feugiat. Proin consequat eget orci ac ultrices. Phasellus a sem nec ipsum tristique mattis. Suspendisse id vulputate eros. Mauris bibendum magna id bibendum ornare. Phasellus ultricies posuere est, vitae sagittis tellus. Donec facilisis non purus egestas vestibulum. Sed orci ex, pharetra id sapien sed, mattis scelerisque velit. Nunc ut diam sed nisi dictum tincidunt.</p>
       
       <p>Morbi vulputate elit sapien, a dignissim tortor vulputate eu. Nam imperdiet sapien vulputate, malesuada enim sit amet, venenatis ipsum. Morbi fringilla nunc sit amet iaculis accumsan. Suspendisse ultricies tempus augue, ut vulputate ipsum. Vivamus imperdiet fringilla lectus at porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et magna in dolor vulputate pulvinar. Nulla molestie rhoncus rutrum.</p>
-      <p>Here is a <a href={useBaseUrl('/AppendixD')}>hyperlink</a> to an internal page in the Guide.</p>
-      
-      
-      <table class="box">
-        <tbody>
-          <tr>
-            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">Only set the <code>target="_blank"</code> attribute for external links.</p></td>
-          </tr>
-        </tbody>
-      </table>
 
-      <p>Here is a link to a <a href={useBaseUrl('#html-style-guide')}>bookmark</a> on the same page in the Guide. When defining bookmarks, use an anchor tag setting an <code>id</code> attribute such as <code>&lt;a id="html-style-guide" /&gt;</code> to ensure that clicking the link does not scroll under the fixed header at the top of the page.</p>
       <p><b>Bold</b>, <i>italic</i> and <b><i>bold italic</i></b> font weights and styles are available.</p>
 
       <h2>Heading 2 (<code>h2</code>)</h2>
@@ -293,6 +281,25 @@ npm install`}
           </tr>
         </tbody>
       </table>
+
+      <p>Create new topics in the <code>/docs</code> subfolder using MDX as the file name extension. To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; <code>&lt;TOCStatus&gt;</code> is a Boolean value determinig whether or not the table of contents appears in the top right corner of a topic; <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar; and, <code>&lt;Description&gt;</code> is a brief summary of the topic that displays in a sidebar category for the topic:</p>
+
+      <pre>
+        {NewTopicTemplate}
+      </pre>
+            <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">For more details on how to preserve whitespace in code blocks, see the source file for <i>Appendix E</i>, available at the relative path <code>/docs/E&#8209;Styles.mdx</code></p></td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+
+
       <p>You can create <code>inline code</code> (<code>code</code>) or code blocks (<code>CodeBlock</code>). For example:</p>
       
       <CodeBlock language="bash" title="Bash">
@@ -347,7 +354,7 @@ fi`}
         {samplePlaceholder}
       </CodeBlock>
 
-      <p>Replace placeholders with values in the definition of the HTMLContent function using string manipulation:</p>
+      <p>Replace placeholders with values in the definition of the <code>HTMLContent</code> function using string manipulation:</p>
 
       <CodeBlock language="bash">
         {`var samplePlaceholderAppendixD = samplePlaceholder.replace("\{\{witness-count\}\}", "3");`}
@@ -359,19 +366,45 @@ fi`}
         {samplePlaceholderAppendixD}
       </CodeBlock>
 
-      <p>Create new topics in the <code>/docs</code> subfolder using MDX as the file name extension. To create a new topic, use the following template where <code>&lt;TopicTitle&gt;</code> is main heading on the page; <code>&lt;TopicSidebarLabel&gt;</code> labels the topic in the sidebar navigation; <code>&lt;UniqueURLSegmentToTopic&gt;</code> is a unique string appended to the base path for the Web site to create the URL for the topic; <code>&lt;TitleStatus&gt;</code> is a Boolean value (<code>true</code> or <code>false</code>) determining whether or not the title displays at the beginning of the topic; <code>&lt;TOCStatus&gt;</code> is a Boolean value determinig whether or not the table of contents appears in the top right corner of a topic; <code>&lt;SidebarPositionNumber&gt;</code> is an integer where higher numbers appear lower in the order of topics in the sidebar; and, <code>&lt;Description&gt;</code> is a brief summary of the topic that displays in a sidebar category for the topic:</p>
 
-      <pre>
-        {NewTopicTemplate}
-      </pre>
-            <table class="box">
+
+
+
+      <p>Here is a <a href={useBaseUrl('/AppendixD')}>hyperlink</a> to an internal page in the Guide. When creating internal links or inserting images in JavaScript XML (JSX), use the <code>useBaseUrl</code> (<code>useBaseUrl</code>) hook to ensure that Docusaurus prepends the <code>baseUrl</code> configured in the <code>docusaurus.config.js</code> file for the project. For example:</p>
+
+      <CodeBlock language="html">{`import React from 'react';
+
+<!-- Import the useBaseUrl component -->
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+      {/* <!-- Creating an internal hyperlink --> */}
+      <a href={useBaseUrl('/AppendixE')}>Appendix E: Styles, Standards and Creating Content</a>
+
+      {/* <!-- Inserting an image using a relative path --> */}
+      <img src={useBaseUrl('img/CCLogoLarge.png')} alt="CoinCashew.io Logo" />
+
+    </div>
+  );
+}
+
+<HTMLContent />`}
+      </CodeBlock>
+
+      <table class="box">
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">For more details on how to preserve whitespace in code blocks, see the source file for <i>Appendix E</i>, available at the relative path <code>/docs/E&#8209;Styles.mdx</code></p></td>
+            <td class="boxText"><p class="boxText">Set the <code>target="_blank"</code> attribute for external hyperlinks only.</p></td>
           </tr>
         </tbody>
       </table>
+
+      <p>Here is a link to a <a href={useBaseUrl('#html-style-guide')}>bookmark</a> on the same page in the Guide. When defining bookmarks, use an anchor tag setting an <code>id</code> attribute such as <code>&lt;a id="html-style-guide" /&gt;</code> to ensure that clicking a link to the anchor does not scroll under the fixed header at the top of the page.</p>
+
       <p>In sit amet mauris laoreet, ultricies diam ut, volutpat neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras facilisis sapien et ante lacinia imperdiet. Nullam condimentum purus non neque porta, malesuada varius nibh rutrum. Nulla maximus at magna eget tincidunt. Donec non porttitor sem. Nam vitae condimentum est. Etiam id faucibus quam, quis aliquet tortor.</p>
 
       <table class="box">
@@ -391,7 +424,7 @@ fi`}
         </tbody>
       </table>
 
-      <p><i>Table 1</i>  (<code>Table</code>) provides some HTML entities that you may need when using JavaScript XML (JSX).</p>
+      <p><i>Table 1</i>  (<code>Table</code>) provides some HTML entities that you may need when using (JSX).</p>
       <table class="center">
         <caption>Table 1 HTML Entities</caption>
         <tbody>
