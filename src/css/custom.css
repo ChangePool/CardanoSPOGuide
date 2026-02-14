@@ -477,6 +477,11 @@ p.boxText
   margin-bottom: 1pt;
 }
 
+p.center
+{
+  text-align: center;
+}
+
 /* August 21, 2025 - The Table snippet uses the table.center style */
 table.center
 {
