@@ -279,23 +279,47 @@ sudo systemctl start cardano-node
 sudo apt-get update && sudo apt-get upgrade -y && sudo reboot
 ```
 
-:::info
-Upgrading to a new Cardano Node version may require replaying the copy of the blockchain ledger residing on the local computer. The task of replaying the ledger may require hours to complete.
-
-For details on monitoring your node, see the section [Verifying the Upgrade](#Verifying-the-Upgrade).
-:::
-
 4\. Copy the new `cardano-cli` binary to the air-gapped, offline computer that you use to sign transactions for your stake pool.
 
 <!-- 5\. On your air-gapped, offline computer, ensure that [libsecp256k1](/OfflineComputer#libsecp) and [blst](/OfflineComputer#blst) are installed and up to date. -->
 
+Upgrading to a new Cardano Node version may require replaying the copy of the blockchain ledger residing on the local computer. Here is an example of Cardano Node log entries showing progress when replaying the blockchain ledger:
+
+```bash
+...
+
+[ChainDB.ReplayBlock.LedgerReplay](Info,5) Replayed block: slot 3368857 out of 104785521. Progress: 3.22%
+[ChainDB.ReplayBlock.LedgerReplay](Info,5) Replayed block: slot 3389817 out of 104785521. Progress: 3.24%
+[ChainDB.ReplayBlock.LedgerReplay](Info,5) Replayed block: slot 3410780 out of 104785521. Progress: 3.26%
+[ChainDB.ReplayBlock.LedgerReplay](Info,5) Replayed block: slot 3421288 out of 104785521. Progress: 3.27%
+[ChainDB.ReplayBlock.LedgerReplay](Info,5) Replayed block: slot 3442207 out of 104785521. Progress: 3.29%
+
+...
+
+[ChainDB.ReplayBlock.LedgerReplay](Info,5) Replayed block: slot 3609875 out of 104785521. Progress: 3.45%
+[ChainDB.ReplayBlock.LedgerReplay](Info,5) Replayed block: slot 3630832 out of 104785521. Progress: 3.47%
+[ChainDB.ReplayBlock.LedgerReplay](Info,5) Replayed block: slot 3651780 out of 104785521. Progress: 3.49%
+[ChainDB.ReplayBlock.LedgerReplay](Info,5) Replayed block: slot 3672859 out of 104785521. Progress: 3.51%
+[ChainDB.ReplayBlock.LedgerReplay](Info,5) Replayed block: slot 3683233 out of 104785521. Progress: 3.52%
+
+...
+```
+
+The task of replaying the ledger may require hours to complete.
+
+<!-- For details on monitoring the Cardano Node log, see the section [Verifying the Upgrade](#Verifying-the-Upgrade). -->
+
 ## Verifying the Upgrade
 
-To verify that the upgrade is successful, open a dashboard or follow the Cardano Node log.
+To verify that the upgrade is successful, open a dashboard or type the following command using a terminal window to follow the Cardano Node log:
 
 <CodeBlock language="bash">
   {`journalctl -fu cardano-node`}
 </CodeBlock>
+
+:::info
+For more details, see the section [Monitoring the Cardano Node Log](/StartingNodes#Monitoring-the-Cardano-Node-Log).
+:::
 
 Congratulations on completing the upgrade! :sparkles:
 
