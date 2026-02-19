@@ -43,13 +43,17 @@ export function HTMLContent() {
 
       <CodeBlock language="json">
         {`[
-  {
-    "address": "stake_test1uz2euqqvaf0v75yhwayefqx0wu0g7jyd0grjzhvkgcmv3ag5avecv",
-    "delegationDeposit": 2000000,
-    "rewardAccountBalance": 39019220657,
-    "stakeDelegation": "pool1ja5uhsx8cmda7x6sqyzrggj07qtncx22lxef398u3ayusfex629",
-    "voteDelegation": null
-  }
+    {
+        "address": "stake_test1uz2euqqvaf0v75yhwayefqx0wu0g7jyd0grjzhvkgcmv3ag5avecv",
+        "govActionDeposits": {},
+        "rewardAccountBalance": 59523321044,
+        "stakeDelegation": {
+            "stakePoolBech32": "pool1ja5uhsx8cmda7x6sqyzrggj07qtncx22lxef398u3ayusfex629",
+            "stakePoolHex": "9769cbc0c7c6dbdf1b50010434224ff0173c194af9b29894fc8f49c8"
+        },
+        "stakeRegistrationDeposit": 2000000,
+        "voteDelegation": "alwaysAbstain"
+    }
 ]`}
       </CodeBlock>
 
