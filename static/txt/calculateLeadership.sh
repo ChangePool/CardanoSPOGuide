@@ -64,24 +64,73 @@ then
 
 fi
 
-# Create a limitless loop
-while true
-do
+#
+# The query_ekg_metrics function requests current EKG metrics from the specified Cardano Node
+# endpoint. If the request fails, then the function retries in 30 seconds.
+#
+query_ekg_metrics() {
 
-  # Retrieve current EKG metrics
-  ekg_metrics=$(curl -s -H 'Accept: application/json' "${ekg_endpoint}")
+  # Query current EKG metrics
+  until ekg_metrics=$(curl -s -H 'Accept: application/json' "${ekg_endpoint}")
+  do
 
-  # From the EKG metrics, retrieve metrics that the calculateLeadership.sh script requires
+    # If the curl command failed, then inform the user
+    echo "Failed to retrieve metrics, retrying in 30 seconds..."
+
+    # Wait 30 seconds
+    sleep 30
+
+  done
+
+}
+
+#
+# The assign_ekg_metrics function queries current EKG metrics. If metrics that the script
+# requires are unavailable, then the function returns a non-zero exit status.
+#
+assign_ekg_metrics() {
+
+  # Retrieve required metrics from current EKG metrics, assigning -1 as the default value
   dashboard_metrics=$(jq -r '
-    .cardano.node.metrics.epoch.int.val // 0,
-    .cardano.node.metrics.slotInEpoch.int.val // 0' <<< "${ekg_metrics}")
+    .cardano.node.metrics.epoch.int.val // -1,
+    .cardano.node.metrics.slotInEpoch.int.val // -1' <<< "${ekg_metrics}")
 
-  # Assign the list of metrics that the dashboard displays to an array
+  # Assign retrieved metrics to an array
   dashboard_metrics_arr=($(echo "${dashboard_metrics}"))
 
   # Assign array entries to variables
   current_epoch_num=${dashboard_metrics_arr[0]}
   slot_in_epoch=${dashboard_metrics_arr[1]}
+
+  # If any required metrics are unavailable, then return a non-zero exit code
+  if (( current_epoch_num == -1 || slot_in_epoch == -1 ))
+  then
+    return 1
+  fi
+
+}
+
+# Create a limitless loop
+while true
+do
+
+  # Retrieve current EKG metrics
+  query_ekg_metrics
+
+  # Assign current EKG metrics to variables
+  until assign_ekg_metrics
+  do
+
+    # If required EKG metrics are unavailable, then inform the user
+    echo "Required metrics are unavailable, retrying in 30 seconds..."
+
+    # Wait 30 seconds
+    sleep 30
+
+    # Refresh EKG metrics
+    query_ekg_metrics
+
+  done
 
   # Calculate the number of the next epoch
   next_epoch_num=$(( current_epoch_num + 1 ))
