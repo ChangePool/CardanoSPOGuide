@@ -167,7 +167,7 @@ do
 
     else
 
-      # Update how many seconds to wait before the next slot leadership schedule is available
+      # Update how many seconds to wait before the next slot leadership schedule may be available
       wait_time=$(( schedule_available - slot_in_epoch ))
 
     fi
