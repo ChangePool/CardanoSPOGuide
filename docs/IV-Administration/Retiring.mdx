@@ -173,7 +173,7 @@ echo "Change: $\{txOut\}"`}
             {`cd $NODE_HOME
 cardano-cli conway query ledger-state --mainnet > ledger-state.json
 sudo systemctl stop cardano-node.service
-jq -r '.stateBefore.esLState.delegationState.pstate.stakePoolParams."'"$(cat stakepoolid-hex.txt)"'" // empty' ledger-state.json
+jq -r '.stateBefore.esLState.delegationState.pstate.stakePools."'"$(cat stakepoolid-hex.txt)"'" // empty' ledger-state.json
 sudo systemctl start cardano-node.service`}
           </CodeBlock>
           <table class="box">
