@@ -13,6 +13,8 @@
 # To use the script, set the following variables as needed to support your implementation:
 #
 #   - environment_option: Set the variable to match the environment that you use.
+#   - epoch_duration: Set the epoch duration in seconds, less slightly more than the duration
+#     that the slot leadership query requires to run.
 #   - schedule_available: Set the slot in epoch when the leadership schedule is available
 #     in the environment that you use.
 #   - ekg_endpoint: If you change the IP address or port where the EKG endpoint listens, then
@@ -34,6 +36,7 @@
 #
 environment_option="--mainnet"
 #environment_option="--testnet-magic 1"
+epoch_duration="430000"
 schedule_available="310000"
 
 #
@@ -43,6 +46,7 @@ schedule_available="310000"
 # As a margin of error, wait about 1 additional hour.
 #
 #environment_option="--testnet-magic 2"
+#epoch_duration="85000"
 #schedule_available="64000"
 
 # Set the URL for the EKG endpoint
@@ -141,7 +145,7 @@ do
 
   # Set a default value for the variable used to calculate how long to wait prior to querying the
   # leadership schedule, if needed
-  wait_time="${schedule_available}"
+  wait_time="${epoch_duration}"
 
   # If the file containing the slot leadership schedule for the stake pool in the next epoch does not exist
   if [ ! -f "${schedule_folder}/${schedule_filename}" ]
