@@ -175,9 +175,9 @@ do
   fi
 
   # Inform the user
-  echo "Waiting ${wait_time} seconds until the next slot leadership schedule is available..."
+  echo "Waiting ${wait_time} seconds until the next slot leadership schedule may be available..."
 
-  # Wait until the next slot leadership schedule is available
+  # Wait until the next slot leadership schedule may be available
   sleep ${wait_time}
 
 done
