@@ -133,19 +133,22 @@ To follow best practices, set `<BlockProducingNodeIPAddress>` to the local area 
 cd ${NODE_HOME}
 ```
 
+<!-- February 22, 2026 - In Cardano Node 10.6.2 and above, legacy topology functionality--including the EnableP2P key in the node configuration file--is removed. -->
+<!--
 2\. Using a text editor, open the `config-bp.json` file, and then edit the following option if needed:
 ```bash
 "EnableP2P": true,
 ```
 
 3\. Save and close the `config-bp.json` file.
+-->
 
-4\. To create a backup of the original topology configuration file, type:
+2\. To create a backup of the original topology configuration file, type:
 ```bash
 cp topology.json topology.json.bak
 ```
 
-5\. Using a text editor, open the `topology.json` file, and then replace the contents of the file with one or more records, as needed, to reference only the relay node(s) in your stake pool configuration. For example, the following lines configure a single relay node where `<RelayNodeIPAddress>` is the IP address of the relay node and `<RelayNodeName>` is an optional descriptive label for the relay node. Set the value `true` for the `trustable` key. Also, set the value of `bootstrapPeers` to `null` and the value of `useLedgerAfterSlot` to `-1`:
+3\. Using a text editor, open the `topology.json` file, and then replace the contents of the file with one or more records, as needed, to reference only the relay node(s) in your stake pool configuration. For example, the following lines configure a single relay node where `<RelayNodeIPAddress>` is the IP address of the relay node and `<RelayNodeName>` is an optional descriptive label for the relay node. Set the value `true` for the `trustable` key. Also, set the value of `bootstrapPeers` to `null` and the value of `useLedgerAfterSlot` to `-1`:
 ```json
 {
   "bootstrapPeers": null,
@@ -186,7 +189,7 @@ To follow best practices, set `<RelayNodeIPAddress>` to the LAN IP address of th
   </tbody>
 </table>
 
-6\. Save and close the `topology.json` file.
+4\. Save and close the `topology.json` file.
 
 ## Configuring Port Forwarding
 
