@@ -1,6 +1,6 @@
 ---
-title: "Implementing an On-disk Transaction Pool"
-sidebar_label: "Implementing an On-disk Transaction Pool"
+title: "Using an On-disk Transaction Pool"
+sidebar_label: "Using an On-disk Transaction Pool"
 slug: /OnDiskTxPool
 hide_title: false
 hide_table_of_contents: true
@@ -18,7 +18,27 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
-      <p></p>
+      <p>Each instance of Cardano Node uses a temporary, local storage area to store unconfirmed submitted transactions prior to validation and inclusion in a block on the chain. By default, Cardano Node stores pending transactions in memory.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Generally, the storage area is referred to as the mempool.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Continuing a committment to provide long-term support for computers having limited memory capacity, Cardano Node includes functionality to store the pool of pending transactions on disk. While using an on-disk transaction pool significantly reduces the memory requirements for Cardano Node, performance is slightly slower.</p>
+
+      <p class="pi">To enable Cardano Node to use an on-disk transaction pool:</p>
+
+      <ol>
+        <li>On a relay node in your stake pool configuration, open the <code>$NODE_HOME/config.json</code> file using a text editor.
+        <center><strong>OR</strong></center>
+      On the block-producing node in your stake pool configuration, open the <code>$NODE_HOME/config-bp.json</code> file using a text editor.</li>
+      <li></li>
+      </ol>
 
     </div>
   );
