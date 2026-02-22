@@ -1,6 +1,6 @@
 ---
-title: "Enabling Peer Sharing"
-sidebar_label: "Enabling Peer Sharing"
+title: "Implementing Peer Sharing"
+sidebar_label: "Implementing Peer Sharing"
 slug: /PeerSharing
 hide_title: false
 hide_table_of_contents: true
@@ -21,12 +21,14 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
-      <p>To improve network security, the peer sharing feature available in the Cardano Node software allows you to connect one or more relay nodes to the Cardano network without registering the relay(s) on the blockchain. One or more relay nodes that you register on the blockchain advertise your unregistered relay(s) to other nodes in the network.</p>
+      <p>To improve network security, the peer sharing feature available in the Cardano Node software allows you to connect one or more relay nodes to the Cardano network without registering the relay(s) on the blockchain. You can use one or more relay nodes that you register on the blockchain to advertise your unregistered relay(s) to other nodes in the network.</p>
 
-      <p class="pi">To enable peer sharing:</p>
+      {/* <!-- In Cardano Node 10.6.2 and above, the PeerSharing and related keys in the node configuration file are obsolete. Now, Cardano Node automatically enables peer sharing when Cardano Node runs as a relay node, and disables peer sharing when Cardano Node runs as a block producer. --> */}
+
+      <p class="pi">To implement peer sharing:</p>
 
       <ol>
-        <li>On a relay node that you registered on the blockchain using a registration certificate, open the <code>config.json</code> file using a text editor, and then edit the following values:
+        <li>On a relay node that you registered on the blockchain using a registration certificate, {/* <!-- open the <code>config.json</code> file using a text editor, and then edit the following values:
         <CodeBlock language="json">
           {`"PeerSharing": true,
 "TargetNumberOfKnownPeers": 150,
@@ -41,8 +43,9 @@ export function HTMLContent() {
           </tbody>
         </table>
         </li>
-        <li>Save and close the <code>config.json</code> file.</li>
-        <li>On the relay node where you edited the <code>config.json</code> file in step 1, open the <code>topology.json</code> file using a text editor. Add another <code>accessPoints</code> subsection to the <code>localRoots</code> section as follows where <code>&lt;UnregisteredRelayNodeIPAddress&gt;</code> is the wide area network (WAN) IP address of the unregistered relay node in your stake pool configuration, and <code>&lt;UnregisteredRelayNodeName&gt;</code> is an optional descriptive label for the unregistered relay. Also, set the <code>advertise</code> key to <code>true</code> in the new <code>accessPoints</code> subsection:
+        <li>Save and close the <code>config.json</code> file.</li> 
+        <li>On the relay node where you edited the <code>config.json</code> file in step 1, --> */}
+           open the <code>topology.json</code> file using a text editor. Add another <code>accessPoints</code> subsection to the <code>localRoots</code> section as follows where <code>&lt;UnregisteredRelayNodeIPAddress&gt;</code> is the wide area network (WAN) IP address of the unregistered relay node in your stake pool configuration, and <code>&lt;UnregisteredRelayNodeName&gt;</code> is an optional descriptive label for the unregistered relay. Also, set the <code>advertise</code> key to <code>true</code> in the new <code>accessPoints</code> subsection:
           <CodeBlock language="json">
           {`\{
   "bootstrapPeers": [
@@ -113,7 +116,7 @@ export function HTMLContent() {
         </li>
       </ol>
 
-      <p>After the registered relay node restarts, verify that other relay nodes in the Cardano network slowly begin connecting to the unregistered relay(s) in your stake pool configuration.</p>
+      <p>After the registered relay node restarts, verify that other relay nodes in the Cardano network gradually begin connecting to the unregistered relay(s) in your stake pool configuration.</p>
 
     </div>
   );
