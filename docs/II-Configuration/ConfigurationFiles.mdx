@@ -12,6 +12,8 @@ import React from 'react';
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
+import CodeBlock from '@theme/CodeBlock';
+
 export function HTMLContent() {
   return (
     <div>
@@ -21,7 +23,7 @@ export function HTMLContent() {
       <p class="pi">To download Cardano Node configuration files:</p>
 
       <ol>
-        <li>On the computer hosting your block-producing node, using a Web browser navigate to the <a href="https://book.play.dev.cardano.org/environments.html" target="_blank">Environments</a> page, then click the link for your environment, and then click to download each configuration file using the default file name in the folder that you set for the <code>$NODE_HOME</code> environment variable.
+        <li>On the computer hosting the block-producing node, using a Web browser navigate to the <a href="https://book.play.dev.cardano.org/environments.html" target="_blank">Environments</a> page, then click the link for your environment, and then click to download each configuration file using the default file name in the folder that you set for the <code>$NODE_HOME</code> environment variable.
           <table class="box">
             <tbody>
               <tr>
@@ -31,8 +33,15 @@ export function HTMLContent() {
             </tbody>
           </table>
         </li>
-        <li>On each computer hosting a relay or block-producing node in your stake pool configuration, repeat step 1</li>
+        <li>On each computer hosting a relay node in your stake pool configuration, repeat step 1</li>
+        <li>Some Cardano Node releases provide a different node configuration file for use on the block-producing node. On the block-producing node, if the files that you downloaded in step 1 do NOT include a file named <code>config-bp.json</code> then type the following commands using a terminal window:
+        <CodeBlock language="bash">
+          {`cd $\{NODE_HOME\}
+mv config.json config-bp.json`}
+        </CodeBlock></li>
       </ol>
+
+      {/* <!-- February 21, 2026 - In the Cardano Node 10.6.2 release, instead of releasing different config.json and config-bp.json node configuration files for use on relay nodes and block-producing nodes respectively as has been the case for the past few years, only one node configuration file named config.json file was released for use on both relay and block-producing nodes. To consider the possibility that future Cardano Node releases may once again release different node configuration files for relay and block-producing nodes, the CoinCashew Guide continues to use the file name config.json for the node configuration file on relay nodes, and the file name config-bp.json for the node configuration file on block-producing nodes. --> */}
 
     </div>
   );

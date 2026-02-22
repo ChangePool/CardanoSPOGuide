@@ -94,7 +94,7 @@ A new Cardano Node release may revise existing configuration files and/or introd
 
 **To download and install the latest Cardano Node configuration files:**
 
-1. To stop an instance of Cardano Node, type the following command in a terminal window where `<CardanoServiceName>` is the name of the systemd service running Cardano Node:
+1. To stop an instance of Cardano Node, type the following command using a terminal window where `<CardanoServiceName>` is the name of the systemd service running Cardano Node:
 
 ```bash
 sudo systemctl stop <CardanoServiceName>.service
@@ -127,8 +127,8 @@ If you follow the CoinCashew instructions for [Downloading Configuration Files](
 3\. Using a Web browser, navigate to the Cardano Node [GitHub repository](https://github.com/IntersectMBO/cardano-node), then browse to the latest release, then click to expand the Downloads dropdown list in the Technical Specification section of the release notes, and then click the Configuration Files link.
 
 4\. In _The Cardano Operations Book_, in the left navigation click the name of the environment that the node you are upgrading uses. Click the links to download <!-- any newly released configuration files, as well as -->the following configuration files to the folder where you created backups of your current configuration files in step 2:
-- `config.json` if you are upgrading a relay node
-- `config-bp.json` if you are upgrading a block-producing node
+- `config.json`
+- `tracer-config.json`
 - `topology.json`
 - `peer-snapshot.json`
 - `checkpoints.json`
@@ -137,7 +137,13 @@ If you follow the CoinCashew instructions for [Downloading Configuration Files](
 If you want to download configuration files using the command line, then navigate to the folder where you created backups of your current configuration files in step 2 using a terminal window, and then type the following command where `<ConfigurationFileURL>` is the URL for the configuration file that you want to download: `wget <ConfigurationFileURL>`
 :::
 
-5\. Using [`diff`](https://www.man7.org/linux/man-pages/man1/diff.1.html) or a similar file comparison utility, identify and copy customizations as needed from the `config*.bak` and `topology.bak` configuration file backups that you created in step 2 to the respective configuration file that you downloaded in step 4.
+5\. If you are upgrading the Cardano Node instance running on the block-producing node in your stake pool configuration, then type the following commands using a terminal window on the block producer to rename the node configuration file:
+```bash
+cd ${NODE_HOME}
+mv config.json config-bp.json
+```
+
+6\. Using [`diff`](https://www.man7.org/linux/man-pages/man1/diff.1.html) or a similar file comparison utility, identify and copy customizations as needed from the `config*.bak` and `topology.bak` configuration file backups that you created in step 2 to the respective configuration file that you downloaded in step 4.
 
 :::warning
 The `config*.json` file contains hashes for the `byron-genesis.json`, `shelley-genesis.json`, `alonzo-genesis.json` and `conway-genesis.json` files using the `ByronGenesisHash`, `ShelleyGenesisHash`, `AlonzoGenesisHash` and `ConwayGenesisHash` keys, respectively. Therefore, do NOT manually edit the `*genesis.json` files.
