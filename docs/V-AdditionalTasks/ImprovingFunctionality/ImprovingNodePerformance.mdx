@@ -12,6 +12,8 @@ import React from 'react';
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
+import CodeBlock from '@theme/CodeBlock';
+
 export function HTMLContent() {
   return (
     <div>
@@ -36,7 +38,7 @@ export function HTMLContent() {
       <ul>
         <li>Increase the speed of the disk drive that the computer hosting the Cardano Node instance uses.</li>
         <li>To force the Cardano Node instance to use all processor cores available on the computer, configure runtime system options to include the <code>-N</code> option. For details, see the topic <a href={useBaseUrl('/ConfiguringGHCRuntime')}>Configuring GHC Runtime System Options</a>.</li>
-        <li>By default, Cardano Node takes a snapshot of the local copy of the blockchain ledger on disk every 72 minutes. Increasing the amount of time between snapshots may improve the performance of Cardano Node. To customize the amount of time between snapshots, add a key named <code>SnapshotInterval</code> in the <code>config*.json</code> file that the Cardano Node instance uses, and then set the value to a duration in seconds. For example, to take a snapshot every 24 hours, set the value to <code>86400</code>
+        <li>By default, Cardano Node stores on disk a ledger snapshot every 72 minutes. Increasing the amount of time between snapshots may improve the performance of Cardano Node. To customize the amount of time between snapshots, update the value of the key named <code>SnapshotInterval</code> in the <code>config*.json</code> file that the Cardano Node instance uses to the desired duration of time between snapshots in seconds. For example, to take a snapshot every 24 hours, set the value to <code>86400</code>
           <table class="box">
             <tbody>
               <tr>
@@ -48,6 +50,16 @@ export function HTMLContent() {
         </li> {/* <!-- Source: https://cardano.stackexchange.com/questions/4532/missed-slot-leader-checks --> */}
         {/* <!-- <li>In the <code>config-bp.json</code> or <code>config.json</code> configuration file that the Cardano Node instance uses, consider setting the <code>TraceMempool</code> key to the value <code>false</code> to disable mempool tracing. When you disable mempool tracing, the Cardano Node instance continues processing transactions as usual. However, the <code>cardano.node.metrics.txsInMempool.int</code> and <code>cardano.node.metrics.mempoolBytes.int</code> EKG metrics are unavailable. Therefore, you may find troubleshooting issues related to block propagation, topology, firewall or transaction processing more challenging when mempool tracing is disabled. Always enabling mempool tracing on a block-producing node may be considered <a href="https://github.com/input-output-hk/cardano-node/issues/2350" target="_blank">best practice</a>.</li>  --> */}
         {/* <!-- October 26, 2025 - NOTE: When using Cardano Tracer, the TraceMempool key is deprecated. Perhaps test using Cardano Tracer options to disable mempool tracing. Remember that Cardano Tracer allows you to customize tracing of all metrics, not only the tracing of mempool metrics. --> */}
+      </ul>
+
+      <p class="pi">To implement new runtime system or node configuration options:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl restart cardano-node.service`}
+          </CodeBlock>
+        </li>
       </ul>
 
     </div>

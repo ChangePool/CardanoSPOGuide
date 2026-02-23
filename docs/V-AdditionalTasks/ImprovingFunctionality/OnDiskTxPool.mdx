@@ -12,6 +12,8 @@ import React from 'react';
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
+import CodeBlock from '@theme/CodeBlock';
+
 export function HTMLContent() {
   return (
     <div>
@@ -24,21 +26,67 @@ export function HTMLContent() {
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
-            <td class="boxText"><p class="boxText">Generally, the storage area is referred to as the mempool.</p></td>
+            <td class="boxText"><p class="boxText">In general, the storage area may be referred to as the mempool.</p></td>
           </tr>
         </tbody>
       </table>
 
-      <p>Continuing a committment to provide long-term support for computers having limited memory capacity, Cardano Node includes functionality to store the pool of pending transactions on disk. While using an on-disk transaction pool significantly reduces the memory requirements for Cardano Node, performance is slightly slower.</p>
+      <p>Continuing a committment to provide long-term support for smaller, less costly computers, Cardano Node includes functionality to store the pool of pending transactions on disk. While using an on-disk transaction pool significantly reduces memory requirements for Cardano Node, performance is slightly slower.</p>
 
       <p class="pi">To enable Cardano Node to use an on-disk transaction pool:</p>
 
       <ol>
-        <li>On a relay node in your stake pool configuration, open the <code>$NODE_HOME/config.json</code> file using a text editor.
+        <li>To stop the Cardano Node instance on the computer where you want to enable an on-disk transaction pool, type the following command using a terminal window:
+          <CodeBlock language="bash">
+            {`sudo systemctl stop cardano-node.service`}
+          </CodeBlock>
+        </li>
+        <li>To enable an on-disk transaction pool on a relay node, open the <code>$NODE_HOME/config.json</code> node configuration file using a text editor.
         <center><strong>OR</strong></center>
-      On the block-producing node in your stake pool configuration, open the <code>$NODE_HOME/config-bp.json</code> file using a text editor.</li>
-      <li></li>
+        To enable an on-disk transaction pool on the block-producing node in your stake pool configuration, open the <code>$NODE_HOME/config-bp.json</code> node configuration file using a text editor.</li>
+        <li>In the node configuration file, add or edit the following lines, where <code>&lt;DatabasePath&gt;</code> is the absolute path to the directory where you want Cardano Node to store the live transaction pool on disk:
+          <CodeBlock language="bash">
+            {`"LedgerDB": {
+  "Backend": "V1LMDB",
+  "FlushFrequency": 100,
+  "LiveTablesPath": "<DatabasePath>",
+  "MapSize": 16,
+  "NumOfDiskSnapshots": 2,
+  "QueryBatchSize": 100000,
+  "SnapshotInterval": 4320
+},`}
+          </CodeBlock>
+        </li>
+        <li>Save and close the <code>config*.json</code> file.</li>
+        <li>To create the directory where Cardano Node stores the live transaction pool, type:
+          <CodeBlock language="bash">
+            {`mkdir -p \<DatabasePath\>`}
+          </CodeBlock>
+        </li>
+        <li>To back up and remove existing ledger snapshots from the copy of the blockchain residing on the local computer, type:
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME
+mkdir ./ledger.bak
+mv ./db/ledger/* ./ledger.bak`}
+          </CodeBlock>
+        </li>
+        <li>To restart the Cardano Node instance, type:
+          <CodeBlock language="bash">
+          {`sudo systemctl start cardano-node.service`}
+          </CodeBlock>
+        </li>
       </ol>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
+            <td class="boxText"><p class="boxText">Enabling an on-disk transaction pool may require replaying the copy of the blockchain ledger residing on the local computer.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>For more details, see the <a href="https://ouroboros-consensus.cardano.intersectmbo.org/docs/references/miscellaneous/utxo-hd/" target="_blank">High Level Overview of UTxO-HD</a>.</p>
 
     </div>
   );
