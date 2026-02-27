@@ -27,7 +27,8 @@ const config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   //baseUrl: '/',
-  baseUrl: '/spo/',
+  //baseUrl: '/spo/',
+  baseUrl: '/Content/SPO/10.6.2/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -49,6 +50,7 @@ const config = {
     parseFrontMatter: async (params) => {
       const result = await params.defaultParseFrontMatter(params);
       result.frontMatter.description =
+        // @ts-ignore
         result.frontMatter.description?.replaceAll('{{MY_VAR}}', 'MY_VALUE');
       return result;
     },
