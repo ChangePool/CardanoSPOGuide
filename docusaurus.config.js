@@ -288,7 +288,7 @@ const config = {
       typesense: {
         // Replace this with the name of your index/collection.
         // It should match the "index_name" entry in the scraper's "config.json" file.
-        typesenseCollectionName: 'CCSPOGuide',
+        typesenseCollectionName: 'CCSPOGuide1062',
         typesenseServerConfig: {
           nodes: [
             {
