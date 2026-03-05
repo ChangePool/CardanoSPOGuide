@@ -51,7 +51,7 @@ export function HTMLContent() {
       <ul class="ss">
         <li>Using a terminal window on the block-producing node, type:
           <CodeBlock language="bash">
-            {`cardano-cli conway query leadership-schedule --output-json \\
+            {`cardano-cli conway query leadership-schedule \\
   --cardano-mode \\
   --mainnet \\
   --genesis $NODE_HOME/shelley-genesis.json \\
@@ -76,7 +76,7 @@ export function HTMLContent() {
       <ul class="ss">
         <li>Using a terminal window on the block-producing node, type the following command when the current epoch is more than 70 percent complete:
           <CodeBlock language="bash">
-            {`cardano-cli conway query leadership-schedule --output-json \\
+            {`cardano-cli conway query leadership-schedule \\
   --cardano-mode \\
   --mainnet \\
   --genesis $NODE_HOME/shelley-genesis.json \\

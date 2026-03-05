@@ -155,7 +155,7 @@ do
       echo "Calculating slot leadership for the next epoch, number ${next_epoch_num}..."
 
       # Query the leadership schedule for the next epoch, saving the results in a file
-      /usr/local/bin/cardano-cli conway query leadership-schedule --output-json \
+      /usr/local/bin/cardano-cli conway query leadership-schedule \
         --socket-path ${node_home_folder}/db/socket \
         --cardano-mode \
         ${environment_option} \

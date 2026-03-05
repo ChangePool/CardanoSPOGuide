@@ -193,7 +193,7 @@ cardano-wallet recovery-phrase generate --size 24 > seed-phrase.dat`}
         </li>
         <li>Wait a few moments for the transaction to complete. To verify the transaction, type the following command using a terminal window on the block-producing node to display the list of Unspent Transaction Output (UTXOs) available for the new payment address, and then find the UTXO for the funds that you sent in step 2:
           <CodeBlock language="bash">
-            {`cardano-cli conway query utxo --output-json \\
+            {`cardano-cli conway query utxo \\
   --address $(cat $NODE_HOME/payment.addr) \\
   --mainnet`}
           </CodeBlock>

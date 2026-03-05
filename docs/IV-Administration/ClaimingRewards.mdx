@@ -136,7 +136,7 @@ echo Change: $\{txOut\}`}
         </li>
         <li>To verify that staking rewards are claimed successfully, type the following command to display the list of Unspent Transaction Output (UTXOs) available for the payment address receiving staking rewards in the transaction, and then find the UTXO that the transaction output:
           <CodeBlock language="bash">
-            {`cardano-cli conway query utxo --output-json \\
+            {`cardano-cli conway query utxo \\
   --address $(cat $NODE_HOME/payment.addr) \\
   --mainnet`}
           </CodeBlock>

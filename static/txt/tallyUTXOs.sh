@@ -1,5 +1,5 @@
 # Retrieve the list of UTXOs available for your payment address
-utxo_json=$(cardano-cli conway query utxo --output-json \
+utxo_json=$(cardano-cli conway query utxo \
   --address $(cat $NODE_HOME/payment.addr) \
   --mainnet)
 
