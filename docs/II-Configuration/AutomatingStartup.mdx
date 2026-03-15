@@ -4,7 +4,7 @@ sidebar_label: "Automating Cardano Node Startup"
 slug: /AutomatingStartup
 hide_title: false
 hide_table_of_contents: true
-sidebar_position: 20
+sidebar_position: 25
 description: ""
 ---
 
@@ -73,6 +73,8 @@ DB_PATH=<NodeHomeValue>/db
 SOCKET_PATH=<NodeHomeValue>/db/socket
 # Set a variable to indicate the file path to your main Cardano Node configuration file
 CONFIG=<NodeHomeValue>/<ConfigFileName>
+# Set a variable to indicate the local socket where Cardano Tracer listens
+TRACER_SOCKET_PATH=/tmp/tracer.socket
 #
 # Run Cardano Node using the options that you set using variables
 #
@@ -82,7 +84,8 @@ CONFIG=<NodeHomeValue>/<ConfigFileName>
   --socket-path ${SOCKET_PATH} \
   --host-addr ${HOSTADDR} \
   --port ${PORT} \
-  --config ${CONFIG}
+  --config ${CONFIG} \
+  --tracer-socket-path-connect ${TRACER_SOCKET_PATH}
 ```
 
 :::info
@@ -108,8 +111,8 @@ mkdir $NODE_HOME/db
   
 [Unit]
 Description       = Cardano Node Service
-Wants             = network-online.target
-After             = network-online.target  
+Wants             = network-online.target cardano-tracer.service
+After             = network-online.target cardano-tracer.service
   
 [Service]
 User              = <UserValue>

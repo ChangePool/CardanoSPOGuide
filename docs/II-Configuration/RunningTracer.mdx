@@ -1,0 +1,71 @@
+---
+title: "Running Cardano Tracer Automatically"
+sidebar_label: "Running Cardano Tracer Automatically"
+slug: /RunningTracer
+hide_title: false
+hide_table_of_contents: true
+sidebar_position: 20
+description: ""
+---
+
+import React from 'react';
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+import CodeBlock from '@theme/CodeBlock';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+      <p>Cardano Tracer provides flexible and efficient monitoring of Cardano Node instances in your stake pool configuration using a modular configuration, ensuring that Cardano Node focuses on core operations while Tracer manages logging, monitoring and external communication.</p>
+
+      <p><i>Figure 1</i> illustrates the mode of operation for Cardano Tracer that the <i>How to Set Up a Cardano Stake Pool</i> guide supports. Each computer in your stake pool configuration hosts an instance of Cardano Tracer.</p>
+
+      <figure>
+        <img src={useBaseUrl('img/TracerOperatingMode.png')} />
+        <figcaption>Figure 1 Cardano Tracer Operating Mode</figcaption>
+      </figure>
+
+      <p>To run an instance of Cardano Tracer, create a bash script to configure options, and then implement a <code>systemd</code> service to run Tracer automatically.</p>
+
+      <p class="pi">To create a startup script and service for an instance of Cardano Tracer:</p>
+
+      <ol>
+        <li></li>
+        <li>
+          <CodeBlock language="bash">
+            {`...
+  "TraceOptionMetricsPrefix": "cardano.node.metrics.",
+  "TraceOptionNodeName": "cardano-node",
+...`}
+          </CodeBlock>
+        </li>
+        <li>Repeat steps 1 to x on each computer in your stake pool configuration.</li>
+      </ol>
+
+
+      
+
+
+
+
+      <p>For more details on using Cardano Tracer, see <a href="https://developers.cardano.org/docs/get-started/infrastructure/node/new-tracing-system/new-tracing-system/" target="_blank">Quick Start</a>.</p>
+
+      <table class="box">
+        <tbody>
+          <tr>
+            <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
+            <td class="boxText"><p class="boxText">Cardano Tracer supports a mode of operation where many Cardano Node instances connect to a single instance of Tracer using SSH forwarding. When the stake pool that you operate is <a href={useBaseUrl('/ProducingBlocks')}>Producing Blocks</a>, configure and implement Cardano Tracer so that all Cardano Node instances connect to the same instance of Cardano Tracer.</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      {/* <!-- March 14, 2026 - After implementing Cardano Tracer, the syntax of log messages may change. As of today, existing sample log messages throughout the How to Set Up a Cardano Stake Pool guide are NOT updated for Cardano Tracer. --> */}
+
+    </div>
+  );
+}
+
+<HTMLContent />
+

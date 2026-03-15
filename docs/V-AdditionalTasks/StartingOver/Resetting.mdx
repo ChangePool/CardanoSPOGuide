@@ -33,6 +33,8 @@ sudo systemctl stop cardano-node
 rm -rf $HOME/git/cardano-node/ $HOME/git/libsodium/ $HOME/git/secp256k1 $HOME/git/blst
 # Remove the systemd service file that manages Cardano Node
 sudo rm /etc/systemd/system/cardano-node.service
+sudo rm /etc/systemd/system/cardano-tracer.service
+sudo rm /etc/systemd/system/slot-leadership.service
 # Reload systemd configuration
 sudo systemctl daemon-reload`}
           </CodeBlock>
@@ -40,7 +42,7 @@ sudo systemctl daemon-reload`}
         <li>Using a terminal window on the computer that you want to reset, type:
           <CodeBlock language="bash">
             {`# Remove binaries related to Cardano Node
-sudo rm /usr/local/bin/cardano-node /usr/local/bin/cardano-cli
+sudo rm /usr/local/bin/cardano-node /usr/local/bin/cardano-cli /usr/local/bin/cardano-tracer
 # Remove the Sodium library
 sudo rm /usr/local/lib/libsodium* /usr/local/lib/pkgconfig/libsodium.pc /usr/local/include/sodium.h
 sudo rm -r /usr/local/include/sodium

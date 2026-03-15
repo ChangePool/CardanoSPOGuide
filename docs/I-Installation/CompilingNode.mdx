@@ -65,10 +65,11 @@ cabal update
 cabal configure -O0 -w ghc-<GHCVersionNumber>
 ```
 
-6\. To produce executable `cardano-node` and `cardano-cli` binaries, type:
+6\. To produce executable `cardano-node`, `cardano-cli` and `cardano-tracer` binaries, type:
 ```bash
 cabal build all
 cabal build cardano-cli
+cabal build cardano-tracer
 ```
 <!-- Source: https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md -->
 
@@ -87,10 +88,16 @@ sudo cp -p "$(./scripts/bin-path.sh cardano-node)" /usr/local/bin/cardano-node
 sudo cp -p "$(./scripts/bin-path.sh cardano-cli)" /usr/local/bin/cardano-cli
 ```
 
-8\. To confirm that the version installed on your computer matches the latest release available in the Cardano Node [GitHub repository](https://github.com/IntersectMBO/cardano-node), type:
+8\. To install the `cardano-tracer` binary that you produced in step 6 in the `/usr/local/bin` directory, type:
+```bash
+cabal install cardano-tracer --installdir=/usr/local/bin --overwrite-policy=always
+```
+
+9\. To confirm that the version installed on your computer matches the latest release available in the Cardano Node [GitHub repository](https://github.com/IntersectMBO/cardano-node), type:
 ```bash
 cardano-node --version
 cardano-cli --version
+cardano-tracer --version
 ```
 
-9\. On each computer hosting a relay or block-producing node in your stake pool configuration, repeat steps 1 to 8
+10\. On each computer hosting a relay or block-producing node in your stake pool configuration, repeat steps 1 to 9
