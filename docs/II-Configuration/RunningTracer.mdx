@@ -111,14 +111,14 @@ sudo chmod 644 /etc/systemd/system/cardano-tracer.service`}
 sudo systemctl start cardano-tracer.service`}
           </CodeBlock>
         </li>
-        <li>To start Cardano Tracer as a service when the computer boots, type:
-          <CodeBlock language="bash">
-            {`sudo systemctl enable cardano-tracer.service`}
-          </CodeBlock>
-        </li>
         <li>To verify that Cardano Tracer is running, type:
           <CodeBlock language="bash">
             {`sudo systemctl status cardano-tracer.service`}
+          </CodeBlock>
+        </li>
+        <li>To start Cardano Tracer as a service when the computer boots, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl enable cardano-tracer.service`}
           </CodeBlock>
         </li>
         <li>Using a text editor, open the <code>config*.json</code> file, and then add or edit the following options if needed:
