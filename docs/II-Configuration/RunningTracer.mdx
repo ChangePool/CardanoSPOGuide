@@ -29,11 +29,99 @@ export function HTMLContent() {
 
       <p>To run an instance of Cardano Tracer, create a bash script to configure options, and then implement a <code>systemd</code> service to run Tracer automatically.</p>
 
-      <p class="pi">To create a startup script and service for an instance of Cardano Tracer:</p>
+      <p class="pi">To create and run a startup script and service for an instance of Cardano Tracer:</p>
 
       <ol>
-        <li></li>
-        <li>
+        <li>On the computer hosting the block-producing node in your stake pool configuration, using a terminal window type the following command to navigate to the folder containing configuration files and scripts related to operating the Cardano Node software:
+          <CodeBlock language="bash">
+            {`cd $NODE_HOME`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">You set the <code>$NODE_HOME</code> environment variable when <a href={useBaseUrl('/SharedLibraries')}>Installing Shared Libraries</a>.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>To retrieve the value of the <code>$NODE_HOME</code> and <code>$USER</code> environment variables, type:
+          <CodeBlock language="bash">
+            {`echo $NODE_HOME
+echo $USER`}
+          </CodeBlock>
+        </li>
+        <li>Using a text editor, create a file named <code>startCardanoTracer.sh</code> and then add the following contents to the file where <code>&lt;NodeHomeValue&gt;</code> is the value of the <code>$NODE_HOME</code> environment variable that you retrieved in step 2:
+          <CodeBlock language="bash">
+            {`#!/bin/bash
+#
+# Set a variable to indicate the file path to the Cardano Tracer configuration file
+#
+CONFIG=<NodeHomeValue>/tracer-config.json
+#
+# Run Cardano Tracer
+#
+/usr/local/bin/cardano-tracer
+  --config $\{CONFIG\}`}
+          </CodeBlock>
+        </li>
+        <li>Save and close the <code>startCardanoTracer.sh</code> file.</li>
+        <li>To set execute permissions for the <code>startCardanoTracer.sh</code> file, type:
+          <CodeBlock language="bash">
+            {`chmod +x $NODE_HOME/startCardanoTracer.sh`}
+          </CodeBlock>
+        </li>
+        <li>To run Cardano Tracer as a service, using a text editor create a file named <code>cardano-tracer.service</code> and then add the following contents to the file where <code>&lt;UserValue&gt;</code> is the value of the <code>$USER</code> environment variable and <code>&lt;NodeHomeValue&gt;</code> is the value of your <code>$NODE_HOME</code> environment variable that you retrieved in step 2:
+          <CodeBlock language="bash">
+            {`# The Cardano Tracer service (part of systemd)
+# file: /etc/systemd/system/cardano-tracer.service  
+  
+[Unit]
+Description       = Cardano Tracer Service
+Wants             = network-online.target
+After             = network-online.target
+  
+[Service]
+User              = <UserValue>
+Type              = simple
+WorkingDirectory  = <NodeHomeValue>
+ExecStart         = /bin/bash -c '<NodeHomeValue>/startCardanoTracer.sh'
+KillSignal        = SIGINT
+RestartKillSignal = SIGINT
+TimeoutStopSec    = 90
+LimitNOFILE       = 32768
+Restart           = always
+RestartSec        = 5
+SyslogIdentifier  = cardano-tracer
+  
+[Install]
+WantedBy          = multi-user.target`}
+          </CodeBlock>
+        </li>
+        <li>Save and close the <code>cardano-tracer.service</code> file.</li>
+        <li>To move the <code>cardano-tracer.service</code> file to the folder <code>/etc/systemd/system</code> and set file permissions, type:
+          <CodeBlock language="bash">
+            {`sudo mv $NODE_HOME/cardano-tracer.service /etc/systemd/system/cardano-tracer.service
+sudo chmod 644 /etc/systemd/system/cardano-tracer.service`}
+          </CodeBlock>
+        </li>
+        <li>To start Cardano Tracer as a service, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl daemon-reload
+sudo systemctl start cardano-tracer.service`}
+          </CodeBlock>
+        </li>
+        <li>To start Cardano Tracer as a service when the computer boots, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl enable cardano-tracer.service`}
+          </CodeBlock>
+        </li>
+        <li>To verify that Cardano Tracer is running, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl status cardano-tracer.service`}
+          </CodeBlock>
+        </li>
+        <li>Using a text editor, open the <code>config*.json</code> file, and then add or edit the following options if needed:
           <CodeBlock language="bash">
             {`...
   "TraceOptionMetricsPrefix": "cardano.node.metrics.",
@@ -41,16 +129,11 @@ export function HTMLContent() {
 ...`}
           </CodeBlock>
         </li>
-        <li>Repeat steps 1 to x on each computer in your stake pool configuration.</li>
+        <li>Save and close the <code>config*.json</code> file.</li>
+        <li>Repeat steps 1 to 13 on each computer hosting a relay node in your stake pool configuration.</li>
       </ol>
 
-
-      
-
-
-
-
-      <p>For more details on using Cardano Tracer, see <a href="https://developers.cardano.org/docs/get-started/infrastructure/node/new-tracing-system/new-tracing-system/" target="_blank">Quick Start</a>.</p>
+      <p>For more details on using Cardano Tracer, see the topic <a href="https://developers.cardano.org/docs/get-started/infrastructure/node/new-tracing-system/new-tracing-system/" target="_blank">Quick Start</a>.</p>
 
       <table class="box">
         <tbody>

@@ -47,20 +47,13 @@ Before you start the nodes comprising your stake pool, you must:
 cd ${NODE_HOME}
 ```
 
-2\. Using a text editor, open the `config.json` file, and then edit the following option if needed:
-```bash
-"EnableP2P": true,
-```
-
-3\. Save and close the `config.json` file.
-
-4\. To create a backup of the original topology configuration file, type:
+2\. To create a backup of the original topology configuration file, type:
 
 ```bash
 cp topology.json topology.json.bak
 ```
 
-5\. Using a text editor, open the `topology.json` file, and then add a record for the block-producing node in the `localRoots` section as follows, where `<BlockProducingNodeIPAddress>` is the IP address of the block-producing node in your stake pool configuration, and `<BlockProducingNodeName>` is an optional descriptive label for the block-producing node. Also, set the value `true` for the `trustable` key:
+3\. Using a text editor, open the `topology.json` file, and then add a record for the block-producing node in the `localRoots` section as follows, where `<BlockProducingNodeIPAddress>` is the IP address of the block-producing node in your stake pool configuration, and `<BlockProducingNodeName>` is an optional descriptive label for the block-producing node. Also, set the value `true` for the `trustable` key:
 
 <CodeBlock language="json">
   {`\{
@@ -120,9 +113,9 @@ To follow best practices, set `<BlockProducingNodeIPAddress>` to the local area 
   </tbody>
 </table>
 
-6\. Save and close the `topology.json` file.
+4\. Save and close the `topology.json` file.
 
-7\. To configure additional relay nodes, repeat steps 1 to 6 for each additional relay node in your stake pool configuration.
+5\. To configure additional relay nodes, repeat steps 1 to 4 for each additional relay node in your stake pool configuration.
 
 ## Configuring the Block-producing Node
 
@@ -132,16 +125,6 @@ To follow best practices, set `<BlockProducingNodeIPAddress>` to the local area 
 ```bash
 cd ${NODE_HOME}
 ```
-
-<!-- February 22, 2026 - In Cardano Node 10.6.2 and above, legacy topology functionality--including the EnableP2P key in the node configuration file--is removed. -->
-<!--
-2\. Using a text editor, open the `config-bp.json` file, and then edit the following option if needed:
-```bash
-"EnableP2P": true,
-```
-
-3\. Save and close the `config-bp.json` file.
--->
 
 2\. To create a backup of the original topology configuration file, type:
 ```bash
