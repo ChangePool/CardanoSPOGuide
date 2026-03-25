@@ -92,8 +92,8 @@ assign_ekg_metrics() {
 
   # Retrieve required metrics from current EKG metrics, assigning -1 as the default value
   dashboard_metrics=$(jq -r '
-    .cardano.node.metrics.epoch.int.val // -1,
-    .cardano.node.metrics.slotInEpoch.int.val // -1' <<< "${ekg_metrics}")
+    .cardano.node.metrics.epoch_int.val // -1,
+    .cardano.node.metrics.slotInEpoch_int.val // -1' <<< "${ekg_metrics}")
 
   # Assign retrieved metrics to an array
   dashboard_metrics_arr=($(echo "${dashboard_metrics}"))

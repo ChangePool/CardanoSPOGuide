@@ -211,23 +211,23 @@ do
 
   # From the EKG metrics, retrieve metrics that the dashboard displays, setting alternatives for NULL values
   dashboard_metrics=$(jq -r '
-    .cardano.node.metrics.epoch.int.val // 0,
-    .cardano.node.metrics.slotInEpoch.int.val // 0,
-    .cardano.node.metrics.slotNum.int.val // 0,
-    .cardano.node.metrics.blockNum.int.val // 0,
-    .cardano.node.metrics.connectionManager.incomingConns.val // 0,
-    .cardano.node.metrics.connectionManager.outgoingConns.val // 0,
-    .cardano.node.metrics.served.block.count.int.val // 0,
-    .cardano.node.metrics.blockfetchclient.blockdelay.cdfOne.val // 0,
-    .cardano.node.metrics.blockfetchclient.blockdelay.cdfThree.val // 0,
-    .cardano.node.metrics.blockfetchclient.blockdelay.cdfFive.val // 0,
-    .cardano.node.metrics.RTS.gcHeapBytes.int.val // 0,
-    .cardano.node.metrics.RTS.gcLiveBytes.int.val // 0,
-    .cardano.node.metrics.forging_enabled.val // 0,
-    .cardano.node.metrics.Forge["node-is-leader"].int.val // 0,
-    .cardano.node.metrics.Forge.adopted.int.val // 0,
-    .cardano.node.metrics.Forge["didnt-adopt"].int.val // 0,
-    .cardano.node.metrics.slotsMissedNum.int.val // 0' <<< "${ekg_metrics}")
+    .cardano.node.metrics.epoch_int.val // 0,
+    .cardano.node.metrics.slotInEpoch_int.val // 0,
+    .cardano.node.metrics.slotNum_int.val // 0,
+    .cardano.node.metrics.blockNum_int.val // 0,
+    .cardano.node.metrics.connectionManager.inboundConns_int.val // 0,
+    .cardano.node.metrics.connectionManager.outboundConns_int.val // 0,
+    .cardano.node.metrics.served.block_counter.val // 0,
+    .cardano.node.metrics.blockfetchclient.blockdelay.cdfOne_real.val // 0,
+    .cardano.node.metrics.blockfetchclient.blockdelay.cdfThree_real.val // 0,
+    .cardano.node.metrics.blockfetchclient.blockdelay.cdfFive_real.val // 0,
+    .cardano.node.metrics.RTS.gcHeapBytes_int.val // 0,
+    .cardano.node.metrics.RTS.gcLiveBytes_int.val // 0,
+    .cardano.node.metrics.forging_enabled_int.val // 0,
+    .cardano.node.metrics.nodeIsLeader_int.val // 0,
+    .cardano.node.metrics.Forge.adopted_counter.val // 0,
+    .cardano.node.metrics.Forge."didnt-adopt_counter".val // 0,
+    .cardano.node.metrics.slotsMissed_int.val // 0' <<< "${ekg_metrics}")
 
   # Assign the list of metrics that the dashboard displays to an array
   dashboard_metrics_arr=($(echo "${dashboard_metrics}"))
@@ -345,7 +345,7 @@ do
   # Clear the screen
   clear
 
-  echo -e "                   ${Black}${WhiteBackground} nodeView v1.0 ${NoColor}"
+  echo -e "                   ${Black}${WhiteBackground} nodeView v1.1 ${NoColor}"
   echo
   echo -e "${LightGreen}${Underline}Blockchain Ledger${NoColor}"
   echo -e "  Epoch Number: ${LightCyan}${current_epoch_num}${NoColor}         Slot in Epoch: ${LightCyan}${slot_in_epoch}${NoColor}"
