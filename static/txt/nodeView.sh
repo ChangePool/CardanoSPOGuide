@@ -284,7 +284,7 @@ do
   block_height=$(printf "%-10s" "${block_height}")
   incoming_conns=$(printf "%-3s" "${incoming_conns}")
   outgoing_conns=$(printf "%-3s" "${outgoing_conns}")
-  block_count=$(printf "%-5s" "${block_count}")
+  block_count=$(printf "%-10s" "${block_count}")
   mem_heap=$(printf "%-7s" "${mem_heap}")
   mem_live=$(printf "%-7s" "${mem_live}")
   blocks_produced=$(printf "%-2s" "${blocks_produced}")
@@ -357,8 +357,8 @@ do
 
   echo
   echo -e "${LightGreen}${Underline}Block Propagation${NoColor}"
-  echo -e "  Count    Within:   1 Second   3 Seconds   5 Seconds"
-  echo -e "  ${LightCyan}${block_count}${NoColor}               ${LightCyan}${block_delay_1s}%${NoColor}     ${LightCyan}${block_delay_3s}%${NoColor}      ${LightCyan}${block_delay_5s}%${NoColor}"
+  echo -e "  Count        Within:   1 Second   3 Seconds   5 Seconds"
+  echo -e "  ${LightCyan}${block_count}${NoColor}              ${LightCyan}${block_delay_1s}%${NoColor}     ${LightCyan}${block_delay_3s}%${NoColor}      ${LightCyan}${block_delay_5s}%${NoColor}"
 
   # When monitoring a block-producing node, display related metrics
   if [ ${block_producer} -eq 1 ]
