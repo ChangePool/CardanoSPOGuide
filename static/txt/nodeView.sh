@@ -23,7 +23,7 @@
 #
 
 # Set the URL for the EKG endpoint
-ekg_endpoint="http://localhost:12788/"
+ekg_endpoint="http://localhost:12788/cardano-node"
 
 # Uncomment a line to match the environment that you use
 environment_option="--mainnet" # Mainnet environment

@@ -188,7 +188,7 @@ export function HTMLContent() {
       <CodeBlock language="bash">
         {`cardano-cli conway stake-pool deregistration-certificate \\
 --cold-verification-key-file node.vkey \\
---epoch $(bc <<< "$(curl -s -H 'Accept: application/json' http://localhost:12788/ | jq -r '.cardano.node.metrics.epoch.int.val') + 1") \\
+--epoch $(bc <<< "$(curl -s -H 'Accept: application/json' http://localhost:12788/cardano-node | jq -r '.cardano.node.metrics.epoch.int.val') + 1") \\
 --out-file pool.dereg`}
       </CodeBlock>
 

@@ -81,7 +81,7 @@ echo "Current Epoch: $\{currentEpoch\}"`}
             {`currentEpoch=$(curl -s -H 'Accept: application/json' <EKGEndpoint> | jq -r '.cardano.node.metrics.epoch.int.val')
 echo "Current Epoch: $\{currentEpoch\}"`}
           </CodeBlock>
-          {/* <!-- http://localhost:12788/ --> */}
+          {/* <!-- http://localhost:12788/cardano-node --> */}
            <center><strong>OR</strong></center>
            <CodeBlock language="bash">
             {`startTimeGenesis=$(cat $NODE_HOME/shelley-genesis.json | jq -r '.systemStart')

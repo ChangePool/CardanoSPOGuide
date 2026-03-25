@@ -29,31 +29,35 @@ export function HTMLContent() {
       <p class="pi">To display current metrics for the instance of Cardano Node running on the local computer using a Web browser:</p>
       
       <ul class="ss">
-        <li>To display metrics using the EKG endpoint, visit <code>http://localhost:12788/</code> To display values, you may need to scroll right.
+        <li>To display metrics using the EKG endpoint, visit <code>http://localhost:12788/cardano-node</code> To display values, you may need to scroll right.
           <center><strong>OR</strong></center>
-          To display metrics using the Prometheus endpoint, visit <code>http://localhost:12798/</code>
+          To display metrics using the Prometheus endpoint, visit <code>http://localhost:12798/metrics</code> or <code>http://localhost:12808/cardano-node</code>
         </li>
       </ul>
 
+      {/* <!-- March 25, 2026 - In the default config*.json file for Cardano Node 10.6.2, the PrometheusSimple backend listens at http://localhost:12798/metrics and the Prometheus endpoint set in tracer-config.json listens on port 12808, making the following challenge a bit too complicated without further explanation of how Cardano Tracer works. Therefore, remove the challenge from the guide. --> */}
+
+      {/* <!-- 
       <table class="box">
         <tbody>
           <tr>
             <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
-            <td class="boxText"><p class="boxText">Using the following options in the <code>$&#123;NODE_HOME&#125;/config*.json</code> file, you can set the IP address and port where the EKG and Prometheus endpoints listen. For options that you modify in the configuration file to take effect, you need to restart Cardano Node:
+            <td class="boxText"><p class="boxText">Using the following options in the <code>$&#123;NODE_HOME&#125;/tracer-config.json</code> file, you can set the IP address and port where the EKG and Prometheus endpoints listen. For options that you modify in the configuration file to take effect, you need to restart Cardano Node:
               <CodeBlock language="json">
-                {`"hasEKG": [
-  "127.0.0.1",
-  12788
-],
-"hasPrometheus": [
-  "127.0.0.1",
-  12798
-]`}
+                {`"hasEKG": {
+  "epHost": "127.0.0.1",
+  "epPort": 12788
+},
+"hasPrometheus": {
+  "epHost": "127.0.0.1",
+  "epPort": 12808
+},`}
               </CodeBlock>
             </p></td>
           </tr>
         </tbody>
       </table>
+       --> */}
 
       <h1>Useful Metrics</h1>
 
@@ -108,7 +112,7 @@ export function HTMLContent() {
       <p class="pi">To query current metrics for the local instance of Cardano Node using a terminal window:</p>
 
       <ul class="ss">
-        <li>To query metrics using the EKG endpoint, type <code>curl -s -H 'Accept: application/json' http://localhost:12788/ | jq .</code>
+        <li>To query metrics using the EKG endpoint, type <code>curl -s -H 'Accept: application/json' http://localhost:12788/cardano-node | jq .</code>
         <center><strong>OR</strong></center>
         To query metrics using the Prometheus endpoint, type <code>curl http://localhost:12798/metrics</code></li>
       </ul>

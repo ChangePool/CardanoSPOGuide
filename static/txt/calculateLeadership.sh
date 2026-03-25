@@ -46,7 +46,7 @@ schedule_available="310000"
 #schedule_available="64000"
 
 # Set the URL for the EKG endpoint
-ekg_endpoint="http://localhost:12788/"
+ekg_endpoint="http://localhost:12788/cardano-node"
 
 # The calculateLeadership.sh script may run as a systemd service. Therefore, assign the value
 # of $NODE_HOME to a variable for use throughout the script because environment variables may
