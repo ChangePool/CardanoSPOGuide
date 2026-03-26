@@ -22,7 +22,7 @@ export function HTMLContent() {
 
       <p>Depending on hardware specifications, in some implementations of Cardano Node configuring runtime system (RTS) options available for the Glasgow Haskell Compiler (GHC) may improve performance and/or stability.</p>
 
-      <p>The RTS offers many options for controlling behaviour. For example, depending on system specifications and Cardano Node version, a block-producing node sometimes may miss checking every second whether to prepare a block. Cardano Node reports missed checks using the <code>cardano.node.metrics.slotsMissedNum.int</code> EKG metric. Using custom RTS options, you may seek to reduce the number of checks that the block-producing node in your stake pool configuration misses, for example due to time spent in garbage collection (GC).</p>
+      <p>The RTS offers many options for controlling behaviour. For example, depending on system specifications and Cardano Node version, a block-producing node sometimes may miss checking every second whether to prepare a block. Cardano Node reports missed checks using the <code>cardano.node.metrics.slotsMissed_int</code> EKG metric. Using custom RTS options, you may seek to reduce the number of checks that the block-producing node in your stake pool configuration misses, for example due to time spent in garbage collection (GC).</p>
 
       <table class="box">
         <tbody>

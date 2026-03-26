@@ -78,7 +78,7 @@ echo "Current Epoch: $\{currentEpoch\}"`}
           </CodeBlock>
           <center><strong>OR</strong></center>
           <CodeBlock language="bash">
-            {`currentEpoch=$(curl -s -H 'Accept: application/json' <EKGEndpoint> | jq -r '.cardano.node.metrics.epoch.int.val')
+            {`currentEpoch=$(curl -s -H 'Accept: application/json' <EKGEndpoint> | jq -r '.cardano.node.metrics.epoch_int.val')
 echo "Current Epoch: $\{currentEpoch\}"`}
           </CodeBlock>
           {/* <!-- http://localhost:12788/cardano-node --> */}

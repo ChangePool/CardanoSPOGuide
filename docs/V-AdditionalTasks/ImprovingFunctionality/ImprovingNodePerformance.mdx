@@ -22,7 +22,7 @@ export function HTMLContent() {
 
       <p>By design, a Cardano Node instance operating as a block producer must test whether to prepare a block every slot—that is, every second. When the computer hosting the block producer is busy, then the block producer sometimes may miss testing whether to prepare a block. If the block producer misses testing whether to prepare a block in a slot when the stake pool is elected to produce a block, then the stake pool may miss the opportunity to produce the block.</p>
 
-      <p>In general, investigate potential configuration changes to reduce missed tests to prepare a block if the <code>cardano.node.metrics.slotsMissedNum.int</code> EKG metric reports that the block-producing node in your stake pool configuration misses more than approximately 75 slots per day.</p>
+      <p>In general, investigate potential configuration changes to reduce missed tests to prepare a block if the <code>cardano.node.metrics.slotsMissed_int</code> EKG metric reports that the block-producing node in your stake pool configuration misses more than approximately 75 slots per day.</p>
 
       <table class="box">
         <tbody>
@@ -48,7 +48,7 @@ export function HTMLContent() {
             </tbody>
           </table>
         </li> {/* <!-- Source: https://cardano.stackexchange.com/questions/4532/missed-slot-leader-checks --> */}
-        {/* <!-- <li>In the <code>config-bp.json</code> or <code>config.json</code> configuration file that the Cardano Node instance uses, consider setting the <code>TraceMempool</code> key to the value <code>false</code> to disable mempool tracing. When you disable mempool tracing, the Cardano Node instance continues processing transactions as usual. However, the <code>cardano.node.metrics.txsInMempool.int</code> and <code>cardano.node.metrics.mempoolBytes.int</code> EKG metrics are unavailable. Therefore, you may find troubleshooting issues related to block propagation, topology, firewall or transaction processing more challenging when mempool tracing is disabled. Always enabling mempool tracing on a block-producing node may be considered <a href="https://github.com/input-output-hk/cardano-node/issues/2350" target="_blank">best practice</a>.</li>  --> */}
+        {/* <!-- <li>In the <code>config-bp.json</code> or <code>config.json</code> configuration file that the Cardano Node instance uses, consider setting the <code>TraceMempool</code> key to the value <code>false</code> to disable mempool tracing. When you disable mempool tracing, the Cardano Node instance continues processing transactions as usual. However, the <code>cardano.node.metrics.txsInMempool_int</code> and <code>cardano.node.metrics.mempoolBytes_int</code> EKG metrics are unavailable. Therefore, you may find troubleshooting issues related to block propagation, topology, firewall or transaction processing more challenging when mempool tracing is disabled. Always enabling mempool tracing on a block-producing node may be considered <a href="https://github.com/input-output-hk/cardano-node/issues/2350" target="_blank">best practice</a>.</li>  --> */}
         {/* <!-- October 26, 2025 - NOTE: When using Cardano Tracer, the TraceMempool key is deprecated. Perhaps test using Cardano Tracer options to disable mempool tracing. Remember that Cardano Tracer allows you to customize tracing of all metrics, not only the tracing of mempool metrics. --> */}
       </ul>
 

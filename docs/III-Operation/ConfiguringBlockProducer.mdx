@@ -96,7 +96,7 @@ cardano-cli conway node key-gen \\
       <p class="pi">To generate an operational certificate:</p>
 
       <ol>
-        <li>To verify that the Cardano Node instance designated as the block producer in your stake pool configuration is fully synchronized with the network, confirm that the values of the <code>cardano.node.metrics.epoch.int</code> and <code>cardano.node.metrics.slotInEpoch.int</code> EKG metrics are equal to the current network epoch and slot values available using a Cardano <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>.</li>
+        <li>To verify that the Cardano Node instance designated as the block producer in your stake pool configuration is fully synchronized with the network, confirm that the values of the <code>cardano.node.metrics.epoch_int</code> and <code>cardano.node.metrics.slotInEpoch_int</code> EKG metrics are equal to the current network epoch and slot values available using a Cardano <a href="https://explorer.cardano.org/" target="_blank">blockchain explorer</a>.</li>
         <li>To calculate the current KES period:
           <ol>
             <li>On the computer designated as the block-producing node in your stake pool configuration, type the following commands using a terminal window to retrieve the number of slots per KES period for your environment using the Shelley Genesis file:
@@ -197,7 +197,7 @@ CERT=<NodeHomeValue>/node.cert
             {`sudo systemctl start cardano-node`}
           </CodeBlock>
         </li>
-        <li>To confirm that the Cardano Node instance is operating as a block producer, verify that the <code>cardano.node.metrics.forging_enabled</code> EKG metric displays the value <code>1</code></li>
+        <li>To confirm that the Cardano Node instance is operating as a block producer, verify that the <code>cardano.node.metrics.forging_enabled_int</code> EKG metric displays the value <code>1</code></li>
       </ol>
 
       <h1>Summarizing Security Considerations</h1>
