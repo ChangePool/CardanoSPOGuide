@@ -105,6 +105,7 @@ If you follow the CoinCashew instructions for [Automating Cardano Node Startup](
 ```bash
 cd <ConfigurationFileFolder>
 mv <ConfigFileName>.json <ConfigFileName>.bak
+mv tracer-config.json tracer-config.bak
 mv topology.json topology.bak
 mv peer-snapshot.json peer-snapshot.bak
 mv checkpoints.json checkpoints.bak
@@ -139,7 +140,7 @@ cd ${NODE_HOME}
 mv config.json config-bp.json
 ```
 
-6\. Using [`diff`](https://www.man7.org/linux/man-pages/man1/diff.1.html) or a similar file comparison utility, identify and copy customizations as needed from the `config*.bak` and `topology.bak` configuration file backups that you created in step 2 to the respective configuration file that you downloaded in step 4.
+6\. Using [`diff`](https://www.man7.org/linux/man-pages/man1/diff.1.html) or a similar file comparison utility, identify and copy customizations as needed from the `config*.bak`, `tracer-config.bak` and `topology.bak` configuration file backups that you created in step 2 to the respective configuration file that you downloaded in step 4.
 
 :::warning
 The `config*.json` file contains hashes for the `byron-genesis.json`, `shelley-genesis.json`, `alonzo-genesis.json` and `conway-genesis.json` files using the `ByronGenesisHash`, `ShelleyGenesisHash`, `AlonzoGenesisHash` and `ConwayGenesisHash` keys, respectively. Therefore, do NOT manually edit the `*genesis.json` files.
@@ -184,6 +185,10 @@ sudo mv ~/tmp2/bin/cardano-cli /usr/local/bin/
 sudo mv ~/tmp2/bin/cardano-node /usr/local/bin/
 ```
 
+```
+sudo mv ~/tmp2/bin/cardano-tracer /usr/local/bin/
+```
+
 6\. To delete the temporary folder, type:
 
 ```
@@ -226,16 +231,18 @@ cabal configure -O0 -w ghc-<GHCVersionNumber>
 # Compile the cardano-node and cardano-cli packages found in the current directory
 cabal build all
 cabal build cardano-cli
+cabal build cardano-tracer
 ```
 <!-- Source: https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md -->
 
-The time required to compile the `cardano-node` and `cardano-cli` packages may be a few minutes to hours, depending on the specifications of your computer.
+The time required to compile the `cardano-node`, `cardano-cli` and `cardano-tracer` packages may be a few minutes to hours, depending on the specifications of your computer.
 
-3\. When the compiler finishes, to verify the version numbers of the new `cardano-node` and `cardano-cli` binaries type:
+3\. When the compiler finishes, to verify the version numbers of the new `cardano-node`, `cardano-cli` and `cardano-tracer` binaries type:
 
 ```bash
 $(./scripts/bin-path.sh cardano-node) --version
 $(./scripts/bin-path.sh cardano-cli) --version
+$(./scripts/bin-path.sh cardano-tracer) --version
 ```
 
 **To install the binaries that you compiled:**
@@ -251,12 +258,35 @@ sudo systemctl stop <CardanoServiceName>.service
 ```bash
 sudo cp -p "$(./scripts/bin-path.sh cardano-node)" <DestinationPath>/cardano-node
 sudo cp -p "$(./scripts/bin-path.sh cardano-cli)" <DestinationPath>/cardano-cli
-
+sudo cp -p "$(./scripts/bin-path.sh cardano-tracer)" <DestinationPath>/cardano-tracer
 ```
 
 :::info
 If you follow the CoinCashew instructions for [Compiling Cardano Node](/CompilingNode), then `<DestinationPath>` is `/usr/local/bin`
 :::
+
+### Implementing Cardano Tracer
+
+Cardano Tracer provides flexible and efficient monitoring of Cardano Node instances in your stake pool configuration using a modular configuration, ensuring that Cardano Node focuses on core operations while Tracer manages logging, monitoring and external communication.
+
+By default, Cardano Node 10.6.2 and above enable Cardano Tracer.
+
+<table class="box">
+  <tbody>
+    <tr>
+      <td class="boxLabel"><p class="boxLabel">Important<br /><img src={useBaseUrl('img/BoxImportant.png')} alt="Important" /></p></td>
+      <td class="boxText"><p class="boxText">The old tracing mechanism is deprecated. Implementing Cardano Tracer is required.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+**To implement Cardano Tracer:**
+
+1\. Follow the procedure for [Running Cardano Tracer Automatically](/RunningTracer).
+
+2\. In the `$NODE_HOME/config*.json` file for each computer in your stake pool configuration, add the `--tracer-socket-path-connect` option to the `cardano-node run` command. For more details, refer to the topic [Automating Cardano Node Startup](/AutomatingStartup).
+
+3\. Update scripts in your stake pool configuration to use Cardano Tracer endpoints and metric names. For more details, see the topic [Monitoring Metrics](/MonitoringMetrics).
 
 ### Completing the Upgrade
 
@@ -265,8 +295,9 @@ If you follow the CoinCashew instructions for [Compiling Cardano Node](/Compilin
 1\. To verify that you installed the new Cardano Node binaries successfully, type:
 
 ```bash
-cardano-node version
-cardano-cli version
+cardano-node --version
+cardano-cli --version
+cardano-tracer --version
 ```
 
 2\. To finish the upgrade process, start the Cardano Node systemd service.
