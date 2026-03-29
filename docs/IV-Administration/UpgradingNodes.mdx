@@ -282,17 +282,40 @@ By default, Cardano Node 10.6.2 and above enable Cardano Tracer.
 
 **To implement Cardano Tracer:**
 
-1\. Follow the procedure for [Running Cardano Tracer Automatically](/RunningTracer).
+1\. On the computer hosting the block-producing node in your stake pool configuration, follow the procedure for [Running Cardano Tracer Automatically](/RunningTracer).
 
-2\. In the `$NODE_HOME/config*.json` file for each computer in your stake pool configuration, add the `--tracer-socket-path-connect` option to the `cardano-node run` command. For more details, refer to the topic [Automating Cardano Node Startup](/AutomatingStartup).
+2\. In the `$NODE_HOME/startCardanoNode.sh` file on the block-producing node, add the `--tracer-socket-path-connect` option to the `cardano-node run` command. For more details, refer to the topic [Automating Cardano Node Startup](/AutomatingStartup).
 
-3\. Update scripts in your stake pool configuration to use Cardano Tracer endpoints and metric names. For more details, see the topic [Monitoring Metrics](/MonitoringMetrics).
+3\. To open the `cardano-node.service` file on the block-producing node using a text editor, type:
+
+```bash
+sudo nano /etc/systemd/system/cardano-node.service
+```
+
+4\. In the `cardano-node.service` file, edit the following lines in the `[Unit]` block:
+
+```bash
+Wants = network-online.target cardano-tracer.service
+After = network-online.target cardano-tracer.service
+```
+
+4\. To save and close the `cardano-node.service` file, press `CTRL+X` and then follow the prompts.
+
+5\. To apply the configuration changes, type:
+
+```bash
+sudo systemctl daemon-reload
+```
+
+6\. Repeat steps 1 to 5 on each computer hosting a relay node in your stake pool configuration.
+
+7\. Update scripts as needed on all computers in your stake pool configuration to use Cardano Tracer endpoints and metric names. For more details, see the topic [Monitoring Metrics](/MonitoringMetrics).
 
 ### Completing the Upgrade
 
 **To finish upgrading Cardano Node binaries:**
 
-1\. To verify that you installed the new Cardano Node binaries successfully, type:
+1\. On the computer hosting the block-producing node in your stake pool configuration, to verify that you installed the new Cardano Node binaries successfully, type:
 
 ```bash
 cardano-node --version
@@ -312,7 +335,9 @@ sudo systemctl start cardano-node
 sudo apt-get update && sudo apt-get upgrade -y && sudo reboot
 ```
 
-4\. Copy the new `cardano-cli` binary to the air-gapped, offline computer that you use to sign transactions for your stake pool.
+4\. Repeat steps 1 to 3 on each computer hosting a relay node in your stake pool configuration.
+
+5\. Copy the new `cardano-cli` binary to the air-gapped, offline computer that you use to sign transactions for your stake pool.
 
 <!-- 5\. On your air-gapped, offline computer, ensure that [libsecp256k1](/OfflineComputer#libsecp) and [blst](/OfflineComputer#blst) are installed and up to date. -->
 
@@ -344,7 +369,7 @@ The task of replaying the ledger may require hours to complete.
 
 ## Verifying the Upgrade
 
-To verify that the upgrade is successful, open a dashboard or type the following command using a terminal window to follow the Cardano Node log:
+To verify that the upgrade is successful, on each computer hosting an instance of Cardano Node in your stake pool configuration open a dashboard, or type the following command using a terminal window to follow the Cardano Node log:
 
 <CodeBlock language="bash">
   {`journalctl -fu cardano-node`}
