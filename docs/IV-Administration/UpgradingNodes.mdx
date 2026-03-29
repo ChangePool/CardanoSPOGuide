@@ -175,7 +175,7 @@ wget <BinaryURL>
 tar -xvf ./cardano*.gz
 ```
 
-5\. To install the new node and cli binaries, type:
+5\. To install the new node, cli and tracer binaries, type:
 
 ```
 sudo mv ~/tmp2/bin/cardano-cli /usr/local/bin/
@@ -253,7 +253,7 @@ $(./scripts/bin-path.sh cardano-tracer) --version
 sudo systemctl stop <CardanoServiceName>.service
 ```
 
-2\. To replace the existing `cardano-node` and `cardano-cli` binaries, type the following commands where `<DestinationPath>` is the absolute file path to the folder where you install Cardano Node binaries on your local computer:
+2\. To replace the existing `cardano-node`, `cardano-cli` and `cardano-tracer` binaries, type the following commands where `<DestinationPath>` is the absolute file path to the folder where you install Cardano Node binaries on your local computer:
 
 ```bash
 sudo cp -p "$(./scripts/bin-path.sh cardano-node)" <DestinationPath>/cardano-node
@@ -309,7 +309,7 @@ sudo systemctl daemon-reload
 
 6\. Repeat steps 1 to 5 on each computer hosting a relay node in your stake pool configuration.
 
-7\. Update scripts as needed on all computers in your stake pool configuration to use Cardano Tracer endpoints and metric names. For more details, see the topic [Monitoring Metrics](/MonitoringMetrics).
+7\. On each computer in your stake pool configuration, update scripts as needed to use Cardano Tracer endpoints and metric names. For more details, see the topic [Monitoring Metrics](/MonitoringMetrics).
 
 ### Completing the Upgrade
 
