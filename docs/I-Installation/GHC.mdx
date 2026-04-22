@@ -13,7 +13,11 @@ import React from 'react';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import CodeBlock from '@theme/CodeBlock';
+import nodeVersionNumber from '!!raw-loader!/txt/nodeVersionNumber.txt';
+import cliVersionNumber from '!!raw-loader!/txt/cliVersionNumber.txt';
+import tracerVersionNumber from '!!raw-loader!/txt/tracerVersionNumber.txt';
 import ghcVersionNumber from '!!raw-loader!/txt/ghcVersionNumber.txt';
+import cabalVersionNumber from '!!raw-loader!/txt/cabalVersionNumber.txt';
 
 export function HTMLContent() {
   return (
@@ -36,11 +40,11 @@ export function HTMLContent() {
           </tr>
           <tr>
             <td class="center"><p>February 2026</p></td>
-            <td class="center"><p>10.6.2</p></td>
-            <td class="center"><p>10.15.0.0</p></td>
-            <td class="center"><p>0.3.6</p></td>
+            <td class="center"><p>{nodeVersionNumber}</p></td>
+            <td class="center"><p>{cliVersionNumber}</p></td>
+            <td class="center"><p>{tracerVersionNumber}</p></td>
             <td class="center"><p>{ghcVersionNumber}</p></td>
-            <td class="center"><p>3.12.1.0</p></td>
+            <td class="center"><p>{cabalVersionNumber}</p></td>
           </tr>
         </tbody>
       </table>

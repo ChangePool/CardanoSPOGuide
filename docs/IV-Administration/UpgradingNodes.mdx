@@ -13,7 +13,11 @@ import React from 'react';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import CodeBlock from '@theme/CodeBlock';
+import nodeVersionNumber from '!!raw-loader!/txt/nodeVersionNumber.txt';
+import cliVersionNumber from '!!raw-loader!/txt/cliVersionNumber.txt';
+import tracerVersionNumber from '!!raw-loader!/txt/tracerVersionNumber.txt';
 import ghcVersionNumber from '!!raw-loader!/txt/ghcVersionNumber.txt';
+import cabalVersionNumber from '!!raw-loader!/txt/cabalVersionNumber.txt';
 
 <!-- September 4, 2025 - Import the Tabs component -->
 <!-- For more details, visit https://docusaurus.io/docs/markdown-features/tabs --> 
@@ -50,7 +54,7 @@ _Table 1 Current Cardano Node Version Requirements_
 
 |     Release Date     | Cardano Node Version | Cardano CLI Version | Cardano Tracer Version | GHC Version | Cabal Version |
 |  :----------------:  | :------------------: | :-----------------: | :--------------------: | :---------: | :-----------: |
-|     February 2026    |        10.6.2        |      10.15.0.0      |         0.3.6          |    {ghcVersionNumber}    |    3.12.1.0   |
+|     February 2026    |        {nodeVersionNumber}        |      {cliVersionNumber}      |         {tracerVersionNumber}          |    {ghcVersionNumber}    |    {cabalVersionNumber}   |
 
 **To set GHCup, GHC and Cabal versions using a graphical user interface, type the following command using a terminal window:**
 ```

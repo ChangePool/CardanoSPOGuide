@@ -12,6 +12,10 @@ import React from 'react';
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
+import nodeVersionNumber from '!!raw-loader!/txt/nodeVersionNumber.txt';
+import cliVersionNumber from '!!raw-loader!/txt/cliVersionNumber.txt';
+import tracerVersionNumber from '!!raw-loader!/txt/tracerVersionNumber.txt';
+
 export function HTMLContent() {
 
   /* Define formatting options for displaying the publication date of the guide */
@@ -36,9 +40,9 @@ export function HTMLContent() {
             <th width="33%"><p>Cardano Tracer</p></th>
           </tr>
           <tr>
-            <td class="center"><p>10.6.2</p></td>
-            <td class="center"><p>10.15.0.0</p></td>
-            <td class="center"><p>0.3.6</p></td>
+            <td class="center"><p>{nodeVersionNumber}</p></td>
+            <td class="center"><p>{cliVersionNumber}</p></td>
+            <td class="center"><p>{tracerVersionNumber}</p></td>
           </tr>
         </tbody>
       </table>
