@@ -13,6 +13,7 @@ import React from 'react';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import CodeBlock from '@theme/CodeBlock';
+import ghcVersionNumber from '!!raw-loader!/txt/ghcVersionNumber.txt';
 
 <!-- September 4, 2025 - Import the Tabs component -->
 <!-- For more details, visit https://docusaurus.io/docs/markdown-features/tabs --> 
@@ -49,7 +50,7 @@ _Table 1 Current Cardano Node Version Requirements_
 
 |     Release Date     | Cardano Node Version | Cardano CLI Version | Cardano Tracer Version | GHC Version | Cabal Version |
 |  :----------------:  | :------------------: | :-----------------: | :--------------------: | :---------: | :-----------: |
-|     February 2026    |        10.6.2        |      10.15.0.0      |         0.3.6          |    9.6.7    |    3.12.1.0   |
+|     February 2026    |        10.6.2        |      10.15.0.0      |         0.3.6          |    {ghcVersionNumber}    |    3.12.1.0   |
 
 **To set GHCup, GHC and Cabal versions using a graphical user interface, type the following command using a terminal window:**
 ```
@@ -213,10 +214,10 @@ git clone https://github.com/IntersectMBO/cardano-node.git ./<NewFolderName>
 
 Cloning the GitHub repository to a new folder allows you to roll back the upgrade, if needed, by re-installing on your computer the `cardano-node` and `cardano-cli` binaries from a folder where you compiled a previous version of Cardano Node packages.
 
-2\. To build Cardano Node binaries using the source code that you downloaded in step 1, type the following commands where `<NewFolderName>` is the name of the folder you created in step 1 and `<GHCVersionNumber>` is the GHC version that you set in the section [Setting GHC and Cabal Versions](#Setting-GHC-and-Cabal-Versions-):
+2\. To build Cardano Node binaries using the source code that you downloaded in step 1, type the following commands where `<NewFolderName>` is the name of the folder you created in step 1:
 
-```bash
-# Ensure that development headers for the libsodium cryptographic library are NOT installed on the local computer
+  <CodeBlock language="bash">
+    {`# Ensure that development headers for the libsodium cryptographic library are NOT installed on the local computer
 sudo apt remove libsodium-dev
 # Navigate to the folder where you cloned the Cardano Node repository
 cd $HOME/git/<NewFolderName>
@@ -227,12 +228,15 @@ git fetch --all --recurse-submodules --tags
 # Switch to the branch of the latest Cardano Node release
 git checkout $(curl -s https://api.github.com/repos/IntersectMBO/cardano-node/releases/latest | jq -r .tag_name)
 # Adjust the project configuration to disable optimization and use the recommended compiler version
-cabal configure -O0 -w ghc-<GHCVersionNumber>
-# Compile the cardano-node and cardano-cli packages found in the current directory
+cabal configure -O0 -w ghc-`}
+    {ghcVersionNumber}
+    {`
+# Compile the cardano-node, cardano-cli and cardano-tracer packages found in the current directory
 cabal build all
 cabal build cardano-cli
-cabal build cardano-tracer
-```
+cabal build cardano-tracer`}
+  </CodeBlock>
+
 <!-- Source: https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md -->
 
 The time required to compile the `cardano-node`, `cardano-cli` and `cardano-tracer` packages may be a few minutes to hours, depending on the specifications of your computer.

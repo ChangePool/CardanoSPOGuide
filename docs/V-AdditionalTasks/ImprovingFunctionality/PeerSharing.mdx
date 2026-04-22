@@ -47,7 +47,7 @@ export function HTMLContent() {
         <li>On the relay node where you edited the <code>config.json</code> file in step 1, --> */}
            open the <code>topology.json</code> file using a text editor. Add another <code>accessPoints</code> subsection to the <code>localRoots</code> section as follows where <code>&lt;UnregisteredRelayNodeIPAddress&gt;</code> is the wide area network (WAN) IP address of the unregistered relay node in your stake pool configuration, and <code>&lt;UnregisteredRelayNodeName&gt;</code> is an optional descriptive label for the unregistered relay. Also, set the <code>advertise</code> key to <code>true</code> in the new <code>accessPoints</code> subsection:
           <CodeBlock language="json">
-          {`\{
+            {`\{
   "bootstrapPeers": [
     \{
       "address": "backbone.cardano.iog.io",
@@ -96,7 +96,9 @@ export function HTMLContent() {
       "advertise": false
     \}
   ],
-  "useLedgerAfterSlot": `}{useLedgerAfterSlotValue}{`
+  "useLedgerAfterSlot": `}
+  {useLedgerAfterSlotValue}
+  {`
 \}`}
           </CodeBlock>
           <table class="box">

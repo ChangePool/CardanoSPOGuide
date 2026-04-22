@@ -13,6 +13,7 @@ import React from 'react';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import CodeBlock from '@theme/CodeBlock';
+import ghcVersionNumber from '!!raw-loader!/txt/ghcVersionNumber.txt';
 
 export function HTMLContent() {
   return (
@@ -38,7 +39,7 @@ export function HTMLContent() {
             <td class="center"><p>10.6.2</p></td>
             <td class="center"><p>10.15.0.0</p></td>
             <td class="center"><p>0.3.6</p></td>
-            <td class="center"><p>9.6.7</p></td>
+            <td class="center"><p>{ghcVersionNumber}</p></td>
             <td class="center"><p>3.12.1.0</p></td>
           </tr>
         </tbody>
