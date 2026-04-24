@@ -305,6 +305,13 @@ const config = {
         // https://docusaurus.io/docs/3.4.0/search#contextual-search
         contextualSearch: true,
       },
+      // April 24, 2026 - Set color mode support for the classic theme. For more details, see
+      // https://docusaurus.io/docs/api/themes/configuration
+      colorMode: {
+        defaultMode: 'light',
+        disableSwitch: false,
+        respectPrefersColorScheme: false,
+      },
     }),
 };
 
