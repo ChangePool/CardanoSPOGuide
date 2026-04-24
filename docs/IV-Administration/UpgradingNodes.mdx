@@ -13,6 +13,7 @@ import React from 'react';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import CodeBlock from '@theme/CodeBlock';
+import nodeReleaseDate from '!!raw-loader!/txt/nodeReleaseDate.txt';
 import nodeVersionNumber from '!!raw-loader!/txt/nodeVersionNumber.txt';
 import cliVersionNumber from '!!raw-loader!/txt/cliVersionNumber.txt';
 import tracerVersionNumber from '!!raw-loader!/txt/tracerVersionNumber.txt';
@@ -54,7 +55,7 @@ _Table 1 Current Cardano Node Version Requirements_
 
 |     Release Date     | Cardano Node Version | Cardano CLI Version | Cardano Tracer Version | GHC Version | Cabal Version |
 |  :----------------:  | :------------------: | :-----------------: | :--------------------: | :---------: | :-----------: |
-|     February 2026    |        {nodeVersionNumber}        |      {cliVersionNumber}      |         {tracerVersionNumber}          |    {ghcVersionNumber}    |    {cabalVersionNumber}   |
+|      {nodeReleaseDate}      |        {nodeVersionNumber}        |      {cliVersionNumber}      |         {tracerVersionNumber}          |    {ghcVersionNumber}    |    {cabalVersionNumber}   |
 
 **To set GHCup, GHC and Cabal versions using a graphical user interface, type the following command using a terminal window:**
 ```
@@ -223,6 +224,8 @@ Cloning the GitHub repository to a new folder allows you to roll back the upgrad
   <CodeBlock language="bash">
     {`# Ensure that development headers for the libsodium cryptographic library are NOT installed on the local computer
 sudo apt remove libsodium-dev
+# Install new packages required for Cardano Node 10.7.1 and above
+sudo apt-get install libsnappy-dev protobuf-compiler liburing-dev -y
 # Navigate to the folder where you cloned the Cardano Node repository
 cd $HOME/git/<NewFolderName>
 # Update the list of available packages
@@ -241,7 +244,10 @@ cabal build cardano-cli
 cabal build cardano-tracer`}
   </CodeBlock>
 
-<!-- Source: https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md -->
+<!-- Sources:
+  https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md
+  https://developers.cardano.org/docs/get-started/infrastructure/node/installing-cardano-node/
+-->
 
 The time required to compile the `cardano-node`, `cardano-cli` and `cardano-tracer` packages may be a few minutes to hours, depending on the specifications of your computer.
 

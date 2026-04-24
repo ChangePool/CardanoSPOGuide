@@ -28,7 +28,7 @@ const config = {
   // For GitHub pages deployment, it is often '/<projectName>/'
   //baseUrl: '/',
   //baseUrl: '/spo/',
-  baseUrl: '/Content/SPO/10.6.2/',
+  baseUrl: '/Content/SPO/10.7.1/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -197,7 +197,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://discord.gg/4GcdAv9sS',
+            href: 'https://discord.gg/NyN8JEMPv',
             label: 'Discord',
             position: 'right',
           },
@@ -288,7 +288,7 @@ const config = {
       typesense: {
         // Replace this with the name of your index/collection.
         // It should match the "index_name" entry in the scraper's "config.json" file.
-        typesenseCollectionName: 'CCSPOGuide1062',
+        typesenseCollectionName: 'CCSPOGuide1071',
         typesenseServerConfig: {
           nodes: [
             {
