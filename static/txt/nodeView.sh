@@ -80,7 +80,7 @@ query_op_cert () {
   kes_info=$(cardano-cli conway query kes-period-info ${environment_option} --op-cert-file ${op_cert_path} 2>&1)
 
   # Detect errors in the current operational certificate details
-  op_cert_error=$(grep -e '✗' -e '<socket: 11>' <<< "${kes_info}")
+  op_cert_error=$(grep -e '✗' -e '<socket: 11>' -e 'Error' <<< "${kes_info}")
 
   # If the details about the current operational certificate are error free
   if [[ -z "${op_cert_error}" ]]
@@ -100,7 +100,7 @@ query_op_cert () {
     kes_periods_remaining=$(( end_kes_period - current_kes_period  ))
 
     # To create fixed widths, add trailing spaces to values as needed
-    kes_periods_remaining=$(printf "%-2s" "${kes_periods_remaining}")
+    kes_periods_remaining=$(printf "%-3s" "${kes_periods_remaining}")
     cert_counter=$(printf "%-3s" "${cert_counter}")
 
     # Format the date when the operational certificate expires
@@ -109,10 +109,10 @@ query_op_cert () {
   else
 
     # Inform the user that details about the current KES period and operational certificate contain errors
-    kes_periods_remaining="Error"
-    expiry_date="Error"
-    cert_counter="Error"
-    registered_counter="Error"
+    kes_periods_remaining="Err"
+    expiry_date="Err"
+    cert_counter="Err"
+    registered_counter="Err"
 
   fi
 
@@ -348,12 +348,12 @@ do
   echo -e "                   ${Black}${WhiteBackground} nodeView v1.1 ${NoColor}"
   echo
   echo -e "${LightGreen}${Underline}Blockchain Ledger${NoColor}"
-  echo -e "  Epoch Number: ${LightCyan}${current_epoch_num}${NoColor}         Slot in Epoch: ${LightCyan}${slot_in_epoch}${NoColor}"
-  echo -e "  Block Height: ${LightCyan}${block_height}${NoColor}    Slot: ${LightCyan}${slot_num_formatted}${NoColor}"
+  echo -e "  Epoch Number: ${LightCyan}${current_epoch_num}${NoColor}          Slot in Epoch: ${LightCyan}${slot_in_epoch}${NoColor}"
+  echo -e "  Block Height: ${LightCyan}${block_height}${NoColor}     Slot: ${LightCyan}${slot_num_formatted}${NoColor}"
 
   echo
   echo -e "${LightGreen}${Underline}Network Connections${NoColor}"
-  echo -e "  Incoming: ${LightCyan}${incoming_conns}${NoColor}               Outgoing: ${LightCyan}${outgoing_conns}${NoColor}"
+  echo -e "  Incoming: ${LightCyan}${incoming_conns}${NoColor}                Outgoing: ${LightCyan}${outgoing_conns}${NoColor}"
 
   echo
   echo -e "${LightGreen}${Underline}Block Propagation${NoColor}"
@@ -371,7 +371,7 @@ do
       echo
       echo -e "${LightGreen}${Underline}Operational Certificate${NoColor}"
       echo -e "  KES Periods Remaining: ${LightCyan}${kes_periods_remaining}${NoColor}   Expiry Date: ${LightCyan}${expiry_date}${NoColor}"
-      echo -e "  Counter Value: ${LightCyan}${cert_counter}${NoColor}          Registered Counter Value: ${LightCyan}${registered_counter}${NoColor}"
+      echo -e "  Counter Value: ${LightCyan}${cert_counter}${NoColor}           Registered Counter Value: ${LightCyan}${registered_counter}${NoColor}"
 
     fi
 
@@ -388,14 +388,14 @@ do
 
     fi
 
-    echo -e "  Prepared      Accepted      Invalid     Missed Slots"
-    echo -e "     ${LightCyan}${blocks_produced}${NoColor}            ${LightCyan}${blocks_adopted}${NoColor}            ${LightCyan}${blocks_invalid}${NoColor}            ${LightCyan}${slots_missed}${NoColor}"
+    echo -e "  Prepared      Accepted       Invalid     Missed Slots"
+    echo -e "     ${LightCyan}${blocks_produced}${NoColor}            ${LightCyan}${blocks_adopted}${NoColor}             ${LightCyan}${blocks_invalid}${NoColor}            ${LightCyan}${slots_missed}${NoColor}"
 
   fi
 
   echo
   echo -e "${LightGreen}${Underline}Memory Usage${NoColor}"
-  echo -e "  Heap: ${LightCyan}${mem_heap}${NoColor}               Live: ${LightCyan}${mem_live}${NoColor}"
+  echo -e "  Heap: ${LightCyan}${mem_heap}${NoColor}                Live: ${LightCyan}${mem_live}${NoColor}"
 
   echo
   echo -e "                    Quit: CTRL+C"
