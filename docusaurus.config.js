@@ -11,6 +11,23 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+//
+// May 24, 2026 - Construct the value for the baseUrl key using the contents of the file named nodeVersionNumber.txt
+//
+const nodeVersionFS = require('fs');
+const nodeVersionPath = require('path');
+
+const nodeVersionFilePath = nodeVersionPath.resolve(__dirname, 'static/txt/nodeVersionNumber.txt');
+const nodeVersionNumber = nodeVersionFS.readFileSync(nodeVersionFilePath, 'utf8');
+
+const baseURLPath = `/Content/SPO/${nodeVersionNumber}/`;
+
+//
+// May 24, 2026 - Using the nodeVersionNumber variable, construct the value for the typesenseCollectionName key
+//
+const nodeVersionNumberNoPeriods = nodeVersionNumber.replaceAll('.', '');
+const typesenseCollectionNameValue = `CCSPOGuide${nodeVersionNumberNoPeriods}`;
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'How to Set Up a Cardano Stake Pool',
@@ -28,7 +45,8 @@ const config = {
   // For GitHub pages deployment, it is often '/<projectName>/'
   //baseUrl: '/',
   //baseUrl: '/spo/',
-  baseUrl: '/Content/SPO/10.7.1/',
+  //baseUrl: '/Content/SPO/10.7.1/',
+  baseUrl: baseURLPath,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -266,7 +284,7 @@ const config = {
         //copyright: `Copyright © ${new Date().getFullYear()} | Presented by CoinCashew | Built Using Docusaurus.`,
         // copyright: 'Creative Commons Attribution 4.0 International | Presented by CoinCashew | Created Using Docusaurus',
         // copyright: 'Hosted by <a href="https://coincashew.io" target="_blank">Change [CHG] Stake Pool</a> | Presented by CoinCashew | Published Using Docusaurus',
-        copyright: 'Hosted by <a href="https://coincashew.io" target="_blank">Change [CHG] Stake Pool</a><br />Presented by CoinCashew',
+        copyright: 'Hosted by <a href="https://coincashew.io" target="_blank">Change [CHG] Stake Pool</a><br />Presented by CoinCashew.io',
       },
       prism: {
         // October 21, 2025 - Set themes for syntax highlighting
@@ -288,7 +306,8 @@ const config = {
       typesense: {
         // Replace this with the name of your index/collection.
         // It should match the "index_name" entry in the scraper's "config.json" file.
-        typesenseCollectionName: 'CCSPOGuide1071',
+        //typesenseCollectionName: 'CCSPOGuide1071',
+        typesenseCollectionName: typesenseCollectionNameValue,
         typesenseServerConfig: {
           nodes: [
             {
