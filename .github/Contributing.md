@@ -11,5 +11,5 @@ To submit small contributions, please create an [Issue](https://github.com/Chang
 
 For larger contributions, prior to creating a Pull Request please read [Appendix E: Styles, Standards and Creating Content](https://coincashew.io/Content/SPO/10.5.4/AppendixE).
 
-We also encourage "cointributors," who may offer delegations to [Change Pool](https://coincashew.io/) or [donations](https://cointr.ee/coincashew) to CoinCashew without contributing new content.
+We also welcome "cointributors," who may offer delegations to [Change Pool](https://coincashew.io/) without contributing new content.
 
