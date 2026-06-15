@@ -250,7 +250,7 @@ const config = {
               //},
               //{
                 //label: 'Discord',
-                //href: 'https://discord.gg/4GcdAv9sS',
+                //href: 'https://discord.gg/Hz3PrkcR5W',
               //},
               // August 17, 2025 - Remove the Twitter link from the footer
               //{
