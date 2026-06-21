@@ -160,7 +160,15 @@
 		"description": "Snippet for importing a raw text file, including a code block"
 	},
 
-		"CoinCashew Guide Code Block": {
+  "Import Code Block Component": {
+    "prefix": "Code Block Component",
+    "body": [
+      "import CodeBlock from '@theme/CodeBlock';"
+    ],
+    "description": "Snippet for inserting the code block component, required to insert a code block"
+  },
+
+	"CoinCashew Guide Code Block": {
 		"prefix": "Code Block",
 		"body": [
 			"<CodeBlock language=\"bash\">",
@@ -187,7 +195,7 @@
 			"\t<figcaption>Figure $2</figcaption>",
 			"</figure>"
 		],
-		"description": "Snippet for inserting a figure"
+		"description": "Snippet for inserting an image in Docusaurus HTML"
 	},
 
 	"CoinCashew Guide Table": {
@@ -324,7 +332,7 @@
 		"description": "Snippet for inserting tabs in Docusaurus Markdown. See also the Tabs Component snippet."
 	},
 
-	"CoinCashew Guide Markdown Image": {
+	"CoinCashew Guide Image": {
 		"prefix": "Image",
 		"body": [
 			"![$1](@site/static/img/$2)"
