@@ -48,6 +48,40 @@ cardano-node trace-documentation --config <ConfigFileName> --output-file <Markdo
         <li>To display metrics using the EKG endpoint, visit <code>http://localhost:12788/cardano-node</code> To display values, you may need to scroll right.
           <center><strong>OR</strong></center>
           To display metrics using the Prometheus endpoint, visit <code>http://localhost:12798/metrics</code> or <code>http://localhost:12808/cardano-node</code>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
+                <td class="boxText"><p class="boxText">By default, the <code>config*.json</code> file enables a Prometheus endpoint that Cardano Node serves on Port 12798:
+                  <CodeBlock language="bash">
+                    {`...
+"TraceOptions": {
+  "": {
+    "backends": [
+      "EKGBackend",
+      "Forwarder",
+      "PrometheusSimple suffix 127.0.0.1 12798",
+      "Stdout HumanFormatColoured"
+    ],
+    "detail": "DNormal",
+    "severity": "Notice"
+  },
+...`}
+                  </CodeBlock>
+                </p>
+                <p>To disable the Prometheus endpoint, delete the string value <code>"PrometheusSimple suffix 127.0.0.1 12798"</code> from the multiple values associated with the <code>backends</code> key, and then restart the Cardano Node service.</p>
+                <p>Additionally, by default the <code>tracer-config.json</code> file enables a Prometheus endpoint that Cardano Tracer serves on port 12808:
+                  <CodeBlock language="bash">
+                    {`...
+"hasPrometheus": {
+  "epHost": "127.0.0.1",
+  "epPort": 12808
+},
+...`}
+                  </CodeBlock></p></td>
+              </tr>
+            </tbody>
+          </table>
         </li>
       </ul>
 
