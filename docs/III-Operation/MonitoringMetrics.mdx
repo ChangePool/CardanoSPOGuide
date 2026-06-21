@@ -22,7 +22,23 @@ export function HTMLContent() {
 
       {/* INSERT HTML HERE */}
 
-      <p>Cardano Node trace objects, which add log entries, may also produce metrics for monitoring node status. By default, Cardano Node enables a proprietary endpoint named EKG, as well as a <a href="https://prometheus.io/" target="_blank">Prometheus</a> endpoint. You can display or query metrics using a Web browser, terminal window or Bash script for example.</p>
+      <p>Cardano Tracer trace objects, which add log entries, may also produce metrics for monitoring node status. By default, Cardano Tracer enables a proprietary endpoint named EKG, as well as a <a href="https://prometheus.io/" target="_blank">Prometheus</a> endpoint.</p>
+
+      <p>You can display or query metrics using a Web browser, terminal window or Bash script for example.</p>
+
+      <h1>Generating Trace Documentation</h1>
+
+      <p>Cardano Tracer uses namespaces for configuration. Trace options in the <code>config*.json</code> file for an instance of Cardano Node configure the messages and details to include in trace output for namespaces, as well as the prefix used when querying metrics, for example.</p>
+
+      <p class="pi">To generate the trace documentation for an instance of Cardano Node:</p>
+      
+      <ul class="ss">
+        <li>On the computer hosting the instance of Cardano Node, using a terminal window type the following command where <code>&lt;ConfigFileName&gt;</code> is the path to the <code>config*.json</code> file; <code>&lt;MarkdownFileName&gt;</code> is the name of the file where you want to save generated documentation for namespaces and metrics using Markdown format; <code>&lt;MetricsFileName&gt;</code> is the name of the file where you want to save metrics help using JSON format; and, <code>&lt;NamespaceFileName&gt;</code> is the name of the file where you want to save a list of available namespaces using text format:</li>
+        <CodeBlock language="bash">
+          {`cd $\{NODE_HOME\}
+cardano-node trace-documentation --config <ConfigFileName> --output-file <MarkdownFileName> --output-metric-help <MetricsFileName> --output-namespace-list <NamespaceFileName>`}
+        </CodeBlock>
+      </ul>
         
       <h1>Displaying Metrics Using a Web Browser</h1>
 
