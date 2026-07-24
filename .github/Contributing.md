@@ -5,11 +5,11 @@
 
 # Contributing
 
-Change Pool and CoinCashew are excited to hear and learn from you! Your contributions of content benefit others who may read and use the *How to Set Up a Cardano Stake Pool* guide.
+CoinCashew.io looks forward to hearin and learning from you. Your contributions of content benefit others who may read and use the *How to Set Up a Cardano Stake Pool* guide.
 
 To submit small contributions, please create an [Issue](https://github.com/ChangePool/CardanoSPOGuide/issues) or [Pull Request](https://github.com/ChangePool/CardanoSPOGuide/pulls).
 
-For larger contributions, prior to creating a Pull Request please read [Appendix E: Styles, Standards and Creating Content](https://coincashew.io/Content/SPO/10.5.4/AppendixE).
+For larger contributions, prior to creating a Pull Request please read [Appendix E: Styles, Standards and Creating Content](https://coincashew.io/Content/SPO/11.0.1/AppendixE).
 
-We also welcome "cointributors," who may offer delegations to [Change Pool](https://coincashew.io/) without contributing new content.
+We also welcome "cointributors," who may offer delegations to [Change [CHG] Stake Pool](https://coincashew.io/) without contributing new content.
 
