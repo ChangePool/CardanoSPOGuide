@@ -5,7 +5,7 @@
 
 # Contributing
 
-CoinCashew.io looks forward to hearin and learning from you. Your contributions of content benefit others who may read and use the *How to Set Up a Cardano Stake Pool* guide.
+CoinCashew.io looks forward to hearing and learning from you. Your contributions of content benefit others who may read and use the *How to Set Up a Cardano Stake Pool* guide.
 
 To submit small contributions, please create an [Issue](https://github.com/ChangePool/CardanoSPOGuide/issues) or [Pull Request](https://github.com/ChangePool/CardanoSPOGuide/pulls).
 
