@@ -1,0 +1,138 @@
+---
+title: "Sending E-mail Notifications"
+sidebar_label: "Sending E-mail Notifications"
+slug: /SendingEmails
+hide_title: false
+hide_table_of_contents: false
+sidebar_position: 25
+description: ""
+---
+
+import React from 'react';
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+import CodeBlock from '@theme/CodeBlock';
+
+export function HTMLContent() {
+  return (
+    <div>
+
+      {/* INSERT HTML HERE */}
+
+      <p>To help you stay informed on the status of the stake pool that you operate, the <a href="https://www.postfix.org/" target="_blank">Postfix</a> mail server allows you to send e-mail notifications securely using Bash scripts.</p>
+
+      <p class="pi">To install and configure Postfix:</p>
+
+      <ol>
+        <li>Using a terminal window, type:
+          <CodeBlock language="bash">
+            {`sudo apt-get update
+sudo apt-get install postfix mailutils libsasl2-modules`}
+          </CodeBlock>
+        </li>
+        <li>When prompted to select the mail server configuration type, using the UP and DOWN arrow keys select the <b>Internet With Smarthost</b> option, then press the TAB key, and then press ENTER
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">Selecting <b>Internet with Smarthost</b> simplifies configuring an e-mail account that you set up with a major service provider—such as Gmail, Microsoft Outlook or Yahoo Mail—to send notifications.</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>When prompted for a mail name, press TAB to accept the default value, and then press ENTER</li>
+        <li>When prompted for the SMTP relay host, type the default external host for Postfix to use when sending e-mail, then press TAB, and then press ENTER
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
+                <td class="boxText">
+                  <p class="boxText">If you plan to configure an account that you set up with one of the following major service providers to send e-mail notifications using Postfix, then type the respective server name and port, for example:</p>
+                    <ul>
+                      <li><b>Gmail</b>—<code>[smtp.gmail.com]:587</code></li>
+                      <li><b>Microsoft Outlook</b>—<code>[smtp.office365.com]:587</code></li>
+                      <li><b>Yahoo Mail</b>—<code>[smtp.mail.yahoo.com]:587</code></li>
+                    </ul>
+                  <p class="boxText">In Postfix, enclosing a hostname in square brackets ( <code>[ ... ]</code> ) skips Domain Name System (DNS) MX record lookup and connects directly to the host using the A/AAAA record and specified port.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>When the installation completes, type the following commands to edit the <code>main.cf</code> configuration file:
+        <CodeBlock language="bash">
+          {`cd /etc/postfix
+sudo nano ./main.cf`}
+        </CodeBlock></li>
+        <li>In the <code>main.cf</code> file, add or edit the following lines:
+          <CodeBlock language="bash">
+            {`...
+
+# Disable local mailbox delivery
+mydestination =
+
+...
+
+# Limit relaying to the local machine
+mynetworks = 127.0.0.0/8 [::1]/128
+
+...
+
+# Bind only to the local loopback network
+inet_interfaces = loopback-only
+
+...
+
+# Enable SASL authentication
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_sasl_tls_security_options = noanonymous
+
+# Enable TLS encryption
+smtp_use_tls = yes
+smtp_tls_security_level = encrypt
+smtp_tls_note_starttls_offer = yes
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt`}
+          </CodeBlock>
+        </li>
+        <li>Save and close the <code>main.cf</code> file.</li>
+        <li>If required by your e-mail service provider, create an app password for the e-mail account sending notifications.</li>
+        <li>To set authentication credentials for the SMTP server, type:
+          <CodeBlock language="bash">
+            {`sudo nano /etc/postfix/sasl_passwd`}
+          </CodeBlock>
+        </li>
+        <li>In the <code>sasl_passwd</code> file, add the following line where <code>&lt;SMTPRelayHost&gt;</code> is the SMTP relay host that you typed in step 4; <code>&lt;EmailAddress&gt;</code> is the e-mail address for the account sending e-mail notifications; and, <code>&lt;Password&gt;</code> is the password for acessing the account sending e-mail notifications or the app password that you generated in step 8
+          <CodeBlock language="bash">
+            {`<SMTPRelayHost> <EmailAddress>:<Password>`}
+          </CodeBlock>
+          <table class="box">
+            <tbody>
+              <tr>
+                <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
+                <td class="boxText"><p class="boxText">For example:
+                  <CodeBlock language="bash">
+                    {`[smtp.gmail.com]:587 user@gmail.com:32787VD5PAVM2OMH`}
+                  </CodeBlock>
+                </p></td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>Save and close the <code>sasl_passwd</code> file, and then type:
+        <CodeBlock language="bash">
+          {`sudo chmod 600 /etc/postfix/sasl_passwd
+sudo postmap /etc/postfix/sasl_passwd`}
+        </CodeBlock></li>
+        <li></li>
+      </ol>
+
+
+    </div>
+  );
+}
+
+<HTMLContent />
+
