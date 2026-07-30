@@ -3,8 +3,8 @@ title: "Sending E-mail Notifications"
 sidebar_label: "Sending E-mail Notifications"
 slug: /SendingEmails
 hide_title: false
-hide_table_of_contents: false
-sidebar_position: 25
+hide_table_of_contents: true
+sidebar_position: 35
 description: ""
 ---
 
@@ -69,18 +69,28 @@ sudo nano ./main.cf`}
           <CodeBlock language="bash">
             {`...
 
+# Set mail relay authorization
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+
+...
+
 # Disable local mailbox delivery
 mydestination =
 
 ...
 
-# Limit relaying to the local machine
+# Limit relaying to the local computer
 mynetworks = 127.0.0.0/8 [::1]/128
 
 ...
 
 # Bind only to the local loopback network
 inet_interfaces = loopback-only
+
+...
+
+# Set Internet protocol versions that the Postfix server uses
+inet_protocols = all
 
 ...
 
@@ -114,7 +124,7 @@ smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt`}
                 <td class="boxLabel"><p class="boxLabel">Note<br /><img src={useBaseUrl('img/BoxNote.png')} alt="Note" /></p></td>
                 <td class="boxText"><p class="boxText">For example:
                   <CodeBlock language="bash">
-                    {`[smtp.gmail.com]:587 user@gmail.com:32787VD5PAVM2OMH`}
+                    {`[smtp.gmail.com]:587 user@gmail.com:nxbnczhaocydwrsl`}
                   </CodeBlock>
                 </p></td>
               </tr>
@@ -126,8 +136,27 @@ smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt`}
           {`sudo chmod 600 /etc/postfix/sasl_passwd
 sudo postmap /etc/postfix/sasl_passwd`}
         </CodeBlock></li>
-        <li></li>
+        <li>To prevent cron from e-mailing you standard output (STDOUT) and standard error (stderr) messages from cron jobs, type <code>crontab -e</code> and then add the following line at the beginning of the file:
+        <CodeBlock language="bash">
+          {`MAILTO=""`}
+        </CodeBlock></li>
+        <li>Save and close the <code>crontab</code> file.</li>
+        <li>To restart the Postfix service, type:
+          <CodeBlock language="bash">
+            {`sudo systemctl restart postfix.service`}
+          </CodeBlock>
+        </li>
       </ol>
+
+      <p class="pi">To send an e-mail using Postfix:</p>
+      
+      <ul class="ss">
+        <li>Using a terminal window, type the following command where <code>&lt;MessageBody&gt;</code> is the information that you want the e-mail to include; <code>&lt;SubjectLine&gt;</code> is a descriptive summary of the e-mail; and, <code>&lt;RecipientEmailAddress&gt;</code> is the e-mail address receiving the e-mail:
+          <CodeBlock language="bash">
+            {`echo "<MessageBody>" | mail -s "<SubjectLine>" <RecipientEmailAddress>`}
+          </CodeBlock>
+        </li>
+      </ul>
 
 
     </div>
