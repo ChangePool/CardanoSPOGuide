@@ -215,7 +215,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://discord.gg/Hz3PrkcR5W',
+            href: 'https://coincashew.io/discord',
             label: 'Discord',
             position: 'right',
           },
