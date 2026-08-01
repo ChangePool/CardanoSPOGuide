@@ -12,92 +12,112 @@ import React from 'react';
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 export function HTMLContent() {
   return (
     <div>
 
       <p><i>Table 1</i> lists updates to the <i>How to Set Up a Cardano Stake Pool</i> guide in reverse chronological order.</p>
 
-      <table class="center">
-        <caption>Table 1 Change Log</caption>
-        <tbody>
-          <tr>
-            <th width="20%"><p>Date</p></th>
-            <th width="25%"><p>Topic(s)</p></th>
-            <th width="55%"><p>Change(s)</p></th>
-          </tr>
-          <tr>
-            <td class="center"><p>July 30, 2026</p></td>
-            <td class="center"><p><a href={useBaseUrl('/SendingEmails')}>Sending E-mail Notifications</a></p></td>
-            <td><p>Add topic</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>July 30, 2026</p></td>
-            <td class="center"><p><a href={useBaseUrl('/AppendixC')}>Appendix C: Cardano Resources</a></p></td>
-            <td><p>Update content</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>June 20, 2026</p></td>
-            <td class="center"><p><a href={useBaseUrl('/MonitoringMetrics')}>Monitoring Metrics</a></p></td>
-            <td><p>Document the <code>cardano-node trace-documentation</code> command</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>May 24, 2026</p></td>
-            <td class="center"><p>Various</p></td>
-            <td><p>Update version numbers for Cardano Node 11.0.1<br />Minor bug fixes and improvements</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>April 24, 2026</p></td>
-            <td class="center"><p>Various</p></td>
-            <td><p>Revisions supporting Cardano Node 10.7.1<br />Minor bug fixes and improvements</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>March 28, 2026</p></td>
-            <td class="center"><p>Various</p></td>
-            <td><p>Revisions supporting Cardano Node 10.6.2, including Cardano Tracer 0.3.6<br />Minor bug fixes and improvements</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>February 11, 2026</p></td>
-            <td class="center"><p><a href={useBaseUrl('/')}>Welcome</a></p></td>
-            <td><p>Publish Version 2.0</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>December 26, 2025</p></td>
-            <td class="center"><p><a href={useBaseUrl('/V')}>Part V</a></p></td>
-            <td><p>Finish importing content</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>November 17, 2025</p></td>
-            <td class="center"><p><a href={useBaseUrl('/IV')}>Part IV</a></p></td>
-            <td><p>Finish importing content</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>October 25, 2025</p></td>
-            <td class="center"><p><a href={useBaseUrl('/III')}>Part III</a></p></td>
-            <td><p>Finish importing content</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>September 28, 2025</p></td>
-            <td class="center"><p><a href={useBaseUrl('/II')}>Part II</a></p></td>
-            <td><p>Finish importing content</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>September 27, 2025</p></td>
-            <td class="center"><p><a href={useBaseUrl('/I')}>Part I</a></p></td>
-            <td><p>Finish importing content</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>August 29, 2025</p></td>
-            <td class="center"><p><a href={useBaseUrl('/')}>Welcome</a></p></td>
-            <td><p>Begin importing content</p></td>
-          </tr>
-          <tr>
-            <td class="center"><p>August 23, 2025</p></td>
-            <td class="center"><p><a href={useBaseUrl('/AppendixE')}>Appendix E: Styles, Standards and Creating Content</a></p></td>
-            <td><p>Begin developing style template</p></td>
-          </tr>
-        </tbody>
-      </table>
+      <Tabs>
+        <TabItem value="2026" label="2026" default>
+          <table class="center">
+            <caption>Table 1 Change Log</caption>
+            <tbody>
+              <tr>
+                <th width="20%"><p>Date</p></th>
+                <th width="25%"><p>Topic(s)</p></th>
+                <th width="55%"><p>Change(s)</p></th>
+              </tr>
+              <tr>
+                <td class="center"><p>July 30</p></td>
+                <td class="center"><p><a href={useBaseUrl('/SendingEmails')}>Sending E-mail Notifications</a></p></td>
+                <td><p>Add topic</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>July 30</p></td>
+                <td class="center"><p><a href={useBaseUrl('/AppendixC')}>Appendix C: Cardano Resources</a></p></td>
+                <td><p>Update content</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>June 20</p></td>
+                <td class="center"><p><a href={useBaseUrl('/MonitoringMetrics')}>Monitoring Metrics</a></p></td>
+                <td><p>Document the <code>cardano-node trace-documentation</code> command</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>May 24</p></td>
+                <td class="center"><p>Various</p></td>
+                <td><p>Update version numbers for Cardano Node 11.0.1<br />Minor bug fixes and improvements</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>April 24</p></td>
+                <td class="center"><p>Various</p></td>
+                <td><p>Revisions supporting Cardano Node 10.7.1<br />Minor bug fixes and improvements</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>March 28</p></td>
+                <td class="center"><p>Various</p></td>
+                <td><p>Revisions supporting Cardano Node 10.6.2, including Cardano Tracer 0.3.6<br />Minor bug fixes and improvements</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>February 11</p></td>
+                <td class="center"><p><a href={useBaseUrl('/')}>Welcome</a></p></td>
+                <td><p>Publish Version 2.0</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </TabItem>
+
+        <TabItem value="2025" label="2025" default>
+          <table class="center">
+            <caption>Table 1 Change Log</caption>
+            <tbody>
+              <tr>
+                <th width="20%"><p>Date</p></th>
+                <th width="25%"><p>Topic(s)</p></th>
+                <th width="55%"><p>Change(s)</p></th>
+              </tr>
+              <tr>
+                <td class="center"><p>December 26</p></td>
+                <td class="center"><p><a href={useBaseUrl('/V')}>Part V</a></p></td>
+                <td><p>Finish importing content</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>November 17</p></td>
+                <td class="center"><p><a href={useBaseUrl('/IV')}>Part IV</a></p></td>
+                <td><p>Finish importing content</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>October 25</p></td>
+                <td class="center"><p><a href={useBaseUrl('/III')}>Part III</a></p></td>
+                <td><p>Finish importing content</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>September 28</p></td>
+                <td class="center"><p><a href={useBaseUrl('/II')}>Part II</a></p></td>
+                <td><p>Finish importing content</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>September 27</p></td>
+                <td class="center"><p><a href={useBaseUrl('/I')}>Part I</a></p></td>
+                <td><p>Finish importing content</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>August 29</p></td>
+                <td class="center"><p><a href={useBaseUrl('/')}>Welcome</a></p></td>
+                <td><p>Begin importing content</p></td>
+              </tr>
+              <tr>
+                <td class="center"><p>August 23</p></td>
+                <td class="center"><p><a href={useBaseUrl('/AppendixE')}>Appendix E: Styles, Standards and Creating Content</a></p></td>
+                <td><p>Begin developing style template</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </TabItem>
+      </Tabs>
 
     </div>
   );
