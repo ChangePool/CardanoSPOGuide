@@ -45,7 +45,7 @@
 }
 
 /* Ensure that clicking a bookmark link scrolls into view, not hidden under the fixed header at the top of the page */
-a
+a, span
 {
   scroll-margin-top: calc(var(--ifm-navbar-height) + 0.5rem);
 }
