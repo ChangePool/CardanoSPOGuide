@@ -37,25 +37,29 @@ Set up Chrony on all computers in your stake pool configuration.
 sudo apt-get install chrony
 ```
 
-2\. To configure Chrony, type:
+2\. To configure time sources, type:
+```bash
+cd /etc/chrony/sources.d
+sudo mv ./ubuntu-ntp-pools.sources ./ubuntu-ntp-pools.sources.disabled
+sudo nano ./custom-ntp-pools.sources
+```
+
+3\. In the `custom-ntp-pools.sources` file, add the following lines, and then save and close the file:
+```bash
+# Add up to 3 sources from each of the following pools, polling every 64 to 1024 seconds
+# and ignoring round trips longer than 3 seconds
+pool time.google.com iburst minpoll 6 maxpoll 10 maxdelay 3 maxsources 3
+pool ntp.ubuntu.com  iburst minpoll 6 maxpoll 10 maxdelay 3 maxsources 3
+pool us.pool.ntp.org iburst minpoll 6 maxpoll 10 maxdelay 3 maxsources 3
+```
+
+4\. To configure additional settings, type:
 ```bash
 sudo nano /etc/chrony/chrony.conf
 ```
 
 3\. In the `chrony.conf` file, add or edit the following lines, and then save and close the file:
 ```bash
-# Comment out default sources
-#pool ntp.ubuntu.com        iburst maxsources 4
-#pool 0.ubuntu.pool.ntp.org iburst maxsources 1
-#pool 1.ubuntu.pool.ntp.org iburst maxsources 1
-#pool 2.ubuntu.pool.ntp.org iburst maxsources 2
-
-# Add up to 3 sources from each of the following pools, polling every 64 to 1024 seconds
-# and ignoring round trips longer than 3 seconds
-pool time.google.com iburst minpoll 6 maxpoll 10 maxdelay 3 maxsources 3
-pool ntp.ubuntu.com  iburst minpoll 6 maxpoll 10 maxdelay 3 maxsources 3
-pool us.pool.ntp.org iburst minpoll 6 maxpoll 10 maxdelay 3 maxsources 3
-
 # Stop bad estimates upsetting machine clock
 maxupdateskew 5.0
 
@@ -79,6 +83,8 @@ sudo systemctl restart chronyd.service
 To use Chrony, you may find the following commands useful:
 
 ```bash
+# Refresh time sources
+sudo chronyc reload sources
 # Display a list of time sources that chronyc currently uses and tracks
 chronyc sources
 # Display parameters related to system clock performance
