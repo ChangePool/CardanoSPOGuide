@@ -77,22 +77,32 @@ export function HTMLContent() {
         {`# Stop the Cardano Node instance
 sudo systemctl stop cardano-node
 
-sudo swapoff /swapfile
+# Disable swapping
+sudo swapoff /swap.img
 
-# Verify swapfile is off
+# Verify that swapping is off
 swapon --show
 
-# Create a 12 GB swapfile
-# Edit swapfile size as needed
-sudo fallocate -l 12G /swapfile
+# Remove the existing swap file
+sudo rm /swap.img
 
-# Verify swapfile exists
-ls -lh /swapfile
+# Create a new 12 GB swap file
+# Edit the swap file size as needed
+sudo fallocate -l 12G /swap.img
 
-sudo mkswap /swapfile
-sudo swapon /swapfile
+# Set permissions on the swap file
+sudo chmod 600 /swap.img
 
-# Verify swapfile increased in size
+# Verify that the swap file exists
+ls -lh /swap.img
+
+# Set up the swap file
+sudo mkswap /swap.img
+
+# Enable swapping
+sudo swapon /swap.img
+
+# Verify that the swap file increased in size
 swapon --show
 
 # Restart the Cardano Node instance

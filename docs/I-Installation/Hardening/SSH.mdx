@@ -1,6 +1,6 @@
 ---
-title: "Configuring and Using Secure Shell"
-sidebar_label: "Configuring and Using Secure Shell"
+title: "Implementing and Using Secure Shell"
+sidebar_label: "Implementing and Using Secure Shell"
 slug: /Hardening/SSH
 hide_title: false
 hide_table_of_contents: false
@@ -28,7 +28,7 @@ Secure Shell (SSH) is a cryptographic network protocol supporting robust authent
 
 **To install SSH:**
 
-1\. On the computer that you want to access remotely, follow the [How to Install SSH Server on Ubuntu](https://www.simplified.guide/ubuntu/install-ssh-server) tutorial.
+1\. On the computer that you want to access remotely, follow the [How to Install and Enable SSH on Ubuntu 26.04](https://linuxconfig.org/how-to-enable-ssh-on-ubuntu-26-04) tutorial.
 
 2\. To connect to the computer where you installed SSH Server in step 1 using Linux, type the following command using a terminal window where `<Username>` identifies your Linux account on the computer hosting SSH Server—that is, `cardano` when using the *How to Set Up a Cardano Stake Pool* guide—and `<SSHServer>` is the IP address or domain name where the SSH Server listens:
 ```bash
@@ -38,11 +38,11 @@ ssh <Username>@<SSHServer>
 For more details on setting up an SSH client connection, see [How to Connect to an SSH Server](https://www.howtogeek.com/311287/how-to-connect-to-an-ssh-server-from-windows-macos-or-linux/), for example.
 :::
 
-## Implementing Key Authentication
+## Configuring Secure Shell
 
 Implementing SSH key authentication and disabling SSH password authentication on a computer enhances security.
 
-**To implement SSH key authentication:**
+**To configure secure shell:**
 
 1\. To create a new SSH key pair, on a computer connecting to the SSH Server as a client, using a terminal window type:
 ```bash
@@ -71,17 +71,36 @@ ssh-copy-id -i $HOME/.ssh/<KeyFileName>.pub <Username>@<SSHServer>
 ssh cardano@<SSHServer>
 ```
 
-6\. To edit the `sshd_config` file on the computer hosting the SSH Server, type the following command in the remote terminal window:
+6\. To change the port number where the SSH Server listens, type the following command in the remote terminal window:
 ```bash
-sudo nano /etc/ssh/sshd_config
+sudo mkdir -p /etc/systemd/system/ssh.socket.d
+sudo nano /etc/systemd/system/ssh.socket.d/listen.conf
 ```
 
-7\. Edit the following lines, where `<PortNumber>` is a port number between 1024 and 49151 that is unused on the computer hosting the SSH Server:
+7\. In the `listen.conf` file, add the following lines where `<IPAddress>` and `<PortNumber>` are the IP address and port number, respectively, where the SSH Server listens:
+```bash
+[Socket]
+ListenStream=
+ListenStream=<IPAddress>:<PortNumber>
+```
+
+:::note
+To check port numbers for potential conflicts, refer to the [List of TCP and UDP Port Numbers](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers).
+:::
+
+8\. Save and close the `listen.conf` file.
+
+9\. To edit additional SSH Server settings, type the following command in the remote terminal window:
+```bash
+sudo nano /etc/ssh/sshd_config.d/01-hardening.conf
+```
+
+10\. Add the following lines in the `01-hardening.conf` file, where `<PortNumber>` is a port number between 1024 and 49151 that is unused on the computer hosting the SSH Server:
 ```bash
 # Specify the port where the SSH Server listens
 Port <PortNumber>
-# Permit root login using public key authentication only
-PermitRootLogin prohibit-password
+# Block the root user
+PermitRootLogin no
 # Allow public key authentication
 PubkeyAuthentication yes 
 # Do not allow password authentication
@@ -90,23 +109,19 @@ PasswordAuthentication no
 PermitEmptyPasswords no
 ```
 
-:::note
-If any of the lines containing keyword-argument pairs begin with a hash (#) character, then remove the hash character. To check port numbers for potential conflicts, refer to the [List of TCP and UDP Port Numbers](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers).
-:::
+11\. Save and close the `01-hardening.conf` file.
 
-8\. Save and close the `sshd_config` file.
-
-9\. To validate the syntax of the `sshd_config` file, type:
+12\. To validate the syntax of SSH Server settings, type:
 ```bash
 sudo sshd -t
 ```
 
-10\. If validating the `sshd_config` file returns no errors, then type the following command to restart the SSH Server:
+13\. If validating settings returns no errors, then type the following command to restart the SSH Server:
 ```bash
-sudo systemctl restart sshd
+sudo systemctl restart ssh.socket
 ```
 
-11\. To verify that you can connect to the SSH Server using public key authentication, type the following command on the computer connecting to the SSH Server as a client where `<SSHServer>` is the IP address or domain name where the SSH Server listens and `<PortNumber>` is the port number that you set in step 7:
+14\. To verify that you can connect to the SSH Server using public key authentication, type the following command on the computer connecting to the SSH Server as a client where `<SSHServer>` is the IP address or domain name where the SSH Server listens and `<PortNumber>` is the port number that you set in step 7:
 ```bash
 ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber>
 ```
@@ -117,39 +132,51 @@ Rsync is a command-line utility for synchronizing and transferring files between
 
 Transferring files securely helps you operate a Cardano stake pool, for example when creating transactions or backing up data.
 
-**To transfer files from a remote computer to your local computer:**
+<p class="pi">To transfer files from a remote computer to your local computer:</p>
 
-- Using a terminal window on the local computer, type the following command where `<PortNumber>` is the port where the SSH Server on the remote computer listens; `<SSHServer>` is the IP address or domain name where the remote SSH Server listens; `<RemotePath>` is the path to the file(s) on the remote computer to copy; and, `<LocalPath>` is the destination file path on the local computer:
+<ul class="ss">
+  <li>Using a terminal window on the local computer, type the following command where `<PortNumber>` is the port where the SSH Server on the remote computer listens; `<SSHServer>` is the IP address or domain name where the remote SSH Server listens; `<RemotePath>` is the path to the file(s) on the remote computer to copy; and, `<LocalPath>` is the destination file path on the local computer:</li>
+
 ```bash
 rsync -avzhe "ssh -p <PortNumber>" cardano@<SSHServer>:<RemotePath> <LocalPath>
 ```
 
-<table class="box">
-  <tbody>
-    <tr>
-      <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
-      <td class="boxText"><p class="boxText">Using the <a href="https://download.samba.org/pub/rsync/rsync.1" target="_blank">man page</a>, investigate to understand the options specified using `-avzhe` in the Rsync command above.</p></td>
-    </tr>
-  </tbody>
-</table>
+  <table class="box">
+    <tbody>
+      <tr>
+        <td class="boxLabel"><p class="boxLabel">Challenge<br /><img src={useBaseUrl('img/BoxChallenge.png')} alt="Challenge" /></p></td>
+        <td class="boxText"><p class="boxText">Using the <a href="https://download.samba.org/pub/rsync/rsync.1" target="_blank">man page</a>, investigate to understand the options specified using `-avzhe` in the Rsync command above.</p></td>
+      </tr>
+    </tbody>
+  </table>
 
-**To transfer files from your local computer to a remote computer:**
+</ul>
 
-- Using a terminal window on the local computer, type the following command where `<PortNumber>` is the port where the SSH Server on the remote computer listens; `<LocalPath>` is the path to the file(s) on the local computer to copy; `<SSHServer>` is the IP address or domain name where the remote SSH Server listens; and, `<RemotePath>` is the destination file path on the remote computer:
+<p class="pi">To transfer files from your local computer to a remote computer:</p>
+
+<ul class="ss">
+  <li>Using a terminal window on the local computer, type the following command where `<PortNumber>` is the port where the SSH Server on the remote computer listens; `<LocalPath>` is the path to the file(s) on the local computer to copy; `<SSHServer>` is the IP address or domain name where the remote SSH Server listens; and, `<RemotePath>` is the destination file path on the remote computer:</li>
+
 ```bash
 rsync -avzhe "ssh -p <PortNumber>" <LocalPath> cardano@<SSHServer>:<RemotePath>
 ```
+
+</ul>
 
 ## Using Port Forwarding
 
 SSH port forwarding allows you to connect from a local computer to a service running on a remote computer without opening ports to the Internet. Opening ports introduces security risks by creating more potential entry points for attackers.
 
-**To use port forwarding to access a service running on a remote computer securely:**
+<p class="pi">To use port forwarding to access a service running on a remote computer securely:</p>
 
-- Using a terminal window, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server listens, `<PortNumber>` is the port number where the SSH Server listens, `<LocalPort>` is the port number on the local computer that you use to connect to the remote service, `<RemoteHost>` is the IP address or domain name of the target computer that the SSH Server can reach, and `<RemotePort>` is the port number on the `<RemoteHost>` computer where SSH forwards traffic and the remote service listens:
+<ul class="ss">
+  <li>Using a terminal window, type the following command where `<SSHServer>` is the IP address or domain name where the SSH Server listens, `<PortNumber>` is the port number where the SSH Server listens, `<LocalPort>` is the port number on the local computer that you use to connect to the remote service, `<RemoteHost>` is the IP address or domain name of the target computer that the SSH Server can reach, and `<RemotePort>` is the port number on the `<RemoteHost>` computer where SSH forwards traffic and the remote service listens:</li>
+
 ```bash
 ssh -i ~/.ssh/id_ed25519 cardano@<SSHServer> -p <PortNumber> -L <LocalPort>:<RemoteHost>:<RemotePort>
 ```
+
+</ul>
 
 For example, if a computer that you access remotely via SSH operates a server having an HTTP endpoint on port 3000, then the following command allows you to access the endpoint by visiting `http://localhost:3010` using a Web browser on the local computer:
 ```bash
@@ -200,7 +227,7 @@ ssh cardano-server
 Using two-factor authentication (2FA) for SSH significantly enhances the security of remote server access by adding an extra layer of verification beyond key authentication.
 
 :::warning
-If you connect remotely to a computer hosting SSH Server to configure two-factor authentication, then you may not regain remote access if you make an error in the configuration.
+If you connect remotely to a computer hosting SSH Server in order to configure two-factor authentication, then you may not regain remote access if you make an error in the configuration.
 :::
 
 **To set up two-factor authentication for SSH:**
@@ -227,25 +254,23 @@ sudo nano /etc/pam.d/sshd
 auth required pam_google_authenticator.so
 ```
 
-5\. To edit the SSH Server configuration file, type:
+5\. To edit SSH Server settings, type:
 ```bash
-sudo nano /etc/ssh/sshd_config
+sudo nano /etc/ssh/sshd_config.d/01-hardening.conf
 ```
 
-6\. In the `sshd_config` file, edit the following lines:
+6\. In the `01-hardening.conf` file, add the following lines:
 ```bash
 UsePAM yes
 KbdInteractiveAuthentication yes
-```
-
-7\. At the end of the `sshd_config` file, add the following line, and then save and close the file:
-```bash
 AuthenticationMethods publickey,keyboard-interactive
 ```
 
+7\. Save and close the `01-hardening.conf` file.
+
 8\. To restart the SSH Server, type:
 ```bash
-sudo systemctl restart sshd.service
+sudo systemctl restart ssh.socket
 ```
 
 9\. To configure Google Authenticator, type:
@@ -268,18 +293,18 @@ google-authenticator
 
 **To test two-factor authentication:**
 
-1\. On a client computer where you [Implemented Key Authentication](#Implementing-Key-Authentication) and [Simplified Logging In](#Simplifying-Logging-In), open a terminal window and then type the following command:
+1\. On a client computer where you implemented key authentication and an SSH `config` file, open a terminal window, and then type the following command:
 ```bash
 ssh cardano-server
 ```
 
-2\. Follow the steps on screen to complete two-factor authentication.
+2\. Follow the prompts on screen to complete two-factor authentication.
 
 ## Verifying and Troubleshooting Configuration
 
 SSH Server uses a modular, drop-in functionality for configuration that many Linux applications and services use.
 
-The `/etc/ssh/sshd-config.d` directory contains configuration files processed in alphabetical order by file name via the `Include /etc/ssh/sshd_config.d/*.conf` statement found as the first line in the file `/etc/ssh/sshd-config` Many applications apply the last definition of a configuration option. However, SSH Server applies the first definition of a configuration option. Therefore, if a configuration file found in the `sshd-config.d` folder sets an option also set in the `sshd-config` file, then the option set in the `sshd-config` file may not apply.
+The `/etc/ssh/sshd-config.d` directory contains configuration files processed in alphabetical order by file name via the `Include /etc/ssh/sshd_config.d/*.conf` statement found as the first line in the `/etc/ssh/sshd-config` file. If a configuration file found in the `sshd-config.d` folder sets an option also set in the `sshd-config` file, then the option set in the `sshd-config` file may not apply. SSH Server applies the last definition of a configuration option.
 
 :::note
 In Ubuntu, the asterisk (`*`) is a wildcard character that acts as a placeholder representing zero or more characters in filenames or paths.
@@ -292,10 +317,10 @@ In Ubuntu, the asterisk (`*`) is a wildcard character that acts as a placeholder
 sudo sshd -T
 ```
 
-2\. Verify that the SSH Server applies the following options, where `<PortNumber>` is the port number that you set when [Implementing Key Authentication](#Implementing-Key-Authentication):
+2\. Verify that the SSH Server applies the following options, where `<PortNumber>` is the port number that you set when [Configuring Secure Shell](#Configuring-Secure-Shell):
 ```bash
 Port <PortNumber>
-PermitRootLogin prohibit-password
+PermitRootLogin no
 PubkeyAuthentication yes
 PasswordAuthentication no
 PermitEmptyPasswords no
@@ -303,13 +328,16 @@ UsePAM yes
 KbdInteractiveAuthentication yes
 ```
 
-3\. If the SSH Server does NOT apply one or more of the options listed in step 2, then examine the contents of the configuration files found in the `/etc/ssh/sshd-config.d` directory to identify the configuration file(s) setting the same option(s) before the `sshd-config` file sets the options.
-
-4\. To resolve conflicting configuration options, create a file in the `/etc/ssh/sshd-config.d` directory having a file name that appears earlier in alphabetical order than the name of configuration files setting unwanted options, and then set the desired configuration options in the file you create. For example, if a configuration file named `50-cloud-init.conf` sets `PasswordAuthentication yes` then you may create a file named `01-custom-ssh.conf` containing `PasswordAuthentication no` to apply the necessary option.
-
-5\. To restart the SSH Server, type:
+3\. If the SSH Server does NOT apply one or more of the options listed in step 2, then examine the contents of the configuration files found in the `/etc/ssh/sshd-config.d` directory to identify the configuration file(s) setting the same option(s) after the `01-hardening.conf` file sets the options. For example, if a configuration file named `50-cloud-init.conf` sets `PasswordAuthentication yes` then type the following commands to rename the file:
 ```bash
-sudo systemctl restart sshd.service
+cd /etc/ssh/sshd-config.d
+sudo mv ./50-cloud-init.conf ./50-cloud-init.conf.disabled
 ```
 
-6\. If you edited configuration options in step 4, then go to step 1, and then verify that the options the SSH Server applies are now correct.
+4\. To restart the SSH Server, type:
+```bash
+sudo systemctl restart ssh.socket
+```
+
+5\. If you edited configuration options in step 3, then repeat steps 1 to 4 as needed until the options that the SSH Server applies are correct.
+
