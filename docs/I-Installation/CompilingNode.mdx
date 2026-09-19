@@ -12,6 +12,9 @@ import React from 'react';
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
+import CodeBlock from '@theme/CodeBlock';
+import ghcVersionNumber from '!!raw-loader!/txt/ghcVersionNumber.txt';
+
 export function HTMLContent() {
     return (
         <div>
@@ -59,11 +62,12 @@ git checkout $(curl -s https://api.github.com/repos/IntersectMBO/cardano-node/re
     </tbody>
 </table>
 
-5\. To adjust the project configuration to disable optimization and set the recommended compiler version, type the following command where `<GHCVersionNumber>` is the GHC version that you set in the procedure [Installing GHC and Cabal](/GHC):
-```bash
-cabal update
-cabal configure -O0 -w ghc-<GHCVersionNumber>
-```
+5\. To adjust the project configuration to disable optimization and set the recommended compiler version, type:
+  <CodeBlock language="bash">
+    {`cabal update
+cabal configure -O0 -w ghc-`}
+    {ghcVersionNumber}
+  </CodeBlock>
 
 6\. To produce executable `cardano-node`, `cardano-cli` and `cardano-tracer` binaries, type:
 ```bash

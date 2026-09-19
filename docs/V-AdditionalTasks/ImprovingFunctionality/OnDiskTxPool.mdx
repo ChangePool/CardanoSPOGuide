@@ -41,19 +41,19 @@ export function HTMLContent() {
             {`sudo systemctl stop cardano-node.service`}
           </CodeBlock>
         </li>
-        <li>To enable an on-disk transaction pool on a relay node, open the <code>$NODE_HOME/config.json</code> node configuration file using a text editor.
-        <center><strong>OR</strong></center>
-        To enable an on-disk transaction pool on the block-producing node in your stake pool configuration, open the <code>$NODE_HOME/config-bp.json</code> node configuration file using a text editor.</li>
+        <li>Using a text editor, open the <code>$NODE_HOME/config*.json</code> node configuration file.</li>
         <li>In the node configuration file, add or edit the following lines, where <code>&lt;DatabasePath&gt;</code> is the absolute path to the directory where you want Cardano Node to store the live transaction pool on disk:
           <CodeBlock language="bash">
             {`"LedgerDB": {
-  "Backend": "V1LMDB",
-  "FlushFrequency": 100,
-  "LiveTablesPath": "<DatabasePath>",
-  "MapSize": 16,
-  "NumOfDiskSnapshots": 2,
+  "Backend": "V2LSM",
+  "lsmDatabasePath": "<DatabasePath>",
   "QueryBatchSize": 100000,
-  "SnapshotInterval": 4320
+  "FlushFrequency": 100,
+  "Snapshots": {
+    "NumOfDiskSnapshots": 2,
+    "SlotOffset": 0,
+    "SnapshotInterval": 86400
+  }
 },`}
           </CodeBlock>
         </li>
